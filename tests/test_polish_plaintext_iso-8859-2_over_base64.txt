@@ -1,0 +1,40 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>,
+ =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
+Sender: =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>
+Reply-To: =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
+To: =?ISo-8859-2?B?Qm9iIE9kYmllcmFqsWN5?= <bob.odbierajacy@example.com>,
+ =?iSO-8859-2?b?S2Fyb2xpbmEgT2RiaWVyYWqxY2E=?= <karolina.odbierajaca@example.com>
+Cc: =?iso-8859-2?B?RGFuaWVsIE9kYmllcmFqsWN5?= <daniel.odbierajacy@example.com>,
+ =?isO-8859-2?B?RXdhIE9kYmllcmFqsWNh?= <ewa.odbierajaca@example.com>
+Bcc: =?iso-8859-2?B?RnJhbmVrIE9kYmllcmFqsWN5?= <franek.odbierajacy@example.com>,
+ =?iso-8859-2?B?R3Jhv3luYSBPZGJpZXJharFjYQ==?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?IsO-8859-2?b?UG9sc2tpZSBwYW5ncmFteQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>,
+ =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>
+Resent-Sender: =?isO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
+Resent-To: =?ISo-8859-2?B?Qm9iIE9kYmllcmFqsWN5?= <bob.odbierajacy@example.net>,
+ =?iSO-8859-2?b?S2Fyb2xpbmEgT2RiaWVyYWqxY2E=?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?iso-8859-2?B?RGFuaWVsIE9kYmllcmFqsWN5?= <daniel.odbierajacy@example.net>,
+ =?isO-8859-2?B?RXdhIE9kYmllcmFqsWNh?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?iso-8859-2?B?RnJhbmVrIE9kYmllcmFqsWN5?= <franek.odbierajacy@example.net>,
+ =?iso-8859-2?B?R3Jhv3luYSBPZGJpZXJharFjYQ==?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TexT/plaiN; CHARSET=ISO-8859-2
+Content-Transfer-Encoding: base64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+SmW/dSBrbLF0dywgc3Cz82S8IEZpbm9tIGN66rbmIGdyeSBoYfFiIQpQ82pkvL9lLCBrafEgdOog
+Y2htdXJub7bmIHcgZ7OxYiBmbGFzenkhCk3qv255IGKxZLwgY2hyb/EgcHWzayB0d/NqIGkgc3pl
+tuYgZmxhZy4KRmlsbXVqIHJ6Zbwgv7FkYfEsIHBvtuYsIGdu6mIgY2izeXN0a/N3IQpQY2huseYg
+dyB06iCz82S8IGplv2EgbHViIG+2bSBza3J6efEgZmlnLgpEb7bmIGdy87xiIGZ1emqxLCBrbG7q
+LCBweWNoIGkgbWGzv2Xxc3R3IQpQ82pkvCB3IGxvY2ggemJp5iBtYbO/ZfFza7EgZ+q2IGZ1dHJ5
+biEKQ2h3eeYgbWGzv29ua+osIHN0cvNqIGKxZLwgcGxltvEgeiBmdWdpLg

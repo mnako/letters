@@ -1,0 +1,90 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>,
+ =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+Sender: =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
+Reply-To: =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+To: =?UTF-8?b?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.com>,
+ =?UTf-8?b?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.com>
+Cc: =?utf-8?b?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.com>,
+ =?UTF-8?B?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.com>
+Bcc: =?UTF-8?B?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.com>,
+ =?UTF-8?B?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?UTf-8?b?UG9sc2tpZSBwYW5ncmFteQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>,
+ =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
+Resent-Sender: =?UTF-8?B?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?b?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.net>,
+ =?UTf-8?b?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?utf-8?b?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.net>,
+ =?UTF-8?B?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?UTF-8?B?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.net>,
+ =?UTF-8?B?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multipart/rElATED; CHARSET="UTF-8"; BoundARY="RelatedBoundaryString"
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: MULTIPart/alternatIvE; BoUnDary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: text/plAIN; CHARSET="UTF-8"
+Content-Transfer-Encoding: Base64
+
+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiIQpQw7NqZMW6
+xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBmbGFzenkhCk3EmcW8bnkgYsSFZMW6
+IGNocm/FhCBwdcWCayB0d8OzaiBpIHN6ZcWbxIcgZmxhZy4KRmlsbXVqIHJ6ZcW6IMW8xIVkYcWE
+LCBwb8WbxIcsIGduxJliIGNoxYJ5c3Rrw7N3IQpQY2huxIXEhyB3IHTEmSDFgsOzZMW6IGplxbxh
+IGx1YiBvxZttIHNrcnp5xYQgZmlnLgpEb8WbxIcgZ3LDs8W6YiBmdXpqxIUsIGtsbsSZLCBweWNo
+IGkgbWHFgsW8ZcWEc3R3IQpQw7NqZMW6IHcgbG9jaCB6YmnEhyBtYcWCxbxlxYRza8SFIGfEmcWb
+IGZ1dHJ5biEKQ2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSFZMW6IHBsZcWbxYQgeiBmdWdp
+Lg
+
+--AlternativeBoundaryString
+Content-Type: TexT/ENRICHED; CHaRset="utf-8"
+Content-Transfer-Encoding: BASE64
+
+PGJvbGQ+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiITwv
+Ym9sZD4KPGl0YWxpYz5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBm
+bGFzenkhPC9pdGFsaWM+CjxmaXhlZD5NxJnFvG55IGLEhWTFuiBjaHJvxYQgcHXFgmsgdHfDs2og
+aSBzemXFm8SHIGZsYWcuPC9maXhlZD4KPHVuZGVybGluZT5GaWxtdWogcnplxbogxbzEhWRhxYQs
+IHBvxZvEhywgZ27EmWIgY2jFgnlzdGvDs3chPC91bmRlcmxpbmU+ClBjaG7EhcSHIHcgdMSZIMWC
+w7NkxbogamXFvGEgbHViIG/Fm20gc2tyennFhCBmaWcuCkRvxZvEhyBncsOzxbpiIGZ1emrEhSwg
+a2xuxJksIHB5Y2ggaSBtYcWCxbxlxYRzdHchClDDs2pkxbogdyBsb2NoIHpiacSHIG1hxYLFvGXF
+hHNrxIUgZ8SZxZsgZnV0cnluIQpDaHd5xIcgbWHFgsW8b25rxJksIHN0csOzaiBixIVkxbogcGxl
+xZvFhCB6IGZ1Z2ku
+
+--AlternativeBoundaryString
+Content-Type: TEXT/HTml; cHarset="utF-8"
+Content-Transfer-Encoding: BASE64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD5KZcW8dSBrbMSFdHcsIHNwxYLDs2TFuiBGaW5vbSBj
+esSZxZvEhyBncnkgaGHFhGIhPC9wPgo8cD5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvE
+hyB3IGfFgsSFYiBmbGFzenkhPC9wPgo8cD5NxJnFvG55IGLEhWTFuiBjaHJvxYQgcHXFgmsgdHfD
+s2ogaSBzemXFm8SHIGZsYWcuPC9wPgo8cD5GaWxtdWogcnplxbogxbzEhWRhxYQsIHBvxZvEhywg
+Z27EmWIgY2jFgnlzdGvDs3chPC9wPgo8cD5QY2huxIXEhyB3IHTEmSDFgsOzZMW6IGplxbxhIGx1
+YiBvxZttIHNrcnp5xYQgZmlnLjwvcD4KPHA+RG/Fm8SHIGdyw7PFumIgZnV6asSFLCBrbG7EmSwg
+cHljaCBpIG1hxYLFvGXFhHN0dyE8L3A+CjxwPlDDs2pkxbogdyBsb2NoIHpiacSHIG1hxYLFvGXF
+hHNrxIUgZ8SZxZsgZnV0cnluITwvcD4KPHA+Q2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSF
+ZMW6IHBsZcWbxYQgeiBmdWdpLjwvcD4KPC9kaXY+CjwvaHRtbD4
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NaME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: Base64
+Content-Disposition: inline; fIlENaMe="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

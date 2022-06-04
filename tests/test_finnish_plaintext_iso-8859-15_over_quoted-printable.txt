@@ -1,0 +1,41 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+From: =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
+ =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Sender: =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Reply-To: =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+To: =?ISO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?isO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?ISO-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?iso-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?ISO-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?iso-8859-15?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?iso-8859-15?q?Suomenkieliset_pangrammit?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+Resent-From: =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
+ =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Resent-Sender: =?iSo-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Resent-To: =?ISO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?isO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?ISO-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?iso-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?ISO-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?iso-8859-15?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: text/plain; chArSEt=iso-8859-15
+Content-Transfer-Encoding: quoTED-PRINTABlE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.
+Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.
+Hyv=E4n lorun sangen pieneksi hy=F6dyksi j=E4i suomen kirjaimet.
+Fahrenheit ja Celsius yrj=F6siv=E4t =C5san backgammon-peliin, Volkswageniss=
+a, daiquirin ja ZX81:n yhteisvaikutuksesta.
+Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
+Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.

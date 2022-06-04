@@ -1,0 +1,131 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>,
+ =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Sender: =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Reply-To: =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+To: =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.com>,
+ =?ISo-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.com>
+Cc: =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.com>,
+ =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.com>
+Bcc: =?ISO-2022-JP?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.com>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?ISO-2022-JP?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>,
+ =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Resent-Sender: =?iSO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Resent-To: =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.net>,
+ =?ISo-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.net>
+Resent-Cc: =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.net>,
+ =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.net>
+Resent-Bcc: =?ISO-2022-JP?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.net>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mULTipart/relATEd; CHARSET="isO-2022-Jp"; boundary="RelatedBoundaryString"
+Content-Transfer-Encoding: 7bit
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: mULtipaRT/ALTERnATive; boundary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: text/PLAIN; ChArset="iso-2022-JP"
+Content-Transfer-Encoding: 7BIT
+
+色は匂えど
+散りぬるを
+我が世誰ぞ
+常ならん
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。
+
+--AlternativeBoundaryString
+Content-Type: TEXT/ENrichEd; CHARSET="ISO-2022-jp"
+Content-Transfer-Encoding: 7bit
+
+<bold>色は匂えど</bold>
+<italic>散りぬるを</italic>
+<fixed>我が世誰ぞ</fixed>
+<underline>常ならん</underline>
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。
+
+--AlternativeBoundaryString
+Content-Type: TeXt/hTMl; CHarset="iso-2022-jP"
+Content-Transfer-Encoding: 7biT
+
+<html>
+<div dir="ltr">
+<p>色は匂えど<br />
+散りぬるを<br />
+我が世誰ぞ<br />
+常ならん<br />
+有為の奥山<br />
+今日越えて<br />
+浅き夢見じ<br />
+酔いもせず。</p>
+
+<p>Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.</p>
+
+<p>とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。</p>
+
+<p>天地星空<br />
+山川峰谷<br />
+雲霧室苔<br />
+人犬上末<br />
+硫黄猿生ふ為よ<br />
+榎の枝を馴れ居て。</p>
+
+<p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: iNline; filEnAmE="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

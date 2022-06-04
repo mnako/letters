@@ -1,0 +1,90 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+From: =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>,
+ =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+Sender: =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
+Reply-To: =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+To: =?iso-8859-15?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
+ =?ISo-8859-15?B?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.com>
+Cc: =?iSO-8859-15?B?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.com>,
+ =?iSo-8859-15?B?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.com>
+Bcc: =?IsO-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.com>,
+ =?iso-8859-15?B?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?Iso-8859-15?B?U3VvbWVua2llbGlzZXQgcGFuZ3JhbW1pdA==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+Resent-From: =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>,
+ =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
+Resent-Sender: =?isO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+Resent-To: =?iso-8859-15?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
+ =?ISo-8859-15?B?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?iSO-8859-15?B?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.net>,
+ =?iSo-8859-15?B?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?IsO-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.net>,
+ =?iso-8859-15?B?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: muLTIPART/RELATEd; CHarSEt="iso-8859-15"; boundaRy="RelatedBoundaryString"
+Content-Transfer-Encoding: baSE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: MuLtipart/alTeRNATIVE; BOUNDArY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TExT/pLaIN; CHARSET="ISO-8859-15"
+Content-Transfer-Encoding: base64
+
+QWxiZXJ0IG9zdGkgZmFnb3RpbiBqYSB09nLkeXR0aSBwdWhrdXZhbiBtZWxvZGlhbi4KTG9ydW4g
+c2FuZ2VuIHBpZW5la3NpIGh59mR5a3NpIGrkaXbkdCBzdW9tZW4ga2lyamFpbWV0LgpIeXbkbiBs
+b3J1biBzYW5nZW4gcGllbmVrc2kgaHn2ZHlrc2kgauRpIHN1b21lbiBraXJqYWltZXQuCkZhaHJl
+bmhlaXQgamEgQ2Vsc2l1cyB5cmr2c2l25HQgxXNhbiBiYWNrZ2FtbW9uLXBlbGlpbiwgVm9sa3N3
+YWdlbmlzc2EsIGRhaXF1aXJpbiBqYSBaWDgxOm4geWh0ZWlzdmFpa3V0dWtzZXN0YS4KQ2hhcmxl
+cyBEYXJ3aW4gamFtbWFpbGkgxWtlbiBoZXZpeHlsb2ZvbmlsbGEgUWF0YXJpbiB59nB1YiBaZWxp
+Z2lzc+QuCldpZW5pbORpbmVuIHNpb3V4OnRhIHB1aHV2YSD2a3l6b21iaWUgZGlnZ2FhIMVzYW4g
+cm9xdWVmb3J0LXRhY29qYS4
+
+--AlternativeBoundaryString
+Content-Type: TEXT/ENrIChed; charset="iso-8859-15"
+Content-Transfer-Encoding: base64
+
+PGJvbGQ+QWxiZXJ0IG9zdGkgZmFnb3RpbiBqYSB09nLkeXR0aSBwdWhrdXZhbiBtZWxvZGlhbi48
+L2JvbGQ+CjxpdGFsaWM+TG9ydW4gc2FuZ2VuIHBpZW5la3NpIGh59mR5a3NpIGrkaXbkdCBzdW9t
+ZW4ga2lyamFpbWV0LjwvaXRhbGljPgo8Zml4ZWQ+SHl25G4gbG9ydW4gc2FuZ2VuIHBpZW5la3Np
+IGh59mR5a3NpIGrkaSBzdW9tZW4ga2lyamFpbWV0LjwvZml4ZWQ+Cjx1bmRlcmxpbmU+RmFocmVu
+aGVpdCBqYSBDZWxzaXVzIHlyavZzaXbkdCDFc2FuIGJhY2tnYW1tb24tcGVsaWluLCBWb2xrc3dh
+Z2VuaXNzYSwgZGFpcXVpcmluIGphIFpYODE6biB5aHRlaXN2YWlrdXR1a3Nlc3RhLjwvdW5kZXJs
+aW5lPgpDaGFybGVzIERhcndpbiBqYW1tYWlsaSDFa2VuIGhldml4eWxvZm9uaWxsYSBRYXRhcmlu
+IHn2cHViIFplbGlnaXNz5C4KV2llbmls5GluZW4gc2lvdXg6dGEgcHVodXZhIPZreXpvbWJpZSBk
+aWdnYWEgxXNhbiByb3F1ZWZvcnQtdGFjb2phLg==
+
+--AlternativeBoundaryString
+Content-Type: text/html; cHaRSET="IsO-8859-15"
+Content-Transfer-Encoding: bASE64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD5BbGJlcnQgb3N0aSBmYWdvdGluIGphIHT2cuR5dHRp
+IHB1aGt1dmFuIG1lbG9kaWFuLjwvcD4KPHA+TG9ydW4gc2FuZ2VuIHBpZW5la3NpIGh59mR5a3Np
+IGrkaXbkdCBzdW9tZW4ga2lyamFpbWV0LjwvcD4KPHA+SHl25G4gbG9ydW4gc2FuZ2VuIHBpZW5l
+a3NpIGh59mR5a3NpIGrkaSBzdW9tZW4ga2lyamFpbWV0LjwvcD4KPHA+RmFocmVuaGVpdCBqYSBD
+ZWxzaXVzIHlyavZzaXbkdCDFc2FuIGJhY2tnYW1tb24tcGVsaWluLCBWb2xrc3dhZ2VuaXNzYSwg
+ZGFpcXVpcmluIGphIFpYODE6biB5aHRlaXN2YWlrdXR1a3Nlc3RhLjwvcD4KPHA+Q2hhcmxlcyBE
+YXJ3aW4gamFtbWFpbGkgxWtlbiBoZXZpeHlsb2ZvbmlsbGEgUWF0YXJpbiB59nB1YiBaZWxpZ2lz
+c+QuPC9wPgo8cD5XaWVuaWzkaW5lbiBzaW91eDp0YSBwdWh1dmEg9mt5em9tYmllIGRpZ2dhYSDF
+c2FuIHJvcXVlZm9ydC10YWNvamEuPC9wPgo8L2Rpdj4KPC9odG1sPg==
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLInE; FILENAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

@@ -1,0 +1,71 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+From: =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>,
+ =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+Sender: =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+To: =?EUC-kR?B?ueQgvPa9xcDa?= <bob.susinja@example.com>,
+ =?euC-kr?b?xLO30SC89r3FwNo=?= <carol.susinja@example.com>
+Cc: =?euc-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.com>,
+ =?eUC-kr?B?wMy66iC89r3FwNo=?= <eve.susinja@example.com>
+Bcc: =?EUC-KR?b?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.com>,
+ =?eUc-KR?B?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?eUC-KR?B?x9Gxub7uIMbSsde3pQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+Resent-From: =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>,
+ =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?EUc-KR?B?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?EUC-kR?B?ueQgvPa9xcDa?= <bob.susinja@example.net>,
+ =?euC-kr?b?xLO30SC89r3FwNo=?= <carol.susinja@example.net>
+Resent-Cc: =?euc-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.net>,
+ =?eUC-kr?B?wMy66iC89r3FwNo=?= <eve.susinja@example.net>
+Resent-Bcc: =?EUC-KR?b?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.net>,
+ =?eUc-KR?B?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multipaRT/RELATED; CHARSet="euc-kR"; BOUNDARY="RelatedBoundaryString"
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: MUltipart/altERNAtIve; bounDary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: texT/plain; chARSET="euc-kR"
+Content-Transfer-Encoding: BAse64
+
+xbC9usDHILDtwK/BtrDHwLogwNS8+rOiuK4guLizqr7fIMfPsO0gxq+6sMfRILHivPrAuiDHyr/k
+xKEgvsq02S4=
+
+--AlternativeBoundaryString
+Content-Type: tEXT/EnRiCHED; ChArset="euc-kR"
+Content-Transfer-Encoding: bAsE64
+
+PGJvbGQ+xbC9usDHPC9ib2xkPiA8aXRhbGljPrDtwK/BtrDHwLo8L2l0YWxpYz4gPGZpeGVkPsDU
+vPqzoriuPC9maXhlZD4gPHVuZGVybGluZT64uLOqvt88L3VuZGVybGluZT4gx8+w7SDGr7qwx9Eg
+seK8+sC6IMfKv+TEoSC+yrTZLg
+
+--AlternativeBoundaryString
+Content-Type: tEXT/HTML; ChArsEt="eUC-KR"
+Content-Transfer-Encoding: BASE64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD7FsL26wMcgsO3Ar8G2sMfAuiDA1Lz6s6K4riC4uLOq
+vt8gx8+w7SDGr7qwx9EgseK8+sC6IMfKv+TEoSC+yrTZLjwvcD4KPC9kaXY+CjwvaHRtbD4
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BAse64
+Content-Disposition: inlINE; FILENAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

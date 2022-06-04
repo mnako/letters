@@ -1,0 +1,42 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>,
+ =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
+Sender: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
+Reply-To: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
+To: =?iso-8859-2?q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.com>,
+ =?Iso-8859-2?Q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.com>
+Cc: =?ISO-8859-2?q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.com>,
+ =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.com>
+Bcc: =?iso-8859-2?Q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.com>,
+ =?ISO-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?IsO-8859-2?q?Polskie_pangramy?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>,
+ =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
+Resent-Sender: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
+Resent-To: =?iso-8859-2?q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.net>,
+ =?Iso-8859-2?Q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?ISO-8859-2?q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.net>,
+ =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?iso-8859-2?Q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.net>,
+ =?ISO-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TeXt/pLain; chaRsET=ISO-8859-2
+Content-Transfer-Encoding: QUOTed-pRINTABLE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+Je=BFu kl=B1tw, sp=B3=F3d=BC Finom cz=EA=B6=E6 gry ha=F1b!
+P=F3jd=BC=BFe, ki=F1 t=EA chmurno=B6=E6 w g=B3=B1b flaszy!
+M=EA=BFny b=B1d=BC chro=F1 pu=B3k tw=F3j i sze=B6=E6 flag.
+Filmuj rze=BC =BF=B1da=F1, po=B6=E6, gn=EAb ch=B3ystk=F3w!
+Pchn=B1=E6 w t=EA =B3=F3d=BC je=BFa lub o=B6m skrzy=F1 fig.
+Do=B6=E6 gr=F3=BCb fuzj=B1, kln=EA, pych i ma=B3=BFe=F1stw!
+P=F3jd=BC w loch zbi=E6 ma=B3=BFe=F1sk=B1 g=EA=B6 futryn!
+Chwy=E6 ma=B3=BFonk=EA, str=F3j b=B1d=BC ple=B6=F1 z fugi.

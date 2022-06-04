@@ -1,0 +1,66 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
+From: =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
+ =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Sender: =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Reply-To: =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+To: =?GBK?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
+ =?Gbk?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
+Cc: =?gbk?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
+ =?GBK?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
+Bcc: =?Gbk?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
+ =?gbk?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?gbk?q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
+Resent-From: =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
+ =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Resent-Sender: =?gbk?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Resent-To: =?GBK?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
+ =?Gbk?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
+Resent-Cc: =?gbk?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
+ =?GBK?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
+Resent-Bcc: =?Gbk?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
+ =?gbk?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mulTiPART/SIGNED;
+              CHARSet="GbK";
+              PROTOCOL="APPLICATioN/pkcS7-SIGNAtuRe";
+              miCalg=sha1;
+              boundaRy=SignedBoundaryString
+Content-Transfer-Encoding: QUoted-printable
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: tEXt/PLAIN
+Content-Transfer-Encoding: qUoTed-priNTABLE
+
+=CA=AF=CA=D2=CA=AB=CA=BF=CA=A9=CA=CF=A3=AC=CA=C8=CA=A8=A3=AC=CA=C4=CA=B3=CA=
+=AE=CA=A8=A1=A3
+=CA=CF=CA=B1=CA=B1=CA=CA=CA=D0=CA=D3=CA=A8=A1=A3
+=CA=AE=CA=B1=A3=AC=CA=CA=CA=AE=CA=A8=CA=CA=CA=D0=A1=A3
+=CA=C7=CA=B1=A3=AC=CA=CA=CA=A9=CA=CF=CA=CA=CA=D0=A1=A3
+=CA=CF=CA=D3=CA=C7=CA=AE=CA=A8=A3=AC=CA=D1=CA=B8=CA=C6=A3=AC=CA=B9=CA=C7=CA=
+=AE=CA=A8=CA=C5=CA=C0=A1=A3
+=CA=CF=CA=B0=CA=C7=CA=AE=CA=A8=CA=AC=A3=AC=CA=CA=CA=AF=CA=D2=A1=A3
+=CA=AF=CA=D2=CA=AA=A3=AC=CA=CF=CA=B9=CA=CC=CA=C3=CA=AF=CA=D2=A1=A3
+=CA=AF=CA=D2=CA=C3=A3=AC=CA=CF=CA=BC=CA=D4=CA=B3=CA=C7=CA=AE=CA=A8=A1=A3
+=CA=B3=CA=B1=A3=AC=CA=BC=CA=B6=CA=C7=CA=AE=CA=A8=CA=AC=A3=AC=CA=B5=CA=AE=CA=
+=AF=CA=A8=CA=AC=A1=A3
+=CA=D4=CA=CD=CA=C7=CA=C2=A1=A3
+
+--SignedBoundaryString
+Content-Type: APPLICATION/PKcs7-SIGNATURe; NAme=smime.p7s
+Content-Transfer-Encoding: Base64
+Content-Disposition: attachmeNt; FIlename=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

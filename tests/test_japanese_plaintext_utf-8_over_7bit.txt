@@ -1,0 +1,55 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>,
+ =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Sender: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Reply-To: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+To: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.com>,
+ =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.com>
+Cc: =?Utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.com>,
+ =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.com>
+Bcc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.com>,
+ =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?UTF-8?Q?=E3=81=84=E3=82=8D=E3=81=AF=E6=AD=8C?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>,
+ =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Resent-To: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.net>,
+ =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.net>
+Resent-Cc: =?Utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.net>,
+ =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.net>
+Resent-Bcc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.net>,
+ =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TEXT/PlAIn; cHArset=uTf-8
+Content-Transfer-Encoding: 7BIT
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+色は匂えど
+散りぬるを
+我が世誰ぞ
+常ならん
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。

@@ -1,0 +1,110 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+From: =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>,
+ =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+Sender: =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+To: =?eUc-kR?Q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.com>,
+ =?EUC-KR?Q?=C4=B3=B7=D1_=BC=F6=BD=C5=C0=DA?= <carol.susinja@example.com>
+Cc: =?EUC-kr?Q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.com>,
+ =?euc-kr?q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.com>
+Bcc: =?EUc-kr?Q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.com>,
+ =?euc-kr?q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?EuC-KR?Q?=C7=D1=B1=B9=BE=EE_=C6=D2=B1=D7=B7=A5?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+Resent-From: =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>,
+ =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?EUc-kR?q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?eUc-kR?Q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.net>,
+ =?EUC-KR?Q?=C4=B3=B7=D1_=BC=F6=BD=C5=C0=DA?= <carol.susinja@example.net>
+Resent-Cc: =?EUC-kr?Q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.net>,
+ =?euc-kr?q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.net>
+Resent-Bcc: =?EUc-kr?Q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.net>,
+ =?euc-kr?q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multIPART/MIXED; CHARset="euC-Kr"; BOUNDARy="MixedBoundaryString"
+Content-Transfer-Encoding: QUOteD-printable
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: muLtIpArt/relateD; BOUNDARY="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: MULTIPArt/alternaTIVE; boundary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: text/plAIN; CHARSET="EUC-Kr"
+Content-Transfer-Encoding: qUoTED-PRINTABle
+
+=C5=B0=BD=BA=C0=C7 =B0=ED=C0=AF=C1=B6=B0=C7=C0=BA =C0=D4=BC=FA=B3=A2=B8=AE =
+=B8=B8=B3=AA=BE=DF =C7=CF=B0=ED =C6=AF=BA=B0=C7=D1 =B1=E2=BC=FA=C0=BA =C7=
+=CA=BF=E4=C4=A1 =BE=CA=B4=D9.
+
+--AlternativeBoundaryString
+Content-Type: tExt/enriched; cHARSeT="euc-kr"
+Content-Transfer-Encoding: quotEd-PRINTABLE
+
+<bold>=C5=B0=BD=BA=C0=C7</bold> <italic>=B0=ED=C0=AF=C1=B6=B0=C7=C0=BA</ita=
+lic> <fixed>=C0=D4=BC=FA=B3=A2=B8=AE</fixed> <underline>=B8=B8=B3=AA=BE=DF<=
+/underline> =C7=CF=B0=ED =C6=AF=BA=B0=C7=D1 =B1=E2=BC=FA=C0=BA =C7=CA=BF=E4=
+=C4=A1 =BE=CA=B4=D9.
+
+--AlternativeBoundaryString
+Content-Type: TEXt/Html; chaRSet="EUc-kR"
+Content-Transfer-Encoding: QUoTED-pRINTabLE
+
+<html>
+<div dir=3D"ltr">
+<p>=C5=B0=BD=BA=C0=C7 =B0=ED=C0=AF=C1=B6=B0=C7=C0=BA =C0=D4=BC=FA=B3=A2=B8=
+=AE =B8=B8=B3=AA=BE=DF =C7=CF=B0=ED =C6=AF=BA=B0=C7=D1 =B1=E2=BC=FA=C0=BA =
+=C7=CA=BF=E4=C4=A1 =BE=CA=B4=D9.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; namE="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: base64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INlINe; filename="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: appLiCAtion/pdf; namE="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BasE64
+Content-Disposition: ATTACHMENt; FIlenaME="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPLICATIon/pdf; name="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: ApPLiCaTion/jsON; nAME="attached-json-name.json"
+Content-Disposition: ATTACHMENT; FILename="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--

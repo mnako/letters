@@ -1,0 +1,39 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>,
+ =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Sender: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Reply-To: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+To: =?aSCiI?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.com>,
+ =?aSciI?B?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.com>
+Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.com>,
+ =?ASCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.com>
+Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.com>,
+ =?aScii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?AScIi?b?RW5nbGlzaCBQYW5ncmFtcw==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+Resent-From: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>,
+ =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Resent-Sender: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Resent-To: =?aSCiI?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.net>,
+ =?aSciI?B?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.net>
+Resent-Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.net>,
+ =?ASCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.net>
+Resent-Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.net>,
+ =?aScii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TExT/PLaIn; ChaRseT=ASCII
+Content-Transfer-Encoding: BasE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIGEgbGF6eSBkb2cuCkdsaWIgam9ja3MgcXVp
+eiBueW1waCB0byB2ZXggZHdhcmYuClNwaGlueCBvZiBibGFjayBxdWFydHosIGp1ZGdlIG15IHZv
+dy4KSG93IHZleGluZ2x5IHF1aWNrIGRhZnQgemVicmFzIGp1bXAhClRoZSBmaXZlIGJveGluZyB3
+aXphcmRzIGp1bXAgcXVpY2tseS4KSmFja2Rhd3MgbG92ZSBteSBiaWcgc3BoaW54IG9mIHF1YXJ0
+ei4KUGFjayBteSBib3ggd2l0aCBmaXZlIGRvemVuIGxpcXVvciBqdWdzLg==

@@ -1,0 +1,148 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>,
+ =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+Sender: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
+Reply-To: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+To: =?utf-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.com>,
+ =?Utf-8?Q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.com>
+Cc: =?UTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.com>,
+ =?utf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.com>
+Bcc: =?utf-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.com>,
+ =?UTF-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?UTF-8?Q?Polskie_pangramy?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>,
+ =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
+Resent-Sender: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+Resent-To: =?utf-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.net>,
+ =?Utf-8?Q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?UTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.net>,
+ =?utf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?utf-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.net>,
+ =?UTF-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mUltipART/MIXED; CHARsEt="utF-8"; boundARY="MixedBoundaryString"
+Content-Transfer-Encoding: QUOTED-prIntable
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: multipaRt/related; boundArY="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: MUlTIPART/ALtERnatiVE; BOUNDARY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TEXT/PlaIn; charSeT="UTF-8"
+Content-Transfer-Encoding: QUOTEd-printable
+
+Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=87 gry =
+ha=C5=84b!
+P=C3=B3jd=C5=BA=C5=BCe, ki=C5=84 t=C4=99 chmurno=C5=9B=C4=87 w g=C5=82=C4=
+=85b flaszy!
+M=C4=99=C5=BCny b=C4=85d=C5=BA chro=C5=84 pu=C5=82k tw=C3=B3j i sze=C5=9B=
+=C4=87 flag.
+Filmuj rze=C5=BA =C5=BC=C4=85da=C5=84, po=C5=9B=C4=87, gn=C4=99b ch=C5=82ys=
+tk=C3=B3w!
+Pchn=C4=85=C4=87 w t=C4=99 =C5=82=C3=B3d=C5=BA je=C5=BCa lub o=C5=9Bm skrzy=
+=C5=84 fig.
+Do=C5=9B=C4=87 gr=C3=B3=C5=BAb fuzj=C4=85, kln=C4=99, pych i ma=C5=82=C5=BC=
+e=C5=84stw!
+P=C3=B3jd=C5=BA w loch zbi=C4=87 ma=C5=82=C5=BCe=C5=84sk=C4=85 g=C4=99=C5=
+=9B futryn!
+Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=C5=
+=84 z fugi.
+
+--AlternativeBoundaryString
+Content-Type: TEXT/ENRICHed; charset="utf-8"
+Content-Transfer-Encoding: quoTeD-pRiNtable
+
+<bold>Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=
+=87 gry ha=C5=84b!</bold>
+<italic>P=C3=B3jd=C5=BA=C5=BCe, ki=C5=84 t=C4=99 chmurno=C5=9B=C4=87 w g=C5=
+=82=C4=85b flaszy!</italic>
+<fixed>M=C4=99=C5=BCny b=C4=85d=C5=BA chro=C5=84 pu=C5=82k tw=C3=B3j i sze=
+=C5=9B=C4=87 flag.</fixed>
+<underline>Filmuj rze=C5=BA =C5=BC=C4=85da=C5=84, po=C5=9B=C4=87, gn=C4=99b=
+ ch=C5=82ystk=C3=B3w!</underline>
+Pchn=C4=85=C4=87 w t=C4=99 =C5=82=C3=B3d=C5=BA je=C5=BCa lub o=C5=9Bm skrzy=
+=C5=84 fig.
+Do=C5=9B=C4=87 gr=C3=B3=C5=BAb fuzj=C4=85, kln=C4=99, pych i ma=C5=82=C5=BC=
+e=C5=84stw!
+P=C3=B3jd=C5=BA w loch zbi=C4=87 ma=C5=82=C5=BCe=C5=84sk=C4=85 g=C4=99=C5=
+=9B futryn!
+Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=C5=
+=84 z fugi.
+
+--AlternativeBoundaryString
+Content-Type: teXt/HTML; CHARSET="UTF-8"
+Content-Transfer-Encoding: quoteD-PRINTABLE
+
+<html>
+<div dir=3D"ltr">
+<p>Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=87 g=
+ry ha=C5=84b!</p>
+<p>P=C3=B3jd=C5=BA=C5=BCe, ki=C5=84 t=C4=99 chmurno=C5=9B=C4=87 w g=C5=82=
+=C4=85b flaszy!</p>
+<p>M=C4=99=C5=BCny b=C4=85d=C5=BA chro=C5=84 pu=C5=82k tw=C3=B3j i sze=C5=
+=9B=C4=87 flag.</p>
+<p>Filmuj rze=C5=BA =C5=BC=C4=85da=C5=84, po=C5=9B=C4=87, gn=C4=99b ch=C5=
+=82ystk=C3=B3w!</p>
+<p>Pchn=C4=85=C4=87 w t=C4=99 =C5=82=C3=B3d=C5=BA je=C5=BCa lub o=C5=9Bm sk=
+rzy=C5=84 fig.</p>
+<p>Do=C5=9B=C4=87 gr=C3=B3=C5=BAb fuzj=C4=85, kln=C4=99, pych i ma=C5=82=C5=
+=BCe=C5=84stw!</p>
+<p>P=C3=B3jd=C5=BA w loch zbi=C4=87 ma=C5=82=C5=BCe=C5=84sk=C4=85 g=C4=99=
+=C5=9B futryn!</p>
+<p>Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=
+=C5=84 z fugi.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: BASE64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; naME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: baSE64
+Content-Disposition: INLINE; FILEName="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: applIcATION/PDF; NAME="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BAsE64
+Content-Disposition: attAchMEnT; FILENAME="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPLiCatIoN/PDF; NAME="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: BASe64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: Application/jSoN; Name="attached-json-name.json"
+Content-Disposition: attachmenT; fiLENAME="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--

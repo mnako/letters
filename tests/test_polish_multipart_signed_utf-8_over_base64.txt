@@ -1,0 +1,61 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>,
+ =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+Sender: =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
+Reply-To: =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+To: =?utF-8?b?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.com>,
+ =?UTf-8?B?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.com>
+Cc: =?UTF-8?b?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.com>,
+ =?utf-8?b?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.com>
+Bcc: =?uTf-8?b?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.com>,
+ =?utf-8?b?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?utf-8?b?UG9sc2tpZSBwYW5ncmFteQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>,
+ =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
+Resent-Sender: =?utf-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
+Resent-To: =?utF-8?b?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.net>,
+ =?UTf-8?B?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?UTF-8?b?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.net>,
+ =?utf-8?b?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?uTf-8?b?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.net>,
+ =?utf-8?b?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multiparT/sigNEd;
+              cHARSET="UtF-8";
+              ProTOCoL="aPPlICATiOn/pkcs7-sIGNATURE";
+              MICALg=SHA1;
+              BouNdARY=SignedBoundaryString
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: TeXT/plain
+Content-Transfer-Encoding: base64
+
+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiIQpQw7NqZMW6
+xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBmbGFzenkhCk3EmcW8bnkgYsSFZMW6
+IGNocm/FhCBwdcWCayB0d8OzaiBpIHN6ZcWbxIcgZmxhZy4KRmlsbXVqIHJ6ZcW6IMW8xIVkYcWE
+LCBwb8WbxIcsIGduxJliIGNoxYJ5c3Rrw7N3IQpQY2huxIXEhyB3IHTEmSDFgsOzZMW6IGplxbxh
+IGx1YiBvxZttIHNrcnp5xYQgZmlnLgpEb8WbxIcgZ3LDs8W6YiBmdXpqxIUsIGtsbsSZLCBweWNo
+IGkgbWHFgsW8ZcWEc3R3IQpQw7NqZMW6IHcgbG9jaCB6YmnEhyBtYcWCxbxlxYRza8SFIGfEmcWb
+IGZ1dHJ5biEKQ2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSFZMW6IHBsZcWbxYQgeiBmdWdp
+Lg
+
+--SignedBoundaryString
+Content-Type: appLICation/pkcS7-SIGNATURE; NAMe=smime.p7s
+Content-Transfer-Encoding: BAse64
+Content-Disposition: aTtAcHMENT; FIlEname=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

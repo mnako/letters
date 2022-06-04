@@ -1,0 +1,121 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: =?asCiI?Q?Alice_Sender?= <alice.sender@example.com>,
+ =?asCiI?Q?Alice_Sender?= <alice.sender@example.net>
+Sender: =?asCiI?Q?Alice_Sender?= <alice.sender@example.com>
+Reply-To: =?asCiI?Q?Alice_Sender?= <alice.sender@example.net>
+To: =?ascIi?Q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?AScii?q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?aScii?q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?ascii?Q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?Ascii?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?AsCii?q?Grace_Recipient?= <grace.recipient@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?AsCII?q?English_Pangrams?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+Resent-From: =?asCiI?Q?Alice_Sender?= <alice.sender@example.net>,
+ =?asCiI?Q?Alice_Sender?= <alice.sender@example.com>
+Resent-Sender: =?asCiI?Q?Alice_Sender?= <alice.sender@example.net>
+Resent-To: =?ascIi?Q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?AScii?q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?aScii?q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?ascii?Q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?Ascii?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?AsCii?q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: muLTIpArt/mIXED; CharsEt="AsCiI"; bOuNDArY="MixedBoundaryString"
+Content-Transfer-Encoding: qUoTED-pRintaBlE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: mUlTipaRT/ReLated; BOUnDary="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: MulTIPart/alTERNATive; BoUNDarY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: tExT/PLain; ChArSeT="asciI"
+Content-Transfer-Encoding: qUOTed-priNTABle
+
+The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.
+
+--AlternativeBoundaryString
+Content-Type: texT/EnRicheD; CHARsEt="ascII"
+Content-Transfer-Encoding: QuOted-PRINTaBle
+
+<bold>The quick brown fox jumps over a lazy dog.</bold>
+<italic>Glib jocks quiz nymph to vex dwarf.</italic>
+<fixed>Sphinx of black quartz, judge my vow.</fixed>
+<underline>How vexingly quick daft zebras jump!</underline>
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.
+
+--AlternativeBoundaryString
+Content-Type: tEXT/hTmL; cHaRSET="ascIi"
+Content-Transfer-Encoding: QUOtEd-PrINTAble
+
+<html>
+<div dir=3D"ltr">
+<p>The quick brown fox jumps over a lazy dog.</p>
+<p>Glib jocks quiz nymph to vex dwarf.</p>
+<p>Sphinx of black quartz, judge my vow.</p>
+<p>How vexingly quick daft zebras jump!</p>
+<p>The five boxing wizards jump quickly.</p>
+<p>Jackdaws love my big sphinx of quartz.</p>
+<p>Pack my box with five dozen liquor jugs.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; naME="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: BASE64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; nAmE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BAsE64
+Content-Disposition: inLiNE; FilenAmE="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: APpLicAtIoN/PDf; naMe="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BASe64
+Content-Disposition: attACHMent; fILeNaMe="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: AppLiCATIon/PdF; nAmE="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPlicaTiON/Json; naMe="attached-json-name.json"
+Content-Disposition: AtTachmEnT; FIlEname="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--

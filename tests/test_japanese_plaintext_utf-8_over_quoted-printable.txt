@@ -1,0 +1,67 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>,
+ =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Sender: =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Reply-To: =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+To: =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.com>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.com>
+Cc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.com>,
+ =?UTf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.com>
+Bcc: =?UTf-8?q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.com>,
+ =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?utf-8?q?=E3=81=84=E3=82=8D=E3=81=AF=E6=AD=8C?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>,
+ =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?UtF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Resent-To: =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.net>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.net>
+Resent-Cc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.net>,
+ =?UTf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.net>
+Resent-Bcc: =?UTf-8?q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.net>,
+ =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TEXT/PLaiN; chARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-pRintablE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+=E8=89=B2=E3=81=AF=E5=8C=82=E3=81=88=E3=81=A9
+=E6=95=A3=E3=82=8A=E3=81=AC=E3=82=8B=E3=82=92
+=E6=88=91=E3=81=8C=E4=B8=96=E8=AA=B0=E3=81=9E
+=E5=B8=B8=E3=81=AA=E3=82=89=E3=82=93
+=E6=9C=89=E7=82=BA=E3=81=AE=E5=A5=A5=E5=B1=B1
+=E4=BB=8A=E6=97=A5=E8=B6=8A=E3=81=88=E3=81=A6
+=E6=B5=85=E3=81=8D=E5=A4=A2=E8=A6=8B=E3=81=98
+=E9=85=94=E3=81=84=E3=82=82=E3=81=9B=E3=81=9A=E3=80=82
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyam=
+a / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+=E3=81=A8=E3=82=8A=E3=81=AA=E3=81=8F=E3=81=93=E3=82=91=E3=81=99=E3=82=86=E3=
+=82=81=E3=81=95=E3=81=BE=E3=81=9B=E3=81=BF=E3=82=88=E3=81=82=E3=81=91=E3=82=
+=8F=E3=81=9F=E3=82=8B=E3=81=B2=E3=82=93=E3=81=8B=E3=81=97=E3=82=92=E3=81=9D=
+=E3=82=89=E3=81=84=E3=82=8D=E3=81=AF=E3=81=88=E3=81=A6=E3=81=8A=E3=81=8D=E3=
+=81=A4=E3=81=B8=E3=81=AB=E3=81=BB=E3=81=B5=E3=81=AD=E3=82=80=E3=82=8C=E3=82=
+=90=E3=81=AC=E3=82=82=E3=82=84=E3=81=AE=E3=81=86=E3=81=A1=E3=80=82
+
+=E5=A4=A9=E5=9C=B0=E6=98=9F=E7=A9=BA
+=E5=B1=B1=E5=B7=9D=E5=B3=B0=E8=B0=B7
+=E9=9B=B2=E9=9C=A7=E5=AE=A4=E8=8B=94
+=E4=BA=BA=E7=8A=AC=E4=B8=8A=E6=9C=AB
+=E7=A1=AB=E9=BB=84=E7=8C=BF=E7=94=9F=E3=81=B5=E7=82=BA=E3=82=88
+=E6=A6=8E=E3=81=AE=E6=9E=9D=E3=82=92=E9=A6=B4=E3=82=8C=E5=B1=85=E3=81=A6=E3=
+=80=82
+
+=E7=94=B0=E5=B1=85=E3=81=AB=E5=87=BA=E3=81=A7=E8=8F=9C=E6=91=98=E3=82=80=E3=
+=82=8F=E3=82=8C=E3=82=92=E3=81=9E=E5=90=9B=E5=8F=AC=E3=81=99=E3=81=A8=E6=B1=
+=82=E9=A3=9F=E3=82=8A=E8=BF=BD=E3=81=B2=E3=82=86=E3=81=8F=E5=B1=B1=E5=9F=8E=
+=E3=81=AE=E6=89=93=E9=85=94=E3=81=B8=E3=82=8B=E5=AD=90=E3=82=89=E8=97=BB=E8=
+=91=89=E5=B9=B2=E3=81=9B=E3=82=88=E3=81=88=E8=88=9F=E7=B9=8B=E3=81=91=E3=81=
+=AC=E3=80=82

@@ -1,0 +1,69 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>,
+ =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+Sender: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
+Reply-To: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+To: =?uTF-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.com>,
+ =?utf-8?q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.com>
+Cc: =?UTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.com>,
+ =?UTF-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.com>
+Bcc: =?utf-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.com>,
+ =?utf-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?utf-8?Q?Polskie_pangramy?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>,
+ =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
+Resent-Sender: =?UTF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
+Resent-To: =?uTF-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.net>,
+ =?utf-8?q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?UTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.net>,
+ =?UTF-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?utf-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.net>,
+ =?utf-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MULTIParT/signed;
+              charsET="UTF-8";
+              Protocol="appliCatION/PKCS7-siGnATURE";
+              MICALG=SHa1;
+              Boundary=SignedBoundaryString
+Content-Transfer-Encoding: quoTeD-PRintable
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: text/PlAIN
+Content-Transfer-Encoding: QUOTED-PRInTable
+
+Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=87 gry =
+ha=C5=84b!
+P=C3=B3jd=C5=BA=C5=BCe, ki=C5=84 t=C4=99 chmurno=C5=9B=C4=87 w g=C5=82=C4=
+=85b flaszy!
+M=C4=99=C5=BCny b=C4=85d=C5=BA chro=C5=84 pu=C5=82k tw=C3=B3j i sze=C5=9B=
+=C4=87 flag.
+Filmuj rze=C5=BA =C5=BC=C4=85da=C5=84, po=C5=9B=C4=87, gn=C4=99b ch=C5=82ys=
+tk=C3=B3w!
+Pchn=C4=85=C4=87 w t=C4=99 =C5=82=C3=B3d=C5=BA je=C5=BCa lub o=C5=9Bm skrzy=
+=C5=84 fig.
+Do=C5=9B=C4=87 gr=C3=B3=C5=BAb fuzj=C4=85, kln=C4=99, pych i ma=C5=82=C5=BC=
+e=C5=84stw!
+P=C3=B3jd=C5=BA w loch zbi=C4=87 ma=C5=82=C5=BCe=C5=84sk=C4=85 g=C4=99=C5=
+=9B futryn!
+Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=C5=
+=84 z fugi.
+
+--SignedBoundaryString
+Content-Type: APPLICATIoN/pkcs7-signaTURE; NAME=smime.p7s
+Content-Transfer-Encoding: BASE64
+Content-Disposition: attachMenT; FILENAME=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

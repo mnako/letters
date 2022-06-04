@@ -1,0 +1,131 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+From: =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>,
+ =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Sender: =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Reply-To: =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+To: =?uTF-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?Utf-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?uTf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?utF-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?UTf-8?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?UTF-8?Q?Suomenkieliset_pangrammit?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+Resent-From: =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>,
+ =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Resent-Sender: =?uTf-8?Q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Resent-To: =?uTF-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?Utf-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?uTf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?utF-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?UTf-8?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multiPaRT/MiXeD; charsET="utF-8"; BOUNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: QUOTed-pRINTABLE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: MULtiPart/relatEd; bOUnDARY="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: mUltiparT/aLTERNATIVe; BOunDary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: text/pLaiN; cHarset="utf-8"
+Content-Transfer-Encoding: quotEd-PRINTABLE
+
+Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.
+Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaimet.
+Hyv=C3=A4n lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4i suomen kirjaimet.
+Fahrenheit ja Celsius yrj=C3=B6siv=C3=A4t =C3=85san backgammon-peliin, Volk=
+swagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
+Charles Darwin jammaili =C3=85ken hevixylofonilla Qatarin y=C3=B6pub Zeligi=
+ss=C3=A4.
+Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
+tacoja.
+
+--AlternativeBoundaryString
+Content-Type: tExt/eNRICHED; CHARSeT="Utf-8"
+Content-Transfer-Encoding: quoted-prinTaBle
+
+<bold>Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.</bold>
+<italic>Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaim=
+et.</italic>
+<fixed>Hyv=C3=A4n lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4i suomen kirja=
+imet.</fixed>
+<underline>Fahrenheit ja Celsius yrj=C3=B6siv=C3=A4t =C3=85san backgammon-p=
+eliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.</underline>
+Charles Darwin jammaili =C3=85ken hevixylofonilla Qatarin y=C3=B6pub Zeligi=
+ss=C3=A4.
+Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
+tacoja.
+
+--AlternativeBoundaryString
+Content-Type: teXt/html; charseT="UtF-8"
+Content-Transfer-Encoding: QUoted-printaBLE
+
+<html>
+<div dir=3D"ltr">
+<p>Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.</p>
+<p>Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaimet.</=
+p>
+<p>Hyv=C3=A4n lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4i suomen kirjaimet=
+.</p>
+<p>Fahrenheit ja Celsius yrj=C3=B6siv=C3=A4t =C3=85san backgammon-peliin, V=
+olkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.</p>
+<p>Charles Darwin jammaili =C3=85ken hevixylofonilla Qatarin y=C3=B6pub Zel=
+igiss=C3=A4.</p>
+<p>Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefo=
+rt-tacoja.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; nAME="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: BASE64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: base64
+Content-Disposition: iNLINE; FILENAMe="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: APplication/pDF; NAme="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachmeNT; fILENAME="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: aPplicAtION/PDF; NAME="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: BAsE64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: applicAtIoN/JSon; name="attached-json-name.json"
+Content-Disposition: attachmenT; FILENAME="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--
