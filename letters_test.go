@@ -39,8 +39,8 @@ func TestParseEmailEnglishEmpty(t *testing.T) {
 			ExtraHeaders: map[string][]string{},
 		},
 		Text: `While this email is undeliverable, this test case makes sure that the
-parser does not crash and that most fields are nullable and the rest
-has sane defaults (e.g. text/plain Content Type).`,
+parser does not crash, most fields are nullable, and the rest has sane
+defaults (e.g. text/plain Content-Type).`,
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
