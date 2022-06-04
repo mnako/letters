@@ -71,6 +71,7 @@ type ContentTransferEncoding string
 const (
 	cte7bit            ContentTransferEncoding = "7bit"
 	cte8bit            ContentTransferEncoding = "8bit"
+	cteBinary          ContentTransferEncoding = "binary"
 	cteQuotedPrintable ContentTransferEncoding = "quoted-printable"
 	cteBase64          ContentTransferEncoding = "base64"
 )
@@ -78,6 +79,7 @@ const (
 var cteMap = map[string]ContentTransferEncoding{
 	"7bit":             cte7bit,
 	"8bit":             cte8bit,
+	"binary":           cteBinary,
 	"quoted-printable": cteQuotedPrintable,
 	"base64":           cteBase64,
 }
