@@ -1,10 +1,10 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
 From: Alice Sender <alice.sender@example.com>,
  Alice Sender <alice.sender@example.net>
-Sender: Alice Sender <alice.sender@example.com>
+Sender: "Sender, Alice" <alice.sender@example.com>
 Reply-To: Alice Sender <alice.sender@example.net>
-To: Bob Recipient <bob.recipient@example.com>,
- Carol Recipient <carol.recipient@example.com>
+To: "Recipient, Bob" <bob.recipient@example.com>,
+ "Recipient, Carol" <carol.recipient@example.com>
 Cc: Dan Recipient <dan.recipient@example.com>,
  Eve Recipient <eve.recipient@example.com>
 Bcc: Frank Recipient <frank.recipient@example.com>,

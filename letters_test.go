@@ -63,7 +63,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alice Sender",
+				Name:    "Sender, Alice",
 				Address: "alice.sender@example.com",
 			},
 			From: []*mail.Address{
@@ -78,11 +78,11 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Recipient",
+					Name:    "Recipient, Bob",
 					Address: "bob.recipient@example.com",
 				},
 				{
-					Name:    "Carol Recipient",
+					Name:    "Recipient, Carol",
 					Address: "carol.recipient@example.com",
 				},
 			},
