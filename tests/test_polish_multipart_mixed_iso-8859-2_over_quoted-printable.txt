@@ -1,46 +1,46 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>,
- =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-Sender: =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
-Reply-To: =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-To: =?ISO-8859-2?Q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.com>,
- =?IsO-8859-2?q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.com>
-Cc: =?iso-8859-2?Q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.com>,
- =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.com>
-Bcc: =?iso-8859-2?q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.com>,
- =?iso-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.com>
+From: =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>,
+ =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+Sender: =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
+Reply-To: =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+To: =?iso-8859-2?Q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.com>,
+ =?ISO-8859-2?q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.com>
+Cc: =?iso-8859-2?Q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.com>,
+ =?ISo-8859-2?q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.com>
+Bcc: =?IsO-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.com>,
+ =?isO-8859-2?Q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?ISO-8859-2?q?Polskie_pangramy?=
+ =?Iso-8859-2?q?Polskie_pangramy?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>,
- =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
-Resent-Sender: =?iso-8859-2?q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-Resent-To: =?ISO-8859-2?Q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.net>,
- =?IsO-8859-2?q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?iso-8859-2?Q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.net>,
- =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?iso-8859-2?q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.net>,
- =?iso-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.net>
+Resent-From: =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>,
+ =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
+Resent-Sender: =?isO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+Resent-To: =?iso-8859-2?Q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.net>,
+ =?ISO-8859-2?q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?iso-8859-2?Q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.net>,
+ =?ISo-8859-2?q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?IsO-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.net>,
+ =?isO-8859-2?Q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mULTIPART/MIxED; Charset="iso-8859-2"; bOundary="MixedBoundaryString"
-Content-Transfer-Encoding: quoted-PrINTABLE
+Content-Type: multipart/mIxed; charset="iso-8859-2"; BOUNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: quoted-PRINTABLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: MULTIPaRt/RELATEd; bOUndAry="RelatedBoundaryString"
+Content-Type: MULTIPART/relaTED; BOUNDARY="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: MuLTIParT/AlTeRNATivE; Boundary="AlternativeBoundaryString"
+Content-Type: MULTipart/alterNAtIVE; BOUNdary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: text/PlAIN; CHARsEt="iso-8859-2"
-Content-Transfer-Encoding: QUOTED-PRINtable
+Content-Type: text/PLAIN; CHARSET="ISO-8859-2"
+Content-Transfer-Encoding: QUOTED-PRinTABLe
 
 Je=BFu kl=B1tw, sp=B3=F3d=BC Finom cz=EA=B6=E6 gry ha=F1b!
 P=F3jd=BC=BFe, ki=F1 t=EA chmurno=B6=E6 w g=B3=B1b flaszy!
@@ -52,8 +52,8 @@ P=F3jd=BC w loch zbi=E6 ma=B3=BFe=F1sk=B1 g=EA=B6 futryn!
 Chwy=E6 ma=B3=BFonk=EA, str=F3j b=B1d=BC ple=B6=F1 z fugi.
 
 --AlternativeBoundaryString
-Content-Type: texT/ENRICHed; Charset="iso-8859-2"
-Content-Transfer-Encoding: QUOTED-PrintAblE
+Content-Type: TEXt/eNriched; charset="iso-8859-2"
+Content-Transfer-Encoding: Quoted-printAblE
 
 <bold>Je=BFu kl=B1tw, sp=B3=F3d=BC Finom cz=EA=B6=E6 gry ha=F1b!</bold>
 <italic>P=F3jd=BC=BFe, ki=F1 t=EA chmurno=B6=E6 w g=B3=B1b flaszy!</italic>
@@ -66,8 +66,8 @@ P=F3jd=BC w loch zbi=E6 ma=B3=BFe=F1sk=B1 g=EA=B6 futryn!
 Chwy=E6 ma=B3=BFonk=EA, str=F3j b=B1d=BC ple=B6=F1 z fugi.
 
 --AlternativeBoundaryString
-Content-Type: text/HtML; CHARSET="IsO-8859-2"
-Content-Transfer-Encoding: QUOTED-PRINTable
+Content-Type: tExt/HTML; charset="iso-8859-2"
+Content-Transfer-Encoding: QUOTED-PriNtablE
 
 <html>
 <div dir=3D"ltr">
@@ -85,7 +85,7 @@ Content-Transfer-Encoding: QUOTED-PRINTable
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; name="inline-jpg-image-without-disposition.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-without-disposition.jpg"
 Content-Transfer-Encoding: BASE64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -94,7 +94,7 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString
 Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
 Content-Transfer-Encoding: BASe64
-Content-Disposition: inline; filenaME="inline-jpg-image-filename.jpg"
+Content-Disposition: iNLiNE; FILENAME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -103,23 +103,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: APplication/pDF; nAME="attached-pdf-name.pdf"
-Content-Transfer-Encoding: bASE64
-Content-Disposition: ATTACHMent; fILENAME="attached-pdf-filename.pdf"
+Content-Type: APPLICAtiOn/pdF; NAME="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: ATTAChment; filenAmE="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPLIcAtion/pdf; name="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: bAsE64
+Content-Type: APPliCation/pdf; namE="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: BaSE64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: application/jSON; nAME="attached-json-name.json"
-Content-Disposition: ATTACHMENt; filENAME="attached-json-filename.json"
+Content-Type: APPlIcAtiOn/JSON; NAME="attached-json-name.json"
+Content-Disposition: ATTAcHment; filename="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

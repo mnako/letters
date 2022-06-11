@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-From: =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
- =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-Sender: =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
-Reply-To: =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-To: =?Iso-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?ISO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+From: =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
+ =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Sender: =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Reply-To: =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+To: =?isO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?ISo-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
 Cc: =?ISO-8859-15?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
- =?Iso-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
-Bcc: =?iSO-8859-15?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
- =?iso-8859-15?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+ =?ISO-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?isO-8859-15?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?ISo-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?IsO-8859-15?Q?Suomenkieliset_pangrammit?=
+ =?iso-8859-15?Q?Suomenkieliset_pangrammit?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-Resent-From: =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
- =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
-Resent-Sender: =?ISO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-Resent-To: =?Iso-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?ISO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-From: =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
+ =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Resent-Sender: =?iSO-8859-15?q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Resent-To: =?isO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?ISo-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
 Resent-Cc: =?ISO-8859-15?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
- =?Iso-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
-Resent-Bcc: =?iSO-8859-15?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
- =?iso-8859-15?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+ =?ISO-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?isO-8859-15?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?ISo-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mULtIPART/SIGnEd;
-              chaRSET="ISO-8859-15";
-              Protocol="appliCaTIoN/PkCs7-sIGnATURE";
-              MICALG=SHa1;
-              BoundarY=SignedBoundaryString
-Content-Transfer-Encoding: QUOTED-Printable
+Content-Type: multIPaRT/SIGNED;
+              CHARsEt="iSo-8859-15";
+              PROTOcoL="Application/PkCS7-SIGnaTure";
+              micalg=sHA1;
+              BOUNDARy=SignedBoundaryString
+Content-Transfer-Encoding: QuOted-printablE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: text/plAIN
-Content-Transfer-Encoding: QUOTED-PRintABLE
+Content-Type: TEXt/plain
+Content-Transfer-Encoding: quoteD-pRINTABLE
 
 Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.
 Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.
@@ -49,9 +49,9 @@ Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
 Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
 
 --SignedBoundaryString
-Content-Type: APPLICATIoN/pkcs7-signaTUrE; NaMe=smime.p7s
+Content-Type: APPLICAtiON/PKCS7-SiGnature; name=smime.p7s
 Content-Transfer-Encoding: base64
-Content-Disposition: attacHMeNT; FILENAME=smime.p7s
+Content-Disposition: ATTACHmEnt; filename=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

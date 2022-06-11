@@ -1,14 +1,14 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
-From: =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>,
- =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-Sender: =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
-Reply-To: =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-To: =?utF-8?Q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.com>,
- =?UTF-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.com>
-Cc: =?utf-8?q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.com>,
- =?Utf-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.com>
-Bcc: =?UTF-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.com>,
- =?UTF-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.com>
+From: =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>,
+ =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+Sender: =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
+Reply-To: =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+To: =?UTF-8?q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.com>,
+ =?utf-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.com>
+Cc: =?Utf-8?Q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.com>,
+ =?UTf-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.com>
+Bcc: =?uTf-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.com>,
+ =?utf-8?q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
  =?UTF-8?Q?=C3=8Dslenskt_pangram?=
 In-Reply-To: <Message-Id-0@example.com>
@@ -17,30 +17,30 @@ Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
-Resent-From: =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>,
- =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
-Resent-Sender: =?UTf-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-Resent-To: =?utF-8?Q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.net>,
- =?UTF-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.net>
-Resent-Cc: =?utf-8?q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.net>,
- =?Utf-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.net>
-Resent-Bcc: =?UTF-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.net>,
- =?UTF-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.net>
+Resent-From: =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>,
+ =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
+Resent-Sender: =?utF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+Resent-To: =?UTF-8?q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.net>,
+ =?utf-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.net>
+Resent-Cc: =?Utf-8?Q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.net>,
+ =?UTf-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.net>
+Resent-Bcc: =?uTf-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.net>,
+ =?utf-8?q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/MiXEd; cHarSET="UTF-8"; BOUNDARy="MixedBoundaryString"
-Content-Transfer-Encoding: QUOted-prinTABLe
+Content-Type: multipart/mIxED; charset="utf-8"; bounDaRY="MixedBoundaryString"
+Content-Transfer-Encoding: QUOTED-PrinTaBLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: MULtipart/relaTeD; BOUNDARY="RelatedBoundaryString"
+Content-Type: MULTIPART/rElated; boundarY="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: MULTiParT/ALTERNATIvE; Boundary="AlternativeBoundaryString"
+Content-Type: MuLTiPart/alteRNATIVE; BOUNDARY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: text/plaIN; cHarset="utf-8"
-Content-Transfer-Encoding: quoTed-PRINTABLE
+Content-Type: TeXt/plain; ChARSEt="UTF-8"
+Content-Transfer-Encoding: QUoted-printaBLe
 
 K=C3=A6mi n=C3=BD =C3=B6xi h=C3=A9r, ykist =C3=BEj=C3=B3fum n=C3=BA b=C3=A6=
 =C3=B0i v=C3=ADl og =C3=A1drepa.
@@ -50,8 +50,8 @@ Svo h=C3=B6lt, yxna k=C3=BDr =C3=BEeg=C3=B0i j=C3=BA um d=C3=B3p =C3=AD f=
 ex=C3=BD p=C3=A6ju.
 
 --AlternativeBoundaryString
-Content-Type: tExt/eNRiched; CHARSET="UTF-8"
-Content-Transfer-Encoding: QUOTED-PriNtaBLE
+Content-Type: TExt/enriched; chaRSET="UTF-8"
+Content-Transfer-Encoding: QUOtEd-printAblE
 
 <bold>K=C3=A6mi n=C3=BD =C3=B6xi h=C3=A9r, ykist =C3=BEj=C3=B3fum n=C3=BA b=
 =C3=A6=C3=B0i v=C3=ADl og =C3=A1drepa.</bold>
@@ -61,8 +61,8 @@ Content-Transfer-Encoding: QUOTED-PriNtaBLE
 =C3=B3m sex=C3=BD p=C3=A6ju.</fixed>
 
 --AlternativeBoundaryString
-Content-Type: text/HTML; CHARSET="utf-8"
-Content-Transfer-Encoding: QUotED-PriNTABLE
+Content-Type: text/HtML; charset="utf-8"
+Content-Transfer-Encoding: quoted-PRINTABLE
 
 <html>
 <div dir=3D"ltr">
@@ -78,16 +78,16 @@ m sex=C3=BD p=C3=A6ju.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAME="inline-jpg-image-without-disposition.jpg"
-Content-Transfer-Encoding: Base64
+Content-Type: image/jpeg; name="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: base64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; name="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline; fIlENAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; naMe="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: bASE64
+Content-Disposition: INLINE; filenAME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -96,23 +96,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: APPLICATiOn/PdF; NAME="attached-pdf-name.pdf"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: ATtachment; filenaME="attached-pdf-filename.pdf"
+Content-Type: APPLICATION/pdf; name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: ATTaChment; filenamE="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPlication/pDF; NAME="attached-pdf-without-disposition.pdf"
+Content-Type: AppLICATION/PDf; namE="attached-pdf-without-disposition.pdf"
 Content-Transfer-Encoding: BASE64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPLIcAtiOn/jSoN; NAME="attached-json-name.json"
-Content-Disposition: ATTachment; filenAme="attached-json-filename.json"
+Content-Type: APPLICATion/json; name="attached-json-name.json"
+Content-Disposition: attAChMeNt; filename="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

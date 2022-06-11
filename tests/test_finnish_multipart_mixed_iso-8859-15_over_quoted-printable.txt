@@ -3,14 +3,14 @@ From: =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
  =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
 Sender: =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
 Reply-To: =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-To: =?Iso-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?iSO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
-Cc: =?iSO-8859-15?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
- =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
-Bcc: =?ISO-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
- =?Iso-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+To: =?ISO-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?isO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?iSo-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?iso-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?ISo-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?Iso-8859-15?Q?Suomenkieliset_pangrammit?=
+ =?iso-8859-15?Q?Suomenkieliset_pangrammit?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
@@ -20,27 +20,27 @@ Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
 Resent-From: =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
  =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
 Resent-Sender: =?ISO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-Resent-To: =?Iso-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?iSO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
-Resent-Cc: =?iSO-8859-15?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
- =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
-Resent-Bcc: =?ISO-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
- =?Iso-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-To: =?ISO-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?isO-8859-15?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?iSo-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?iso-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?ISo-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mulTIPArt/mixed; charSeT="ISo-8859-15"; BOUndArY="MixedBoundaryString"
-Content-Transfer-Encoding: QUOTED-PRINtable
+Content-Type: multiparT/MIXED; CHARSET="ISO-8859-15"; BOUNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: QUoTed-printable
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: multipaRt/RELATED; boundAry="RelatedBoundaryString"
+Content-Type: mUlTIPArT/ReLatED; bOUNDARY="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: MUlTIPART/ALtErnative; boundARy="AlternativeBoundaryString"
+Content-Type: MULTIPaRt/alternatiVE; bOundary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TExt/plain; chaRsET="ISO-8859-15"
-Content-Transfer-Encoding: QUOteD-PrInTABLe
+Content-Type: text/pLAiN; CHARSET="ISO-8859-15"
+Content-Transfer-Encoding: QUOTED-PRiNTable
 
 Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.
 Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.
@@ -51,8 +51,8 @@ Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
 Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
 
 --AlternativeBoundaryString
-Content-Type: TEXt/enriched; charsET="iSO-8859-15"
-Content-Transfer-Encoding: quoTeD-PRINTABLE
+Content-Type: text/enrichED; cHaRset="iso-8859-15"
+Content-Transfer-Encoding: QUOTED-PRIntable
 
 <bold>Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.</bold>
 <italic>Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.</ital=
@@ -65,8 +65,8 @@ Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
 Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
 
 --AlternativeBoundaryString
-Content-Type: TEXT/HTMl; chArset="iSo-8859-15"
-Content-Transfer-Encoding: Quoted-printABlE
+Content-Type: TeXT/HTML; CHARSet="iso-8859-15"
+Content-Transfer-Encoding: quoted-prINTABLE
 
 <html>
 <div dir=3D"ltr">
@@ -85,16 +85,16 @@ issa, daiquirin ja ZX81:n yhteisvaikutuksesta.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAmE="inline-jpg-image-without-disposition.jpg"
-Content-Transfer-Encoding: BaSe64
+Content-Type: image/jpeg; NAME="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: BASE64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; name="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: INLINE; FILENAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NamE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BaSE64
+Content-Disposition: INLINE; FILeNAme="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -103,23 +103,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: AppliCaTION/PdF; NamE="attached-pdf-name.pdf"
-Content-Transfer-Encoding: Base64
-Content-Disposition: attachmEnT; FILename="attached-pdf-filename.pdf"
+Content-Type: AppliCaTiON/Pdf; Name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attaChMENT; FILENAME="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: applIcaTION/PDF; NAME="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: BASE64
+Content-Type: applICATION/PDF; NaMe="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: apPlIcATION/json; name="attached-json-name.json"
-Content-Disposition: attachmeNT; fILENaMe="attached-json-filename.json"
+Content-Type: applicAtION/JSON; NAme="attached-json-name.json"
+Content-Disposition: ATTACHMent; fiLENAMe="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

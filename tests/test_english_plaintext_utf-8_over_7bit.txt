@@ -27,8 +27,8 @@ Resent-Cc: Dan Recipient <dan.recipient@example.net>,
 Resent-Bcc: Frank Recipient <frank.recipient@example.net>,
  Grace Recipient <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: tExt/PlAiN; CharSET=UTF-8
-Content-Transfer-Encoding: 7BIt
+Content-Type: tEXt/PLain; ChARSEt=utF-8
+Content-Transfer-Encoding: 7BiT
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

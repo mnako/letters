@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>,
- =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-Sender: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
-Reply-To: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-To: =?euc-jp?b?zbnK2KXcpdY=?= <bob.yuubin@example.com>,
- =?EUc-JP?B?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.com>
-Cc: =?EUC-JP?B?zbnK2KXApfM=?= <dan.yuubin@example.com>,
- =?eUC-jp?B?zbnK2KWkobyl1g==?= <eve.yubin@example.com>
-Bcc: =?euc-jP?b?zbnK2KXVpeml86Wv?= <frank.yuubin@example.com>,
- =?EUC-JP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.com>
+From: =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>,
+ =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+Sender: =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
+Reply-To: =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+To: =?Euc-jp?b?zbnK2KXcpdY=?= <bob.yuubin@example.com>,
+ =?Euc-jP?B?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.com>
+Cc: =?EUC-jP?B?zbnK2KXApfM=?= <dan.yuubin@example.com>,
+ =?EUC-JP?b?zbnK2KWkobyl1g==?= <eve.yubin@example.com>
+Bcc: =?EUC-jP?B?zbnK2KXVpeml86Wv?= <frank.yuubin@example.com>,
+ =?EUc-jP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?EUC-Jp?B?pKSk7aTPss4=?=
+ =?euC-JP?B?pKSk7aTPss4=?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>,
- =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
-Resent-Sender: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-Resent-To: =?euc-jp?b?zbnK2KXcpdY=?= <bob.yuubin@example.net>,
- =?EUc-JP?B?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.net>
-Resent-Cc: =?EUC-JP?B?zbnK2KXApfM=?= <dan.yuubin@example.net>,
- =?eUC-jp?B?zbnK2KWkobyl1g==?= <eve.yubin@example.net>
-Resent-Bcc: =?euc-jP?b?zbnK2KXVpeml86Wv?= <frank.yuubin@example.net>,
- =?EUC-JP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.net>
+Resent-From: =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>,
+ =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
+Resent-Sender: =?eUC-Jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+Resent-To: =?Euc-jp?b?zbnK2KXcpdY=?= <bob.yuubin@example.net>,
+ =?Euc-jP?B?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.net>
+Resent-Cc: =?EUC-jP?B?zbnK2KXApfM=?= <dan.yuubin@example.net>,
+ =?EUC-JP?b?zbnK2KWkobyl1g==?= <eve.yubin@example.net>
+Resent-Bcc: =?EUC-jP?B?zbnK2KXVpeml86Wv?= <frank.yuubin@example.net>,
+ =?EUc-jP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: teXT/PLAIN; CHARSET=EUC-Jp
-Content-Transfer-Encoding: base64
+Content-Type: TEXt/PLAIn; charset=euC-jP
+Content-Transfer-Encoding: BASE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

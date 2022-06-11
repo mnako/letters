@@ -1,53 +1,53 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-From: =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>,
- =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
-Sender: =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
-Reply-To: =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
-To: =?eUC-kr?Q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.com>,
+From: =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>,
+ =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+Sender: =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+To: =?eUC-kr?q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.com>,
  =?euC-kr?Q?=C4=B3=B7=D1_=BC=F6=BD=C5=C0=DA?= <carol.susinja@example.com>
-Cc: =?EUC-Kr?q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.com>,
- =?euc-kr?q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.com>
-Bcc: =?Euc-kR?q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.com>,
- =?euC-KR?Q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.com>
+Cc: =?EuC-KR?q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.com>,
+ =?Euc-Kr?Q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.com>
+Bcc: =?euc-kr?q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.com>,
+ =?EUC-KR?Q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?eUc-kR?Q?=C7=D1=B1=B9=BE=EE_=C6=D2=B1=D7=B7=A5?=
+ =?EuC-kR?q?=C7=D1=B1=B9=BE=EE_=C6=D2=B1=D7=B7=A5?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-Resent-From: =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>,
- =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
-Resent-Sender: =?EUC-kr?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
-Resent-To: =?eUC-kr?Q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.net>,
+Resent-From: =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>,
+ =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?EUC-KR?Q?=BE=D9=B8=AE=BD=BA_=BA=B8=B3=BB=B4=C2=BB=E7=B6=F7?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?eUC-kr?q?=B9=E4_=BC=F6=BD=C5=C0=DA?= <bob.susinja@example.net>,
  =?euC-kr?Q?=C4=B3=B7=D1_=BC=F6=BD=C5=C0=DA?= <carol.susinja@example.net>
-Resent-Cc: =?EUC-Kr?q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.net>,
- =?euc-kr?q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.net>
-Resent-Bcc: =?Euc-kR?q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.net>,
- =?euC-KR?Q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.net>
+Resent-Cc: =?EuC-KR?q?=B4=ED_=BC=F6=BD=C5=C0=DA?= <dan.susinja@example.net>,
+ =?Euc-Kr?Q?=C0=CC=BA=EA_=BC=F6=BD=C5=C0=DA?= <eve.susinja@example.net>
+Resent-Bcc: =?euc-kr?q?=C7=C1=B7=A9=C5=A9_=BC=F6=BD=C5=C0=DA?= <frank.susinja@example.net>,
+ =?EUC-KR?Q?=B1=D7=B7=B9=C0=CC=BD=BA_=BC=F6=BD=C5=C0=DA?= <grace.susinja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multipaRt/SIGNeD;
-              charset="euc-kR";
-              PROTOCOL="APPLICAtION/PKCS7-SiGnature";
-              micalg=sHa1;
-              bOUNDaRy=SignedBoundaryString
-Content-Transfer-Encoding: quoted-pRINTABLE
+Content-Type: MuLTiPaRt/signED;
+              chARSET="EUC-KR";
+              PROTOcOl="APPLICATION/pKcs7-signaTurE";
+              MiCALG=SHA1;
+              boundary=SignedBoundaryString
+Content-Transfer-Encoding: qUOtED-PRINTAbLe
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TEXT/PLain
-Content-Transfer-Encoding: QuOtEd-PRINTabLe
+Content-Type: teXt/pLaIN
+Content-Transfer-Encoding: QUOTEd-Printable
 
 =C5=B0=BD=BA=C0=C7 =B0=ED=C0=AF=C1=B6=B0=C7=C0=BA =C0=D4=BC=FA=B3=A2=B8=AE =
 =B8=B8=B3=AA=BE=DF =C7=CF=B0=ED =C6=AF=BA=B0=C7=D1 =B1=E2=BC=FA=C0=BA =C7=
 =CA=BF=E4=C4=A1 =BE=CA=B4=D9.
 
 --SignedBoundaryString
-Content-Type: application/PkCS7-SIGNAtUre; NaME=smime.p7s
-Content-Transfer-Encoding: BASE64
-Content-Disposition: ATTAChMent; filename=smime.p7s
+Content-Type: applICaTION/PKCS7-sIGnature; naME=smime.p7s
+Content-Transfer-Encoding: BASe64
+Content-Disposition: ATTAchmenT; FILENAMe=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

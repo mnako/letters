@@ -27,20 +27,20 @@ Resent-Cc: Dan Recipient <dan.recipient@example.net>,
 Resent-Bcc: Frank Recipient <frank.recipient@example.net>,
  Grace Recipient <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multipArt/MIxED; chArset="asCii"; BOunDArY="MixedBoundaryString"
-Content-Transfer-Encoding: 7bIT
+Content-Type: MULtiPARt/mIXed; Charset="ascII"; bouNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: 7BiT
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: muLTiPART/ReLATeD; BoUNDARY="RelatedBoundaryString"
+Content-Type: MulTipart/relAtED; bOundary="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: MULTiPARt/AltErNAtivE; BOunDARY="AlternativeBoundaryString"
+Content-Type: multipART/ALTERNATiVe; bounDaRy="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TexT/plAiN; ChaRseT="asCII"
-Content-Transfer-Encoding: 7biT
+Content-Type: TEXT/PLain; charset="ascii"
+Content-Transfer-Encoding: 7bIt
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -51,8 +51,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: TexT/EnRicHEd; cHaRSet="AScIi"
-Content-Transfer-Encoding: 7BIt
+Content-Type: TEXT/enriched; charset="aScII"
+Content-Transfer-Encoding: 7BIT
 
 <bold>The quick brown fox jumps over a lazy dog.</bold>
 <italic>Glib jocks quiz nymph to vex dwarf.</italic>
@@ -63,8 +63,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: teXT/htML; CharsET="asCiI"
-Content-Transfer-Encoding: 7biT
+Content-Type: TEXT/HtmL; CharSEt="ascii"
+Content-Transfer-Encoding: 7BIt
 
 <html>
 <div dir="ltr">
@@ -81,16 +81,16 @@ Content-Transfer-Encoding: 7biT
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NamE="inline-jpg-image-without-disposition.jpg"
+Content-Type: image/jpeg; nAME="inline-jpg-image-without-disposition.jpg"
 Content-Transfer-Encoding: BASE64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAme="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: INLine; FIlenAmE="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BAse64
+Content-Disposition: iNLINE; FILENAME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -99,23 +99,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: appLICATiON/pdF; NAme="attached-pdf-name.pdf"
-Content-Transfer-Encoding: BAse64
-Content-Disposition: aTTacHmENt; fILenAmE="attached-pdf-filename.pdf"
+Content-Type: APPLICATION/pdf; Name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attaCHMent; fiLEName="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: AppLICAtiON/Pdf; NAme="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: bAsE64
+Content-Type: application/pdF; NaMe="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPlIcaTION/jSON; namE="attached-json-name.json"
-Content-Disposition: AttACHMenT; FilenAMe="attached-json-filename.json"
+Content-Type: appliCAtION/JSON; NAME="attached-json-name.json"
+Content-Disposition: AtTacHMENT; FILENAME="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

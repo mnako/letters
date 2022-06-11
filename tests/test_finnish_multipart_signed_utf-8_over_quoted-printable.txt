@@ -3,14 +3,14 @@ From: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>,
  =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
 Sender: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
 Reply-To: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
-To: =?UTF-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?uTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
-Cc: =?utf-8?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
- =?uTF-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+To: =?UTf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?UTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?utf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?uTF-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
 Bcc: =?UTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
- =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+ =?uTf-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?utf-8?q?Suomenkieliset_pangrammit?=
+ =?UTF-8?q?Suomenkieliset_pangrammit?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
@@ -20,25 +20,25 @@ Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
 Resent-From: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>,
  =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
 Resent-Sender: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
-Resent-To: =?UTF-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?uTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
-Resent-Cc: =?utf-8?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
- =?uTF-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-To: =?UTf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?UTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?utf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?uTF-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
 Resent-Bcc: =?UTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
- =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+ =?uTf-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MuLTIPART/SiGNed;
-              Charset="uTF-8";
-              PROTOCol="Application/pKCS7-SIGnAtuRe";
-              mICALG=SHA1;
-              BOUNDARy=SignedBoundaryString
-Content-Transfer-Encoding: QUOtEd-pRINTABlE
+Content-Type: mULTIPART/SIGNeD;
+              CHaRseT="UTF-8";
+              PROTOCOL="APPLIcaTion/PkCs7-SIGnAture";
+              micalg=sha1;
+              boUNDARY=SignedBoundaryString
+Content-Transfer-Encoding: quoted-priNTaBLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TExt/plain
-Content-Transfer-Encoding: quoted-PRINTABLE
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: QUotED-PRINTABLe
 
 Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.
 Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaimet.
@@ -51,9 +51,9 @@ Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
 tacoja.
 
 --SignedBoundaryString
-Content-Type: applicATiON/PKCS7-SIGnature; name=smime.p7s
-Content-Transfer-Encoding: BaSe64
-Content-Disposition: ATTachment; filenAme=smime.p7s
+Content-Type: APPlication/pkCs7-SIGNATUrE; naMe=smime.p7s
+Content-Transfer-Encoding: baSE64
+Content-Disposition: ATTACHMENT; Filename=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-From: =?utf-8?q?Alice_Sender?= <alice.sender@example.com>,
- =?utf-8?q?Alice_Sender?= <alice.sender@example.net>
-Sender: =?utf-8?q?Alice_Sender?= <alice.sender@example.com>
-Reply-To: =?utf-8?q?Alice_Sender?= <alice.sender@example.net>
-To: =?UTF-8?Q?Bob_Recipient?= <bob.recipient@example.com>,
- =?Utf-8?Q?Carol_Recipient?= <carol.recipient@example.com>
-Cc: =?uTF-8?q?Dan_Recipient?= <dan.recipient@example.com>,
- =?UTF-8?Q?Eve_Recipient?= <eve.recipient@example.com>
-Bcc: =?Utf-8?Q?Frank_Recipient?= <frank.recipient@example.com>,
- =?utf-8?Q?Grace_Recipient?= <grace.recipient@example.com>
+From: =?utF-8?q?Alice_Sender?= <alice.sender@example.com>,
+ =?utF-8?q?Alice_Sender?= <alice.sender@example.net>
+Sender: =?utF-8?q?Alice_Sender?= <alice.sender@example.com>
+Reply-To: =?utF-8?q?Alice_Sender?= <alice.sender@example.net>
+To: =?UTF-8?q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?UTf-8?q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?utf-8?q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?Utf-8?Q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?UTF-8?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?UTF-8?Q?Grace_Recipient?= <grace.recipient@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?utf-8?q?English_Pangrams?=
+ =?utF-8?Q?English_Pangrams?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-Resent-From: =?utf-8?q?Alice_Sender?= <alice.sender@example.net>,
- =?utf-8?q?Alice_Sender?= <alice.sender@example.com>
-Resent-Sender: =?utf-8?q?Alice_Sender?= <alice.sender@example.net>
-Resent-To: =?UTF-8?Q?Bob_Recipient?= <bob.recipient@example.net>,
- =?Utf-8?Q?Carol_Recipient?= <carol.recipient@example.net>
-Resent-Cc: =?uTF-8?q?Dan_Recipient?= <dan.recipient@example.net>,
- =?UTF-8?Q?Eve_Recipient?= <eve.recipient@example.net>
-Resent-Bcc: =?Utf-8?Q?Frank_Recipient?= <frank.recipient@example.net>,
- =?utf-8?Q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-From: =?utF-8?q?Alice_Sender?= <alice.sender@example.net>,
+ =?utF-8?q?Alice_Sender?= <alice.sender@example.com>
+Resent-Sender: =?utF-8?q?Alice_Sender?= <alice.sender@example.net>
+Resent-To: =?UTF-8?q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?UTf-8?q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?utf-8?q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?Utf-8?Q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?UTF-8?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?UTF-8?Q?Grace_Recipient?= <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/SIGNed;
-              cHarset="UTf-8";
-              protocol="aPPLIcation/pkcs7-signature";
-              MICAlg=shA1;
+Content-Type: Multipart/siGNed;
+              charseT="utf-8";
+              prOTOCol="appliCATION/PKCs7-SIgNature";
+              micalg=shA1;
               BOUNDARY=SignedBoundaryString
-Content-Transfer-Encoding: QUOTed-PrintABle
+Content-Transfer-Encoding: QUOTed-prinTablE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: text/plain
-Content-Transfer-Encoding: quOTED-PRINTABLE
+Content-Type: TexT/plAin
+Content-Transfer-Encoding: quoted-PRINTABLE
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -49,9 +49,9 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --SignedBoundaryString
-Content-Type: APPliCATiON/PkCs7-signature; nAME=smime.p7s
-Content-Transfer-Encoding: BASE64
-Content-Disposition: aTTACHmeNT; filename=smime.p7s
+Content-Type: APPlication/pkcs7-siGNATURE; NAME=smime.p7s
+Content-Transfer-Encoding: BASe64
+Content-Disposition: AttACHMeNT; filename=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

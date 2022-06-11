@@ -27,18 +27,18 @@ Resent-Cc: Dan Recipient <dan.recipient@example.net>,
 Resent-Bcc: Frank Recipient <frank.recipient@example.net>,
  Grace Recipient <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/SIGnED;
-              chaRSet="utF-8";
-              protocol="applicaTION/PKCS7-SIGNATure";
-              micalg=sha1;
-              BOuNDArY=SignedBoundaryString
-Content-Transfer-Encoding: 7bIt
+Content-Type: MUlTIpart/signeD;
+              chaRSet="UTf-8";
+              PROtoCOl="ApPLIcATioN/pkcs7-sIgnaTuRE";
+              MICALG=SHA1;
+              boundary=SignedBoundaryString
+Content-Transfer-Encoding: 7bit
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: tEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
+Content-Type: texT/PlAIN
+Content-Transfer-Encoding: 7bit
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -49,9 +49,9 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --SignedBoundaryString
-Content-Type: Application/pkcs7-SIGNATURE; NAME=smime.p7s
-Content-Transfer-Encoding: baSE64
-Content-Disposition: aTTAcHMent; filename=smime.p7s
+Content-Type: APPLICATION/PKCs7-signature; name=smime.p7s
+Content-Transfer-Encoding: BASE64
+Content-Disposition: ATTACHMEnt; filename=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

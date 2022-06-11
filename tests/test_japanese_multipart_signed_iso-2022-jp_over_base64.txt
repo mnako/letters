@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
- =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-Sender: =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
-Reply-To: =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-To: =?iso-2022-jp?b?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
- =?Iso-2022-jp?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
-Cc: =?ISo-2022-JP?B?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
- =?ISO-2022-jp?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
-Bcc: =?ISO-2022-JP?B?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
- =?ISO-2022-Jp?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
+From: =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
+ =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Sender: =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Reply-To: =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+To: =?isO-2022-jp?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
+ =?ISO-2022-Jp?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
+Cc: =?iSO-2022-Jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
+ =?iso-2022-Jp?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
+Bcc: =?iso-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
+ =?Iso-2022-jp?b?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?ISo-2022-jP?b?GyRCJCQkbSRPMk4bKEI=?=
+ =?iso-2022-jp?b?GyRCJCQkbSRPMk4bKEI=?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
- =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
-Resent-Sender: =?ISO-2022-JP?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-Resent-To: =?iso-2022-jp?b?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
- =?Iso-2022-jp?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
-Resent-Cc: =?ISo-2022-JP?B?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
- =?ISO-2022-jp?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
-Resent-Bcc: =?ISO-2022-JP?B?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
- =?ISO-2022-Jp?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
+Resent-From: =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
+ =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Resent-Sender: =?ISo-2022-jP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Resent-To: =?isO-2022-jp?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
+ =?ISO-2022-Jp?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
+Resent-Cc: =?iSO-2022-Jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
+ =?iso-2022-Jp?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
+Resent-Bcc: =?iso-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
+ =?Iso-2022-jp?b?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multIPArt/signed;
-              charseT="ISo-2022-JP";
-              PrOtoCoL="APPLICATION/pkcs7-signaTurE";
-              MiCalg=sha1;
-              boundary=SignedBoundaryString
-Content-Transfer-Encoding: baSe64
+Content-Type: multipart/sigNEd;
+              CHARSeT="ISO-2022-JP";
+              proTOCol="apPlIcATiOn/pkcs7-signATURE";
+              MICALG=SHA1;
+              BoUnDArY=SignedBoundaryString
+Content-Transfer-Encoding: BASE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TEXT/PLain
-Content-Transfer-Encoding: base64
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: BaSe64
 
 GyRCPyckT0Z3JCgkSRsoQgobJEI7NiRqJEwkayRyGyhCChskQjJmJCxAJEMvJD4bKEIKGyRCPm8k
 SiRpJHMbKEIKGyRCTS0wWSROMXw7MxsoQgobJEI6I0Z8MVskKCRGGyhCChskQkB1JC1MNDgrJDgb
@@ -52,9 +52,9 @@ RmskbDVvJEYhIxsoQgoKGyRCRUQ1byRLPVAkRzpaRSYkYCRvJGwkciQ+Ny8+JCQ5JEg1YT8pJGpE
 SSRSJGYkLzszPmskTkJHP2wkWCRrO1IkaUF0TVU0MyQ7JGgkKD0uN1IkMSRMISMbKEI=
 
 --SignedBoundaryString
-Content-Type: appLICATION/PKCS7-sIgNATURE; NAME=smime.p7s
+Content-Type: apPLICATION/PKCS7-siGnaTuRe; NAME=smime.p7s
 Content-Transfer-Encoding: BASE64
-Content-Disposition: ATtAchmeNt; FILENAme=smime.p7s
+Content-Disposition: AttAchment; filenaME=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

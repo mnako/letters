@@ -63,7 +63,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Sender, Alice",
+				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
 			},
 			From: []*mail.Address{
@@ -78,11 +78,11 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Recipient, Bob",
+					Name:    "Bob Recipient",
 					Address: "bob.recipient@example.com",
 				},
 				{
-					Name:    "Recipient, Carol",
+					Name:    "Carol Recipient",
 					Address: "carol.recipient@example.com",
 				},
 			},
@@ -21652,51 +21652,51 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -21708,45 +21708,45 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -21786,51 +21786,51 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -21842,45 +21842,45 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -21920,51 +21920,51 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -21976,45 +21976,45 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22054,51 +22054,51 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22110,45 +22110,45 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22188,51 +22188,51 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22244,45 +22244,45 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22364,51 +22364,51 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22420,45 +22420,45 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22540,51 +22540,51 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22596,45 +22596,45 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22716,51 +22716,51 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22772,45 +22772,45 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -22892,51 +22892,51 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -22948,45 +22948,45 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -23136,51 +23136,51 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -23192,45 +23192,45 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -23380,51 +23380,51 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -23436,45 +23436,45 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -23624,51 +23624,51 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -23680,45 +23680,45 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -23868,51 +23868,51 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -23924,45 +23924,45 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -24022,51 +24022,51 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -24078,45 +24078,45 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -24176,51 +24176,51 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -24232,45 +24232,45 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},
@@ -24330,51 +24330,51 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			Sender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
 			},
 			From: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 			},
 			To: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.com",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.com",
 				},
 			},
 			Cc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.com",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.com",
 				},
 			},
 			Bcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.com",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.com",
 				},
 			},
@@ -24386,45 +24386,45 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 			ResentDate: expectedDate,
 			ResentFrom: []*mail.Address{
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.net",
 				},
 				{
-					Name:    "Alicja Nadająca",
+					Name:    "Nadająca, Alicja",
 					Address: "alicja.nadajaca@example.com",
 				},
 			},
 			ResentSender: &mail.Address{
-				Name:    "Alicja Nadająca",
+				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.net",
 			},
 			ResentTo: []*mail.Address{
 				{
-					Name:    "Bob Odbierający",
+					Name:    "Odbierający, Bob",
 					Address: "bob.odbierajacy@example.net",
 				},
 				{
-					Name:    "Karolina Odbierająca",
+					Name:    "Odbierająca, Karolina",
 					Address: "karolina.odbierajaca@example.net",
 				},
 			},
 			ResentCc: []*mail.Address{
 				{
-					Name:    "Daniel Odbierający",
+					Name:    "Odbierający, Daniel",
 					Address: "daniel.odbierajacy@example.net",
 				},
 				{
-					Name:    "Ewa Odbierająca",
+					Name:    "Odbierająca, Ewa",
 					Address: "ewa.odbierajaca@example.net",
 				},
 			},
 			ResentBcc: []*mail.Address{
 				{
-					Name:    "Franek Odbierający",
+					Name:    "Odbierający, Franek",
 					Address: "franek.odbierajacy@example.net",
 				},
 				{
-					Name:    "Grażyna Odbierająca",
+					Name:    "Odbierająca, Grażyna",
 					Address: "grazyna.odbierajaca@example.net",
 				},
 			},

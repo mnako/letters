@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-From: =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>,
- =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
-Sender: =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
-Reply-To: =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
-To: =?UTF-8?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?uTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+From: =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>,
+ =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Sender: =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Reply-To: =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+To: =?UTf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?uTf-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
 Cc: =?utf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
- =?UTf-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
-Bcc: =?UTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
- =?UTF-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+ =?UTF-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?uTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?UTF-8?Q?Suomenkieliset_pangrammit?=
+ =?UTf-8?q?Suomenkieliset_pangrammit?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-Resent-From: =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>,
- =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
-Resent-Sender: =?uTf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
-Resent-To: =?UTF-8?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?uTF-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-From: =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>,
+ =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Resent-Sender: =?utF-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Resent-To: =?UTf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?uTf-8?q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
 Resent-Cc: =?utf-8?q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
- =?UTf-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
-Resent-Bcc: =?UTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
- =?UTF-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+ =?UTF-8?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?uTF-8?Q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?UTF-8?Q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPARt/relaTeD; CHARSEt="UTF-8"; Boundary="RelatedBoundaryString"
-Content-Transfer-Encoding: quoteD-PRiNtable
+Content-Type: mULTIPART/RELATed; cHarset="UtF-8"; BOUNDAry="RelatedBoundaryString"
+Content-Transfer-Encoding: qUoted-printaBLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: multIPaRT/ALTERNATIve; BoundArY="AlternativeBoundaryString"
+Content-Type: MULTIPART/alTERNATIVE; BOUnDAry="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TEXT/PlAin; charset="utf-8"
-Content-Transfer-Encoding: quoTED-pRintable
+Content-Type: text/plain; chaRSET="utf-8"
+Content-Transfer-Encoding: quoted-PRINTABLE
 
 Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.
 Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaimet.
@@ -50,8 +50,8 @@ Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
 tacoja.
 
 --AlternativeBoundaryString
-Content-Type: texT/eNRICHED; CHARSET="Utf-8"
-Content-Transfer-Encoding: qUOtED-PRINTABLe
+Content-Type: TEXT/EnricHeD; CHARSET="UTf-8"
+Content-Transfer-Encoding: quoted-prinTAbLE
 
 <bold>Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.</bold>
 <italic>Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaim=
@@ -66,8 +66,8 @@ Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
 tacoja.
 
 --AlternativeBoundaryString
-Content-Type: TExT/htmL; CHARSET="UTF-8"
-Content-Transfer-Encoding: QUOTeD-printabLE
+Content-Type: TeXt/html; charsET="UtF-8"
+Content-Transfer-Encoding: QUOTED-PRinTaBlE
 
 <html>
 <div dir=3D"ltr">
@@ -88,9 +88,9 @@ rt-tacoja.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAMe="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BASe64
-Content-Disposition: inline; filenaME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLiNe; filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
- =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Sender: =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Reply-To: =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-To: =?euc-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
- =?euC-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
-Cc: =?EUC-JP?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
- =?euc-Jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
-Bcc: =?Euc-JP?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
- =?EUC-JP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
+From: =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Sender: =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Reply-To: =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+To: =?eUC-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
+ =?eUC-Jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
+Cc: =?euc-jp?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
+ =?Euc-JP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
+Bcc: =?Euc-JP?Q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?EUc-jP?Q?=A4=A4=A4=ED=A4=CF=B2=CE?=
+ =?euc-jp?q?=A4=A4=A4=ED=A4=CF=B2=CE?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
- =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Resent-Sender: =?EUC-jp?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Resent-To: =?euc-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
- =?euC-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
-Resent-Cc: =?EUC-JP?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
- =?euc-Jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
-Resent-Bcc: =?Euc-JP?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
- =?EUC-JP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
+Resent-From: =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?euc-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Resent-To: =?eUC-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
+ =?eUC-Jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
+Resent-Cc: =?euc-jp?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
+ =?Euc-JP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
+Resent-Bcc: =?Euc-JP?Q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mULTIPART/SIGNED;
-              CHarSEt="euc-jp";
-              protocOL="ApplicaTiON/pkCs7-signaturE";
-              MIcALG=SHA1;
-              BOUNDary=SignedBoundaryString
-Content-Transfer-Encoding: qUOtED-PRINTAbLe
+Content-Type: muLtipart/signed;
+              cHaRSET="EUC-jp";
+              PRotocol="applicAtIOn/pkcs7-sigNatURE";
+              mICALG=SHA1;
+              Boundary=SignedBoundaryString
+Content-Transfer-Encoding: qUotED-PRINTABLe
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: text/plain
-Content-Transfer-Encoding: quOteD-Printable
+Content-Type: TEXt/pLaIN
+Content-Transfer-Encoding: QUOTED-PriNtable
 
 =BF=A7=A4=CF=C6=F7=A4=A8=A4=C9
 =BB=B6=A4=EA=A4=CC=A4=EB=A4=F2
@@ -70,9 +70,9 @@ a / Kyo koete Asaki yume miji / Yoi mo sezu.
 =A8=BD=AE=B7=D2=A4=B1=A4=CC=A1=A3
 
 --SignedBoundaryString
-Content-Type: appliCaTION/PKCS7-Signature; NAME=smime.p7s
+Content-Type: applicatIoN/pKcs7-signaTuRE; NAME=smime.p7s
 Content-Transfer-Encoding: BASE64
-Content-Disposition: AttaCHMent; fiLenAME=smime.p7s
+Content-Disposition: ATTAChmeNT; FILENAME=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

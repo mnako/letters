@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>,
- =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
-Sender: =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>
-Reply-To: =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
-To: =?iSO-8859-2?b?Qm9iIE9kYmllcmFqsWN5?= <bob.odbierajacy@example.com>,
- =?ISO-8859-2?B?S2Fyb2xpbmEgT2RiaWVyYWqxY2E=?= <karolina.odbierajaca@example.com>
-Cc: =?iso-8859-2?B?RGFuaWVsIE9kYmllcmFqsWN5?= <daniel.odbierajacy@example.com>,
- =?IsO-8859-2?b?RXdhIE9kYmllcmFqsWNh?= <ewa.odbierajaca@example.com>
-Bcc: =?ISo-8859-2?B?RnJhbmVrIE9kYmllcmFqsWN5?= <franek.odbierajacy@example.com>,
- =?ISO-8859-2?b?R3Jhv3luYSBPZGJpZXJharFjYQ==?= <grazyna.odbierajaca@example.com>
+From: =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>,
+ =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+Sender: =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>
+Reply-To: =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+To: =?iSo-8859-2?b?T2RiaWVyYWqxY3ksIEJvYg==?= <bob.odbierajacy@example.com>,
+ =?ISO-8859-2?B?T2RiaWVyYWqxY2EsIEthcm9saW5h?= <karolina.odbierajaca@example.com>
+Cc: =?iSO-8859-2?b?T2RiaWVyYWqxY3ksIERhbmllbA==?= <daniel.odbierajacy@example.com>,
+ =?iso-8859-2?b?T2RiaWVyYWqxY2EsIEV3YQ==?= <ewa.odbierajaca@example.com>
+Bcc: =?ISO-8859-2?b?T2RiaWVyYWqxY3ksIEZyYW5law==?= <franek.odbierajacy@example.com>,
+ =?ISO-8859-2?B?T2RiaWVyYWqxY2EsIEdyYb95bmE=?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?ISo-8859-2?b?UG9sc2tpZSBwYW5ncmFteQ==?=
+ =?ISO-8859-2?b?UG9sc2tpZSBwYW5ncmFteQ==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>,
- =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.com>
-Resent-Sender: =?ISO-8859-2?b?QWxpY2phIE5hZGFqsWNh?= <alicja.nadajaca@example.net>
-Resent-To: =?iSO-8859-2?b?Qm9iIE9kYmllcmFqsWN5?= <bob.odbierajacy@example.net>,
- =?ISO-8859-2?B?S2Fyb2xpbmEgT2RiaWVyYWqxY2E=?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?iso-8859-2?B?RGFuaWVsIE9kYmllcmFqsWN5?= <daniel.odbierajacy@example.net>,
- =?IsO-8859-2?b?RXdhIE9kYmllcmFqsWNh?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?ISo-8859-2?B?RnJhbmVrIE9kYmllcmFqsWN5?= <franek.odbierajacy@example.net>,
- =?ISO-8859-2?b?R3Jhv3luYSBPZGJpZXJharFjYQ==?= <grazyna.odbierajaca@example.net>
+Resent-From: =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>,
+ =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>
+Resent-Sender: =?Iso-8859-2?b?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+Resent-To: =?iSo-8859-2?b?T2RiaWVyYWqxY3ksIEJvYg==?= <bob.odbierajacy@example.net>,
+ =?ISO-8859-2?B?T2RiaWVyYWqxY2EsIEthcm9saW5h?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?iSO-8859-2?b?T2RiaWVyYWqxY3ksIERhbmllbA==?= <daniel.odbierajacy@example.net>,
+ =?iso-8859-2?b?T2RiaWVyYWqxY2EsIEV3YQ==?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?ISO-8859-2?b?T2RiaWVyYWqxY3ksIEZyYW5law==?= <franek.odbierajacy@example.net>,
+ =?ISO-8859-2?B?T2RiaWVyYWqxY2EsIEdyYb95bmE=?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/signEd;
-              CHARSET="ISO-8859-2";
-              protocol="aPpLIcAtion/pkcs7-SIGNATURE";
-              MICalG=Sha1;
-              bOuNDARY=SignedBoundaryString
-Content-Transfer-Encoding: BASE64
+Content-Type: MulTiparT/SIgneD;
+              chaRSET="ISO-8859-2";
+              pROtocol="application/pKCs7-SIGNATURe";
+              micalg=sha1;
+              bOunDARY=SignedBoundaryString
+Content-Transfer-Encoding: BaSe64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TExt/plain
-Content-Transfer-Encoding: base64
+Content-Type: text/plAiN
+Content-Transfer-Encoding: BAsE64
 
 SmW/dSBrbLF0dywgc3Cz82S8IEZpbm9tIGN66rbmIGdyeSBoYfFiIQpQ82pkvL9lLCBrafEgdOog
 Y2htdXJub7bmIHcgZ7OxYiBmbGFzenkhCk3qv255IGKxZLwgY2hyb/EgcHWzayB0d/NqIGkgc3pl
@@ -48,9 +48,9 @@ LCBweWNoIGkgbWGzv2Xxc3R3IQpQ82pkvCB3IGxvY2ggemJp5iBtYbO/ZfFza7EgZ+q2IGZ1dHJ5
 biEKQ2h3eeYgbWGzv29ua+osIHN0cvNqIGKxZLwgcGxltvEgeiBmdWdpLg
 
 --SignedBoundaryString
-Content-Type: APPlICatIon/pkcs7-SigNATURE; NAME=smime.p7s
-Content-Transfer-Encoding: bAsE64
-Content-Disposition: attACHMENT; FILENaMe=smime.p7s
+Content-Type: APPLICATIon/pKcS7-SIGnAture; name=smime.p7s
+Content-Transfer-Encoding: base64
+Content-Disposition: atTAcHMENT; FiLenamE=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

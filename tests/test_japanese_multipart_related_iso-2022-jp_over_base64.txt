@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
- =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-Sender: =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
-Reply-To: =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-To: =?iSO-2022-jp?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
- =?iso-2022-jP?b?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
-Cc: =?iso-2022-JP?B?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
- =?ISo-2022-jP?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
-Bcc: =?iso-2022-JP?B?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
- =?ISo-2022-jp?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
+From: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
+ =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Sender: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Reply-To: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+To: =?iso-2022-jP?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
+ =?IsO-2022-JP?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
+Cc: =?iSO-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
+ =?iso-2022-JP?B?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
+Bcc: =?ISO-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
+ =?iso-2022-JP?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?iso-2022-JP?B?GyRCJCQkbSRPMk4bKEI=?=
+ =?iSO-2022-JP?B?GyRCJCQkbSRPMk4bKEI=?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
- =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
-Resent-Sender: =?iso-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
-Resent-To: =?iSO-2022-jp?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
- =?iso-2022-jP?b?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
-Resent-Cc: =?iso-2022-JP?B?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
- =?ISo-2022-jP?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
-Resent-Bcc: =?iso-2022-JP?B?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
- =?ISo-2022-jp?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
+Resent-From: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
+ =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Resent-Sender: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Resent-To: =?iso-2022-jP?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
+ =?IsO-2022-JP?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
+Resent-Cc: =?iSO-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
+ =?iso-2022-JP?B?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
+Resent-Bcc: =?ISO-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
+ =?iso-2022-JP?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/Related; charset="iSo-2022-jp"; boundary="RelatedBoundaryString"
-Content-Transfer-Encoding: base64
+Content-Type: mulTiPaRT/ReLated; charset="iso-2022-JP"; BOUNdary="RelatedBoundaryString"
+Content-Transfer-Encoding: baSE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: mULTIPART/AltERNATIVE; BOUNDARy="AlternativeBoundaryString"
+Content-Type: MULTIPART/AltErnative; BoUnDArY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: tEXt/plain; ChArSET="ISO-2022-jp"
-Content-Transfer-Encoding: base64
+Content-Type: text/plaiN; chaRsET="ISO-2022-Jp"
+Content-Transfer-Encoding: basE64
 
 GyRCPyckT0Z3JCgkSRsoQgobJEI7NiRqJEwkayRyGyhCChskQjJmJCxAJEMvJD4bKEIKGyRCPm8k
 SiRpJHMbKEIKGyRCTS0wWSROMXw7MxsoQgobJEI6I0Z8MVskKCRGGyhCChskQkB1JC1MNDgrJDgb
@@ -51,8 +51,8 @@ RmskbDVvJEYhIxsoQgoKGyRCRUQ1byRLPVAkRzpaRSYkYCRvJGwkciQ+Ny8+JCQ5JEg1YT8pJGpE
 SSRSJGYkLzszPmskTkJHP2wkWCRrO1IkaUF0TVU0MyQ7JGgkKD0uN1IkMSRMISMbKEI=
 
 --AlternativeBoundaryString
-Content-Type: teXt/ENRiched; charset="iso-2022-JP"
-Content-Transfer-Encoding: BASE64
+Content-Type: tEXT/ENRICHED; ChArset="iSo-2022-jP"
+Content-Transfer-Encoding: BasE64
 
 PGJvbGQ+GyRCPyckT0Z3JCgkSRsoQjwvYm9sZD4KPGl0YWxpYz4bJEI7NiRqJEwkayRyGyhCPC9p
 dGFsaWM+CjxmaXhlZD4bJEIyZiQsQCRDLyQ+GyhCPC9maXhlZD4KPHVuZGVybGluZT4bJEI+byRK
@@ -68,8 +68,8 @@ JDkkSDVhPykkakRJJFIkZiQvOzM+ayROQkc/bCRYJGs7UiRpQXRNVTQzJDskaCQoPS43UiQxJEwh
 IxsoQg
 
 --AlternativeBoundaryString
-Content-Type: text/htMl; cHARSET="ISO-2022-jp"
-Content-Transfer-Encoding: BaSE64
+Content-Type: text/html; chaRsET="iSo-2022-jp"
+Content-Transfer-Encoding: basE64
 
 PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD4bJEI/JyRPRnckKCRJGyhCPGJyIC8+ChskQjs2JGok
 TCRrJHIbKEI8YnIgLz4KGyRCMmYkLEAkQy8kPhsoQjxiciAvPgobJEI+byRKJGkkcxsoQjxiciAv
@@ -88,9 +88,9 @@ ISMbKEI8L3A+CjwvZGl2Pgo8L2h0bWw+
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: INLINE; fiLeNAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; nAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: bASE64
+Content-Disposition: Inline; fiLeNAME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

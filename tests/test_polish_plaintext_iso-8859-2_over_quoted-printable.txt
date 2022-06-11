@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>,
- =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-Sender: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
-Reply-To: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-To: =?iso-8859-2?q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.com>,
- =?Iso-8859-2?Q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.com>
-Cc: =?ISO-8859-2?q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.com>,
- =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.com>
-Bcc: =?iso-8859-2?Q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.com>,
- =?ISO-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.com>
+From: =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>,
+ =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+Sender: =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
+Reply-To: =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+To: =?iso-8859-2?q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.com>,
+ =?ISO-8859-2?Q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.com>
+Cc: =?ISO-8859-2?q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.com>,
+ =?iso-8859-2?Q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.com>
+Bcc: =?iso-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.com>,
+ =?Iso-8859-2?q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?IsO-8859-2?q?Polskie_pangramy?=
+ =?iso-8859-2?Q?Polskie_pangramy?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>,
- =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.com>
-Resent-Sender: =?iSO-8859-2?Q?Alicja_Nadaj=B1ca?= <alicja.nadajaca@example.net>
-Resent-To: =?iso-8859-2?q?Bob_Odbieraj=B1cy?= <bob.odbierajacy@example.net>,
- =?Iso-8859-2?Q?Karolina_Odbieraj=B1ca?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?ISO-8859-2?q?Daniel_Odbieraj=B1cy?= <daniel.odbierajacy@example.net>,
- =?ISO-8859-2?Q?Ewa_Odbieraj=B1ca?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?iso-8859-2?Q?Franek_Odbieraj=B1cy?= <franek.odbierajacy@example.net>,
- =?ISO-8859-2?q?Gra=BFyna_Odbieraj=B1ca?= <grazyna.odbierajaca@example.net>
+Resent-From: =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>,
+ =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
+Resent-Sender: =?ISO-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
+Resent-To: =?iso-8859-2?q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.net>,
+ =?ISO-8859-2?Q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?ISO-8859-2?q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.net>,
+ =?iso-8859-2?Q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?iso-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.net>,
+ =?Iso-8859-2?q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TeXt/pLain; chaRsET=ISO-8859-2
-Content-Transfer-Encoding: QUOTed-pRINTABLE
+Content-Type: texT/pLain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PrIntAbLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

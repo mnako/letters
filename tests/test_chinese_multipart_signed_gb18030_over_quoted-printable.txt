@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-From: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
- =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Sender: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Reply-To: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-To: =?gb18030?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
- =?gB18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
-Cc: =?GB18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
- =?Gb18030?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
-Bcc: =?gB18030?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
- =?GB18030?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
+From: =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
+ =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Sender: =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Reply-To: =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+To: =?Gb18030?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
+ =?gb18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
+Cc: =?GB18030?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
+ =?gB18030?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
+Bcc: =?GB18030?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
+ =?gb18030?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?gB18030?q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
+ =?gb18030?q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-Resent-From: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
- =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Resent-Sender: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Resent-To: =?gb18030?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
- =?gB18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
-Resent-Cc: =?GB18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
- =?Gb18030?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
-Resent-Bcc: =?gB18030?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
- =?GB18030?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
+Resent-From: =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
+ =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Resent-Sender: =?Gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Resent-To: =?Gb18030?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
+ =?gb18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
+Resent-Cc: =?GB18030?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
+ =?gB18030?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
+Resent-Bcc: =?GB18030?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
+ =?gb18030?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/SIgned;
-              charset="gb18030";
-              PROTOcol="Application/pkCs7-signature";
-              micalg=sha1;
-              BOuNDARy=SignedBoundaryString
-Content-Transfer-Encoding: quoted-pRinTABLE
+Content-Type: MULTIPART/sIgned;
+              charSeT="GB18030";
+              pRotocol="applicATiON/PKCS7-SigNATURE";
+              MICALg=SHA1;
+              bOundary=SignedBoundaryString
+Content-Transfer-Encoding: quoted-PRIntable
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: QuOtED-PRINTABLE
+Content-Type: text/PLAIN
+Content-Transfer-Encoding: QUOTED-PRIntAble
 
 =CA=AF=CA=D2=CA=AB=CA=BF=CA=A9=CA=CF=A3=AC=CA=C8=CA=A8=A3=AC=CA=C4=CA=B3=CA=
 =AE=CA=A8=A1=A3
@@ -55,9 +55,9 @@ Content-Transfer-Encoding: QuOtED-PRINTABLE
 =CA=D4=CA=CD=CA=C7=CA=C2=A1=A3
 
 --SignedBoundaryString
-Content-Type: APPLIcAtion/pkcs7-SIgNature; name=smime.p7s
-Content-Transfer-Encoding: base64
-Content-Disposition: aTTACHMENT; Filename=smime.p7s
+Content-Type: APPLICATION/Pkcs7-signatuRe; naME=smime.p7s
+Content-Transfer-Encoding: BAse64
+Content-Disposition: attachment; filenAME=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

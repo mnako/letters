@@ -1,46 +1,46 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-From: =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>,
- =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
-Sender: =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
-Reply-To: =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
-To: =?iSo-8859-15?B?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
- =?Iso-8859-15?B?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.com>
-Cc: =?ISO-8859-15?b?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.com>,
- =?isO-8859-15?B?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.com>
-Bcc: =?ISO-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.com>,
- =?isO-8859-15?B?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.com>
+From: =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>,
+ =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+Sender: =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
+Reply-To: =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+To: =?ISO-8859-15?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
+ =?Iso-8859-15?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.com>
+Cc: =?iso-8859-15?B?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.com>,
+ =?ISO-8859-15?b?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.com>
+Bcc: =?iso-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.com>,
+ =?iSo-8859-15?b?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?ISO-8859-15?b?U3VvbWVua2llbGlzZXQgcGFuZ3JhbW1pdA==?=
+ =?iso-8859-15?B?U3VvbWVua2llbGlzZXQgcGFuZ3JhbW1pdA==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-Resent-From: =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>,
- =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
-Resent-Sender: =?ISO-8859-15?b?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
-Resent-To: =?iSo-8859-15?B?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
- =?Iso-8859-15?B?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.net>
-Resent-Cc: =?ISO-8859-15?b?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.net>,
- =?isO-8859-15?B?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.net>
-Resent-Bcc: =?ISO-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.net>,
- =?isO-8859-15?B?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.net>
+Resent-From: =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>,
+ =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.com>
+Resent-Sender: =?ISo-8859-15?B?QWxpY2UgTORoZXR05Grk?= <alice.lahettaja@example.net>
+Resent-To: =?ISO-8859-15?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
+ =?Iso-8859-15?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?iso-8859-15?B?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.net>,
+ =?ISO-8859-15?b?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?iso-8859-15?B?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.net>,
+ =?iSo-8859-15?b?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: muLTiPART/mIXed; CharsEt="iSO-8859-15"; BOUNDARY="MixedBoundaryString"
-Content-Transfer-Encoding: baSE64
+Content-Type: Multipart/mixed; chaRSeT="ISO-8859-15"; BOUNdARY="MixedBoundaryString"
+Content-Transfer-Encoding: Base64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: muLTIPART/RElated; boundary="RelatedBoundaryString"
+Content-Type: multipart/RELATED; BOUNDaRy="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: mulTiPArT/alternaTIvE; BOUNDARY="AlternativeBoundaryString"
+Content-Type: mULTIPART/ALtERnative; boundaRy="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TEXT/PLain; cHaRsET="ISO-8859-15"
-Content-Transfer-Encoding: base64
+Content-Type: tEXT/PLAIn; chaRseT="ISO-8859-15"
+Content-Transfer-Encoding: BASE64
 
 QWxiZXJ0IG9zdGkgZmFnb3RpbiBqYSB09nLkeXR0aSBwdWhrdXZhbiBtZWxvZGlhbi4KTG9ydW4g
 c2FuZ2VuIHBpZW5la3NpIGh59mR5a3NpIGrkaXbkdCBzdW9tZW4ga2lyamFpbWV0LgpIeXbkbiBs
@@ -52,8 +52,8 @@ Z2lzc+QuCldpZW5pbORpbmVuIHNpb3V4OnRhIHB1aHV2YSD2a3l6b21iaWUgZGlnZ2FhIMVzYW4g
 cm9xdWVmb3J0LXRhY29qYS4=
 
 --AlternativeBoundaryString
-Content-Type: text/EnRICHeD; charset="iso-8859-15"
-Content-Transfer-Encoding: BASE64
+Content-Type: TexT/EnRICHED; ChArset="iso-8859-15"
+Content-Transfer-Encoding: bAse64
 
 PGJvbGQ+QWxiZXJ0IG9zdGkgZmFnb3RpbiBqYSB09nLkeXR0aSBwdWhrdXZhbiBtZWxvZGlhbi48
 L2JvbGQ+CjxpdGFsaWM+TG9ydW4gc2FuZ2VuIHBpZW5la3NpIGh59mR5a3NpIGrkaXbkdCBzdW9t
@@ -66,8 +66,8 @@ IHn2cHViIFplbGlnaXNz5C4KV2llbmls5GluZW4gc2lvdXg6dGEgcHVodXZhIPZreXpvbWJpZSBk
 aWdnYWEgxXNhbiByb3F1ZWZvcnQtdGFjb2phLg==
 
 --AlternativeBoundaryString
-Content-Type: tExT/hTML; CHARSET="ISO-8859-15"
-Content-Transfer-Encoding: base64
+Content-Type: text/htML; cHARSET="IsO-8859-15"
+Content-Transfer-Encoding: BaSE64
 
 PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD5BbGJlcnQgb3N0aSBmYWdvdGluIGphIHT2cuR5dHRp
 IHB1aGt1dmFuIG1lbG9kaWFuLjwvcD4KPHA+TG9ydW4gc2FuZ2VuIHBpZW5la3NpIGh59mR5a3Np
@@ -89,9 +89,9 @@ Content-Transfer-Encoding: BASE64
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; Name="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: inliNe; fIlEname="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; nAme="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BaSE64
+Content-Disposition: INLINE; FILeNAme="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -100,23 +100,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: applicatION/PDF; NAME="attached-pdf-name.pdf"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: AttAcHMENT; FILEnaMe="attached-pdf-filename.pdf"
+Content-Type: ApplicatioN/PdF; name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attACHMENT; FILENAME="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: application/PDF; NAMe="attached-pdf-without-disposition.pdf"
+Content-Type: apPlIcATION/pDF; Name="attached-pdf-without-disposition.pdf"
 Content-Transfer-Encoding: base64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: apPliCATION/JSON; NaME="attached-json-name.json"
-Content-Disposition: AtTachmenT; FILENamE="attached-json-filename.json"
+Content-Type: applicATIOn/jSoN; name="attached-json-name.json"
+Content-Disposition: atTaCHMENT; FILENAme="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

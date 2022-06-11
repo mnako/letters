@@ -3,14 +3,14 @@ From: =?ASciI?Q?Alice_Sender?= <alice.sender@example.com>,
  =?ASciI?Q?Alice_Sender?= <alice.sender@example.net>
 Sender: =?ASciI?Q?Alice_Sender?= <alice.sender@example.com>
 Reply-To: =?ASciI?Q?Alice_Sender?= <alice.sender@example.net>
-To: =?ascii?q?Bob_Recipient?= <bob.recipient@example.com>,
- =?ascII?Q?Carol_Recipient?= <carol.recipient@example.com>
-Cc: =?ASCiI?Q?Dan_Recipient?= <dan.recipient@example.com>,
- =?asCIi?q?Eve_Recipient?= <eve.recipient@example.com>
-Bcc: =?asciI?Q?Frank_Recipient?= <frank.recipient@example.com>,
- =?ascii?q?Grace_Recipient?= <grace.recipient@example.com>
+To: =?asCii?q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?asciI?Q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?ASCII?Q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?AsCII?Q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?ascii?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?ASCII?Q?Grace_Recipient?= <grace.recipient@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?ascII?Q?English_Pangrams?=
+ =?ascii?q?English_Pangrams?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
@@ -20,25 +20,25 @@ Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
 Resent-From: =?ASciI?Q?Alice_Sender?= <alice.sender@example.net>,
  =?ASciI?Q?Alice_Sender?= <alice.sender@example.com>
 Resent-Sender: =?ASciI?Q?Alice_Sender?= <alice.sender@example.net>
-Resent-To: =?ascii?q?Bob_Recipient?= <bob.recipient@example.net>,
- =?ascII?Q?Carol_Recipient?= <carol.recipient@example.net>
-Resent-Cc: =?ASCiI?Q?Dan_Recipient?= <dan.recipient@example.net>,
- =?asCIi?q?Eve_Recipient?= <eve.recipient@example.net>
-Resent-Bcc: =?asciI?Q?Frank_Recipient?= <frank.recipient@example.net>,
- =?ascii?q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-To: =?asCii?q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?asciI?Q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?ASCII?Q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?AsCII?Q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?ascii?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?ASCII?Q?Grace_Recipient?= <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: muLTIPART/sIGNED;
-              CHARSeT="ASCII";
-              PrOtoCOL="APpLication/pkcs7-sIgNATURE";
-              MICALG=Sha1;
-              bOundary=SignedBoundaryString
-Content-Transfer-Encoding: QuOteD-prINtabLE
+Content-Type: multipart/signEd;
+              CHARSET="ASCII";
+              protocol="ApplIcaTIoN/PkCS7-SIGNATure";
+              MIcaLG=SHa1;
+              boundary=SignedBoundaryString
+Content-Transfer-Encoding: quoteD-PRINTABLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: teXT/PLAIN
-Content-Transfer-Encoding: QUOTED-printable
+Content-Type: TEXT/plain
+Content-Transfer-Encoding: quoted-prINTABLE
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -49,9 +49,9 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --SignedBoundaryString
-Content-Type: applicATION/PKCS7-SIGnature; name=smime.p7s
-Content-Transfer-Encoding: basE64
-Content-Disposition: ATTACHMENT; FIlEName=smime.p7s
+Content-Type: APpLICATIon/pkcs7-signaturE; NAME=smime.p7s
+Content-Transfer-Encoding: bASe64
+Content-Disposition: ATTACHMENT; FILENaMe=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

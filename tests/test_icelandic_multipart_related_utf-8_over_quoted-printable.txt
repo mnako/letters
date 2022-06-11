@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
-From: =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>,
- =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-Sender: =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
-Reply-To: =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-To: =?utf-8?q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.com>,
- =?utF-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.com>
-Cc: =?UTf-8?Q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.com>,
- =?uTF-8?q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.com>
-Bcc: =?utf-8?q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.com>,
- =?utf-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.com>
+From: =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>,
+ =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+Sender: =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
+Reply-To: =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+To: =?UTF-8?Q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.com>,
+ =?Utf-8?Q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.com>
+Cc: =?uTf-8?q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.com>,
+ =?uTF-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.com>
+Bcc: =?UTF-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.com>,
+ =?uTF-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?utf-8?q?=C3=8Dslenskt_pangram?=
+ =?UtF-8?q?=C3=8Dslenskt_pangram?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
-Resent-From: =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>,
- =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
-Resent-Sender: =?UTF-8?Q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
-Resent-To: =?utf-8?q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.net>,
- =?utF-8?q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.net>
-Resent-Cc: =?UTf-8?Q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.net>,
- =?uTF-8?q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.net>
-Resent-Bcc: =?utf-8?q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.net>,
- =?utf-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.net>
+Resent-From: =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>,
+ =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.com>
+Resent-Sender: =?uTF-8?q?Alice_Sendandid=C3=B3ttir?= <alice.sendandidottir@example.net>
+Resent-To: =?UTF-8?Q?Bob_Vi=C3=B0takandison?= <bob.didtakandison@example.net>,
+ =?Utf-8?Q?Carol_Vi=C3=B0takandid=C3=B3ttir?= <carol.didtakandidottir@example.net>
+Resent-Cc: =?uTf-8?q?Dan_Vi=C3=B0takandison?= <dan.vidtakandison@example.net>,
+ =?uTF-8?Q?Eve_Vi=C3=B0takandid=C3=B3ttir?= <eve.vidtakandidottir@example.net>
+Resent-Bcc: =?UTF-8?Q?Frank_Vi=C3=B0takandison?= <frank.vidtakandison@example.net>,
+ =?uTF-8?Q?Grace_Vi=C3=B0takandid=C3=B3ttir?= <grace.vidtakandidottir@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MulTiPART/RELAtEd; ChArset="utf-8"; bounDaRY="RelatedBoundaryString"
-Content-Transfer-Encoding: quoted-prinTabLE
+Content-Type: multIPaRT/RELaTed; chaRsET="UtF-8"; BOUNDARY="RelatedBoundaryString"
+Content-Transfer-Encoding: QUOted-PRINTABLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: MULTIPART/aLternative; BoUNdAry="AlternativeBoundaryString"
+Content-Type: MULTIPaRt/alTernative; bOUndary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: text/plain; cHaRSET="UTF-8"
-Content-Transfer-Encoding: quoted-pRINTABLE
+Content-Type: texT/PLain; chARSET="UTF-8"
+Content-Transfer-Encoding: QUOTed-printable
 
 K=C3=A6mi n=C3=BD =C3=B6xi h=C3=A9r, ykist =C3=BEj=C3=B3fum n=C3=BA b=C3=A6=
 =C3=B0i v=C3=ADl og =C3=A1drepa.
@@ -47,8 +47,8 @@ Svo h=C3=B6lt, yxna k=C3=BDr =C3=BEeg=C3=B0i j=C3=BA um d=C3=B3p =C3=AD f=
 ex=C3=BD p=C3=A6ju.
 
 --AlternativeBoundaryString
-Content-Type: TEXT/ENriChed; charseT="UTF-8"
-Content-Transfer-Encoding: QUoted-printaBlE
+Content-Type: text/EnRICHED; ChArset="utf-8"
+Content-Transfer-Encoding: quOTED-PRINTABlE
 
 <bold>K=C3=A6mi n=C3=BD =C3=B6xi h=C3=A9r, ykist =C3=BEj=C3=B3fum n=C3=BA b=
 =C3=A6=C3=B0i v=C3=ADl og =C3=A1drepa.</bold>
@@ -58,8 +58,8 @@ Content-Transfer-Encoding: QUoted-printaBlE
 =C3=B3m sex=C3=BD p=C3=A6ju.</fixed>
 
 --AlternativeBoundaryString
-Content-Type: TeXT/HtMl; charset="utf-8"
-Content-Transfer-Encoding: quotED-PRINTABLe
+Content-Type: texT/HTML; CHARSET="UTF-8"
+Content-Transfer-Encoding: QUoTed-pRiNTABLE
 
 <html>
 <div dir=3D"ltr">
@@ -75,9 +75,9 @@ m sex=C3=BD p=C3=A6ju.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; namE="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BaSE64
-Content-Disposition: INLINE; FILENAme="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NaME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BaSe64
+Content-Disposition: inline; FIlenaMe="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

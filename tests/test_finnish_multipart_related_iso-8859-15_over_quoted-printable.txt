@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-From: =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
- =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-Sender: =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
-Reply-To: =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-To: =?iso-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?Iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
-Cc: =?IsO-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
- =?iso-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
-Bcc: =?ISo-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
- =?iso-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+From: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
+ =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Sender: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Reply-To: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+To: =?iSO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?iso-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?iso-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?ISO-8859-15?q?Suomenkieliset_pangrammit?=
+ =?ISo-8859-15?q?Suomenkieliset_pangrammit?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-Resent-From: =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
- =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
-Resent-Sender: =?iSO-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
-Resent-To: =?iso-8859-15?q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
- =?Iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
-Resent-Cc: =?IsO-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
- =?iso-8859-15?Q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
-Resent-Bcc: =?ISo-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
- =?iso-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-From: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
+ =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Resent-Sender: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Resent-To: =?iSO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?iso-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?iso-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/rElated; charset="iSO-8859-15"; boundary="RelatedBoundaryString"
-Content-Transfer-Encoding: quotED-PRINTABLe
+Content-Type: MUltiPARt/RELaTED; chARSet="ISo-8859-15"; Boundary="RelatedBoundaryString"
+Content-Transfer-Encoding: quoted-pRiNTaBle
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: mUlTIPART/ALTErnative; boundary="AlternativeBoundaryString"
+Content-Type: multipart/ALTERNATIVE; BOUndary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: tEXT/PLaIn; charseT="Iso-8859-15"
-Content-Transfer-Encoding: QUOTED-prinTaBlE
+Content-Type: TeXt/PLAIN; ChaRset="iso-8859-15"
+Content-Transfer-Encoding: quOTED-PrIntabLe
 
 Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.
 Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.
@@ -48,8 +48,8 @@ Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
 Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
 
 --AlternativeBoundaryString
-Content-Type: TEXT/ENrIched; charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-PrINTABLE
+Content-Type: teXt/ENRICHED; CHArset="iso-8859-15"
+Content-Transfer-Encoding: QuoTed-printablE
 
 <bold>Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.</bold>
 <italic>Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.</ital=
@@ -62,8 +62,8 @@ Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
 Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
 
 --AlternativeBoundaryString
-Content-Type: TEXT/HTML; charSET="ISO-8859-15"
-Content-Transfer-Encoding: Quoted-printaBlE
+Content-Type: tExt/HTML; Charset="iso-8859-15"
+Content-Transfer-Encoding: QUOTED-PrIntabLe
 
 <html>
 <div dir=3D"ltr">
@@ -82,9 +82,9 @@ issa, daiquirin ja ZX81:n yhteisvaikutuksesta.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAme="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline; fIleNAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: Inline; filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

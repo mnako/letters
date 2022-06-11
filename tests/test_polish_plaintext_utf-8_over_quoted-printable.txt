@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>,
- =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-Sender: =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
-Reply-To: =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-To: =?Utf-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.com>,
- =?uTf-8?Q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.com>
-Cc: =?utF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.com>,
- =?UTf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.com>
-Bcc: =?utF-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.com>,
- =?UTF-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.com>
+From: =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>,
+ =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+Sender: =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>
+Reply-To: =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+To: =?UTF-8?Q?Odbieraj=C4=85cy,_Bob?= <bob.odbierajacy@example.com>,
+ =?Utf-8?Q?Odbieraj=C4=85ca,_Karolina?= <karolina.odbierajaca@example.com>
+Cc: =?uTF-8?q?Odbieraj=C4=85cy,_Daniel?= <daniel.odbierajacy@example.com>,
+ =?uTF-8?Q?Odbieraj=C4=85ca,_Ewa?= <ewa.odbierajaca@example.com>
+Bcc: =?UtF-8?Q?Odbieraj=C4=85cy,_Franek?= <franek.odbierajacy@example.com>,
+ =?uTF-8?q?Odbieraj=C4=85ca,_Gra=C5=BCyna?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?UtF-8?q?Polskie_pangramy?=
+ =?UTF-8?q?Polskie_pangramy?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>,
- =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
-Resent-Sender: =?UtF-8?q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-Resent-To: =?Utf-8?q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.net>,
- =?uTf-8?Q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?utF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.net>,
- =?UTf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?utF-8?Q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.net>,
- =?UTF-8?Q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.net>
+Resent-From: =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>,
+ =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>
+Resent-Sender: =?utF-8?q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?Q?Odbieraj=C4=85cy,_Bob?= <bob.odbierajacy@example.net>,
+ =?Utf-8?Q?Odbieraj=C4=85ca,_Karolina?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?uTF-8?q?Odbieraj=C4=85cy,_Daniel?= <daniel.odbierajacy@example.net>,
+ =?uTF-8?Q?Odbieraj=C4=85ca,_Ewa?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?UtF-8?Q?Odbieraj=C4=85cy,_Franek?= <franek.odbierajacy@example.net>,
+ =?uTF-8?q?Odbieraj=C4=85ca,_Gra=C5=BCyna?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TEXT/pLaIN; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-printabLE
+Content-Type: TExT/PLAIN; CHARSET=UTF-8
+Content-Transfer-Encoding: QuOted-prInTaBLe
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

@@ -1,14 +1,14 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-From: =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>,
- =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-Sender: =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
-Reply-To: =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-To: =?uTF-8?B?67ClIOyImOyLoOyekA==?= <bob.susinja@example.com>,
- =?Utf-8?B?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.com>
-Cc: =?utF-8?B?64yEIOyImOyLoOyekA==?= <dan.susinja@example.com>,
- =?utf-8?b?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.com>
-Bcc: =?UTf-8?B?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.com>,
- =?UTF-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.com>
+From: =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>,
+ =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+Sender: =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+To: =?UTF-8?B?67ClIOyImOyLoOyekA==?= <bob.susinja@example.com>,
+ =?utf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.com>
+Cc: =?utf-8?B?64yEIOyImOyLoOyekA==?= <dan.susinja@example.com>,
+ =?utF-8?b?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.com>
+Bcc: =?UTF-8?b?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.com>,
+ =?UTf-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
  =?Utf-8?b?7ZWc6rWt7Ja0IO2MrOq3uOueqA==?=
 In-Reply-To: <Message-Id-0@example.com>
@@ -17,42 +17,42 @@ Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-Resent-From: =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>,
- =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
-Resent-Sender: =?utf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-Resent-To: =?uTF-8?B?67ClIOyImOyLoOyekA==?= <bob.susinja@example.net>,
- =?Utf-8?B?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.net>
-Resent-Cc: =?utF-8?B?64yEIOyImOyLoOyekA==?= <dan.susinja@example.net>,
- =?utf-8?b?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.net>
-Resent-Bcc: =?UTf-8?B?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.net>,
- =?UTF-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.net>
+Resent-From: =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>,
+ =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?utf-8?b?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?UTF-8?B?67ClIOyImOyLoOyekA==?= <bob.susinja@example.net>,
+ =?utf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.net>
+Resent-Cc: =?utf-8?B?64yEIOyImOyLoOyekA==?= <dan.susinja@example.net>,
+ =?utF-8?b?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.net>
+Resent-Bcc: =?UTF-8?b?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.net>,
+ =?UTf-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: muLtiparT/related; CHARSET="UTF-8"; BOUnDAry="RelatedBoundaryString"
-Content-Transfer-Encoding: BasE64
+Content-Type: multipart/relaTed; cHarsET="utF-8"; BoUNDArY="RelatedBoundaryString"
+Content-Transfer-Encoding: Base64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: MULTIPART/ALTERNatIve; BOUNDARY="AlternativeBoundaryString"
+Content-Type: mULTIPART/ALtERnative; bOUNDARY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TEXT/PLAiN; Charset="UTF-8"
-Content-Transfer-Encoding: BASE64
+Content-Type: TExt/plain; charseT="uTf-8"
+Content-Transfer-Encoding: bAse64
 
 7YKk7Iqk7J2YIOqzoOycoOyhsOqxtOydgCDsnoXsiKDrgbzrpqwg66eM64KY7JW8IO2VmOqzoCDt
 irnrs4TtlZwg6riw7Iig7J2AIO2VhOyalOy5mCDslYrri6Qu
 
 --AlternativeBoundaryString
-Content-Type: TEXT/ENRIcHed; ChARSET="UTF-8"
-Content-Transfer-Encoding: BASE64
+Content-Type: text/enrICHED; CHARSET="UTF-8"
+Content-Transfer-Encoding: basE64
 
 PGJvbGQ+7YKk7Iqk7J2YPC9ib2xkPiA8aXRhbGljPuqzoOycoOyhsOqxtOydgDwvaXRhbGljPiA8
 Zml4ZWQ+7J6F7Iig64G866asPC9maXhlZD4gPHVuZGVybGluZT7rp4zrgpjslbw8L3VuZGVybGlu
 ZT4g7ZWY6rOgIO2KueuzhO2VnCDquLDsiKDsnYAg7ZWE7JqU7LmYIOyViuuLpC4
 
 --AlternativeBoundaryString
-Content-Type: TExT/html; cHaRSET="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Type: tEXT/HTML; CHARSET="Utf-8"
+Content-Transfer-Encoding: BASE64
 
 PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD7tgqTsiqTsnZgg6rOg7Jyg7KGw6rG07J2AIOyeheyI
 oOuBvOumrCDrp4zrgpjslbwg7ZWY6rOgIO2KueuzhO2VnCDquLDsiKDsnYAg7ZWE7JqU7LmYIOyV
@@ -61,9 +61,9 @@ iuuLpC48L3A+CjwvZGl2Pgo8L2h0bWw+
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; name="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: INLine; filename="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: inline; filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

@@ -27,17 +27,17 @@ Resent-Cc: Dan Recipient <dan.recipient@example.net>,
 Resent-Bcc: Frank Recipient <frank.recipient@example.net>,
  Grace Recipient <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mulTipaRT/reLateD; chaRSet="aScIi"; bOundAry="RelatedBoundaryString"
-Content-Transfer-Encoding: 7Bit
+Content-Type: MuLtiPARt/relaTED; CHarset="ASCIi"; BoUnDaRY="RelatedBoundaryString"
+Content-Transfer-Encoding: 7biT
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: muLtipArT/AlTeRnatIvE; BoUnDaRy="AlternativeBoundaryString"
+Content-Type: MULTIPart/alTERnaTive; BoUNDary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TeXT/plAin; cHaRsEt="aScII"
-Content-Transfer-Encoding: 7bIT
+Content-Type: tExT/PLain; chArSeT="asciI"
+Content-Transfer-Encoding: 7BIT
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -48,8 +48,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: tExT/EnRiChED; cHaRsEt="ASCii"
-Content-Transfer-Encoding: 7biT
+Content-Type: texT/ENRIcHeD; cHARSeT="ascIi"
+Content-Transfer-Encoding: 7BIt
 
 <bold>The quick brown fox jumps over a lazy dog.</bold>
 <italic>Glib jocks quiz nymph to vex dwarf.</italic>
@@ -60,8 +60,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: TeXT/HtmL; ChArSet="asCiI"
-Content-Transfer-Encoding: 7BIt
+Content-Type: TEXT/html; CHArSET="aScII"
+Content-Transfer-Encoding: 7Bit
 
 <html>
 <div dir="ltr">
@@ -78,9 +78,9 @@ Content-Transfer-Encoding: 7BIt
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAMe="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: bAsE64
-Content-Disposition: INLiNe; filEnAmE="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; namE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: inLiNe; FiLeNaME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

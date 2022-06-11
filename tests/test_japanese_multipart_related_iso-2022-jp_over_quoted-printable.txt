@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>,
- =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
-Sender: =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
-Reply-To: =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
-To: =?ISo-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.com>,
- =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.com>
-Cc: =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.com>,
- =?iSo-2022-jp?q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.com>
-Bcc: =?ISO-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.com>,
- =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.com>
+From: =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>,
+ =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Sender: =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Reply-To: =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+To: =?ISO-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.com>,
+ =?isO-2022-jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.com>
+Cc: =?iSo-2022-jp?q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.com>,
+ =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.com>
+Bcc: =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.com>,
+ =?iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?IsO-2022-jp?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
+ =?ISO-2022-Jp?q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>,
- =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
-Resent-Sender: =?Iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
-Resent-To: =?ISo-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.net>,
- =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.net>
-Resent-Cc: =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.net>,
- =?iSo-2022-jp?q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.net>
-Resent-Bcc: =?ISO-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.net>,
- =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.net>
+Resent-From: =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>,
+ =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Resent-Sender: =?iSO-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Resent-To: =?ISO-2022-jp?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.net>,
+ =?isO-2022-jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.net>
+Resent-Cc: =?iSo-2022-jp?q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.net>,
+ =?ISO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.net>
+Resent-Bcc: =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.net>,
+ =?iso-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multiPaRt/Related; charset="iso-2022-JP"; bOundary="RelatedBoundaryString"
-Content-Transfer-Encoding: quoted-pRinTABLE
+Content-Type: multipaRT/RELATED; CHARSEt="Iso-2022-JP"; BOUNDAry="RelatedBoundaryString"
+Content-Transfer-Encoding: qUoted-printaBLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: MUlTipart/aLtERNATIVE; BOUNDaRY="AlternativeBoundaryString"
+Content-Type: MUltipart/altERNATIVE; BOUNDARy="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: Text/PlAiN; CHARSEt="ISO-2022-jp"
-Content-Transfer-Encoding: quoted-PRintable
+Content-Type: tExt/pLaIn; CHARSeT="ISo-2022-jp"
+Content-Transfer-Encoding: quoteD-pRINtable
 
 =1B$B?'$OFw$($I=1B(B
 =1B$B;6$j$L$k$r=1B(B
@@ -65,8 +65,8 @@ $X$K$[$U$M$`$l$p$L$b$d$N$&$A!#=1B(B
 43$;$h$(=3D.7R$1$L!#=1B(B
 
 --AlternativeBoundaryString
-Content-Type: text/enRICHED; CHARSET="ISo-2022-JP"
-Content-Transfer-Encoding: QUOTED-pRintable
+Content-Type: text/EnrICHED; CHARSET="ISO-2022-Jp"
+Content-Transfer-Encoding: QUOTEd-printable
 
 <bold>=1B$B?'$OFw$($I=1B(B</bold>
 <italic>=1B$B;6$j$L$k$r=1B(B</italic>
@@ -94,8 +94,8 @@ $X$K$[$U$M$`$l$p$L$b$d$N$&$A!#=1B(B
 43$;$h$(=3D.7R$1$L!#=1B(B
 
 --AlternativeBoundaryString
-Content-Type: text/html; CHARset="iso-2022-JP"
-Content-Transfer-Encoding: quOTED-PRINTABle
+Content-Type: text/htML; cHArSet="iso-2022-JP"
+Content-Transfer-Encoding: QUOTED-PRINtABle
 
 <html>
 <div dir=3D"ltr">
@@ -129,9 +129,9 @@ tMU43$;$h$(=3D.7R$1$L!#=1B(B</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; nAMe="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: bASE64
-Content-Disposition: INLINE; FILEname="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NaME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLINe; FIleName="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

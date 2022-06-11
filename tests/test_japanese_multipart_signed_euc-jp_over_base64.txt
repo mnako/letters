@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>,
- =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-Sender: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
-Reply-To: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-To: =?eUC-JP?b?zbnK2KXcpdY=?= <bob.yuubin@example.com>,
- =?Euc-JP?b?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.com>
-Cc: =?euC-jp?b?zbnK2KXApfM=?= <dan.yuubin@example.com>,
- =?EUC-jP?B?zbnK2KWkobyl1g==?= <eve.yubin@example.com>
-Bcc: =?euc-JP?B?zbnK2KXVpeml86Wv?= <frank.yuubin@example.com>,
- =?Euc-jp?b?zbnK2KWwpeylpKW5?= <grace.yubin@example.com>
+From: =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>,
+ =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+Sender: =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
+Reply-To: =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+To: =?EUC-JP?B?zbnK2KXcpdY=?= <bob.yuubin@example.com>,
+ =?euc-JP?b?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.com>
+Cc: =?Euc-jp?b?zbnK2KXApfM=?= <dan.yuubin@example.com>,
+ =?euC-jP?b?zbnK2KWkobyl1g==?= <eve.yubin@example.com>
+Bcc: =?EUc-Jp?b?zbnK2KXVpeml86Wv?= <frank.yuubin@example.com>,
+ =?Euc-JP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?Euc-jp?b?pKSk7aTPss4=?=
+ =?EUC-JP?B?pKSk7aTPss4=?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>,
- =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
-Resent-Sender: =?eUC-jp?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
-Resent-To: =?eUC-JP?b?zbnK2KXcpdY=?= <bob.yuubin@example.net>,
- =?Euc-JP?b?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.net>
-Resent-Cc: =?euC-jp?b?zbnK2KXApfM=?= <dan.yuubin@example.net>,
- =?EUC-jP?B?zbnK2KWkobyl1g==?= <eve.yubin@example.net>
-Resent-Bcc: =?euc-JP?B?zbnK2KXVpeml86Wv?= <frank.yuubin@example.net>,
- =?Euc-jp?b?zbnK2KWwpeylpKW5?= <grace.yubin@example.net>
+Resent-From: =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>,
+ =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.com>
+Resent-Sender: =?EUc-JP?B?zbnK2KWipeqluQ==?= <alice.yuubin@example.net>
+Resent-To: =?EUC-JP?B?zbnK2KXcpdY=?= <bob.yuubin@example.net>,
+ =?euc-JP?b?zbnK2KWtpeOl7aXr?= <carol.yuubin@example.net>
+Resent-Cc: =?Euc-jp?b?zbnK2KXApfM=?= <dan.yuubin@example.net>,
+ =?euC-jP?b?zbnK2KWkobyl1g==?= <eve.yubin@example.net>
+Resent-Bcc: =?EUc-Jp?b?zbnK2KXVpeml86Wv?= <frank.yuubin@example.net>,
+ =?Euc-JP?B?zbnK2KWwpeylpKW5?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multIpART/SIGNED;
-              CHArSet="EuC-JP";
-              PROTOCOL="APPLication/pkcs7-SIGnature";
-              micALG=sHA1;
-              BOUNDARY=SignedBoundaryString
-Content-Transfer-Encoding: BASE64
+Content-Type: MULTipart/signeD;
+              ChaRSET="EUC-JP";
+              protocOL="aPPLICATION/PkcS7-signatuRe";
+              mICAlg=sha1;
+              boundarY=SignedBoundaryString
+Content-Transfer-Encoding: basE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: TeXT/PLAIN
-Content-Transfer-Encoding: BASE64
+Content-Type: TEXT/PLAiN
+Content-Transfer-Encoding: basE64
 
 v6ekz8b3pKikyQq7tqTqpMyk66TyCrLmpKzApMOvpL4Kvu+kyqTppPMKza2w2aTOsfy7swq6o8b8
 sdukqKTGCsD1pK3MtLirpLgKv+ykpKTipLukuqGjCgpJcm8gd2EgbmlvZWRvIC8gQ2hpcmludXJ1
@@ -51,9 +51,9 @@ pOyk8qS+t6++pKS5pMi14b+ppOrEyaTSpOakr7uzvuukzsLHv+yk2KTru9Kk6cH0zdW0s6S7pOik
 qL2ut9KksaTMoaM=
 
 --SignedBoundaryString
-Content-Type: APplication/pkCs7-SIgnatuRe; naMe=smime.p7s
-Content-Transfer-Encoding: bASE64
-Content-Disposition: ATTACHMeNt; fiLeNaMe=smime.p7s
+Content-Type: aPplICATION/PKCs7-signaturE; NAMe=smime.p7s
+Content-Transfer-Encoding: base64
+Content-Disposition: attachmeNT; FiLENAME=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

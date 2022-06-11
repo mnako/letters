@@ -1,33 +1,33 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-From: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>,
- =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-Sender: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
-Reply-To: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-To: =?GBK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.com>,
- =?GBK?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.com>
-Cc: =?GBk?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.com>,
- =?gbk?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.com>
-Bcc: =?gbK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.com>,
- =?gBK?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.com>
+From: =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>,
+ =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Sender: =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Reply-To: =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+To: =?gbK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.com>,
+ =?GBk?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.com>
+Cc: =?gBK?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.com>,
+ =?Gbk?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.com>
+Bcc: =?GBK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.com>,
+ =?Gbk?b?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?GBK?B?yqnKz8qzyqjKtw==?=
+ =?gbk?b?yqnKz8qzyqjKtw==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-Resent-From: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>,
- =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
-Resent-Sender: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-Resent-To: =?GBK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.net>,
- =?GBK?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.net>
-Resent-Cc: =?GBk?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.net>,
- =?gbk?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.net>
-Resent-Bcc: =?gbK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.net>,
- =?gBK?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.net>
+Resent-From: =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>,
+ =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Resent-Sender: =?gbk?b?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Resent-To: =?gbK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.net>,
+ =?GBk?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.net>
+Resent-Cc: =?gBK?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.net>,
+ =?Gbk?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.net>
+Resent-Bcc: =?GBK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.net>,
+ =?Gbk?b?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: text/plain; chaRsET=GBK
+Content-Type: TEXT/PLAIN; CHarset=Gbk
 Content-Transfer-Encoding: BASE64
 X-Clacks-Overhead: GNU Terry Pratchett
 

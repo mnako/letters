@@ -4,13 +4,13 @@ From: =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>,
 Sender: =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
 Reply-To: =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
 To: =?Euc-KR?B?ueQgvPa9xcDa?= <bob.susinja@example.com>,
- =?EUC-kR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.com>
-Cc: =?euC-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.com>,
- =?euc-kr?b?wMy66iC89r3FwNo=?= <eve.susinja@example.com>
-Bcc: =?euC-KR?B?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.com>,
- =?eUc-KR?B?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.com>
+ =?EUC-KR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.com>
+Cc: =?eUc-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.com>,
+ =?euc-kR?b?wMy66iC89r3FwNo=?= <eve.susinja@example.com>
+Bcc: =?euc-kr?B?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.com>,
+ =?EUC-kR?b?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?eUC-kR?b?x9Gxub7uIMbSsde3pQ==?=
+ =?Euc-kr?b?x9Gxub7uIMbSsde3pQ==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
@@ -21,13 +21,13 @@ Resent-From: =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example
  =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
 Resent-Sender: =?euc-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
 Resent-To: =?Euc-KR?B?ueQgvPa9xcDa?= <bob.susinja@example.net>,
- =?EUC-kR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.net>
-Resent-Cc: =?euC-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.net>,
- =?euc-kr?b?wMy66iC89r3FwNo=?= <eve.susinja@example.net>
-Resent-Bcc: =?euC-KR?B?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.net>,
- =?eUc-KR?B?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.net>
+ =?EUC-KR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.net>
+Resent-Cc: =?eUc-kr?b?tO0gvPa9xcDa?= <dan.susinja@example.net>,
+ =?euc-kR?b?wMy66iC89r3FwNo=?= <eve.susinja@example.net>
+Resent-Bcc: =?euc-kr?B?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.net>,
+ =?EUC-kR?b?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: tExT/PLAIN; CHArSeT=euc-kR
+Content-Type: TExT/plain; chaRSeT=EUC-KR
 Content-Transfer-Encoding: BASE64
 X-Clacks-Overhead: GNU Terry Pratchett
 

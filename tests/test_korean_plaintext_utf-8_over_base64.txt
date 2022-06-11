@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-From: =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>,
- =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-Sender: =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
-Reply-To: =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-To: =?uTF-8?b?67ClIOyImOyLoOyekA==?= <bob.susinja@example.com>,
- =?utf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.com>
+From: =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>,
+ =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+Sender: =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+To: =?utf-8?b?67ClIOyImOyLoOyekA==?= <bob.susinja@example.com>,
+ =?UTf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.com>
 Cc: =?uTF-8?b?64yEIOyImOyLoOyekA==?= <dan.susinja@example.com>,
- =?UTF-8?B?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.com>
-Bcc: =?uTF-8?b?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.com>,
- =?UTF-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.com>
+ =?utf-8?B?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.com>
+Bcc: =?UTF-8?B?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.com>,
+ =?utF-8?B?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?utF-8?B?7ZWc6rWt7Ja0IO2MrOq3uOueqA==?=
+ =?UTF-8?B?7ZWc6rWt7Ja0IO2MrOq3uOueqA==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-Resent-From: =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>,
- =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
-Resent-Sender: =?UTF-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
-Resent-To: =?uTF-8?b?67ClIOyImOyLoOyekA==?= <bob.susinja@example.net>,
- =?utf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.net>
+Resent-From: =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>,
+ =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?UTf-8?B?7JWo66as7IqkIOuztOuCtOuKlOyCrOuejA==?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?utf-8?b?67ClIOyImOyLoOyekA==?= <bob.susinja@example.net>,
+ =?UTf-8?b?7LqQ66GkIOyImOyLoOyekA==?= <carol.susinja@example.net>
 Resent-Cc: =?uTF-8?b?64yEIOyImOyLoOyekA==?= <dan.susinja@example.net>,
- =?UTF-8?B?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.net>
-Resent-Bcc: =?uTF-8?b?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.net>,
- =?UTF-8?b?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.net>
+ =?utf-8?B?7J2067iMIOyImOyLoOyekA==?= <eve.susinja@example.net>
+Resent-Bcc: =?UTF-8?B?7ZSE656t7YGsIOyImOyLoOyekA==?= <frank.susinja@example.net>,
+ =?utF-8?B?6re466CI7J207IqkIOyImOyLoOyekA==?= <grace.susinja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TEXT/PLain; charset=utf-8
-Content-Transfer-Encoding: BASE64
+Content-Type: Text/Plain; charSet=UTF-8
+Content-Transfer-Encoding: BAsE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

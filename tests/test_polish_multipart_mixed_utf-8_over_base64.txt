@@ -1,46 +1,46 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>,
- =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
-Sender: =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
-Reply-To: =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
-To: =?utf-8?B?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.com>,
- =?UTF-8?b?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.com>
-Cc: =?UtF-8?B?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.com>,
- =?uTF-8?b?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.com>
-Bcc: =?utf-8?b?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.com>,
- =?utf-8?B?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.com>
+From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>,
+ =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
+Reply-To: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.com>,
+ =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.com>
+Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.com>,
+ =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.com>
+Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.com>,
+ =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?UTF-8?B?UG9sc2tpZSBwYW5ncmFteQ==?=
+ =?utf-8?B?UG9sc2tpZSBwYW5ncmFteQ==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>,
- =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.com>
-Resent-Sender: =?utF-8?b?QWxpY2phIE5hZGFqxIVjYQ==?= <alicja.nadajaca@example.net>
-Resent-To: =?utf-8?B?Qm9iIE9kYmllcmFqxIVjeQ==?= <bob.odbierajacy@example.net>,
- =?UTF-8?b?S2Fyb2xpbmEgT2RiaWVyYWrEhWNh?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?UtF-8?B?RGFuaWVsIE9kYmllcmFqxIVjeQ==?= <daniel.odbierajacy@example.net>,
- =?uTF-8?b?RXdhIE9kYmllcmFqxIVjYQ==?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?utf-8?b?RnJhbmVrIE9kYmllcmFqxIVjeQ==?= <franek.odbierajacy@example.net>,
- =?utf-8?B?R3Jhxbx5bmEgT2RiaWVyYWrEhWNh?= <grazyna.odbierajaca@example.net>
+Resent-From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>,
+ =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
+Resent-Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.net>,
+ =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.net>,
+ =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.net>,
+ =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: mULTIPART/MIxed; Charset="uTf-8"; BOuNDary="MixedBoundaryString"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mIXED; charset="utf-8"; bouNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: BASE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: multipaRt/RELAtEd; boundaRy="RelatedBoundaryString"
+Content-Type: MUlTipArT/RELATED; BOUNdAry="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: mULTIPART/ALTeRNativE; BOUNDARY="AlternativeBoundaryString"
+Content-Type: multipart/ALtERNative; bounDArY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TEXt/plain; charset="utf-8"
-Content-Transfer-Encoding: BaSe64
+Content-Type: TEXT/PLAIN; CHaRSet="UtF-8"
+Content-Transfer-Encoding: BASE64
 
 SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiIQpQw7NqZMW6
 xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBmbGFzenkhCk3EmcW8bnkgYsSFZMW6
@@ -52,8 +52,8 @@ IGZ1dHJ5biEKQ2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSFZMW6IHBsZcWbxYQgeiBmdWdp
 Lg==
 
 --AlternativeBoundaryString
-Content-Type: text/enriCHED; CHARSET="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Type: TEXT/ENriched; charseT="uTF-8"
+Content-Transfer-Encoding: Base64
 
 PGJvbGQ+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiITwv
 Ym9sZD4KPGl0YWxpYz5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBm
@@ -66,8 +66,8 @@ hHNrxIUgZ8SZxZsgZnV0cnluIQpDaHd5xIcgbWHFgsW8b25rxJksIHN0csOzaiBixIVkxbogcGxl
 xZvFhCB6IGZ1Z2ku
 
 --AlternativeBoundaryString
-Content-Type: texT/HTML; CHARSET="UTf-8"
-Content-Transfer-Encoding: bASE64
+Content-Type: text/html; chaRsET="utf-8"
+Content-Transfer-Encoding: base64
 
 PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD5KZcW8dSBrbMSFdHcsIHNwxYLDs2TFuiBGaW5vbSBj
 esSZxZvEhyBncnkgaGHFhGIhPC9wPgo8cD5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvE
@@ -82,16 +82,16 @@ ZMW6IHBsZcWbxYQgeiBmdWdpLjwvcD4KPC9kaXY+CjwvaHRtbD4
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAME="inline-jpg-image-without-disposition.jpg"
-Content-Transfer-Encoding: BASE64
+Content-Type: image/jpeg; name="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: bAsE64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BaSe64
-Content-Disposition: INLINE; FILENAMe="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; nAMe="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: base64
+Content-Disposition: inliNe; fiLENAME="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -100,23 +100,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: ApPlication/pdF; NAME="attached-pdf-name.pdf"
+Content-Type: APPLICATIon/pDf; NAME="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: ATTAcHMent; fiLeNAME="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPLICaTion/pdf; name="attached-pdf-without-disposition.pdf"
 Content-Transfer-Encoding: base64
-Content-Disposition: attachMeNT; FILENAME="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPLIcaTiON/PDF; NAME="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: BASe64
-
-JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
-XT4+XT4+Pj4+Pg==
-
---MixedBoundaryString
-Content-Type: Application/JSON; name="attached-json-name.json"
-Content-Disposition: attachmENt; fILENAME="attached-json-filename.json"
+Content-Type: Application/jsON; NAME="attached-json-name.json"
+Content-Disposition: ATTACHMENT; filenAme="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

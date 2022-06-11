@@ -1,46 +1,46 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-From: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
- =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Sender: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Reply-To: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-To: =?Gb18030?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
- =?gb18030?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
-Cc: =?gb18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
- =?GB18030?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
-Bcc: =?GB18030?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
- =?gb18030?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
+From: =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
+ =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Sender: =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Reply-To: =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+To: =?GB18030?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
+ =?gb18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
+Cc: =?GB18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
+ =?GB18030?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
+Bcc: =?gb18030?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
+ =?GB18030?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?gB18030?Q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
+ =?GB18030?Q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-Resent-From: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
- =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Resent-Sender: =?GB18030?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Resent-To: =?Gb18030?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
- =?gb18030?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
-Resent-Cc: =?gb18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
- =?GB18030?q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
-Resent-Bcc: =?GB18030?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
- =?gb18030?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
+Resent-From: =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
+ =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Resent-Sender: =?gb18030?q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Resent-To: =?GB18030?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
+ =?gb18030?Q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
+Resent-Cc: =?GB18030?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
+ =?GB18030?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
+Resent-Bcc: =?gb18030?Q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
+ =?GB18030?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: multipart/mIXED; CHARsEt="gb18030"; boUNdARY="MixedBoundaryString"
-Content-Transfer-Encoding: qUOTED-PRInTaBLE
+Content-Type: mULTIPArT/miXed; cHArSET="gB18030"; BOUNDArY="MixedBoundaryString"
+Content-Transfer-Encoding: quOTED-PRINTABlE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: MULTIPART/RElated; boundarY="RelatedBoundaryString"
+Content-Type: Multipart/rElAtED; boundary="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: muLTiPaRt/alteRnaTIVE; BOUNDARY="AlternativeBoundaryString"
+Content-Type: multipaRT/ALTERNATIVE; BoundARY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TEXT/plaIn; CHARSET="GB18030"
-Content-Transfer-Encoding: qUoted-prinTabLE
+Content-Type: TEXT/PLAIN; CHArsEt="gb18030"
+Content-Transfer-Encoding: QUOTED-PRiNtable
 
 =CA=AF=CA=D2=CA=AB=CA=BF=CA=A9=CA=CF=A3=AC=CA=C8=CA=A8=A3=AC=CA=C4=CA=B3=CA=
 =AE=CA=A8=A1=A3
@@ -57,8 +57,8 @@ Content-Transfer-Encoding: qUoted-prinTabLE
 =CA=D4=CA=CD=CA=C7=CA=C2=A1=A3
 
 --AlternativeBoundaryString
-Content-Type: TExt/enriched; cHaRSET="GB18030"
-Content-Transfer-Encoding: QUOtEd-PRINTABLE
+Content-Type: text/enricHEd; charset="gb18030"
+Content-Transfer-Encoding: qUoTED-PRINTABLe
 
 <bold>=CA=AF=CA=D2=CA=AB=CA=BF=CA=A9=CA=CF=A3=AC=CA=C8=CA=A8=A3=AC=CA=C4=CA=
 =B3=CA=AE=CA=A8=A1=A3</bold>
@@ -76,8 +76,8 @@ e>
 =CA=D4=CA=CD=CA=C7=CA=C2=A1=A3
 
 --AlternativeBoundaryString
-Content-Type: TEXT/HTML; CHaRseT="gB18030"
-Content-Transfer-Encoding: QUOTED-pRintable
+Content-Type: text/HtML; CHARSET="GB18030"
+Content-Transfer-Encoding: quotED-PRINTABLE
 
 <html>
 <div dir=3D"ltr">
@@ -101,16 +101,16 @@ Content-Transfer-Encoding: QUOTED-pRintable
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; name="inline-jpg-image-without-disposition.jpg"
-Content-Transfer-Encoding: BaSE64
+Content-Type: image/jpeg; NAMe="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: BaSe64
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
 EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NaMe="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline; filENAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; naMe="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLIne; Filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -119,23 +119,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: applicatioN/PDF; NAME="attached-pdf-name.pdf"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: ATtAchMeNt; FILENAme="attached-pdf-filename.pdf"
+Content-Type: appliCAtION/PDf; name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: baSe64
+Content-Disposition: AtTACHMENT; FILENaMe="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APplication/pDF; nAME="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: bASE64
+Content-Type: aPPLICATION/pDF; name="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: application/json; name="attached-json-name.json"
-Content-Disposition: attachmENT; fILENAmE="attached-json-filename.json"
+Content-Type: aPplICatiOn/json; name="attached-json-name.json"
+Content-Disposition: attaChmENT; FiLENAMe="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--

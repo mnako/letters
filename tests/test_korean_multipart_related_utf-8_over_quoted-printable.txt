@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-From: =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>,
- =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
-Sender: =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>
-Reply-To: =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
-To: =?uTF-8?q?=EB=B0=A5_=EC=88=98=EC=8B=A0=EC=9E=90?= <bob.susinja@example.com>,
- =?utf-8?q?=EC=BA=90=EB=A1=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <carol.susinja@example.com>
-Cc: =?Utf-8?Q?=EB=8C=84_=EC=88=98=EC=8B=A0=EC=9E=90?= <dan.susinja@example.com>,
- =?UTf-8?Q?=EC=9D=B4=EB=B8=8C_=EC=88=98=EC=8B=A0=EC=9E=90?= <eve.susinja@example.com>
-Bcc: =?UTf-8?q?=ED=94=84=EB=9E=AD=ED=81=AC_=EC=88=98=EC=8B=A0=EC=9E=90?= <frank.susinja@example.com>,
- =?UtF-8?Q?=EA=B7=B8=EB=A0=88=EC=9D=B4=EC=8A=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <grace.susinja@example.com>
+From: =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>,
+ =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
+Sender: =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
+To: =?UTF-8?Q?=EB=B0=A5_=EC=88=98=EC=8B=A0=EC=9E=90?= <bob.susinja@example.com>,
+ =?utF-8?q?=EC=BA=90=EB=A1=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <carol.susinja@example.com>
+Cc: =?utF-8?q?=EB=8C=84_=EC=88=98=EC=8B=A0=EC=9E=90?= <dan.susinja@example.com>,
+ =?UTF-8?Q?=EC=9D=B4=EB=B8=8C_=EC=88=98=EC=8B=A0=EC=9E=90?= <eve.susinja@example.com>
+Bcc: =?utf-8?q?=ED=94=84=EB=9E=AD=ED=81=AC_=EC=88=98=EC=8B=A0=EC=9E=90?= <frank.susinja@example.com>,
+ =?utf-8?q?=EA=B7=B8=EB=A0=88=EC=9D=B4=EC=8A=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <grace.susinja@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?utf-8?q?=ED=95=9C=EA=B5=AD=EC=96=B4_=ED=8C=AC=EA=B7=B8=EB=9E=A8?=
+ =?uTF-8?Q?=ED=95=9C=EA=B5=AD=EC=96=B4_=ED=8C=AC=EA=B7=B8=EB=9E=A8?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
-Resent-From: =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>,
- =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>
-Resent-Sender: =?UTF-8?Q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
-Resent-To: =?uTF-8?q?=EB=B0=A5_=EC=88=98=EC=8B=A0=EC=9E=90?= <bob.susinja@example.net>,
- =?utf-8?q?=EC=BA=90=EB=A1=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <carol.susinja@example.net>
-Resent-Cc: =?Utf-8?Q?=EB=8C=84_=EC=88=98=EC=8B=A0=EC=9E=90?= <dan.susinja@example.net>,
- =?UTf-8?Q?=EC=9D=B4=EB=B8=8C_=EC=88=98=EC=8B=A0=EC=9E=90?= <eve.susinja@example.net>
-Resent-Bcc: =?UTf-8?q?=ED=94=84=EB=9E=AD=ED=81=AC_=EC=88=98=EC=8B=A0=EC=9E=90?= <frank.susinja@example.net>,
- =?UtF-8?Q?=EA=B7=B8=EB=A0=88=EC=9D=B4=EC=8A=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <grace.susinja@example.net>
+Resent-From: =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>,
+ =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?utf-8?q?=EC=95=A8=EB=A6=AC=EC=8A=A4_=EB=B3=B4=EB=82=B4=EB=8A=94=EC=82=AC=EB=9E=8C?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?UTF-8?Q?=EB=B0=A5_=EC=88=98=EC=8B=A0=EC=9E=90?= <bob.susinja@example.net>,
+ =?utF-8?q?=EC=BA=90=EB=A1=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <carol.susinja@example.net>
+Resent-Cc: =?utF-8?q?=EB=8C=84_=EC=88=98=EC=8B=A0=EC=9E=90?= <dan.susinja@example.net>,
+ =?UTF-8?Q?=EC=9D=B4=EB=B8=8C_=EC=88=98=EC=8B=A0=EC=9E=90?= <eve.susinja@example.net>
+Resent-Bcc: =?utf-8?q?=ED=94=84=EB=9E=AD=ED=81=AC_=EC=88=98=EC=8B=A0=EC=9E=90?= <frank.susinja@example.net>,
+ =?utf-8?q?=EA=B7=B8=EB=A0=88=EC=9D=B4=EC=8A=A4_=EC=88=98=EC=8B=A0=EC=9E=90?= <grace.susinja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MUltipart/relAtED; charset="utf-8"; bounDaRY="RelatedBoundaryString"
-Content-Transfer-Encoding: QUOTED-PrIntaBLE
+Content-Type: multipart/RElATED; ChArSet="utf-8"; boUnDARY="RelatedBoundaryString"
+Content-Transfer-Encoding: QUOTED-PRintaBLe
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: MULTIPART/aLternative; bounDaRY="AlternativeBoundaryString"
+Content-Type: mULtIPART/ALTERNAtIVe; bOUNdarY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: tExt/plain; cHarSET="UTF-8"
-Content-Transfer-Encoding: QUOTED-PrinTABLE
+Content-Type: TexT/PLAIN; chARSEt="UTF-8"
+Content-Transfer-Encoding: QuoteD-pRiNTABLE
 
 =ED=82=A4=EC=8A=A4=EC=9D=98 =EA=B3=A0=EC=9C=A0=EC=A1=B0=EA=B1=B4=EC=9D=80 =
 =EC=9E=85=EC=88=A0=EB=81=BC=EB=A6=AC =EB=A7=8C=EB=82=98=EC=95=BC =ED=95=98=
@@ -45,8 +45,8 @@ Content-Transfer-Encoding: QUOTED-PrinTABLE
 =EC=9A=94=EC=B9=98 =EC=95=8A=EB=8B=A4.
 
 --AlternativeBoundaryString
-Content-Type: TEXT/ENriChed; charset="utf-8"
-Content-Transfer-Encoding: QUoted-printaBlE
+Content-Type: TEXT/ENRiCHed; ChaRsET="UTF-8"
+Content-Transfer-Encoding: QUOTED-PRINtAble
 
 <bold>=ED=82=A4=EC=8A=A4=EC=9D=98</bold> <italic>=EA=B3=A0=EC=9C=A0=EC=A1=
 =B0=EA=B1=B4=EC=9D=80</italic> <fixed>=EC=9E=85=EC=88=A0=EB=81=BC=EB=A6=AC<=
@@ -55,8 +55,8 @@ Content-Transfer-Encoding: QUoted-printaBlE
 =94=EC=B9=98 =EC=95=8A=EB=8B=A4.
 
 --AlternativeBoundaryString
-Content-Type: tEXT/HTML; CHARSET="utf-8"
-Content-Transfer-Encoding: QuOTED-PRINtABle
+Content-Type: TeXT/HTML; CHARSet="Utf-8"
+Content-Transfer-Encoding: quoted-prINTable
 
 <html>
 <div dir=3D"ltr">
@@ -70,9 +70,9 @@ Content-Transfer-Encoding: QuOTED-PRINtABle
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; Name="inline-jpg-image-name.jpg"
+Content-Type: image/jpeg; name="inline-jpg-image-name.jpg"
 Content-Transfer-Encoding: base64
-Content-Disposition: iNLINE; FIlename="inline-jpg-image-filename.jpg"
+Content-Disposition: inlInE; FIlENAme="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

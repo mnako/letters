@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-From: =?aScii?q?Alice_Sender?= <alice.sender@example.com>,
- =?aScii?q?Alice_Sender?= <alice.sender@example.net>
-Sender: =?aScii?q?Alice_Sender?= <alice.sender@example.com>
-Reply-To: =?aScii?q?Alice_Sender?= <alice.sender@example.net>
-To: =?AsCII?Q?Bob_Recipient?= <bob.recipient@example.com>,
- =?ascIi?q?Carol_Recipient?= <carol.recipient@example.com>
-Cc: =?Ascii?Q?Dan_Recipient?= <dan.recipient@example.com>,
- =?asciI?q?Eve_Recipient?= <eve.recipient@example.com>
-Bcc: =?ascii?Q?Frank_Recipient?= <frank.recipient@example.com>,
- =?asCiI?Q?Grace_Recipient?= <grace.recipient@example.com>
+From: =?aSCii?q?Alice_Sender?= <alice.sender@example.com>,
+ =?aSCii?q?Alice_Sender?= <alice.sender@example.net>
+Sender: =?aSCii?q?Alice_Sender?= <alice.sender@example.com>
+Reply-To: =?aSCii?q?Alice_Sender?= <alice.sender@example.net>
+To: =?asciI?q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?aScii?q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?AsciI?Q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?aScii?q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?AsCii?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?AsCiI?q?Grace_Recipient?= <grace.recipient@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?AScII?Q?English_Pangrams?=
+ =?AScIi?q?English_Pangrams?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-Resent-From: =?aScii?q?Alice_Sender?= <alice.sender@example.net>,
- =?aScii?q?Alice_Sender?= <alice.sender@example.com>
-Resent-Sender: =?aScii?q?Alice_Sender?= <alice.sender@example.net>
-Resent-To: =?AsCII?Q?Bob_Recipient?= <bob.recipient@example.net>,
- =?ascIi?q?Carol_Recipient?= <carol.recipient@example.net>
-Resent-Cc: =?Ascii?Q?Dan_Recipient?= <dan.recipient@example.net>,
- =?asciI?q?Eve_Recipient?= <eve.recipient@example.net>
-Resent-Bcc: =?ascii?Q?Frank_Recipient?= <frank.recipient@example.net>,
- =?asCiI?Q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-From: =?aSCii?q?Alice_Sender?= <alice.sender@example.net>,
+ =?aSCii?q?Alice_Sender?= <alice.sender@example.com>
+Resent-Sender: =?aSCii?q?Alice_Sender?= <alice.sender@example.net>
+Resent-To: =?asciI?q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?aScii?q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?AsciI?Q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?aScii?q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?AsCii?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?AsCiI?q?Grace_Recipient?= <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TExt/plain; charSEt=AsCIi
-Content-Transfer-Encoding: QuOteD-pRintABLe
+Content-Type: TexT/PlAiN; charSET=AScii
+Content-Transfer-Encoding: QuOtED-prInTaBlE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

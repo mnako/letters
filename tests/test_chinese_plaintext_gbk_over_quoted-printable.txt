@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-From: =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
- =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Sender: =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Reply-To: =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-To: =?GBk?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
+From: =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>,
+ =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Sender: =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Reply-To: =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+To: =?GBk?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.com>,
  =?gbk?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.com>
-Cc: =?GBK?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
- =?Gbk?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
-Bcc: =?gBK?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
- =?Gbk?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
+Cc: =?GbK?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.com>,
+ =?GBK?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.com>
+Bcc: =?Gbk?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.com>,
+ =?gbk?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?GBK?Q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
+ =?gBK?Q?=CA=A9=CA=CF=CA=B3=CA=A8=CA=B7?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-Resent-From: =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
- =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
-Resent-Sender: =?Gbk?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
-Resent-To: =?GBk?q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
+Resent-From: =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>,
+ =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.com>
+Resent-Sender: =?GBK?Q?=B0=AC=C0=F2=BDz_=B7=A2=BC=FE=C8=CB?= <alice.fajianren@example.net>
+Resent-To: =?GBk?Q?=C5c=F5U=B2=AE_=CA=D5=BC=FE=C8=CB?= <bob.shoujianren@example.net>,
  =?gbk?q?=BF=A8=C2=DE=B6=FB_=CA=D5=BC=FE=C8=CB?= <carol.shoujianren@example.net>
-Resent-Cc: =?GBK?q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
- =?Gbk?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
-Resent-Bcc: =?gBK?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
- =?Gbk?q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
+Resent-Cc: =?GbK?Q?=B4=F7=B7=F2_=CA=D5=BC=FE=C8=CB?= <dave.shoujianren@example.net>,
+ =?GBK?Q?=D2=C1=B7=F2_=CA=D5=BC=FE=C8=CB?= <eve.shoujianren@example.net>
+Resent-Bcc: =?Gbk?q?=B0=AC=C8=F8=BF=CB_=D2=C1=B7=F2?= <isaac.shoujianren@example.net>,
+ =?gbk?Q?=D9Z=CB=B9=CD=A1_=D2=C1=B7=F2?= <justin.shoujianren@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: text/plain; charseT=GBK
-Content-Transfer-Encoding: QUOTED-Printable
+Content-Type: text/plAin; chArset=gbK
+Content-Transfer-Encoding: QUOTED-PRINTabLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

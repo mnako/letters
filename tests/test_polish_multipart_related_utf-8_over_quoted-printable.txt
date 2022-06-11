@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>,
- =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-Sender: =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
-Reply-To: =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-To: =?Utf-8?Q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.com>,
- =?uTf-8?q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.com>
-Cc: =?uTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.com>,
- =?UTf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.com>
-Bcc: =?UTf-8?q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.com>,
- =?utf-8?q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.com>
+From: =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>,
+ =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+Sender: =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>
+Reply-To: =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+To: =?UTF-8?Q?Odbieraj=C4=85cy,_Bob?= <bob.odbierajacy@example.com>,
+ =?utF-8?q?Odbieraj=C4=85ca,_Karolina?= <karolina.odbierajaca@example.com>
+Cc: =?utf-8?Q?Odbieraj=C4=85cy,_Daniel?= <daniel.odbierajacy@example.com>,
+ =?UTF-8?Q?Odbieraj=C4=85ca,_Ewa?= <ewa.odbierajaca@example.com>
+Bcc: =?uTF-8?Q?Odbieraj=C4=85cy,_Franek?= <franek.odbierajacy@example.com>,
+ =?utf-8?Q?Odbieraj=C4=85ca,_Gra=C5=BCyna?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?UTF-8?Q?Polskie_pangramy?=
+ =?UTf-8?q?Polskie_pangramy?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>,
- =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.com>
-Resent-Sender: =?UtF-8?Q?Alicja_Nadaj=C4=85ca?= <alicja.nadajaca@example.net>
-Resent-To: =?Utf-8?Q?Bob_Odbieraj=C4=85cy?= <bob.odbierajacy@example.net>,
- =?uTf-8?q?Karolina_Odbieraj=C4=85ca?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?uTF-8?Q?Daniel_Odbieraj=C4=85cy?= <daniel.odbierajacy@example.net>,
- =?UTf-8?Q?Ewa_Odbieraj=C4=85ca?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?UTf-8?q?Franek_Odbieraj=C4=85cy?= <franek.odbierajacy@example.net>,
- =?utf-8?q?Gra=C5=BCyna_Odbieraj=C4=85ca?= <grazyna.odbierajaca@example.net>
+Resent-From: =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>,
+ =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.com>
+Resent-Sender: =?Utf-8?Q?Nadaj=C4=85ca,_Alicja?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?Q?Odbieraj=C4=85cy,_Bob?= <bob.odbierajacy@example.net>,
+ =?utF-8?q?Odbieraj=C4=85ca,_Karolina?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?utf-8?Q?Odbieraj=C4=85cy,_Daniel?= <daniel.odbierajacy@example.net>,
+ =?UTF-8?Q?Odbieraj=C4=85ca,_Ewa?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?uTF-8?Q?Odbieraj=C4=85cy,_Franek?= <franek.odbierajacy@example.net>,
+ =?utf-8?Q?Odbieraj=C4=85ca,_Gra=C5=BCyna?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/Related; charset="UTF-8"; BouNdary="RelatedBoundaryString"
-Content-Transfer-Encoding: quoted-pRInTABLE
+Content-Type: multipart/reLATED; CHARSeT="utf-8"; bouNDARY="RelatedBoundaryString"
+Content-Transfer-Encoding: QUOTED-PRintable
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: mUlTiParT/ALTERNATIvE; BouNdary="AlternativeBoundaryString"
+Content-Type: MultiparT/alternative; bOUndary="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: text/plaIN; cHarset="utf-8"
-Content-Transfer-Encoding: quoted-PRINTABLE
+Content-Type: teXT/PLAIN; CHARSEt="UTF-8"
+Content-Transfer-Encoding: quoTeD-PRINTABle
 
 Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=87 gry =
 ha=C5=84b!
@@ -57,8 +57,8 @@ Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=C5=
 =84 z fugi.
 
 --AlternativeBoundaryString
-Content-Type: tExT/eNrICHED; CHARSET="UTF-8"
-Content-Transfer-Encoding: quOted-printable
+Content-Type: TExt/enriched; charSeT="Utf-8"
+Content-Transfer-Encoding: quoted-prinTABLE
 
 <bold>Je=C5=BCu kl=C4=85tw, sp=C5=82=C3=B3d=C5=BA Finom cz=C4=99=C5=9B=C4=
 =87 gry ha=C5=84b!</bold>
@@ -78,8 +78,8 @@ Chwy=C4=87 ma=C5=82=C5=BConk=C4=99, str=C3=B3j b=C4=85d=C5=BA ple=C5=9B=C5=
 =84 z fugi.
 
 --AlternativeBoundaryString
-Content-Type: text/html; cHARSet="UTf-8"
-Content-Transfer-Encoding: quoted-prIntABLE
+Content-Type: TEXT/hTmL; chaRsET="UTF-8"
+Content-Transfer-Encoding: QUOTED-PRintable
 
 <html>
 <div dir=3D"ltr">
@@ -105,9 +105,9 @@ rzy=C5=84 fig.</p>
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NaMe="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: base64
-Content-Disposition: inlInE; FILENAME="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLinE; Filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

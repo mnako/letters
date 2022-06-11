@@ -1,10 +1,10 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-From: =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>,
- =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
-Sender: =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>
-Reply-To: =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
+From: =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>,
+ =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
+Sender: =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>
+Reply-To: =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
 To: =?UTF-8?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
- =?UTf-8?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.com>
+ =?Utf-8?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.com>
 Cc: =?utF-8?b?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.com>,
  =?utf-8?b?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.com>
 Bcc: =?utf-8?b?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.com>,
@@ -17,18 +17,18 @@ Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
-Resent-From: =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>,
- =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>
-Resent-Sender: =?UTF-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
+Resent-From: =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>,
+ =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.com>
+Resent-Sender: =?UTf-8?B?QWxpY2UgTMOkaGV0dMOkasOk?= <alice.lahettaja@example.net>
 Resent-To: =?UTF-8?b?Qm9iIFZhc3RhYW5vdHRhamE=?= <bob.vastaanottaja@exaple.com>,
- =?UTf-8?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.net>
+ =?Utf-8?b?Q2Fyb2wgVmFzdGFhbm90dGFqYQ==?= <carol.vastaanottaja@example.net>
 Resent-Cc: =?utF-8?b?RGFuIFZhc3RhYW5vdHRhamE=?= <dan.vastaanottaja@example.net>,
  =?utf-8?b?RXZlIFZhc3RhYW5vdHRhamE=?= <eve.vastaanottaja@example.net>
 Resent-Bcc: =?utf-8?b?RnJhbmsgVmFzdGFhbm90dGFqYQ==?= <frank.vastaanottaja@example.net>,
  =?utf-8?b?R3JhY2UgVmFzdGFhbm90dGFqYQ==?= <grace.vastaanottaja@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: teXt/pLAiN; Charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Type: TEXT/pLain; charset=utF-8
+Content-Transfer-Encoding: BASe64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

@@ -1,43 +1,43 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-From: =?AsciI?q?Alice_Sender?= <alice.sender@example.com>,
- =?AsciI?q?Alice_Sender?= <alice.sender@example.net>
-Sender: =?AsciI?q?Alice_Sender?= <alice.sender@example.com>
-Reply-To: =?AsciI?q?Alice_Sender?= <alice.sender@example.net>
-To: =?aSCII?q?Bob_Recipient?= <bob.recipient@example.com>,
- =?AscIi?Q?Carol_Recipient?= <carol.recipient@example.com>
-Cc: =?Ascii?Q?Dan_Recipient?= <dan.recipient@example.com>,
- =?AsciI?q?Eve_Recipient?= <eve.recipient@example.com>
-Bcc: =?aSCII?Q?Frank_Recipient?= <frank.recipient@example.com>,
- =?AsCII?Q?Grace_Recipient?= <grace.recipient@example.com>
+From: =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>,
+ =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+Sender: =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>
+Reply-To: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+To: =?asCII?q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?AScII?Q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?ascii?q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?aSCII?Q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?AScII?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?ascii?q?Grace_Recipient?= <grace.recipient@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?AsCii?q?English_Pangrams?=
+ =?ASCII?Q?English_Pangrams?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-Resent-From: =?AsciI?q?Alice_Sender?= <alice.sender@example.net>,
- =?AsciI?q?Alice_Sender?= <alice.sender@example.com>
-Resent-Sender: =?AsciI?q?Alice_Sender?= <alice.sender@example.net>
-Resent-To: =?aSCII?q?Bob_Recipient?= <bob.recipient@example.net>,
- =?AscIi?Q?Carol_Recipient?= <carol.recipient@example.net>
-Resent-Cc: =?Ascii?Q?Dan_Recipient?= <dan.recipient@example.net>,
- =?AsciI?q?Eve_Recipient?= <eve.recipient@example.net>
-Resent-Bcc: =?aSCII?Q?Frank_Recipient?= <frank.recipient@example.net>,
- =?AsCII?Q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-From: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>,
+ =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>
+Resent-Sender: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+Resent-To: =?asCII?q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?AScII?Q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?ascii?q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?aSCII?Q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?AScII?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?ascii?q?Grace_Recipient?= <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MUlTIPArT/relAtED; CHaRsEt="aScIi"; BoundArY="RelatedBoundaryString"
-Content-Transfer-Encoding: qUOTEd-pRiNTABle
+Content-Type: mULTIpART/reLAted; charset="asCIi"; bOUNdARY="RelatedBoundaryString"
+Content-Transfer-Encoding: qUOTED-PRINtaBle
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --RelatedBoundaryString
-Content-Type: multIpART/aLtErNATive; bouNDARy="AlternativeBoundaryString"
+Content-Type: multipart/alTErnaTIVe; bOUNdARY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: Text/PlAIN; ChArSeT="aSCIi"
-Content-Transfer-Encoding: QUOteD-PriNtABlE
+Content-Type: TEXT/plAIn; chARset="asciI"
+Content-Transfer-Encoding: quoTED-prINTaBLE
 
 The quick brown fox jumps over a lazy dog.
 Glib jocks quiz nymph to vex dwarf.
@@ -48,8 +48,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: tEXt/enRiCHeD; cHArSet="asCiI"
-Content-Transfer-Encoding: quOtEd-PrINtabLe
+Content-Type: teXT/enRIChed; Charset="aSCii"
+Content-Transfer-Encoding: QUOtED-PRINTAblE
 
 <bold>The quick brown fox jumps over a lazy dog.</bold>
 <italic>Glib jocks quiz nymph to vex dwarf.</italic>
@@ -60,8 +60,8 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 
 --AlternativeBoundaryString
-Content-Type: tExt/hTMl; ChArsEt="AscIi"
-Content-Transfer-Encoding: QuoTeD-pRiNTAbLE
+Content-Type: texT/html; Charset="aSCii"
+Content-Transfer-Encoding: QUOtED-PRiNTABlE
 
 <html>
 <div dir=3D"ltr">
@@ -78,9 +78,9 @@ Content-Transfer-Encoding: QuoTeD-pRiNTAbLE
 --AlternativeBoundaryString--
 
 --RelatedBoundaryString
-Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BASe64
-Content-Disposition: inlINe; FiLEnAme="inline-jpg-image-filename.jpg"
+Content-Type: image/jpeg; namE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: baSE64
+Content-Disposition: INLINE; FILENAMe="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q

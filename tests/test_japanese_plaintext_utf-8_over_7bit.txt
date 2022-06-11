@@ -4,13 +4,13 @@ From: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@ex
 Sender: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
 Reply-To: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
 To: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.com>,
- =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.com>
-Cc: =?Utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.com>,
- =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.com>
-Bcc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.com>,
- =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.com>
+ =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.com>
+Cc: =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.com>,
+ =?uTf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.com>
+Bcc: =?uTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.com>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?UTF-8?Q?=E3=81=84=E3=82=8D=E3=81=AF=E6=AD=8C?=
+ =?uTF-8?q?=E3=81=84=E3=82=8D=E3=81=AF=E6=AD=8C?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
@@ -21,13 +21,13 @@ Resent-From: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yu
  =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
 Resent-Sender: =?utF-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
 Resent-To: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.net>,
- =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.net>
-Resent-Cc: =?Utf-8?q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.net>,
- =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.net>
-Resent-Bcc: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.net>,
- =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.net>
+ =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.net>
+Resent-Cc: =?Utf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.net>,
+ =?uTf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.net>
+Resent-Bcc: =?uTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.net>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TEXT/PlAIn; cHArset=uTf-8
+Content-Type: tEXT/pLain; charSeT=UTF-8
 Content-Transfer-Encoding: 7BIT
 X-Clacks-Overhead: GNU Terry Pratchett
 

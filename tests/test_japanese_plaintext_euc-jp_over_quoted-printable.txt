@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
- =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Sender: =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Reply-To: =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-To: =?euc-Jp?Q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
- =?euc-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
-Cc: =?eUC-Jp?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
- =?eUC-jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
-Bcc: =?eUC-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
- =?EUC-jP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
+From: =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
+ =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Sender: =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Reply-To: =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+To: =?euc-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
+ =?euC-JP?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
+Cc: =?EuC-jp?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
+Bcc: =?EUc-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?euC-jp?q?=A4=A4=A4=ED=A4=CF=B2=CE?=
+ =?euc-jP?Q?=A4=A4=A4=ED=A4=CF=B2=CE?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
- =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Resent-Sender: =?eUC-jp?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Resent-To: =?euc-Jp?Q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
- =?euc-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
-Resent-Cc: =?eUC-Jp?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
- =?eUC-jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
-Resent-Bcc: =?eUC-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
- =?EUC-jP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
+Resent-From: =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
+ =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?EuC-JP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Resent-To: =?euc-jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
+ =?euC-JP?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
+Resent-Cc: =?EuC-jp?q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
+Resent-Bcc: =?EUc-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
+ =?euc-jp?q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TEXT/PLAIn; cHarset=euc-jp
-Content-Transfer-Encoding: qUOTED-PRIntable
+Content-Type: text/plaIN; cHARSET=Euc-jp
+Content-Transfer-Encoding: quoteD-PRINTABLE
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

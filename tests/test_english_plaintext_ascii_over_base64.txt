@@ -1,34 +1,34 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-From: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>,
- =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
-Sender: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
-Reply-To: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
-To: =?aSCiI?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.com>,
- =?aSciI?B?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.com>
-Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.com>,
- =?ASCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.com>
-Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.com>,
- =?aScii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.com>
+From: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>,
+ =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Sender: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Reply-To: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+To: =?aScii?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.com>,
+ =?AsCii?b?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.com>
+Cc: =?AsCII?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.com>,
+ =?aSCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.com>
+Bcc: =?asCiI?B?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.com>,
+ =?AsCii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?AScIi?b?RW5nbGlzaCBQYW5ncmFtcw==?=
+ =?AScii?b?RW5nbGlzaCBQYW5ncmFtcw==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
-Resent-From: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>,
- =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
-Resent-Sender: =?AScIi?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
-Resent-To: =?aSCiI?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.net>,
- =?aSciI?B?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.net>
-Resent-Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.net>,
- =?ASCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.net>
-Resent-Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.net>,
- =?aScii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.net>
+Resent-From: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>,
+ =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Resent-Sender: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Resent-To: =?aScii?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.net>,
+ =?AsCii?b?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.net>
+Resent-Cc: =?AsCII?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.net>,
+ =?aSCII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.net>
+Resent-Bcc: =?asCiI?B?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.net>,
+ =?AsCii?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: TExT/PLaIn; ChaRseT=ASCII
-Content-Transfer-Encoding: BasE64
+Content-Type: teXt/PLain; ChARSEt=asciI
+Content-Transfer-Encoding: BAsE64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 

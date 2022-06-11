@@ -1,44 +1,44 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-From: =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>,
- =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-Sender: =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
-Reply-To: =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-To: =?Gbk?b?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.com>,
- =?gbk?b?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.com>
-Cc: =?gbk?B?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.com>,
- =?gbK?B?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.com>
-Bcc: =?GBK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.com>,
- =?GBK?b?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.com>
+From: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>,
+ =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Sender: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Reply-To: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+To: =?gbk?b?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.com>,
+ =?GBk?b?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.com>
+Cc: =?GbK?B?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.com>,
+ =?gbk?B?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.com>
+Bcc: =?gbk?b?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.com>,
+ =?gbK?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
- =?gBk?b?yqnKz8qzyqjKtw==?=
+ =?gBK?B?yqnKz8qzyqjKtw==?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
-Resent-From: =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>,
- =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
-Resent-Sender: =?GBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
-Resent-To: =?Gbk?b?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.net>,
- =?gbk?b?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.net>
-Resent-Cc: =?gbk?B?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.net>,
- =?gbK?B?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.net>
-Resent-Bcc: =?GBK?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.net>,
- =?GBK?b?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.net>
+Resent-From: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>,
+ =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Resent-Sender: =?gbK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Resent-To: =?gbk?b?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.net>,
+ =?GBk?b?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.net>
+Resent-Cc: =?GbK?B?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.net>,
+ =?gbk?B?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.net>
+Resent-Bcc: =?gbk?b?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.net>,
+ =?gbK?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTipart/signed;
-              cHaRSeT="GBk";
-              PRotocol="applicaTiON/Pkcs7-signAtURE";
-              mICALG=SHA1;
-              BOuNdAry=SignedBoundaryString
-Content-Transfer-Encoding: bAse64
+Content-Type: mULTIPART/sIgned;
+              charset="gbk";
+              proToCOL="ApplicatioN/PKCS7-SIGnAture";
+              micalg=sha1;
+              BOUndary=SignedBoundaryString
+Content-Transfer-Encoding: base64
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --SignedBoundaryString
-Content-Type: tEXT/PLAIN
-Content-Transfer-Encoding: BASE64
+Content-Type: text/PlAIN
+Content-Transfer-Encoding: bASE64
 
 yq/K0sqryr/KqcrPo6zKyMqoo6zKxMqzyq7KqKGjCsrPyrHKscrKytDK08qooaMKyq7KsaOsysrK
 rsqoysrK0KGjCsrHyrGjrMrKyqnKz8rKytChowrKz8rTysfKrsqoo6zK0cq4ysajrMq5ysfKrsqo
@@ -47,9 +47,9 @@ ysOjrMrPyrzK1MqzysfKrsqooaMKyrPKsaOsyrzKtsrHyq7KqMqso6zKtcquyq/KqMqsoaMKytTK
 zcrHysKhow
 
 --SignedBoundaryString
-Content-Type: appLicATION/PKCS7-sIGnature; nAME=smime.p7s
-Content-Transfer-Encoding: BASE64
-Content-Disposition: ATTAChMent; filenamE=smime.p7s
+Content-Type: applicatIoN/PKCS7-SIGNature; name=smime.p7s
+Content-Transfer-Encoding: bAsE64
+Content-Disposition: AtTAchment; filenaMe=smime.p7s
 
 ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
 6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf

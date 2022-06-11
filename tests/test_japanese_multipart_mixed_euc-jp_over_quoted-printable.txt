@@ -1,46 +1,46 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-From: =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
- =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Sender: =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Reply-To: =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-To: =?Euc-Jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
- =?euc-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
-Cc: =?EUc-JP?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
- =?EUC-jP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
-Bcc: =?euc-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
- =?EUC-JP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
+From: =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>,
+ =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Sender: =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Reply-To: =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+To: =?eUC-JP?Q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.com>,
+ =?eUC-jp?Q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.com>
+Cc: =?euc-jp?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.com>,
+ =?eUC-JP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.com>
+Bcc: =?EUc-Jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.com>,
+ =?EUC-jP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
- =?EUC-JP?Q?=A4=A4=A4=ED=A4=CF=B2=CE?=
+ =?euc-jp?Q?=A4=A4=A4=ED=A4=CF=B2=CE?=
 In-Reply-To: <Message-Id-0@example.com>
 References: <Message-Id-0@example.com>
 Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
-Resent-From: =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
- =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
-Resent-Sender: =?Euc-JP?q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
-Resent-To: =?Euc-Jp?q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
- =?euc-jp?q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
-Resent-Cc: =?EUc-JP?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
- =?EUC-jP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
-Resent-Bcc: =?euc-jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
- =?EUC-JP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
+Resent-From: =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>,
+ =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?euC-jP?Q?=CD=B9=CA=D8=A5=A2=A5=EA=A5=B9?= <alice.yuubin@example.net>
+Resent-To: =?eUC-JP?Q?=CD=B9=CA=D8=A5=DC=A5=D6?= <bob.yuubin@example.net>,
+ =?eUC-jp?Q?=CD=B9=CA=D8=A5=AD=A5=E3=A5=ED=A5=EB?= <carol.yuubin@example.net>
+Resent-Cc: =?euc-jp?Q?=CD=B9=CA=D8=A5=C0=A5=F3?= <dan.yuubin@example.net>,
+ =?eUC-JP?Q?=CD=B9=CA=D8=A5=A4=A1=BC=A5=D6?= <eve.yubin@example.net>
+Resent-Bcc: =?EUc-Jp?q?=CD=B9=CA=D8=A5=D5=A5=E9=A5=F3=A5=AF?= <frank.yuubin@example.net>,
+ =?EUC-jP?Q?=CD=B9=CA=D8=A5=B0=A5=EC=A5=A4=A5=B9?= <grace.yubin@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
-Content-Type: MULTIPART/mixED; CHARSET="EUC-jP"; BOuNDary="MixedBoundaryString"
-Content-Transfer-Encoding: quotED-PRiNTable
+Content-Type: MuLTIPART/MIXEd; ChArset="euc-Jp"; BOUNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: QUOTeD-PRiNtable
 X-Clacks-Overhead: GNU Terry Pratchett
 
 
 --MixedBoundaryString
-Content-Type: multiparT/rELATED; BOUNDAry="RelatedBoundaryString"
+Content-Type: MultIPART/RELATED; BOUNdaRY="RelatedBoundaryString"
 
 --RelatedBoundaryString
-Content-Type: muLTIPART/ALTernative; boundaRY="AlternativeBoundaryString"
+Content-Type: multIpart/alteRnativE; bouNDArY="AlternativeBoundaryString"
 
 --AlternativeBoundaryString
-Content-Type: TeXT/PLAiN; charSEt="eUC-JP"
-Content-Transfer-Encoding: QUOTED-pRIntable
+Content-Type: TEXT/PLAIN; CHArSEt="euc-jp"
+Content-Transfer-Encoding: quoted-prinTAble
 
 =BF=A7=A4=CF=C6=F7=A4=A8=A4=C9
 =BB=B6=A4=EA=A4=CC=A4=EB=A4=F2
@@ -72,8 +72,8 @@ a / Kyo koete Asaki yume miji / Yoi mo sezu.
 =A8=BD=AE=B7=D2=A4=B1=A4=CC=A1=A3
 
 --AlternativeBoundaryString
-Content-Type: TEXT/ENRIChEd; charset="euc-jp"
-Content-Transfer-Encoding: quOTeD-printabLE
+Content-Type: TEXT/ENRICHed; charset="euc-jp"
+Content-Transfer-Encoding: qUoTED-PRINTABLe
 
 <bold>=BF=A7=A4=CF=C6=F7=A4=A8=A4=C9</bold>
 <italic>=BB=B6=A4=EA=A4=CC=A4=EB=A4=F2</italic>
@@ -105,8 +105,8 @@ a / Kyo koete Asaki yume miji / Yoi mo sezu.
 =A8=BD=AE=B7=D2=A4=B1=A4=CC=A1=A3
 
 --AlternativeBoundaryString
-Content-Type: teXT/HTML; CHARSET="EUc-jp"
-Content-Transfer-Encoding: QUOTED-PRINtAble
+Content-Type: texT/HTML; CHARSEt="EUC-Jp"
+Content-Transfer-Encoding: quoted-pRINTable
 
 <html>
 <div dir=3D"ltr">
@@ -153,8 +153,8 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 
 --RelatedBoundaryString
 Content-Type: image/jpeg; name="inline-jpg-image-name.jpg"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: INline; filename="inline-jpg-image-filename.jpg"
+Content-Transfer-Encoding: baSe64
+Content-Disposition: inline; filename="inline-jpg-image-filename.jpg"
 Content-ID: <inline-jpg-image.jpg@example.com>
 
 /9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
@@ -163,23 +163,23 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
 --RelatedBoundaryString--
 
 --MixedBoundaryString
-Content-Type: appLICAtIoN/Pdf; nAmE="attached-pdf-name.pdf"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: ATTACHmENt; fIlenaMe="attached-pdf-filename.pdf"
+Content-Type: apPlICATION/PDf; name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: aTtaCHMENT; FIlename="attached-pdf-filename.pdf"
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPLICatIon/pdf; namE="attached-pdf-without-disposition.pdf"
-Content-Transfer-Encoding: basE64
+Content-Type: applicATION/PDF; NAME="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: BaSe64
 
 JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
 XT4+XT4+Pj4+Pg==
 
 --MixedBoundaryString
-Content-Type: APPLICaTiOn/JsON; NAME="attached-json-name.json"
-Content-Disposition: ATTACHMENT; FIlEname="attached-json-filename.json"
+Content-Type: apPlICATION/JSON; NaMe="attached-json-name.json"
+Content-Disposition: AtTaCHMENT; FILENAmE="attached-json-filename.json"
 
 {"foo":"bar"}
 --MixedBoundaryString--
