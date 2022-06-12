@@ -155,7 +155,7 @@ email.AttachedFiles
 ```
 
 The same parser and methods will work for other languages, text encodings, 
-and transfer encodings:
+and transfer-encodings:
 
 ```go
 r := strings.NewReader(```Subject: =?ISO-2022-JP?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
@@ -182,9 +182,10 @@ email.Text
 * Unfolding headers
 * Decoding non-US-ASCII email headers according to
   [RFC 2047](https://datatracker.ietf.org/doc/html/rfc2047)
-* Decoding Base64 and Quoted-Printable Content Transfer Encodings
-* Decoding any text encoding (e.g. UTF-8, Japanese ISO-2022-JP,
-  Polish ISO-8859-2, Finnish ISO-8859-15) in combination with any Transfer
+* Decoding Base64 and Quoted-Printable Content-Transfer-Encodings
+* Decoding any text encoding (e.g. UTF-8, Chinese GB18030 or GBK, Finnish 
+  ISO-8859-15, Icelandic ISO-8859-1, Japanese ISO-2022-JP, Korean EUC-KR,
+  Polish ISO-8859-2) in combination with any Transfer
   Encoding (e.g. ASCII-over-7bit, UTF-8-over-Base64,
   Japanese ISO-2022-JP-over-7bit, Polish ISO-8859-2-over-Quoted-Printable,
   etc.)
