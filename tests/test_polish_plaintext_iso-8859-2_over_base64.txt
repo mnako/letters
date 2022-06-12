@@ -1,0 +1,40 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>,
+ =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+Sender: =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>
+Reply-To: =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+To: =?iSo-8859-2?b?T2RiaWVyYWqxY3ksIEJvYg==?= <bob.odbierajacy@example.com>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEthcm9saW5h?= <karolina.odbierajaca@example.com>
+Cc: =?IsO-8859-2?B?T2RiaWVyYWqxY3ksIERhbmllbA==?= <daniel.odbierajacy@example.com>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEV3YQ==?= <ewa.odbierajaca@example.com>
+Bcc: =?Iso-8859-2?b?T2RiaWVyYWqxY3ksIEZyYW5law==?= <franek.odbierajacy@example.com>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEdyYb95bmE=?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?IsO-8859-2?b?UG9sc2tpZSBwYW5ncmFteQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>,
+ =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.com>
+Resent-Sender: =?ISo-8859-2?B?TmFkYWqxY2EsIEFsaWNqYQ==?= <alicja.nadajaca@example.net>
+Resent-To: =?iSo-8859-2?b?T2RiaWVyYWqxY3ksIEJvYg==?= <bob.odbierajacy@example.net>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEthcm9saW5h?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?IsO-8859-2?B?T2RiaWVyYWqxY3ksIERhbmllbA==?= <daniel.odbierajacy@example.net>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEV3YQ==?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?Iso-8859-2?b?T2RiaWVyYWqxY3ksIEZyYW5law==?= <franek.odbierajacy@example.net>,
+ =?iso-8859-2?B?T2RiaWVyYWqxY2EsIEdyYb95bmE=?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TEXT/pLain; charsET=IsO-8859-2
+Content-Transfer-Encoding: bAsE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+SmW/dSBrbLF0dywgc3Cz82S8IEZpbm9tIGN66rbmIGdyeSBoYfFiIQpQ82pkvL9lLCBrafEgdOog
+Y2htdXJub7bmIHcgZ7OxYiBmbGFzenkhCk3qv255IGKxZLwgY2hyb/EgcHWzayB0d/NqIGkgc3pl
+tuYgZmxhZy4KRmlsbXVqIHJ6Zbwgv7FkYfEsIHBvtuYsIGdu6mIgY2izeXN0a/N3IQpQY2huseYg
+dyB06iCz82S8IGplv2EgbHViIG+2bSBza3J6efEgZmlnLgpEb7bmIGdy87xiIGZ1emqxLCBrbG7q
+LCBweWNoIGkgbWGzv2Xxc3R3IQpQ82pkvCB3IGxvY2ggemJp5iBtYbO/ZfFza7EgZ+q2IGZ1dHJ5
+biEKQ2h3eeYgbWGzv29ua+osIHN0cvNqIGKxZLwgcGxltvEgeiBmdWdpLg

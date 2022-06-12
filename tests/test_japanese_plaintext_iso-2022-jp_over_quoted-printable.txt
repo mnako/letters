@@ -1,0 +1,58 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>,
+ =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Sender: =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Reply-To: =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+To: =?ISo-2022-jP?q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.com>,
+ =?Iso-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.com>
+Cc: =?iSo-2022-Jp?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.com>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.com>
+Bcc: =?ISO-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.com>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?iso-2022-jp?q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>,
+ =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Resent-Sender: =?ISo-2022-jP?Q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Resent-To: =?ISo-2022-jP?q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.net>,
+ =?Iso-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.net>
+Resent-Cc: =?iSo-2022-Jp?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.net>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.net>
+Resent-Bcc: =?ISO-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.net>,
+ =?iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: Text/plain; charsET=isO-2022-JP
+Content-Transfer-Encoding: QUoted-PRINTABLE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+=1B$B?'$OFw$($I=1B(B
+=1B$B;6$j$L$k$r=1B(B
+=1B$B2f$,@$C/$>=1B(B
+=1B$B>o$J$i$s=1B(B
+=1B$BM-0Y$N1|;3=1B(B
+=1B$B:#F|1[$($F=1B(B
+=1B$B@u$-L48+$8=1B(B
+=1B$B?l$$$b$;$:!#=1B(B
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyam=
+a / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+=1B$B$H$j$J$/$3$q$9$f$a$5$^$;$_$h$"$1$o$?$k$R$s$+$7$r$=3D$i$$$m$O$($F$*$-$D=
+$X$K$[$U$M$`$l$p$L$b$d$N$&$A!#=1B(B
+
+=1B$BE7CO@16u=1B(B
+=1B$B;3@nJvC+=1B(B
+=1B$B1@L8<<B]=1B(B
+=1B$B?M8$>eKv=1B(B
+=1B$BN22+1n@8$U0Y$h=1B(B
+=1B$B1]$N;^$rFk$l5o$F!#=1B(B
+
+=1B$BED5o$K=3DP$G:ZE&$`$o$l$r$>7/>$$9$H5a?)$jDI$R$f$/;3>k$NBG?l$X$k;R$iAtMU=
+43$;$h$(=3D.7R$1$L!#=1B(B

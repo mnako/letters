@@ -1,0 +1,89 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>,
+ =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+Sender: =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>
+Reply-To: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+To: =?asCII?q?Bob_Recipient?= <bob.recipient@example.com>,
+ =?AScII?Q?Carol_Recipient?= <carol.recipient@example.com>
+Cc: =?ascii?q?Dan_Recipient?= <dan.recipient@example.com>,
+ =?aSCII?Q?Eve_Recipient?= <eve.recipient@example.com>
+Bcc: =?AScII?q?Frank_Recipient?= <frank.recipient@example.com>,
+ =?ascii?q?Grace_Recipient?= <grace.recipient@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?ASCII?Q?English_Pangrams?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+Resent-From: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>,
+ =?ASCii?Q?Alice_Sender?= <alice.sender@example.com>
+Resent-Sender: =?ASCii?Q?Alice_Sender?= <alice.sender@example.net>
+Resent-To: =?asCII?q?Bob_Recipient?= <bob.recipient@example.net>,
+ =?AScII?Q?Carol_Recipient?= <carol.recipient@example.net>
+Resent-Cc: =?ascii?q?Dan_Recipient?= <dan.recipient@example.net>,
+ =?aSCII?Q?Eve_Recipient?= <eve.recipient@example.net>
+Resent-Bcc: =?AScII?q?Frank_Recipient?= <frank.recipient@example.net>,
+ =?ascii?q?Grace_Recipient?= <grace.recipient@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mULTIpART/reLAted; charset="asCIi"; bOUNdARY="RelatedBoundaryString"
+Content-Transfer-Encoding: qUOTED-PRINtaBle
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: multipart/alTErnaTIVe; bOUNdARY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TEXT/plAIn; chARset="asciI"
+Content-Transfer-Encoding: quoTED-prINTaBLE
+
+The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.
+
+--AlternativeBoundaryString
+Content-Type: teXT/enRIChed; Charset="aSCii"
+Content-Transfer-Encoding: QUOtED-PRINTAblE
+
+<bold>The quick brown fox jumps over a lazy dog.</bold>
+<italic>Glib jocks quiz nymph to vex dwarf.</italic>
+<fixed>Sphinx of black quartz, judge my vow.</fixed>
+<underline>How vexingly quick daft zebras jump!</underline>
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.
+
+--AlternativeBoundaryString
+Content-Type: texT/html; Charset="aSCii"
+Content-Transfer-Encoding: QUOtED-PRiNTABlE
+
+<html>
+<div dir=3D"ltr">
+<p>The quick brown fox jumps over a lazy dog.</p>
+<p>Glib jocks quiz nymph to vex dwarf.</p>
+<p>Sphinx of black quartz, judge my vow.</p>
+<p>How vexingly quick daft zebras jump!</p>
+<p>The five boxing wizards jump quickly.</p>
+<p>Jackdaws love my big sphinx of quartz.</p>
+<p>Pack my box with five dozen liquor jugs.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; namE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: baSE64
+Content-Disposition: INLINE; FILENAMe="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

@@ -1,0 +1,81 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
+From: =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>,
+ =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Sender: =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Reply-To: =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+To: =?GBK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.com>,
+ =?Gbk?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.com>
+Cc: =?gbK?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.com>,
+ =?GBK?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.com>
+Bcc: =?GBk?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.com>,
+ =?Gbk?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?gbk?b?yqnKz8qzyqjKtw==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0800 (CST)
+Resent-From: =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>,
+ =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.com>
+Resent-Sender: =?gBK?B?sKzA8r16ILeivP7Iyw==?= <alice.fajianren@example.net>
+Resent-To: =?GBK?B?xWP1VbKuIMrVvP7Iyw==?= <bob.shoujianren@example.net>,
+ =?Gbk?B?v6jC3rb7IMrVvP7Iyw==?= <carol.shoujianren@example.net>
+Resent-Cc: =?gbK?b?tPe38iDK1bz+yMs=?= <dave.shoujianren@example.net>,
+ =?GBK?b?0sG38iDK1bz+yMs=?= <eve.shoujianren@example.net>
+Resent-Bcc: =?GBk?B?sKzI+L/LINLBt/I=?= <isaac.shoujianren@example.net>,
+ =?Gbk?B?2VrLuc2hINLBt/I=?= <justin.shoujianren@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multiparT/RELATED; CHARSet="gbk"; boundaRy="RelatedBoundaryString"
+Content-Transfer-Encoding: baSE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: Multipart/alTeRNATIVE; BOUNDARY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: tExt/plAiN; CHARSET="GBK"
+Content-Transfer-Encoding: BASE64
+
+yq/K0sqryr/KqcrPo6zKyMqoo6zKxMqzyq7KqKGjCsrPyrHKscrKytDK08qooaMKyq7KsaOsysrK
+rsqoysrK0KGjCsrHyrGjrMrKyqnKz8rKytChowrKz8rTysfKrsqoo6zK0cq4ysajrMq5ysfKrsqo
+ysXKwKGjCsrPyrDKx8quyqjKrKOsysrKr8rSoaMKyq/K0sqqo6zKz8q5yszKw8qvytKhowrKr8rS
+ysOjrMrPyrzK1MqzysfKrsqooaMKyrPKsaOsyrzKtsrHyq7KqMqso6zKtcquyq/KqMqsoaMKytTK
+zcrHysKhow
+
+--AlternativeBoundaryString
+Content-Type: TExt/eNrICHED; CHARSeT="GBK"
+Content-Transfer-Encoding: BASe64
+
+PGJvbGQ+yq/K0sqryr/KqcrPo6zKyMqoo6zKxMqzyq7KqKGjPC9ib2xkPgo8aXRhbGljPsrPyrHK
+scrKytDK08qooaM8L2l0YWxpYz4KPGZpeGVkPsquyrGjrMrKyq7KqMrKytChozwvZml4ZWQ+Cjx1
+bmRlcmxpbmU+ysfKsaOsysrKqcrPysrK0KGjPC91bmRlcmxpbmU+CsrPytPKx8quyqijrMrRyrjK
+xqOsyrnKx8quyqjKxcrAoaMKys/KsMrHyq7KqMqso6zKysqvytKhowrKr8rSyqqjrMrPyrnKzMrD
+yq/K0qGjCsqvytLKw6Osys/KvMrUyrPKx8quyqihowrKs8qxo6zKvMq2ysfKrsqoyqyjrMq1yq7K
+r8qoyqyhowrK1MrNysfKwqGj
+
+--AlternativeBoundaryString
+Content-Type: TEXT/Html; charseT="gbk"
+Content-Transfer-Encoding: bAsE64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD7Kr8rSyqvKv8qpys+jrMrIyqijrMrEyrPKrsqooaM8
+YnIgLz4Kys/KscqxysrK0MrTyqihozxiciAvPgrKrsqxo6zKysquyqjKysrQoaM8YnIgLz4KysfK
+saOsysrKqcrPysrK0KGjPGJyIC8+CsrPytPKx8quyqijrMrRyrjKxqOsyrnKx8quyqjKxcrAoaM8
+YnIgLz4Kys/KsMrHyq7KqMqso6zKysqvytKhozxiciAvPgrKr8rSyqqjrMrPyrnKzMrDyq/K0qGj
+PGJyIC8+CsqvytLKw6Osys/KvMrUyrPKx8quyqihozxiciAvPgrKs8qxo6zKvMq2ysfKrsqoyqyj
+rMq1yq7Kr8qoyqyhozxiciAvPgrK1MrNysfKwqGjPC9wPgo8L2Rpdj4KPC9odG1sPg
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; naME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: bAsE64
+Content-Disposition: inline; fiLENAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

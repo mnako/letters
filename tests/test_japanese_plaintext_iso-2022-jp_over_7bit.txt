@@ -1,0 +1,55 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>,
+ =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Sender: =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Reply-To: =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+To: =?Iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.com>,
+ =?Iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.com>
+Cc: =?iSo-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.com>,
+ =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.com>
+Bcc: =?IsO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.com>,
+ =?ISO-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?iSO-2022-jP?q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>,
+ =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.com>
+Resent-Sender: =?iso-2022-jP?q?=1B=24=42=4D=39=4A=58=25=22=25=6A=25=39=1B=28=42?= <alice.yuubin@example.net>
+Resent-To: =?Iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=5C=25=56=1B=28=42?= <bob.yuubin@example.net>,
+ =?Iso-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=2D=25=63=25=6D=25=6B=1B=28=42?= <carol.yuubin@example.net>
+Resent-Cc: =?iSo-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=40=25=73=1B=28=42?= <dan.yuubin@example.net>,
+ =?Iso-2022-jp?q?=1B=24=42=4D=39=4A=58=25=24=21=3C=25=56=1B=28=42?= <eve.yubin@example.net>
+Resent-Bcc: =?IsO-2022-JP?Q?=1B=24=42=4D=39=4A=58=25=55=25=69=25=73=25=2F=1B=28=42?= <frank.yuubin@example.net>,
+ =?ISO-2022-Jp?q?=1B=24=42=4D=39=4A=58=25=30=25=6C=25=24=25=39=1B=28=42?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: text/pLAIN; charset=iso-2022-JP
+Content-Transfer-Encoding: 7BIT
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+色は匂えど
+散りぬるを
+我が世誰ぞ
+常ならん
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。

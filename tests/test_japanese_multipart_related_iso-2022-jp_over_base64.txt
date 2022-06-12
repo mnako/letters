@@ -1,0 +1,99 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
+ =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Sender: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Reply-To: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+To: =?iso-2022-jP?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
+ =?IsO-2022-JP?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
+Cc: =?iSO-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
+ =?iso-2022-JP?B?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
+Bcc: =?ISO-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
+ =?iso-2022-JP?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?iSO-2022-JP?B?GyRCJCQkbSRPMk4bKEI=?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
+ =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Resent-Sender: =?ISo-2022-JP?b?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Resent-To: =?iso-2022-jP?B?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
+ =?IsO-2022-JP?B?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
+Resent-Cc: =?iSO-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
+ =?iso-2022-JP?B?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
+Resent-Bcc: =?ISO-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
+ =?iso-2022-JP?B?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mulTiPaRT/ReLated; charset="iso-2022-JP"; BOUNdary="RelatedBoundaryString"
+Content-Transfer-Encoding: baSE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: MULTIPART/AltErnative; BoUnDArY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: text/plaiN; chaRsET="ISO-2022-Jp"
+Content-Transfer-Encoding: basE64
+
+GyRCPyckT0Z3JCgkSRsoQgobJEI7NiRqJEwkayRyGyhCChskQjJmJCxAJEMvJD4bKEIKGyRCPm8k
+SiRpJHMbKEIKGyRCTS0wWSROMXw7MxsoQgobJEI6I0Z8MVskKCRGGyhCChskQkB1JC1MNDgrJDgb
+KEIKGyRCP2wkJCRiJDskOiEjGyhCCgpJcm8gd2EgbmlvZWRvIC8gQ2hpcmludXJ1IG8gLyBXYSBn
+YSB5byB0YXJlIHpvIC8gVHN1bmUgbmFyYW4gLyBVaSBubyBva3V5YW1hIC8gS3lvIGtvZXRlIEFz
+YWtpIHl1bWUgbWlqaSAvIFlvaSBtbyBzZXp1LgoKGyRCJEgkaiRKJC8kMyRxJDkkZiRhJDUkXiQ7
+JF8kaCQiJDEkbyQ/JGskUiRzJCskNyRyJD0kaSQkJG0kTyQoJEYkKiQtJEQkWCRLJFskVSRNJGAk
+bCRwJEwkYiRkJE4kJiRBISMbKEIKChskQkU3Q09AMTZ1GyhCChskQjszQG5KdkMrGyhCChskQjFA
+TDg8PEJdGyhCChskQj9NOCQ+ZUt2GyhCChskQk4yMisxbkA4JFUwWSRoGyhCChskQjFdJE47XiRy
+RmskbDVvJEYhIxsoQgoKGyRCRUQ1byRLPVAkRzpaRSYkYCRvJGwkciQ+Ny8+JCQ5JEg1YT8pJGpE
+SSRSJGYkLzszPmskTkJHP2wkWCRrO1IkaUF0TVU0MyQ7JGgkKD0uN1IkMSRMISMbKEI=
+
+--AlternativeBoundaryString
+Content-Type: tEXT/ENRICHED; ChArset="iSo-2022-jP"
+Content-Transfer-Encoding: BasE64
+
+PGJvbGQ+GyRCPyckT0Z3JCgkSRsoQjwvYm9sZD4KPGl0YWxpYz4bJEI7NiRqJEwkayRyGyhCPC9p
+dGFsaWM+CjxmaXhlZD4bJEIyZiQsQCRDLyQ+GyhCPC9maXhlZD4KPHVuZGVybGluZT4bJEI+byRK
+JGkkcxsoQjwvdW5kZXJsaW5lPgobJEJNLTBZJE4xfDszGyhCChskQjojRnwxWyQoJEYbKEIKGyRC
+QHUkLUw0OCskOBsoQgobJEI/bCQkJGIkOyQ6ISMbKEIKCklybyB3YSBuaW9lZG8gLyBDaGlyaW51
+cnUgbyAvIFdhIGdhIHlvIHRhcmUgem8gLyBUc3VuZSBuYXJhbiAvIFVpIG5vIG9rdXlhbWEgLyBL
+eW8ga29ldGUgQXNha2kgeXVtZSBtaWppIC8gWW9pIG1vIHNlenUuCgobJEIkSCRqJEokLyQzJHEk
+OSRmJGEkNSReJDskXyRoJCIkMSRvJD8kayRSJHMkKyQ3JHIkPSRpJCQkbSRPJCgkRiQqJC0kRCRY
+JEskWyRVJE0kYCRsJHAkTCRiJGQkTiQmJEEhIxsoQgoKGyRCRTdDT0AxNnUbKEIKGyRCOzNAbkp2
+QysbKEIKGyRCMUBMODw8Ql0bKEIKGyRCP004JD5lS3YbKEIKGyRCTjIyKzFuQDgkVTBZJGgbKEIK
+GyRCMV0kTjteJHJGayRsNW8kRiEjGyhCCgobJEJFRDVvJEs9UCRHOlpFJiRgJG8kbCRyJD43Lz4k
+JDkkSDVhPykkakRJJFIkZiQvOzM+ayROQkc/bCRYJGs7UiRpQXRNVTQzJDskaCQoPS43UiQxJEwh
+IxsoQg
+
+--AlternativeBoundaryString
+Content-Type: text/html; chaRsET="iSo-2022-jp"
+Content-Transfer-Encoding: basE64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD4bJEI/JyRPRnckKCRJGyhCPGJyIC8+ChskQjs2JGok
+TCRrJHIbKEI8YnIgLz4KGyRCMmYkLEAkQy8kPhsoQjxiciAvPgobJEI+byRKJGkkcxsoQjxiciAv
+PgobJEJNLTBZJE4xfDszGyhCPGJyIC8+ChskQjojRnwxWyQoJEYbKEI8YnIgLz4KGyRCQHUkLUw0
+OCskOBsoQjxiciAvPgobJEI/bCQkJGIkOyQ6ISMbKEI8L3A+Cgo8cD5Jcm8gd2EgbmlvZWRvIC8g
+Q2hpcmludXJ1IG8gLyBXYSBnYSB5byB0YXJlIHpvIC8gVHN1bmUgbmFyYW4gLyBVaSBubyBva3V5
+YW1hIC8gS3lvIGtvZXRlIEFzYWtpIHl1bWUgbWlqaSAvIFlvaSBtbyBzZXp1LjwvcD4KCjxwPhsk
+QiRIJGokSiQvJDMkcSQ5JGYkYSQ1JF4kOyRfJGgkIiQxJG8kPyRrJFIkcyQrJDckciQ9JGkkJCRt
+JE8kKCRGJCokLSREJFgkSyRbJFUkTSRgJGwkcCRMJGIkZCROJCYkQSEjGyhCPC9wPgoKPHA+GyRC
+RTdDT0AxNnUbKEI8YnIgLz4KGyRCOzNAbkp2QysbKEI8YnIgLz4KGyRCMUBMODw8Ql0bKEI8YnIg
+Lz4KGyRCP004JD5lS3YbKEI8YnIgLz4KGyRCTjIyKzFuQDgkVTBZJGgbKEI8YnIgLz4KGyRCMV0k
+TjteJHJGayRsNW8kRiEjGyhCPC9wPgoKPHA+GyRCRUQ1byRLPVAkRzpaRSYkYCRvJGwkciQ+Ny8+
+JCQ5JEg1YT8pJGpESSRSJGYkLzszPmskTkJHP2wkWCRrO1IkaUF0TVU0MyQ7JGgkKD0uN1IkMSRM
+ISMbKEI8L3A+CjwvZGl2Pgo8L2h0bWw+
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; nAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: bASE64
+Content-Disposition: Inline; fiLeNAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

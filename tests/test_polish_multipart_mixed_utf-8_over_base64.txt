@@ -1,0 +1,122 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>,
+ =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
+Reply-To: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.com>,
+ =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.com>
+Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.com>,
+ =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.com>
+Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.com>,
+ =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?utf-8?B?UG9sc2tpZSBwYW5ncmFteQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
+Resent-From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>,
+ =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
+Resent-Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.net>,
+ =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.net>,
+ =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.net>,
+ =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multipart/mIXED; charset="utf-8"; bouNDARY="MixedBoundaryString"
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: MUlTipArT/RELATED; BOUNdAry="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: multipart/ALtERNative; bounDArY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TEXT/PLAIN; CHaRSet="UtF-8"
+Content-Transfer-Encoding: BASE64
+
+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiIQpQw7NqZMW6
+xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBmbGFzenkhCk3EmcW8bnkgYsSFZMW6
+IGNocm/FhCBwdcWCayB0d8OzaiBpIHN6ZcWbxIcgZmxhZy4KRmlsbXVqIHJ6ZcW6IMW8xIVkYcWE
+LCBwb8WbxIcsIGduxJliIGNoxYJ5c3Rrw7N3IQpQY2huxIXEhyB3IHTEmSDFgsOzZMW6IGplxbxh
+IGx1YiBvxZttIHNrcnp5xYQgZmlnLgpEb8WbxIcgZ3LDs8W6YiBmdXpqxIUsIGtsbsSZLCBweWNo
+IGkgbWHFgsW8ZcWEc3R3IQpQw7NqZMW6IHcgbG9jaCB6YmnEhyBtYcWCxbxlxYRza8SFIGfEmcWb
+IGZ1dHJ5biEKQ2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSFZMW6IHBsZcWbxYQgeiBmdWdp
+Lg==
+
+--AlternativeBoundaryString
+Content-Type: TEXT/ENriched; charseT="uTF-8"
+Content-Transfer-Encoding: Base64
+
+PGJvbGQ+SmXFvHUga2zEhXR3LCBzcMWCw7NkxbogRmlub20gY3rEmcWbxIcgZ3J5IGhhxYRiITwv
+Ym9sZD4KPGl0YWxpYz5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvEhyB3IGfFgsSFYiBm
+bGFzenkhPC9pdGFsaWM+CjxmaXhlZD5NxJnFvG55IGLEhWTFuiBjaHJvxYQgcHXFgmsgdHfDs2og
+aSBzemXFm8SHIGZsYWcuPC9maXhlZD4KPHVuZGVybGluZT5GaWxtdWogcnplxbogxbzEhWRhxYQs
+IHBvxZvEhywgZ27EmWIgY2jFgnlzdGvDs3chPC91bmRlcmxpbmU+ClBjaG7EhcSHIHcgdMSZIMWC
+w7NkxbogamXFvGEgbHViIG/Fm20gc2tyennFhCBmaWcuCkRvxZvEhyBncsOzxbpiIGZ1emrEhSwg
+a2xuxJksIHB5Y2ggaSBtYcWCxbxlxYRzdHchClDDs2pkxbogdyBsb2NoIHpiacSHIG1hxYLFvGXF
+hHNrxIUgZ8SZxZsgZnV0cnluIQpDaHd5xIcgbWHFgsW8b25rxJksIHN0csOzaiBixIVkxbogcGxl
+xZvFhCB6IGZ1Z2ku
+
+--AlternativeBoundaryString
+Content-Type: text/html; chaRsET="utf-8"
+Content-Transfer-Encoding: base64
+
+PGh0bWw+CjxkaXYgZGlyPSJsdHIiPgo8cD5KZcW8dSBrbMSFdHcsIHNwxYLDs2TFuiBGaW5vbSBj
+esSZxZvEhyBncnkgaGHFhGIhPC9wPgo8cD5Qw7NqZMW6xbxlLCBracWEIHTEmSBjaG11cm5vxZvE
+hyB3IGfFgsSFYiBmbGFzenkhPC9wPgo8cD5NxJnFvG55IGLEhWTFuiBjaHJvxYQgcHXFgmsgdHfD
+s2ogaSBzemXFm8SHIGZsYWcuPC9wPgo8cD5GaWxtdWogcnplxbogxbzEhWRhxYQsIHBvxZvEhywg
+Z27EmWIgY2jFgnlzdGvDs3chPC9wPgo8cD5QY2huxIXEhyB3IHTEmSDFgsOzZMW6IGplxbxhIGx1
+YiBvxZttIHNrcnp5xYQgZmlnLjwvcD4KPHA+RG/Fm8SHIGdyw7PFumIgZnV6asSFLCBrbG7EmSwg
+cHljaCBpIG1hxYLFvGXFhHN0dyE8L3A+CjxwPlDDs2pkxbogdyBsb2NoIHpiacSHIG1hxYLFvGXF
+hHNrxIUgZ8SZxZsgZnV0cnluITwvcD4KPHA+Q2h3ecSHIG1hxYLFvG9ua8SZLCBzdHLDs2ogYsSF
+ZMW6IHBsZcWbxYQgeiBmdWdpLjwvcD4KPC9kaXY+CjwvaHRtbD4
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; name="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: bAsE64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; nAMe="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: base64
+Content-Disposition: inliNe; fiLENAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: APPLICATIon/pDf; NAME="attached-pdf-name.pdf"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: ATTAcHMent; fiLeNAME="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPLICaTion/pdf; name="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: Application/jsON; NAME="attached-json-name.json"
+Content-Disposition: ATTACHMENT; filenAme="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--

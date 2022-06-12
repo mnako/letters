@@ -1,0 +1,93 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+From: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>,
+ =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Sender: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Reply-To: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+To: =?iSO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?iso-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?iso-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?ISo-8859-15?q?Suomenkieliset_pangrammit?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+Resent-From: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>,
+ =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.com>
+Resent-Sender: =?iso-8859-15?Q?Alice_L=E4hett=E4j=E4?= <alice.lahettaja@example.net>
+Resent-To: =?iSO-8859-15?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?iso-8859-15?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?iso-8859-15?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?ISo-8859-15?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?iso-8859-15?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?ISO-8859-15?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MUltiPARt/RELaTED; chARSet="ISo-8859-15"; Boundary="RelatedBoundaryString"
+Content-Transfer-Encoding: quoted-pRiNTaBle
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: multipart/ALTERNATIVE; BOUndary="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TeXt/PLAIN; ChaRset="iso-8859-15"
+Content-Transfer-Encoding: quOTED-PrIntabLe
+
+Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.
+Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.
+Hyv=E4n lorun sangen pieneksi hy=F6dyksi j=E4i suomen kirjaimet.
+Fahrenheit ja Celsius yrj=F6siv=E4t =C5san backgammon-peliin, Volkswageniss=
+a, daiquirin ja ZX81:n yhteisvaikutuksesta.
+Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
+Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
+
+--AlternativeBoundaryString
+Content-Type: teXt/ENRICHED; CHArset="iso-8859-15"
+Content-Transfer-Encoding: QuoTed-printablE
+
+<bold>Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.</bold>
+<italic>Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.</ital=
+ic>
+<fixed>Hyv=E4n lorun sangen pieneksi hy=F6dyksi j=E4i suomen kirjaimet.</fi=
+xed>
+<underline>Fahrenheit ja Celsius yrj=F6siv=E4t =C5san backgammon-peliin, Vo=
+lkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.</underline>
+Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=E4.
+Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja.
+
+--AlternativeBoundaryString
+Content-Type: tExt/HTML; Charset="iso-8859-15"
+Content-Transfer-Encoding: QUOTED-PrIntabLe
+
+<html>
+<div dir=3D"ltr">
+<p>Albert osti fagotin ja t=F6r=E4ytti puhkuvan melodian.</p>
+<p>Lorun sangen pieneksi hy=F6dyksi j=E4iv=E4t suomen kirjaimet.</p>
+<p>Hyv=E4n lorun sangen pieneksi hy=F6dyksi j=E4i suomen kirjaimet.</p>
+<p>Fahrenheit ja Celsius yrj=F6siv=E4t =C5san backgammon-peliin, Volkswagen=
+issa, daiquirin ja ZX81:n yhteisvaikutuksesta.</p>
+<p>Charles Darwin jammaili =C5ken hevixylofonilla Qatarin y=F6pub Zeligiss=
+=E4.</p>
+<p>Wienil=E4inen sioux:ta puhuva =F6kyzombie diggaa =C5san roquefort-tacoja=
+.</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NAME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: Inline; filename="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--

@@ -1,0 +1,56 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
+From: =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.com>,
+ =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.net>
+Sender: =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.com>
+Reply-To: =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.net>
+To: =?iso-8859-1?b?Qm9iIFZp8HRha2FuZGlzb24=?= <bob.didtakandison@example.com>,
+ =?iSO-8859-1?B?Q2Fyb2wgVmnwdGFrYW5kaWTzdHRpcg==?= <carol.didtakandidottir@example.com>
+Cc: =?isO-8859-1?B?RGFuIFZp8HRha2FuZGlzb24=?= <dan.vidtakandison@example.com>,
+ =?iso-8859-1?B?RXZlIFZp8HRha2FuZGlk83R0aXI=?= <eve.vidtakandidottir@example.com>
+Bcc: =?iso-8859-1?B?RnJhbmsgVmnwdGFrYW5kaXNvbg==?= <frank.vidtakandison@example.com>,
+ =?iso-8859-1?b?R3JhY2UgVmnwdGFrYW5kaWTzdHRpcg==?= <grace.vidtakandidottir@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?iso-8859-1?B?zXNsZW5za3QgcGFuZ3JhbQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0000 (GMT)
+Resent-From: =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.net>,
+ =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.com>
+Resent-Sender: =?ISO-8859-1?B?QWxpY2UgU2VuZGFuZGlk83R0aXI=?= <alice.sendandidottir@example.net>
+Resent-To: =?iso-8859-1?b?Qm9iIFZp8HRha2FuZGlzb24=?= <bob.didtakandison@example.net>,
+ =?iSO-8859-1?B?Q2Fyb2wgVmnwdGFrYW5kaWTzdHRpcg==?= <carol.didtakandidottir@example.net>
+Resent-Cc: =?isO-8859-1?B?RGFuIFZp8HRha2FuZGlzb24=?= <dan.vidtakandison@example.net>,
+ =?iso-8859-1?B?RXZlIFZp8HRha2FuZGlk83R0aXI=?= <eve.vidtakandidottir@example.net>
+Resent-Bcc: =?iso-8859-1?B?RnJhbmsgVmnwdGFrYW5kaXNvbg==?= <frank.vidtakandison@example.net>,
+ =?iso-8859-1?b?R3JhY2UgVmnwdGFrYW5kaWTzdHRpcg==?= <grace.vidtakandidottir@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: multipART/SIGNED;
+              CHARSEt="iSo-8859-1";
+              pROTocOl="application/PKCS7-SIGNATUre";
+              micalG=SHA1;
+              BOUNDaRy=SignedBoundaryString
+Content-Transfer-Encoding: base64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: text/pLaiN
+Content-Transfer-Encoding: base64
+
+S+ZtaSBu/SD2eGkgaOlyLCB5a2lzdCD+avNmdW0gbvogYubwaSB27Wwgb2cg4WRyZXBhLgpTdm8g
+aPZsdCwgeXhuYSBr/XIg/mVn8GkgavogdW0gZPNwIO0gZukg4SBi5i4K3vogZGF6dCDhIGhu6fAg
+7SB29msgb2cgeWZpciBibPNtIHNleP0gcOZqdS4=
+
+--SignedBoundaryString
+Content-Type: applicatION/PKCS7-SIgNature; name=smime.p7s
+Content-Transfer-Encoding: bASE64
+Content-Disposition: ATtachment; filenaME=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

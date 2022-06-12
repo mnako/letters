@@ -1,0 +1,163 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Sender: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Reply-To: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+To: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.com>,
+ =?utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.com>
+Cc: =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.com>,
+ =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.com>
+Bcc: =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.com>,
+ =?uTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?UTF-8?Q?=E3=81=84=E3=82=8D=E3=81=AF=E6=AD=8C?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>,
+ =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.com>
+Resent-Sender: =?utf-8?q?=E9=83=B5=E4=BE=BF=E3=82=A2=E3=83=AA=E3=82=B9?= <alice.yuubin@example.net>
+Resent-To: =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=83=9C=E3=83=96?= <bob.yuubin@example.net>,
+ =?utf-8?Q?=E9=83=B5=E4=BE=BF=E3=82=AD=E3=83=A3=E3=83=AD=E3=83=AB?= <carol.yuubin@example.net>
+Resent-Cc: =?UTf-8?Q?=E9=83=B5=E4=BE=BF=E3=83=80=E3=83=B3?= <dan.yuubin@example.net>,
+ =?UTF-8?Q?=E9=83=B5=E4=BE=BF=E3=82=A4=E3=83=BC=E3=83=96?= <eve.yubin@example.net>
+Resent-Bcc: =?UTF-8?q?=E9=83=B5=E4=BE=BF=E3=83=95=E3=83=A9=E3=83=B3=E3=82=AF?= <frank.yuubin@example.net>,
+ =?uTF-8?q?=E9=83=B5=E4=BE=BF=E3=82=B0=E3=83=AC=E3=82=A4=E3=82=B9?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mULTipART/mIXEd; cHArseT="utf-8"; boundary="MixedBoundaryString"
+Content-Transfer-Encoding: 7Bit
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--MixedBoundaryString
+Content-Type: MULtipART/RelaTED; BOUNDaRy="RelatedBoundaryString"
+
+--RelatedBoundaryString
+Content-Type: mUlTIPART/ALTERnatiVE; bOUNDArY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: teXT/plain; chaRset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+
+色は匂えど
+散りぬるを
+我が世誰ぞ
+常ならん
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。
+
+--AlternativeBoundaryString
+Content-Type: TeXT/ENRICHeD; chARSET="UTF-8"
+Content-Transfer-Encoding: 7BIT
+
+<bold>色は匂えど</bold>
+<italic>散りぬるを</italic>
+<fixed>我が世誰ぞ</fixed>
+<underline>常ならん</underline>
+有為の奥山
+今日越えて
+浅き夢見じ
+酔いもせず。
+
+Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.
+
+とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。
+
+天地星空
+山川峰谷
+雲霧室苔
+人犬上末
+硫黄猿生ふ為よ
+榎の枝を馴れ居て。
+
+田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。
+
+--AlternativeBoundaryString
+Content-Type: TEXT/HtMl; cHaRsET="UTF-8"
+Content-Transfer-Encoding: 7BIT
+
+<html>
+<div dir="ltr">
+<p>色は匂えど<br />
+散りぬるを<br />
+我が世誰ぞ<br />
+常ならん<br />
+有為の奥山<br />
+今日越えて<br />
+浅き夢見じ<br />
+酔いもせず。</p>
+
+<p>Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / Kyo koete Asaki yume miji / Yoi mo sezu.</p>
+
+<p>とりなくこゑすゆめさませみよあけわたるひんかしをそらいろはえておきつへにほふねむれゐぬもやのうち。</p>
+
+<p>天地星空<br />
+山川峰谷<br />
+雲霧室苔<br />
+人犬上末<br />
+硫黄猿生ふ為よ<br />
+榎の枝を馴れ居て。</p>
+
+<p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; NaMe="inline-jpg-image-without-disposition.jpg"
+Content-Transfer-Encoding: baSe64
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; nAmE="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BASE64
+Content-Disposition: INLine; Filename="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
+
+--MixedBoundaryString
+Content-Type: appliCATIon/pdf; name="attached-pdf-name.pdf"
+Content-Transfer-Encoding: bASe64
+Content-Disposition: ATTACHMENT; FiLenAmE="attached-pdf-filename.pdf"
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: APPLICATION/pdf; name="attached-pdf-without-disposition.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==
+
+--MixedBoundaryString
+Content-Type: apPLICaTion/json; nAMe="attached-json-name.json"
+Content-Disposition: ATTACHMENT; FILeName="attached-json-filename.json"
+
+{"foo":"bar"}
+--MixedBoundaryString--

@@ -1,0 +1,55 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+From: =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>,
+ =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+Sender: =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
+Reply-To: =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+To: =?euc-kr?b?ueQgvPa9xcDa?= <bob.susinja@example.com>,
+ =?eUc-kR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.com>
+Cc: =?eUC-kR?B?tO0gvPa9xcDa?= <dan.susinja@example.com>,
+ =?EuC-KR?B?wMy66iC89r3FwNo=?= <eve.susinja@example.com>
+Bcc: =?eUC-Kr?b?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.com>,
+ =?eUC-Kr?b?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?euc-KR?B?x9Gxub7uIMbSsde3pQ==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (KST)
+Resent-From: =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>,
+ =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.com>
+Resent-Sender: =?euC-kr?b?vtm4rr26ILq4s7u0wrvntvc=?= <alice.bonaeneunsalam@example.net>
+Resent-To: =?euc-kr?b?ueQgvPa9xcDa?= <bob.susinja@example.net>,
+ =?eUc-kR?B?xLO30SC89r3FwNo=?= <carol.susinja@example.net>
+Resent-Cc: =?eUC-kR?B?tO0gvPa9xcDa?= <dan.susinja@example.net>,
+ =?EuC-KR?B?wMy66iC89r3FwNo=?= <eve.susinja@example.net>
+Resent-Bcc: =?eUC-Kr?b?x8G3qcWpILz2vcXA2g==?= <frank.susinja@example.net>,
+ =?eUC-Kr?b?sde3ucDMvbogvPa9xcDa?= <grace.susinja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MULTIPART/SIgned;
+              charset="euc-kR";
+              PROtocol="applicatiON/PKCS7-SIGnAture";
+              mIcAlG=SHA1;
+              BOUNdAry=SignedBoundaryString
+Content-Transfer-Encoding: base64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: text/PlAIn
+Content-Transfer-Encoding: base64
+
+xbC9usDHILDtwK/BtrDHwLogwNS8+rOiuK4guLizqr7fIMfPsO0gxq+6sMfRILHivPrAuiDHyr/k
+xKEgvsq02S4=
+
+--SignedBoundaryString
+Content-Type: applicatIOn/PKCS7-SIGNatUrE; NAME=smime.p7s
+Content-Transfer-Encoding: BASE64
+Content-Disposition: ATtAchment; filenamE=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

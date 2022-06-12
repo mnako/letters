@@ -1,0 +1,60 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: Alice Sender <alice.sender@example.com>,
+ Alice Sender <alice.sender@example.net>
+Sender: Alice Sender <alice.sender@example.com>
+Reply-To: Alice Sender <alice.sender@example.net>
+To: Bob Recipient <bob.recipient@example.com>,
+ Carol Recipient <carol.recipient@example.com>
+Cc: Dan Recipient <dan.recipient@example.com>,
+ Eve Recipient <eve.recipient@example.com>
+Bcc: Frank Recipient <frank.recipient@example.com>,
+ Grace Recipient <grace.recipient@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ English Pangrams
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+Resent-From: Alice Sender <alice.sender@example.net>,
+ Alice Sender <alice.sender@example.com>
+Resent-Sender: Alice Sender <alice.sender@example.net>
+Resent-To: Bob Recipient <bob.recipient@example.net>,
+ Carol Recipient <carol.recipient@example.net>
+Resent-Cc: Dan Recipient <dan.recipient@example.net>,
+ Eve Recipient <eve.recipient@example.net>
+Resent-Bcc: Frank Recipient <frank.recipient@example.net>,
+ Grace Recipient <grace.recipient@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MULTIpaRT/sigNEd;
+              chArset="AsciI";
+              ProtOCOl="aPplication/pKCs7-signatuRE";
+              mICALG=SHA1;
+              BOUNdARy=SignedBoundaryString
+Content-Transfer-Encoding: 7biT
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+
+The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.
+
+--SignedBoundaryString
+Content-Type: APpLIcatioN/PKCS7-SIGnaTure; name=smime.p7s
+Content-Transfer-Encoding: base64
+Content-Disposition: atTAcHment; filename=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

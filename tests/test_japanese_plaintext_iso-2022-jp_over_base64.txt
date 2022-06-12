@@ -1,0 +1,44 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+From: =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>,
+ =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Sender: =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Reply-To: =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+To: =?isO-2022-jp?b?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.com>,
+ =?Iso-2022-jP?b?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.com>
+Cc: =?Iso-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.com>,
+ =?iso-2022-jP?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.com>
+Bcc: =?Iso-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.com>,
+ =?iso-2022-JP?b?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?iso-2022-Jp?B?GyRCJCQkbSRPMk4bKEI=?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0900 (JST)
+Resent-From: =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>,
+ =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.com>
+Resent-Sender: =?ISO-2022-jp?B?GyRCTTlKWCUiJWolORsoQg==?= <alice.yuubin@example.net>
+Resent-To: =?isO-2022-jp?b?GyRCTTlKWCVcJVYbKEI=?= <bob.yuubin@example.net>,
+ =?Iso-2022-jP?b?GyRCTTlKWCUtJWMlbSVrGyhC?= <carol.yuubin@example.net>
+Resent-Cc: =?Iso-2022-jp?b?GyRCTTlKWCVAJXMbKEI=?= <dan.yuubin@example.net>,
+ =?iso-2022-jP?b?GyRCTTlKWCUkITwlVhsoQg==?= <eve.yubin@example.net>
+Resent-Bcc: =?Iso-2022-jp?b?GyRCTTlKWCVVJWklcyUvGyhC?= <frank.yuubin@example.net>,
+ =?iso-2022-JP?b?GyRCTTlKWCUwJWwlJCU5GyhC?= <grace.yubin@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TExT/plain; charseT=isO-2022-JP
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+GyRCPyckT0Z3JCgkSRsoQgobJEI7NiRqJEwkayRyGyhCChskQjJmJCxAJEMvJD4bKEIKGyRCPm8k
+SiRpJHMbKEIKGyRCTS0wWSROMXw7MxsoQgobJEI6I0Z8MVskKCRGGyhCChskQkB1JC1MNDgrJDgb
+KEIKGyRCP2wkJCRiJDskOiEjGyhCCgpJcm8gd2EgbmlvZWRvIC8gQ2hpcmludXJ1IG8gLyBXYSBn
+YSB5byB0YXJlIHpvIC8gVHN1bmUgbmFyYW4gLyBVaSBubyBva3V5YW1hIC8gS3lvIGtvZXRlIEFz
+YWtpIHl1bWUgbWlqaSAvIFlvaSBtbyBzZXp1LgoKGyRCJEgkaiRKJC8kMyRxJDkkZiRhJDUkXiQ7
+JF8kaCQiJDEkbyQ/JGskUiRzJCskNyRyJD0kaSQkJG0kTyQoJEYkKiQtJEQkWCRLJFskVSRNJGAk
+bCRwJEwkYiRkJE4kJiRBISMbKEIKChskQkU3Q09AMTZ1GyhCChskQjszQG5KdkMrGyhCChskQjFA
+TDg8PEJdGyhCChskQj9NOCQ+ZUt2GyhCChskQk4yMisxbkA4JFUwWSRoGyhCChskQjFdJE47XiRy
+RmskbDVvJEYhIxsoQgoKGyRCRUQ1byRLPVAkRzpaRSYkYCRvJGwkciQ+Ny8+JCQ5JEg1YT8pJGpE
+SSRSJGYkLzszPmskTkJHP2wkWCRrO1IkaUF0TVU0MyQ7JGgkKD0uN1IkMSRMISMbKEI

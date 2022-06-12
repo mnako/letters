@@ -1,0 +1,58 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>,
+ =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Sender: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Reply-To: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+To: =?ASCII?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.com>,
+ =?AScII?b?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.com>
+Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.com>,
+ =?ascII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.com>
+Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.com>,
+ =?aSCIi?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?ASCII?b?RW5nbGlzaCBQYW5ncmFtcw==?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+Resent-From: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>,
+ =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Resent-Sender: =?AsciI?B?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Resent-To: =?ASCII?B?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.net>,
+ =?AScII?b?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.net>
+Resent-Cc: =?aScii?b?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.net>,
+ =?ascII?B?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.net>
+Resent-Bcc: =?ASCII?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.net>,
+ =?aSCIi?b?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MUltIpaRT/siGNed;
+              chARSET="ASCII";
+              PROTOcol="application/PKCS7-SIGNATURE";
+              micalg=sha1;
+              boundARY=SignedBoundaryString
+Content-Transfer-Encoding: baSE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: teXt/PLAIN
+Content-Transfer-Encoding: BASE64
+
+VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIGEgbGF6eSBkb2cuCkdsaWIgam9ja3MgcXVp
+eiBueW1waCB0byB2ZXggZHdhcmYuClNwaGlueCBvZiBibGFjayBxdWFydHosIGp1ZGdlIG15IHZv
+dy4KSG93IHZleGluZ2x5IHF1aWNrIGRhZnQgemVicmFzIGp1bXAhClRoZSBmaXZlIGJveGluZyB3
+aXphcmRzIGp1bXAgcXVpY2tseS4KSmFja2Rhd3MgbG92ZSBteSBiaWcgc3BoaW54IG9mIHF1YXJ0
+ei4KUGFjayBteSBib3ggd2l0aCBmaXZlIGRvemVuIGxpcXVvciBqdWdzLg==
+
+--SignedBoundaryString
+Content-Type: APplication/pkcs7-SIGNATURE; NAME=smime.p7s
+Content-Transfer-Encoding: Base64
+Content-Disposition: attAchment; FIlenAMe=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--

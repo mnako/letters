@@ -65,28 +65,70 @@ func parseCommaSeparatedStringHeader(s string) []string {
 	return values
 }
 
-func parseAddressHeader(s string) *mail.Address {
+func parseAddressHeader(header mail.Header, name string) (*mail.Address, error) {
 	var address *mail.Address
+
+	ss, ok := header[name]
+	if !ok {
+		return address, nil
+	}
+
+	s := strings.Join(ss, ", ")
 
 	normalizedS := normalizeMultilineString(s)
 	if normalizedS == "" {
-		return address
+		return address, nil
 	}
 
-	decodedHeader, _ := decodeHeader(normalizedS)
-	address, _ = mail.ParseAddress(decodedHeader)
-	return address
+	decodedHeader, err := decodeHeader(normalizedS)
+	if err != nil {
+		return address, fmt.Errorf(
+			"letters.parsers.parseAddressHeader: cannot decode address header %q: %w",
+			s,
+			err)
+	}
+
+	address, err = mail.ParseAddress(decodedHeader)
+	if err != nil {
+		return address, fmt.Errorf(
+			"letters.parsers.parseAddressHeader: cannot parse address header %q: %w",
+			s,
+			err)
+	}
+
+	return address, nil
 }
 
-func parseAddressListHeader(s string) []*mail.Address {
+func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, error) {
 	var addresses []*mail.Address
-	for _, value := range strings.Split(s, ",") {
-		normalizedValue := normalizeMultilineString(value)
-		if normalizedValue != "" {
-			addresses = append(addresses, parseAddressHeader(value))
-		}
+
+	ss, ok := header[name]
+	if !ok {
+		return addresses, nil
 	}
-	return addresses
+	s := strings.Join(ss, ", ")
+	normalizedS := normalizeMultilineString(s)
+	if normalizedS == "" {
+		return addresses, nil
+	}
+
+	decodedHeader, err := decodeHeader(normalizedS)
+	if err != nil {
+		return addresses, fmt.Errorf(
+			"letters.parsers.parseAddressListHeader: cannot decode address list header %q: %w",
+			s,
+			err)
+	}
+
+	addresses, err = mail.ParseAddressList(decodedHeader)
+	if err != nil {
+		return addresses, fmt.Errorf(
+			"letters.parsers.parseAddressListHeader: cannot parse address list header %q: %w",
+			s,
+			err)
+	}
+
+	return addresses, nil
 }
 
 func parseMessageIdHeader(s string) MessageId {
@@ -202,14 +244,91 @@ func parseHeaders(header mail.Header) (Headers, error) {
 		}
 	}
 
+	sender, err := parseAddressHeader(header, "Sender")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Sender header: %w",
+			err)
+	}
+
+	from, err := parseAddressListHeader(header, "From")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse From header: %w",
+			err)
+	}
+
+	replyTo, err := parseAddressListHeader(header, "Reply-To")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Reply-To header: %w",
+			err)
+	}
+
+	to, err := parseAddressListHeader(header, "To")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse To header: %w",
+			err)
+	}
+
+	cc, err := parseAddressListHeader(header, "Cc")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Cc header: %w",
+			err)
+	}
+
+	bcc, err := parseAddressListHeader(header, "Bcc")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Bcc header: %w",
+			err)
+	}
+
+	resentFrom, err := parseAddressListHeader(header, "Resent-From")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Resent-From header: %w",
+			err)
+	}
+
+	resentSender, err := parseAddressHeader(header, "Resent-Sender")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Resent-Sender header: %w",
+			err)
+	}
+
+	resentTo, err := parseAddressListHeader(header, "Resent-To")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Resent-To header: %w",
+			err)
+	}
+
+	resentCc, err := parseAddressListHeader(header, "Resent-Cc")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Resent-Cc header: %w",
+			err)
+	}
+
+	resentBcc, err := parseAddressListHeader(header, "Resent-Bcc")
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.parseHeaders: cannot parse Resent-Bcc header: %w",
+			err)
+	}
+
 	return Headers{
 		Date:            parseDateHeader(header.Get("Date")),
-		Sender:          parseAddressHeader(header.Get("Sender")),
-		From:            parseAddressListHeader(header.Get("From")),
-		ReplyTo:         parseAddressListHeader(header.Get("Reply-To")),
-		To:              parseAddressListHeader(header.Get("To")),
-		Cc:              parseAddressListHeader(header.Get("Cc")),
-		Bcc:             parseAddressListHeader(header.Get("Bcc")),
+		Sender:          sender,
+		From:            from,
+		ReplyTo:         replyTo,
+		To:              to,
+		Cc:              cc,
+		Bcc:             bcc,
 		MessageID:       parseMessageIdHeader(header.Get("Message-ID")),
 		InReplyTo:       parseCommaSeparatedMessageIdHeader(header.Get("In-Reply-To")),
 		References:      parseCommaSeparatedMessageIdHeader(header.Get("References")),
@@ -217,11 +336,11 @@ func parseHeaders(header mail.Header) (Headers, error) {
 		Comments:        parseStringHeader(header.Get("Comments")),
 		Keywords:        parseCommaSeparatedStringHeader(header.Get("Keywords")),
 		ResentDate:      parseDateHeader(header.Get("Resent-Date")),
-		ResentFrom:      parseAddressListHeader(header.Get("Resent-From")),
-		ResentSender:    parseAddressHeader(header.Get("Resent-Sender")),
-		ResentTo:        parseAddressListHeader(header.Get("Resent-To")),
-		ResentCc:        parseAddressListHeader(header.Get("Resent-Cc")),
-		ResentBcc:       parseAddressListHeader(header.Get("Resent-Bcc")),
+		ResentFrom:      resentFrom,
+		ResentSender:    resentSender,
+		ResentTo:        resentTo,
+		ResentCc:        resentCc,
+		ResentBcc:       resentBcc,
 		ResentMessageID: parseMessageIdHeader(header.Get("Resent-Message-ID")),
 		ContentType:     contentType,
 		ExtraHeaders:    extraHeaders,

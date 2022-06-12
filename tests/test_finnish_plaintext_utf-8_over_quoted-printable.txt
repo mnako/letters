@@ -1,0 +1,43 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+From: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>,
+ =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Sender: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Reply-To: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+To: =?utf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?uTF-8?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.com>
+Cc: =?Utf-8?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.com>,
+ =?uTf-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.com>
+Bcc: =?utF-8?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.com>,
+ =?UtF-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?utf-8?q?Suomenkieliset_pangrammit?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0300 (EEST)
+Resent-From: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>,
+ =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.com>
+Resent-Sender: =?utf-8?q?Alice_L=C3=A4hett=C3=A4j=C3=A4?= <alice.lahettaja@example.net>
+Resent-To: =?utf-8?Q?Bob_Vastaanottaja?= <bob.vastaanottaja@exaple.com>,
+ =?uTF-8?Q?Carol_Vastaanottaja?= <carol.vastaanottaja@example.net>
+Resent-Cc: =?Utf-8?Q?Dan_Vastaanottaja?= <dan.vastaanottaja@example.net>,
+ =?uTf-8?q?Eve_Vastaanottaja?= <eve.vastaanottaja@example.net>
+Resent-Bcc: =?utF-8?q?Frank_Vastaanottaja?= <frank.vastaanottaja@example.net>,
+ =?UtF-8?q?Grace_Vastaanottaja?= <grace.vastaanottaja@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: TEXT/pLain; charset=uTf-8
+Content-Transfer-Encoding: QUOtEd-printable
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+Albert osti fagotin ja t=C3=B6r=C3=A4ytti puhkuvan melodian.
+Lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4iv=C3=A4t suomen kirjaimet.
+Hyv=C3=A4n lorun sangen pieneksi hy=C3=B6dyksi j=C3=A4i suomen kirjaimet.
+Fahrenheit ja Celsius yrj=C3=B6siv=C3=A4t =C3=85san backgammon-peliin, Volk=
+swagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
+Charles Darwin jammaili =C3=85ken hevixylofonilla Qatarin y=C3=B6pub Zeligi=
+ss=C3=A4.
+Wienil=C3=A4inen sioux:ta puhuva =C3=B6kyzombie diggaa =C3=85san roquefort-=
+tacoja.
