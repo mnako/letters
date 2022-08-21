@@ -231,7 +231,7 @@ func parseHeaders(header mail.Header) (Headers, error) {
 			err)
 	}
 
-	contentDisposition, err := parseContentDisposition(header.Get("Content-Disposition"))
+	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
 
 	var extraHeaders = make(map[string][]string)
 	for key, value := range header {
