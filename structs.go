@@ -35,6 +35,7 @@ var knownHeaders = map[string]void{
 	"Resent-Message-Id":         member,
 	"Content-Transfer-Encoding": member,
 	"Content-Type":              member,
+	"Content-Disposition":       member,
 }
 
 type ContentDisposition string
@@ -525,8 +526,9 @@ type Headers struct {
 	// If another top-level type is to be used for any reason, it must be
 	// given a name starting with "X-" to indicate its non-standard status
 	// and to avoid a potential conflict with a future official name.
-	ContentType  ContentTypeHeader
-	ExtraHeaders map[string][]string
+	ContentType        ContentTypeHeader
+	ContentDisposition ContentDispositionHeader
+	ExtraHeaders       map[string][]string
 }
 
 type emailBodies struct {
