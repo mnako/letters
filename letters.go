@@ -66,11 +66,13 @@ func ParseEmail(r io.Reader) (Email, error) {
 		email.AttachedFiles = emailBodies.AttachedFiles
 
 	} else {
-		return email, fmt.Errorf(
-			"letters.ParseEmail: cannot parse unknown Content-Type %q: %w",
-			email.Headers.ContentType.ContentType,
-			&UnknownContentTypeError{contentType: email.Headers.ContentType.ContentType},
-		)
+		afl, err := decodeAttachmentFileFromBody(msg.Body, email.Headers, cte)
+		if err != nil {
+			return email, fmt.Errorf(
+				"letters.decoders.ParseEmail: cannot decode attached file content from body: %w",
+				err)
+		}
+		email.AttachedFiles = append(email.AttachedFiles, afl)
 	}
 
 	email.Text = normalizeMultilineString(email.Text)

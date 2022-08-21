@@ -1,0 +1,20 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0100 (BST)
+From: =?uTf-8?b?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>,
+ =?uTf-8?b?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+Sender: =?uTf-8?b?QWxpY2UgU2VuZGVy?= <alice.sender@example.com>
+Reply-To: =?uTf-8?b?QWxpY2UgU2VuZGVy?= <alice.sender@example.net>
+To: =?utf-8?b?Qm9iIFJlY2lwaWVudA==?= <bob.recipient@example.com>,
+ =?UTF-8?B?Q2Fyb2wgUmVjaXBpZW50?= <carol.recipient@example.com>
+Cc: =?Utf-8?B?RGFuIFJlY2lwaWVudA==?= <dan.recipient@example.com>,
+ =?uTF-8?b?RXZlIFJlY2lwaWVudA==?= <eve.recipient@example.com>
+Bcc: =?utf-8?b?RnJhbmsgUmVjaXBpZW50?= <frank.recipient@example.com>,
+ =?Utf-8?B?R3JhY2UgUmVjaXBpZW50?= <grace.recipient@example.com>
+Message-ID: <Message-Id-1@example.com>
+Subject: Test No Text Content, Attachment Only
+Content-Type: applicaTION/PDF; NAME="attached-pdf-name.pdf"
+Content-Disposition: AttachmenT; FILENAMe="attached-pdf-filename.pdf"
+Content-Transfer-Encoding: BASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+JVBERi0xLg10cmFpbGVyPDwvUm9vdDw8L1BhZ2VzPDwvS2lkc1s8PC9NZWRpYUJveFswIDAgMyAz
+XT4+XT4+Pj4+Pg==

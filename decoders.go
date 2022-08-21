@@ -129,34 +129,56 @@ func decodeInlineFile(part *multipart.Part, cte ContentTransferEncoding) (Inline
 	return ifl, nil
 }
 
-func decodeAttachedFile(part *multipart.Part, cte ContentTransferEncoding) (AttachedFile, error) {
+func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTransferEncoding) (AttachedFile, error) {
+	var afl AttachedFile
+
+	decoded, err := decodeContent(body, nil, cte)
+	if err != nil {
+		return afl, fmt.Errorf(
+			"letters.decoders.decodeAttachmentFileFromBody: cannot decode attached file content: %w",
+			err)
+	}
+
+	afl.ContentType = headers.ContentType
+	afl.ContentDisposition = headers.ContentDisposition
+	afl.Data, err = ioutil.ReadAll(decoded)
+	if err != nil {
+		return afl, fmt.Errorf(
+			"letters.decoders.decodeAttachmentFileFromBody: cannot read attached file data: %w",
+			err)
+	}
+
+	return afl, nil
+}
+
+func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncoding) (AttachedFile, error) {
 	var afl AttachedFile
 
 	decoded, err := decodeContent(part, nil, cte)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFile: cannot decode attached file content: %w",
+			"letters.decoders.decodeAttachedFileFromPart: cannot decode attached file content: %w",
 			err)
 	}
 
 	afl.ContentType, err = parseContentTypeHeader(part.Header.Get("Content-Type"))
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFile: cannot parse Content-Type of attached file: %w",
+			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Type of attached file: %w",
 			err)
 	}
 
 	afl.ContentDisposition, err = parseContentDisposition(part.Header.Get("Content-Disposition"))
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFile: cannot parse Content-Disposition of attached file: %w",
+			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Disposition of attached file: %w",
 			err)
 	}
 
 	afl.Data, err = ioutil.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFile: cannot read attached file data: %w",
+			"letters.decoders.decodeAttachedFileFromPart: cannot read attached file data: %w",
 			err)
 	}
 

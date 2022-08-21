@@ -46,6 +46,111 @@ defaults (e.g. text/plain Content-Type).`,
 	testEmailFromFile(t, fp, expectedEmail)
 }
 
+func TestParseEmailEnglishNoTextContent(t *testing.T) {
+	fp := "tests/test_english_no_text_content.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "Test No Text Content, Attachment Only",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.com",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.com",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.com",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.com",
+				},
+			},
+			MessageID: "Message-Id-1@example.com",
+			ContentType: ContentTypeHeader{
+				ContentType: "application/pdf",
+				Params: map[string]string{
+					"name": "attached-pdf-name.pdf",
+				},
+			},
+			ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: attachment,
+				Params: map[string]string{
+					"filename": "attached-pdf-filename.pdf",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text:         "",
+		EnrichedText: "",
+		HTML:         "",
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")

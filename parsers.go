@@ -231,6 +231,8 @@ func parseHeaders(header mail.Header) (Headers, error) {
 			err)
 	}
 
+	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
+
 	var extraHeaders = make(map[string][]string)
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
@@ -322,28 +324,29 @@ func parseHeaders(header mail.Header) (Headers, error) {
 	}
 
 	return Headers{
-		Date:            parseDateHeader(header.Get("Date")),
-		Sender:          sender,
-		From:            from,
-		ReplyTo:         replyTo,
-		To:              to,
-		Cc:              cc,
-		Bcc:             bcc,
-		MessageID:       parseMessageIdHeader(header.Get("Message-ID")),
-		InReplyTo:       parseCommaSeparatedMessageIdHeader(header.Get("In-Reply-To")),
-		References:      parseCommaSeparatedMessageIdHeader(header.Get("References")),
-		Subject:         parseStringHeader(header.Get("Subject")),
-		Comments:        parseStringHeader(header.Get("Comments")),
-		Keywords:        parseCommaSeparatedStringHeader(header.Get("Keywords")),
-		ResentDate:      parseDateHeader(header.Get("Resent-Date")),
-		ResentFrom:      resentFrom,
-		ResentSender:    resentSender,
-		ResentTo:        resentTo,
-		ResentCc:        resentCc,
-		ResentBcc:       resentBcc,
-		ResentMessageID: parseMessageIdHeader(header.Get("Resent-Message-ID")),
-		ContentType:     contentType,
-		ExtraHeaders:    extraHeaders,
+		Date:               parseDateHeader(header.Get("Date")),
+		Sender:             sender,
+		From:               from,
+		ReplyTo:            replyTo,
+		To:                 to,
+		Cc:                 cc,
+		Bcc:                bcc,
+		MessageID:          parseMessageIdHeader(header.Get("Message-ID")),
+		InReplyTo:          parseCommaSeparatedMessageIdHeader(header.Get("In-Reply-To")),
+		References:         parseCommaSeparatedMessageIdHeader(header.Get("References")),
+		Subject:            parseStringHeader(header.Get("Subject")),
+		Comments:           parseStringHeader(header.Get("Comments")),
+		Keywords:           parseCommaSeparatedStringHeader(header.Get("Keywords")),
+		ResentDate:         parseDateHeader(header.Get("Resent-Date")),
+		ResentFrom:         resentFrom,
+		ResentSender:       resentSender,
+		ResentTo:           resentTo,
+		ResentCc:           resentCc,
+		ResentBcc:          resentBcc,
+		ResentMessageID:    parseMessageIdHeader(header.Get("Resent-Message-ID")),
+		ContentType:        contentType,
+		ContentDisposition: contentDisposition,
+		ExtraHeaders:       extraHeaders,
 	}, nil
 }
 
@@ -500,7 +503,7 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 				}
 				emailBodies.InlineFiles = append(emailBodies.InlineFiles, inlineFile)
 			} else if isAttFile {
-				attachedFile, err := decodeAttachedFile(part, cte)
+				attachedFile, err := decodeAttachedFileFromPart(part, cte)
 				if err != nil {
 					return emailBodies, fmt.Errorf(
 						"letters.parsers.parsePart: cannot decode attached file: %w",
