@@ -1,7 +1,6 @@
 # Letters, or how to parse emails in Go
 
 [![Test](https://github.com/mnako/letters/actions/workflows/test.yml/badge.svg)](https://github.com/mnako/letters/actions/workflows/test.yml)
-[![Lint](https://github.com/mnako/letters/actions/workflows/lint.yml/badge.svg)](https://github.com/mnako/letters/actions/workflows/lint.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mnako/letters)](https://goreportcard.com/report/github.com/mnako/letters)
 
 **Letters** is a minimalistic Golang library for parsing plaintext and MIME
