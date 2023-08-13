@@ -368,36 +368,21 @@ func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (s
 	return strings.TrimSuffix(string(textBody), "\n"), nil
 }
 
-func isInlineFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader, p *multipart.Part) (bool, error) {
-	cdh, err := parseContentDisposition(p.Header.Get("Content-Disposition"))
-	if err != nil {
-		return false, fmt.Errorf(
-			"letters.parsers.isInlineFile: cannot parse Content-Disposition: %w",
-			err)
-	}
+func isInlineFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader, cdh ContentDispositionHeader) bool {
 	if cdh.ContentDisposition == inline {
-		return true, nil
+		return true
 	}
 	if contentType.ContentType == contentTypeTextPlain || contentType.ContentType == contentTypeTextEnriched || contentType.ContentType == contentTypeTextHtml {
-		return false, nil
+		return false
 	}
-	return parentContentType.ContentType == contentTypeMultipartRelated, nil
+	return parentContentType.ContentType == contentTypeMultipartRelated
 }
 
-func isAttachedFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader, part *multipart.Part) (bool, error) {
-	cdh, err := parseContentDisposition(part.Header.Get("Content-Disposition"))
-	if err != nil {
-		return false, fmt.Errorf(
-			"letters.parsers.isAttachedFile: cannot parse Content-Disposition: %w",
-			err)
-	}
-	if cdh.ContentDisposition == attachment {
-		return true, nil
-	}
+func isAttachedFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader) bool {
 	if contentType.ContentType != contentTypeTextPlain && contentType.ContentType != contentTypeTextEnriched && contentType.ContentType != contentTypeTextHtml {
-		return true, nil
+		return true
 	}
-	return parentContentType.ContentType == contentTypeMultipartMixed || parentContentType.ContentType == contentTypeMultipartParallel, nil
+	return parentContentType.ContentType == contentTypeMultipartMixed || parentContentType.ContentType == contentTypeMultipartParallel
 }
 
 func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary string) (emailBodies, error) {
@@ -441,6 +426,23 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 				err)
 		}
 
+		cdh, err := parseContentDisposition(part.Header.Get("Content-Disposition"))
+		if err != nil {
+			return emailBodies, fmt.Errorf(
+				"letters.parsers.parsePart: cannot parse Content-Disposition: %w",
+				err)
+		}
+		if cdh.ContentDisposition == attachment {
+			attachedFile, err := decodeAttachedFileFromPart(part, cte)
+			if err != nil {
+				return emailBodies, fmt.Errorf(
+					"letters.parsers.parsePart: cannot decode attached file: %w",
+					err)
+			}
+			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
+			continue
+		}
+
 		if partContentType.ContentType == contentTypeTextPlain {
 			partTextBody, err := parseText(part, enc, cte)
 			if err != nil {
@@ -450,8 +452,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 			}
 			emailBodies.text += partTextBody
 			emailBodies.text += "\n\n"
+			continue
+		}
 
-		} else if partContentType.ContentType == contentTypeTextEnriched {
+		if partContentType.ContentType == contentTypeTextEnriched {
 			partEnrichedText, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -459,8 +463,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 					err)
 			}
 			emailBodies.enrichedText += partEnrichedText
+			continue
+		}
 
-		} else if partContentType.ContentType == contentTypeTextHtml {
+		if partContentType.ContentType == contentTypeTextHtml {
 			partHtmlBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -468,8 +474,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 					err)
 			}
 			emailBodies.html += partHtmlBody
+			continue
+		}
 
-		} else if strings.HasPrefix(partContentType.ContentType, contentTypeMultipartPrefix) {
+		if strings.HasPrefix(partContentType.ContentType, contentTypeMultipartPrefix) {
 			nestedEmailBodies, err := parsePart(part, partContentType, partContentType.Params["boundary"])
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -478,42 +486,32 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 			}
 
 			emailBodies.extend(nestedEmailBodies)
-		} else {
-
-			isInlFile, err := isInlineFile(partContentType, parentContentType, part)
-			if err != nil {
-				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot read part: %w",
-					err)
-			}
-
-			isAttFile, err := isAttachedFile(partContentType, parentContentType, part)
-			if err != nil {
-				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot check attached file: %w",
-					err)
-			}
-
-			if isInlFile {
-				inlineFile, err := decodeInlineFile(part, cte)
-				if err != nil {
-					return emailBodies, fmt.Errorf(
-						"letters.parsers.parsePart: cannot decode inline file: %w",
-						err)
-				}
-				emailBodies.InlineFiles = append(emailBodies.InlineFiles, inlineFile)
-			} else if isAttFile {
-				attachedFile, err := decodeAttachedFileFromPart(part, cte)
-				if err != nil {
-					return emailBodies, fmt.Errorf(
-						"letters.parsers.parsePart: cannot decode attached file: %w",
-						err)
-				}
-				emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
-			} else {
-				return emailBodies, &UnknownContentTypeError{contentType: parentContentType.ContentType}
-			}
+			continue
 		}
+
+		if isInlineFile(partContentType, parentContentType, cdh) {
+			inlineFile, err := decodeInlineFile(part, cte)
+			if err != nil {
+				return emailBodies, fmt.Errorf(
+					"letters.parsers.parsePart: cannot decode inline file: %w",
+					err)
+			}
+			emailBodies.InlineFiles = append(emailBodies.InlineFiles, inlineFile)
+			continue
+		}
+
+		if isAttachedFile(partContentType, parentContentType) {
+			attachedFile, err := decodeAttachedFileFromPart(part, cte)
+			if err != nil {
+				return emailBodies, fmt.Errorf(
+					"letters.parsers.parsePart: cannot decode attached file: %w",
+					err)
+			}
+			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
+			continue
+		}
+
+		return emailBodies, &UnknownContentTypeError{contentType: parentContentType.ContentType}
 	}
 
 	emailBodies.text = strings.Trim(emailBodies.text, "\n")
