@@ -138,4 +138,17 @@ Content-Type: ApPLICATION/JSon; NamE="attached-json-name.json"
 Content-Disposition: aTTACHMENT; FILename="attached-json-filename.json"
 
 {"foo":"bar"}
+--MixedBoundaryString
+Content-Type: text/PlAiN; NAme="attached-text-plain-name.txt"
+Content-Disposition: ATTaChMeNt; FIlename="attached-text-plain-filename.txt"
+Content-Transfer-Encoding: bASe64
+
+VGV4dC9wbGFpbiBjb250ZW50IGFzIGFuIGF0dGFjaGVkIC50eHQgZmlsZS4=
+
+--MixedBoundaryString
+Content-Type: tEXT/hTML; name="attached-text-html-name.html"
+Content-Disposition: atTaCHmEnT; FIleNamE="attached-text-html-filename.html"
+Content-Transfer-Encoding: BAse64
+
+VGV4dC9odG1sIGNvbnRlbnQgYXMgYW4gYXR0YWNoZWQgLmh0bWwgZmlsZS4=
 --MixedBoundaryString--

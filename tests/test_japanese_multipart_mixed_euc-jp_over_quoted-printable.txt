@@ -182,4 +182,17 @@ Content-Type: apPlICATION/JSON; NaMe="attached-json-name.json"
 Content-Disposition: AtTaCHMENT; FILENAmE="attached-json-filename.json"
 
 {"foo":"bar"}
+--MixedBoundaryString
+Content-Type: text/PLAIN; naME="attached-text-plain-name.txt"
+Content-Disposition: aTtacHMENt; filEnAMe="attached-text-plain-filename.txt"
+Content-Transfer-Encoding: baSE64
+
+VGV4dC9wbGFpbiBjb250ZW50IGFzIGFuIGF0dGFjaGVkIC50eHQgZmlsZS4=
+
+--MixedBoundaryString
+Content-Type: TeXT/hTmL; Name="attached-text-html-name.html"
+Content-Disposition: ATTAchmeNT; filenAME="attached-text-html-filename.html"
+Content-Transfer-Encoding: BASe64
+
+VGV4dC9odG1sIGNvbnRlbnQgYXMgYW4gYXR0YWNoZWQgLmh0bWwgZmlsZS4=
 --MixedBoundaryString--
