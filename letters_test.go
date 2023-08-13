@@ -2177,6 +2177,40 @@ Pack my box with five dozen liquor jugs.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -2417,6 +2451,40 @@ Pack my box with five dozen liquor jugs.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -2659,6 +2727,40 @@ Pack my box with five dozen liquor jugs.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -2899,6 +3001,40 @@ Pack my box with five dozen liquor jugs.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -3141,6 +3277,40 @@ Pack my box with five dozen liquor jugs.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -3381,6 +3551,40 @@ Pack my box with five dozen liquor jugs.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -5822,6 +6026,40 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -6071,6 +6309,40 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -6322,6 +6594,40 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -6571,6 +6877,40 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -8642,6 +8982,40 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -8879,6 +9253,40 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -9118,6 +9526,40 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -9355,6 +9797,40 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -11353,6 +11829,40 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -11581,6 +12091,40 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -11811,6 +12355,40 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -12039,6 +12617,40 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -15815,6 +16427,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -16097,6 +16743,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -16381,6 +17061,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -16663,6 +17377,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -16947,6 +17695,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -17229,6 +18011,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -17513,6 +18329,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -17795,6 +18645,40 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -20483,6 +21367,40 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -20705,6 +21623,40 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -20929,6 +21881,40 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -21151,6 +22137,40 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -23224,6 +24244,40 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -23467,6 +24521,40 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
@@ -23712,6 +24800,40 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
 		},
 	}
 
@@ -23955,6 +25077,40 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 					},
 				},
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
 			},
 		},
 	}
