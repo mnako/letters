@@ -17,7 +17,7 @@ content, and decode inline and attached files.
 Install
 
 ```
-go get github.com/mnako/letters@v0.1.4
+go get github.com/mnako/letters@v0.2.0
 ```
 
 Parse a raw email from a Reader:
@@ -206,5 +206,5 @@ examples and thorough test coverage.
 
 Feature-complete and tests passing. 
 
-Currently gethering feedback and refactoring code before releasing v1.0.0.
+Currently, gathering feedback and refactoring code before releasing v1.0.0.
 Fields and API are still subject to change.
