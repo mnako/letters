@@ -52,16 +52,16 @@ var cdMap = map[string]ContentDisposition{
 
 const contentTypeMultipartPrefix = "multipart/"
 
-//const contentTypeMultipartAlternative = "multipart/alternative"
-//const contentTypeMultipartDigest = "multipart/digest"
+// const contentTypeMultipartAlternative = "multipart/alternative"
+// const contentTypeMultipartDigest = "multipart/digest"
 const contentTypeMultipartMixed = "multipart/mixed"
 const contentTypeMultipartParallel = "multipart/parallel"
 const contentTypeMultipartRelated = "multipart/related"
 
-//const contentTypeMultipartReport = "multipart/report"
+// const contentTypeMultipartReport = "multipart/report"
 
-//const contentTypeMultipartSigned = "multipart/signed"
-//const contentTypeMultipartEncrypted = "multipart/encrypted"
+// const contentTypeMultipartSigned = "multipart/signed"
+// const contentTypeMultipartEncrypted = "multipart/encrypted"
 
 const contentTypeTextPlain = "text/plain"
 const contentTypeTextEnriched = "text/enriched"

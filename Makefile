@@ -1,3 +1,6 @@
+dev-container:
+	docker run --rm -it -v .:/src -v ./.gopath:/go golang:1.21-bookworm bash
+
 format:
 	go fmt
 
