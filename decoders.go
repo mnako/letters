@@ -18,8 +18,18 @@ import (
 
 func decodeHeader(s string) (string, error) {
 	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
-		label = strings.Replace(label, "windows-", "cp", -1)
-		enc, _ := charset.Lookup(label)
+		normalized := strings.Replace(label, "windows-", "cp", -1)
+		enc, _ := charset.Lookup(normalized)
+		if enc == nil {
+			// no encoder found for normalized label,
+			// try to lookup using the original value
+			enc, _ = charset.Lookup(label)
+			if enc == nil {
+				return nil, fmt.Errorf(
+					"letters.decoders.decodeHeader: cannot find MIME-word-encoded for %s", label)
+			}
+		}
+
 		return enc.NewDecoder().Reader(input), nil
 	}
 	mimeDecoder := mime.WordDecoder{CharsetReader: CharsetReader}
