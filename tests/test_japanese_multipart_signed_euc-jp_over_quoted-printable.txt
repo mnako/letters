@@ -34,6 +34,12 @@ Content-Type: muLtipart/signed;
               Boundary=SignedBoundaryString
 Content-Transfer-Encoding: qUotED-PRINTABLe
 X-Clacks-Overhead: GNU Terry Pratchett
+X-Script/function/	 !"#$%&'()*+,-./;<=>?@[\]^_`{|}~: TEST
+ VALUE 1	 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+ abcdefghijklmnopqrstuvwxyz{|}~
+X-Script/function/	 !"#$%&'()*+,-./;<=>?@[\]^_`{|}~: TEST
+ VALUE 2	 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+ abcdefghijklmnopqrstuvwxyz{|}~
 
 
 --SignedBoundaryString

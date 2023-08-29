@@ -121,6 +121,10 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         "",
@@ -224,6 +228,10 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -357,6 +365,10 @@ func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -490,6 +502,10 @@ func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -623,6 +639,10 @@ func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -756,6 +776,10 @@ func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -889,6 +913,10 @@ func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1023,6 +1051,10 @@ func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1196,6 +1228,10 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1369,6 +1405,10 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1542,6 +1582,10 @@ func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1715,6 +1759,10 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -1888,6 +1936,10 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -2061,6 +2113,10 @@ func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -2336,6 +2392,10 @@ func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -2611,6 +2671,10 @@ func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -2886,6 +2950,10 @@ func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -3161,6 +3229,10 @@ func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -3436,6 +3508,10 @@ func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -3713,6 +3789,10 @@ func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -3866,6 +3946,10 @@ func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -4019,6 +4103,10 @@ func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -4172,6 +4260,10 @@ func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -4325,6 +4417,10 @@ func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -4478,6 +4574,10 @@ func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `The quick brown fox jumps over a lazy dog.
@@ -4628,6 +4728,10 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -4764,6 +4868,10 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -4900,6 +5008,10 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5036,6 +5148,10 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5173,6 +5289,10 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5355,6 +5475,10 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5537,6 +5661,10 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5719,6 +5847,10 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -5901,6 +6033,10 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -6185,6 +6321,10 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -6469,6 +6609,10 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -6753,6 +6897,10 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -7039,6 +7187,10 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -7195,6 +7347,10 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -7351,6 +7507,10 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -7507,6 +7667,10 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `石室诗士施氏，嗜狮，誓食十狮。
@@ -7660,6 +7824,10 @@ func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -7792,6 +7960,10 @@ func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -7924,6 +8096,10 @@ func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8056,6 +8232,10 @@ func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8189,6 +8369,10 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8359,6 +8543,10 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8529,6 +8717,10 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8699,6 +8891,10 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testin
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -8869,6 +9065,10 @@ func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -9141,6 +9341,10 @@ func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -9413,6 +9617,10 @@ func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -9685,6 +9893,10 @@ func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -9959,6 +10171,10 @@ func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -10111,6 +10327,10 @@ func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -10263,6 +10483,10 @@ func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -10415,6 +10639,10 @@ func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Albert osti fagotin ja töräytti puhkuvan melodian.
@@ -10564,6 +10792,10 @@ func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -10693,6 +10925,10 @@ func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -10822,6 +11058,10 @@ func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -10951,6 +11191,10 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11081,6 +11325,10 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11242,6 +11490,10 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11403,6 +11655,10 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11564,6 +11820,10 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testi
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11725,6 +11985,10 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -11988,6 +12252,10 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -12251,6 +12519,10 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -12514,6 +12786,10 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -12779,6 +13055,10 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -12928,6 +13208,10 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -13077,6 +13361,10 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -13226,6 +13514,10 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
@@ -13372,6 +13664,10 @@ func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -13519,6 +13815,10 @@ func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -13666,6 +13966,10 @@ func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -13813,6 +14117,10 @@ func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -13960,6 +14268,10 @@ func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14107,6 +14419,10 @@ func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14254,6 +14570,10 @@ func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14401,6 +14721,10 @@ func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14549,6 +14873,10 @@ func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14764,6 +15092,10 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -14979,6 +15311,10 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -15194,6 +15530,10 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -15409,6 +15749,10 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -15624,6 +15968,10 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testi
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -15839,6 +16187,10 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -16054,6 +16406,10 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -16269,6 +16625,10 @@ func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -16586,6 +16946,10 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -16903,6 +17267,10 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -17220,6 +17588,10 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -17537,6 +17909,10 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -17854,6 +18230,10 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -18171,6 +18551,10 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -18488,6 +18872,10 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -18807,6 +19195,10 @@ func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -18974,6 +19366,10 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19141,6 +19537,10 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19308,6 +19708,10 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19475,6 +19879,10 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19642,6 +20050,10 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testin
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19809,6 +20221,10 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -19976,6 +20392,10 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `色は匂えど
@@ -20140,6 +20560,10 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20267,6 +20691,10 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20394,6 +20822,10 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20521,6 +20953,10 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20649,6 +21085,10 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20804,6 +21244,10 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -20959,6 +21403,10 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -21114,6 +21562,10 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -21269,6 +21721,10 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -21526,6 +21982,10 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -21783,6 +22243,10 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22040,6 +22504,10 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text:         `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22299,6 +22767,10 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22446,6 +22918,10 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22593,6 +23069,10 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22740,6 +23220,10 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
@@ -22884,6 +23368,10 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23018,6 +23506,10 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23152,6 +23644,10 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23286,6 +23782,10 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23421,6 +23921,10 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23597,6 +24101,10 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23773,6 +24281,10 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -23949,6 +24461,10 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -24125,6 +24641,10 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -24403,6 +24923,10 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -24681,6 +25205,10 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -24959,6 +25487,10 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -25239,6 +25771,10 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -25393,6 +25929,10 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -25547,6 +26087,10 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!
@@ -25701,6 +26245,10 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 			},
 			ExtraHeaders: map[string][]string{
 				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 		Text: `Jeżu klątw, spłódź Finom część gry hańb!

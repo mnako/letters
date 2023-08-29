@@ -30,6 +30,12 @@ Resent-Message-ID: <Message-Id-1@example.net>
 Content-Type: teXt/pLain; ChARSEt=EUc-KR
 Content-Transfer-Encoding: quoted-printabLe
 X-Clacks-Overhead: GNU Terry Pratchett
+X-Script/function/	 !"#$%&'()*+,-./;<=>?@[\]^_`{|}~: TEST
+ VALUE 1	 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+ abcdefghijklmnopqrstuvwxyz{|}~
+X-Script/function/	 !"#$%&'()*+,-./;<=>?@[\]^_`{|}~: TEST
+ VALUE 2	 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+ abcdefghijklmnopqrstuvwxyz{|}~
 
 
 =C5=B0=BD=BA=C0=C7 =B0=ED=C0=AF=C1=B6=B0=C7=C0=BA =C0=D4=BC=FA=B3=A2=B8=AE =
