@@ -1,0 +1,59 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+From: =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>,
+ =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Sender: =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Reply-To: =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+To: =?TIS-620?b?uurNuiC82enD0bo=?= <bob.phurab@example.com>,
+ =?tis-620?B?pNLiw8UgvNnpw9G6?= <carol.phurab@example.com>
+Cc: =?tis-620?b?4bS5ILzZ6cPRug==?= <dan.phurab@example.com>,
+ =?tIs-620?b?zdW/ILzZ6cPRug==?= <eve.phurab@example.com>
+Bcc: =?tiS-620?B?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.com>,
+ =?TIS-620?b?4KHDqyC82enD0bo=?= <grace.phurab@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?TiS-620?B?4b654aHDwcDSydLkt8I=?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+Resent-From: =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>,
+ =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Resent-Sender: =?tiS-620?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Resent-To: =?TIS-620?b?uurNuiC82enD0bo=?= <bob.phurab@example.net>,
+ =?tis-620?B?pNLiw8UgvNnpw9G6?= <carol.phurab@example.net>
+Resent-Cc: =?tis-620?b?4bS5ILzZ6cPRug==?= <dan.phurab@example.net>,
+ =?tIs-620?b?zdW/ILzZ6cPRug==?= <eve.phurab@example.net>
+Resent-Bcc: =?tiS-620?B?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.net>,
+ =?TIS-620?b?4KHDqyC82enD0bo=?= <grace.phurab@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: muLTIpART/SIgnED;
+              CHaRSet="Tis-620";
+              PROTOcOl="applicAtioN/pKCs7-SIgnatUrE";
+              Micalg=sha1;
+              bounDary=SignedBoundaryString
+Content-Transfer-Encoding: BaSe64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: teXt/Plain
+Content-Transfer-Encoding: BaSE64
+
+4LvnucG52MnC7MrYtLvD0ODKw9Sw4MXUyKTYs6To0iChx+jSusPDtNK92afK0bXH7OC0w9GoqdK5
+IKinvejSv9G5vtGyudLH1KrSodLDIM3C6NLF6dKnvMXSrcTl4KLouabo0rrVsdLjpMMg5MHottfN
+4rfJ4qHDuOGq6Ker0bTO1rTO0bS06NIgy9G0zcDRwuDLwdfNuaHVzNLN0aqs0srRwiC7r9S60bXU
+u8PQvsS11KGuodPLubTjqCC+2bSo0uPL6ajq0OYgqOvS5iC56NK/0afgzcLPCgq50sLK0aemwNGz
+sewg4M6nvtS30aHJ7L3R6KcgvNnp4LLo0qvW6KfB1c3SqtW+4LvnuaW5otLCo8e0ILbZobXTw8eo
+u6/UutG11KHSw6jRur/pzafI0sUgsNK5xdGhudLM1KHSpNizy63Up6nRtcOqrtIgrNK5ysHSuNQ
+
+--SignedBoundaryString
+Content-Type: apPliCaTioN/pKcS7-SiGNATuRe; namE=smime.p7s
+Content-Transfer-Encoding: bAsE64
+Content-Disposition: attaChmenT; FIlEnaMe=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--
