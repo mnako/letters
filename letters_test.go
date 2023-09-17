@@ -26280,3 +26280,4215 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
+func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
+	fp := "tests/test_thai_plaintext_iso-8859-11_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_plaintext_iso-8859-11_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
+	fp := "tests/test_thai_plaintext_windows-874_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_plaintext_windows-874_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
+	fp := "tests/test_thai_plaintext_tis-620_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_plaintext_tis-620_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_iso-8859-11_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_iso-8859-11_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_windows-874_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_windows-874_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_tis-620_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_related_tis-620_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/related",
+				Params: map[string]string{
+					"boundary": "RelatedBoundaryString",
+					"charset":  "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "iso-8859-11",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_windows-874_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_windows-874_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "windows-874",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_tis-620_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_mixed_tis-620_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params: map[string]string{
+					"boundary": "MixedBoundaryString",
+					"charset":  "tis-620",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		EnrichedText: `<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> <italic>กว่าบรรดาฝูงสัตว์เดรัจฉาน</italic> <fixed>จงฝ่าฟันพัฒนาวิชาการ</fixed> <underline>อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</underline> ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		HTML: `<html>
+<div dir="ltr">
+<p>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ</p>
+
+<p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
+</div>
+</html>`,
+		InlineFiles: []InlineFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-without-disposition.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+			{
+				ContentID: "inline-jpg-image.jpg@example.com",
+				ContentType: ContentTypeHeader{
+					ContentType: "image/jpeg",
+					Params: map[string]string{
+						"name": "inline-jpg-image-name.jpg",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: inline,
+					Params: map[string]string{
+						"filename": "inline-jpg-image-filename.jpg",
+					},
+				},
+				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
+					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
+					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
+					32, 255, 217},
+			},
+		},
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-name.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-pdf-filename.pdf",
+					},
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pdf",
+					Params: map[string]string{
+						"name": "attached-pdf-without-disposition.pdf",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: "",
+					Params:             map[string]string(nil),
+				},
+				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+					62, 62, 62, 62, 62},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/json",
+					Params: map[string]string{
+						"name": "attached-json-name.json",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-json-filename.json",
+					},
+				},
+				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/plain",
+					Params: map[string]string{
+						"name": "attached-text-plain-name.txt",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-plain-filename.txt",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
+					108, 101, 46},
+			},
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "text/html",
+					Params: map[string]string{
+						"name": "attached-text-html-name.html",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "attached-text-html-filename.html",
+					},
+				},
+				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
+					105, 108, 101, 46},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "iso-8859-11",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "iso-8859-11",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_windows-874_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "windows-874",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_windows-874_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "windows-874",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_tis-620_over_base64.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "tis-620",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
+	fp := "tests/test_thai_multipart_signed_tis-620_over_quoted-printable.txt"
+	tz, _ := time.LoadLocation("Asia/Bangkok")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.com",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.com",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.com",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.net",
+				},
+				{
+					Name:    "อลิซ ผู้ส่งจดหมาย",
+					Address: "alis.phusngcdhmay@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "อลิซ ผู้ส่งจดหมาย",
+				Address: "alis.phusngcdhmay@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "บ๊อบ ผู้รับ",
+					Address: "bob.phurab@example.net",
+				},
+				{
+					Name:    "คาโรล ผู้รับ",
+					Address: "carol.phurab@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "แดน ผู้รับ",
+					Address: "dan.phurab@example.net",
+				},
+				{
+					Name:    "อีฟ ผู้รับ",
+					Address: "eve.phurab@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "แฟรงค์ ผู้รับ",
+					Address: "frank.phurab@example.net",
+				},
+				{
+					Name:    "เกรซ ผู้รับ",
+					Address: "grace.phurab@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "tis-620",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			},
+		},
+		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
+
+นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
+		AttachedFiles: []AttachedFile{
+			{
+				ContentType: ContentTypeHeader{
+					ContentType: "application/pkcs7-signature",
+					Params: map[string]string{
+						"name": "smime.p7s",
+					},
+				},
+				ContentDisposition: ContentDispositionHeader{
+					ContentDisposition: attachment,
+					Params: map[string]string{
+						"filename": "smime.p7s",
+					},
+				},
+				Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
+			},
+		},
+	}
+
+	testEmailFromFile(t, fp, expectedEmail)
+}

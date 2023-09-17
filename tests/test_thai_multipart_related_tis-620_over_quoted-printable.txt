@@ -1,0 +1,114 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+From: =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.com>,
+ =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.net>
+Sender: =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.com>
+Reply-To: =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.net>
+To: =?tiS-620?Q?=BA=EA=CD=BA_=BC=D9=E9=C3=D1=BA?= <bob.phurab@example.com>,
+ =?TIS-620?Q?=A4=D2=E2=C3=C5_=BC=D9=E9=C3=D1=BA?= <carol.phurab@example.com>
+Cc: =?TiS-620?Q?=E1=B4=B9_=BC=D9=E9=C3=D1=BA?= <dan.phurab@example.com>,
+ =?tIs-620?Q?=CD=D5=BF_=BC=D9=E9=C3=D1=BA?= <eve.phurab@example.com>
+Bcc: =?tIs-620?q?=E1=BF=C3=A7=A4=EC_=BC=D9=E9=C3=D1=BA?= <frank.phurab@example.com>,
+ =?TiS-620?q?=E0=A1=C3=AB_=BC=D9=E9=C3=D1=BA?= <grace.phurab@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?Tis-620?Q?=E1=BE=B9=E1=A1=C3=C1=C0=D2=C9=D2=E4=B7=C2?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+Resent-From: =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.net>,
+ =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.com>
+Resent-Sender: =?tis-620?Q?=CD=C5=D4=AB_=BC=D9=E9=CA=E8=A7=A8=B4=CB=C1=D2=C2?= <alis.phusngcdhmay@example.net>
+Resent-To: =?tiS-620?Q?=BA=EA=CD=BA_=BC=D9=E9=C3=D1=BA?= <bob.phurab@example.net>,
+ =?TIS-620?Q?=A4=D2=E2=C3=C5_=BC=D9=E9=C3=D1=BA?= <carol.phurab@example.net>
+Resent-Cc: =?TiS-620?Q?=E1=B4=B9_=BC=D9=E9=C3=D1=BA?= <dan.phurab@example.net>,
+ =?tIs-620?Q?=CD=D5=BF_=BC=D9=E9=C3=D1=BA?= <eve.phurab@example.net>
+Resent-Bcc: =?tIs-620?q?=E1=BF=C3=A7=A4=EC_=BC=D9=E9=C3=D1=BA?= <frank.phurab@example.net>,
+ =?TiS-620?q?=E0=A1=C3=AB_=BC=D9=E9=C3=D1=BA?= <grace.phurab@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: mulTIpARt/RElaTeD; chaRsEt="tiS-620"; BoundaRY="RelatedBoundaryString"
+Content-Transfer-Encoding: quoTEd-PRINtablE
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--RelatedBoundaryString
+Content-Type: MultIparT/ALtErNatIVE; boundarY="AlternativeBoundaryString"
+
+--AlternativeBoundaryString
+Content-Type: TexT/pLaiN; CHArsET="tIs-620"
+Content-Transfer-Encoding: qUOTed-PRintaBlE
+
+=E0=BB=E7=B9=C1=B9=D8=C9=C2=EC=CA=D8=B4=BB=C3=D0=E0=CA=C3=D4=B0=E0=C5=D4=C8=
+=A4=D8=B3=A4=E8=D2 =A1=C7=E8=D2=BA=C3=C3=B4=D2=BD=D9=A7=CA=D1=B5=C7=EC=E0=
+=B4=C3=D1=A8=A9=D2=B9 =A8=A7=BD=E8=D2=BF=D1=B9=BE=D1=B2=B9=D2=C7=D4=AA=D2=
+=A1=D2=C3 =CD=C2=E8=D2=C5=E9=D2=A7=BC=C5=D2=AD=C4=E5=E0=A2=E8=B9=A6=E8=D2=
+=BA=D5=B1=D2=E3=A4=C3 =E4=C1=E8=B6=D7=CD=E2=B7=C9=E2=A1=C3=B8=E1=AA=E8=A7=
+=AB=D1=B4=CE=D6=B4=CE=D1=B4=B4=E8=D2 =CB=D1=B4=CD=C0=D1=C2=E0=CB=C1=D7=CD=
+=B9=A1=D5=CC=D2=CD=D1=AA=AC=D2=CA=D1=C2 =BB=AF=D4=BA=D1=B5=D4=BB=C3=D0=BE=
+=C4=B5=D4=A1=AE=A1=D3=CB=B9=B4=E3=A8 =BE=D9=B4=A8=D2=E3=CB=E9=A8=EA=D0=E6 =
+=A8=EB=D2=E6 =B9=E8=D2=BF=D1=A7=E0=CD=C2=CF
+
+=B9=D2=C2=CA=D1=A7=A6=C0=D1=B3=B1=EC =E0=CE=A7=BE=D4=B7=D1=A1=C9=EC=BD=D1=
+=E8=A7 =BC=D9=E9=E0=B2=E8=D2=AB=D6=E8=A7=C1=D5=CD=D2=AA=D5=BE=E0=BB=E7=B9=
+=A5=B9=A2=D2=C2=A3=C7=B4 =B6=D9=A1=B5=D3=C3=C7=A8=BB=AF=D4=BA=D1=B5=D4=A1=
+=D2=C3=A8=D1=BA=BF=E9=CD=A7=C8=D2=C5 =B0=D2=B9=C5=D1=A1=B9=D2=CC=D4=A1=D2=
+=A4=D8=B3=CB=AD=D4=A7=A9=D1=B5=C3=AA=AE=D2 =AC=D2=B9=CA=C1=D2=B8=D4
+
+--AlternativeBoundaryString
+Content-Type: TeXT/eNRIchED; CharSET="tIs-620"
+Content-Transfer-Encoding: qUOteD-pRiNTabLe
+
+<bold>=E0=BB=E7=B9=C1=B9=D8=C9=C2=EC=CA=D8=B4=BB=C3=D0=E0=CA=C3=D4=B0=E0=C5=
+=D4=C8=A4=D8=B3=A4=E8=D2</bold> <italic>=A1=C7=E8=D2=BA=C3=C3=B4=D2=BD=D9=
+=A7=CA=D1=B5=C7=EC=E0=B4=C3=D1=A8=A9=D2=B9</italic> <fixed>=A8=A7=BD=E8=D2=
+=BF=D1=B9=BE=D1=B2=B9=D2=C7=D4=AA=D2=A1=D2=C3</fixed> <underline>=CD=C2=E8=
+=D2=C5=E9=D2=A7=BC=C5=D2=AD=C4=E5=E0=A2=E8=B9=A6=E8=D2=BA=D5=B1=D2=E3=A4=C3=
+</underline> =E4=C1=E8=B6=D7=CD=E2=B7=C9=E2=A1=C3=B8=E1=AA=E8=A7=AB=D1=B4=
+=CE=D6=B4=CE=D1=B4=B4=E8=D2 =CB=D1=B4=CD=C0=D1=C2=E0=CB=C1=D7=CD=B9=A1=D5=
+=CC=D2=CD=D1=AA=AC=D2=CA=D1=C2 =BB=AF=D4=BA=D1=B5=D4=BB=C3=D0=BE=C4=B5=D4=
+=A1=AE=A1=D3=CB=B9=B4=E3=A8 =BE=D9=B4=A8=D2=E3=CB=E9=A8=EA=D0=E6 =A8=EB=D2=
+=E6 =B9=E8=D2=BF=D1=A7=E0=CD=C2=CF
+
+=B9=D2=C2=CA=D1=A7=A6=C0=D1=B3=B1=EC =E0=CE=A7=BE=D4=B7=D1=A1=C9=EC=BD=D1=
+=E8=A7 =BC=D9=E9=E0=B2=E8=D2=AB=D6=E8=A7=C1=D5=CD=D2=AA=D5=BE=E0=BB=E7=B9=
+=A5=B9=A2=D2=C2=A3=C7=B4 =B6=D9=A1=B5=D3=C3=C7=A8=BB=AF=D4=BA=D1=B5=D4=A1=
+=D2=C3=A8=D1=BA=BF=E9=CD=A7=C8=D2=C5 =B0=D2=B9=C5=D1=A1=B9=D2=CC=D4=A1=D2=
+=A4=D8=B3=CB=AD=D4=A7=A9=D1=B5=C3=AA=AE=D2 =AC=D2=B9=CA=C1=D2=B8=D4
+
+--AlternativeBoundaryString
+Content-Type: TExt/html; ChaRset="TIs-620"
+Content-Transfer-Encoding: qUOTeD-PrINTaBLE
+
+<html>
+<div dir=3D"ltr">
+<p>=E0=BB=E7=B9=C1=B9=D8=C9=C2=EC=CA=D8=B4=BB=C3=D0=E0=CA=C3=D4=B0=E0=C5=D4=
+=C8=A4=D8=B3=A4=E8=D2 =A1=C7=E8=D2=BA=C3=C3=B4=D2=BD=D9=A7=CA=D1=B5=C7=EC=
+=E0=B4=C3=D1=A8=A9=D2=B9 =A8=A7=BD=E8=D2=BF=D1=B9=BE=D1=B2=B9=D2=C7=D4=AA=
+=D2=A1=D2=C3 =CD=C2=E8=D2=C5=E9=D2=A7=BC=C5=D2=AD=C4=E5=E0=A2=E8=B9=A6=E8=
+=D2=BA=D5=B1=D2=E3=A4=C3 =E4=C1=E8=B6=D7=CD=E2=B7=C9=E2=A1=C3=B8=E1=AA=E8=
+=A7=AB=D1=B4=CE=D6=B4=CE=D1=B4=B4=E8=D2 =CB=D1=B4=CD=C0=D1=C2=E0=CB=C1=D7=
+=CD=B9=A1=D5=CC=D2=CD=D1=AA=AC=D2=CA=D1=C2 =BB=AF=D4=BA=D1=B5=D4=BB=C3=D0=
+=BE=C4=B5=D4=A1=AE=A1=D3=CB=B9=B4=E3=A8 =BE=D9=B4=A8=D2=E3=CB=E9=A8=EA=D0=
+=E6 =A8=EB=D2=E6 =B9=E8=D2=BF=D1=A7=E0=CD=C2=CF</p>
+
+<p>=B9=D2=C2=CA=D1=A7=A6=C0=D1=B3=B1=EC =E0=CE=A7=BE=D4=B7=D1=A1=C9=EC=BD=
+=D1=E8=A7 =BC=D9=E9=E0=B2=E8=D2=AB=D6=E8=A7=C1=D5=CD=D2=AA=D5=BE=E0=BB=E7=
+=B9=A5=B9=A2=D2=C2=A3=C7=B4 =B6=D9=A1=B5=D3=C3=C7=A8=BB=AF=D4=BA=D1=B5=D4=
+=A1=D2=C3=A8=D1=BA=BF=E9=CD=A7=C8=D2=C5 =B0=D2=B9=C5=D1=A1=B9=D2=CC=D4=A1=
+=D2=A4=D8=B3=CB=AD=D4=A7=A9=D1=B5=C3=AA=AE=D2 =AC=D2=B9=CA=C1=D2=B8=D4</p>
+</div>
+</html>
+
+--AlternativeBoundaryString--
+
+--RelatedBoundaryString
+Content-Type: image/jpeg; naME="inline-jpg-image-name.jpg"
+Content-Transfer-Encoding: BAse64
+Content-Disposition: iNlINE; FIlENAME="inline-jpg-image-filename.jpg"
+Content-ID: <inline-jpg-image.jpg@example.com>
+
+/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=
+
+--RelatedBoundaryString--
