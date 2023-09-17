@@ -1,0 +1,40 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+From: =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>,
+ =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Sender: =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Reply-To: =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+To: =?WiNdOwS-874?B?uurNuiC82enD0bo=?= <bob.phurab@example.com>,
+ =?WIndOWS-874?B?pNLiw8UgvNnpw9G6?= <carol.phurab@example.com>
+Cc: =?wINDOWs-874?b?4bS5ILzZ6cPRug==?= <dan.phurab@example.com>,
+ =?WInDOws-874?B?zdW/ILzZ6cPRug==?= <eve.phurab@example.com>
+Bcc: =?WIndOwS-874?b?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.com>,
+ =?WiNDOWs-874?b?4KHDqyC82enD0bo=?= <grace.phurab@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Test
+ =?wInDowS-874?B?4b654aHDwcDSydLkt8I=?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+Resent-From: =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>,
+ =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Resent-Sender: =?WiNdOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Resent-To: =?WiNdOwS-874?B?uurNuiC82enD0bo=?= <bob.phurab@example.net>,
+ =?WIndOWS-874?B?pNLiw8UgvNnpw9G6?= <carol.phurab@example.net>
+Resent-Cc: =?wINDOWs-874?b?4bS5ILzZ6cPRug==?= <dan.phurab@example.net>,
+ =?WInDOws-874?B?zdW/ILzZ6cPRug==?= <eve.phurab@example.net>
+Resent-Bcc: =?WIndOwS-874?b?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.net>,
+ =?WiNDOWs-874?b?4KHDqyC82enD0bo=?= <grace.phurab@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: teXt/PLAIN; chARSEt=Windows-874
+Content-Transfer-Encoding: bASE64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+4LvnucG52MnC7MrYtLvD0ODKw9Sw4MXUyKTYs6To0iChx+jSusPDtNK92afK0bXH7OC0w9GoqdK5
+IKinvejSv9G5vtGyudLH1KrSodLDIM3C6NLF6dKnvMXSrcTl4KLouabo0rrVsdLjpMMg5MHottfN
+4rfJ4qHDuOGq6Ker0bTO1rTO0bS06NIgy9G0zcDRwuDLwdfNuaHVzNLN0aqs0srRwiC7r9S60bXU
+u8PQvsS11KGuodPLubTjqCC+2bSo0uPL6ajq0OYgqOvS5iC56NK/0afgzcLPCgq50sLK0aemwNGz
+sewg4M6nvtS30aHJ7L3R6KcgvNnp4LLo0qvW6KfB1c3SqtW+4LvnuaW5otLCo8e0ILbZobXTw8eo
+u6/UutG11KHSw6jRur/pzafI0sUgsNK5xdGhudLM1KHSpNizy63Up6nRtcOqrtIgrNK5ysHSuNQ
