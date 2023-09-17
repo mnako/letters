@@ -1,0 +1,60 @@
+Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+From: =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>,
+ =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Sender: =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Reply-To: =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+To: =?wINDows-874?b?uurNuiC82enD0bo=?= <bob.phurab@example.com>,
+ =?wiNDOwS-874?b?pNLiw8UgvNnpw9G6?= <carol.phurab@example.com>
+Cc: =?WINDOws-874?B?4bS5ILzZ6cPRug==?= <dan.phurab@example.com>,
+ =?wINdOWs-874?b?zdW/ILzZ6cPRug==?= <eve.phurab@example.com>
+Bcc: =?WinDoWs-874?b?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.com>,
+ =?WinDOWS-874?b?4KHDqyC82enD0bo=?= <grace.phurab@example.com>
+Subject: =?UTF-8?B?8J+Tpw==?= Signed Test
+ =?wiNDOwS-874?B?4b654aHDwcDSydLkt8I=?=
+In-Reply-To: <Message-Id-0@example.com>
+References: <Message-Id-0@example.com>
+Message-ID: <Message-Id-1@example.com>
+Comments: Message Header Comment
+Keywords: Keyword 1, Keyword 2
+Resent-Date: Mon, 01 Apr 2019 07:55:00 +0700 (+07)
+Resent-From: =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>,
+ =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.com>
+Resent-Sender: =?winDOWs-874?B?zcXUqyC82enK6KeotMvB0sI=?= <alis.phusngcdhmay@example.net>
+Resent-To: =?wINDows-874?b?uurNuiC82enD0bo=?= <bob.phurab@example.net>,
+ =?wiNDOwS-874?b?pNLiw8UgvNnpw9G6?= <carol.phurab@example.net>
+Resent-Cc: =?WINDOws-874?B?4bS5ILzZ6cPRug==?= <dan.phurab@example.net>,
+ =?wINdOWs-874?b?zdW/ILzZ6cPRug==?= <eve.phurab@example.net>
+Resent-Bcc: =?WinDoWs-874?b?4b/Dp6TsILzZ6cPRug==?= <frank.phurab@example.net>,
+ =?WinDOWS-874?b?4KHDqyC82enD0bo=?= <grace.phurab@example.net>
+Resent-Message-ID: <Message-Id-1@example.net>
+Content-Type: MuLTIPARt/sIGnED;
+              ChaRsET="WindoWs-874";
+              prOTocOl="APpLicATIon/PKcs7-SIGnATUre";
+              MIcaLg=shA1;
+              boUnDAry=SignedBoundaryString
+Content-Transfer-Encoding: bASe64
+X-Clacks-Overhead: GNU Terry Pratchett
+
+
+--SignedBoundaryString
+Content-Type: teXT/plaiN
+Content-Transfer-Encoding: BaSE64
+
+4LvnucG52MnC7MrYtLvD0ODKw9Sw4MXUyKTYs6To0iChx+jSusPDtNK92afK0bXH7OC0w9GoqdK5
+IKinvejSv9G5vtGyudLH1KrSodLDIM3C6NLF6dKnvMXSrcTl4KLouabo0rrVsdLjpMMg5MHottfN
+4rfJ4qHDuOGq6Ker0bTO1rTO0bS06NIgy9G0zcDRwuDLwdfNuaHVzNLN0aqs0srRwiC7r9S60bXU
+u8PQvsS11KGuodPLubTjqCC+2bSo0uPL6ajq0OYgqOvS5iC56NK/0afgzcLPCgq50sLK0aemwNGz
+sewg4M6nvtS30aHJ7L3R6KcgvNnp4LLo0qvW6KfB1c3SqtW+4LvnuaW5otLCo8e0ILbZobXTw8eo
+u6/UutG11KHSw6jRur/pzafI0sUgsNK5xdGhudLM1KHSpNizy63Up6nRtcOqrtIgrNK5ysHSuNQ=
+
+
+--SignedBoundaryString
+Content-Type: ApPLiCaTiON/pKCS7-signaTUre; name=smime.p7s
+Content-Transfer-Encoding: BaSE64
+Content-Disposition: attaCHmenT; FIlENAMe=smime.p7s
+
+ghyHhHUujhJhjH77n8HHGTrfvbnj756tbB9HG4VQpfyF467GhIGfHfYT64VQpfyF467GhIGfHfYT
+6jH77n8HHGghyHhHUujhJh756tbB9HGTrfvbnjn8HHGTrfvhJhjH776tbB9HG4VQbnj7567GhIGf
+HfYT6ghyHhHUujpfyF47GhIGfHfYT64VQbnj756
+
+--SignedBoundaryString--
