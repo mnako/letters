@@ -17,7 +17,7 @@ content, and decode inline and attached files.
 Install
 
 ```
-go get github.com/mnako/letters@v0.2.1
+go get github.com/mnako/letters@v0.2.2
 ```
 
 Parse a raw email from a Reader:
