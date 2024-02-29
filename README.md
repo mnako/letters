@@ -174,6 +174,15 @@ email.Text
 // "色は匂えど散りぬるを..."
 ```
 
+To only parse headers:
+
+```go
+email, err := letters.ParseEmail(r, "HeadersOnly")
+if err != nil {
+    log.Fatal(err)
+}
+```
+
 ## Current Scope and Features
 
 * Parsing plaintext emails and recursively traversing multipart

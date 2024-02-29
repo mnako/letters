@@ -3,28 +3,27 @@ package letters
 import (
 	"net/mail"
 	"os"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
-func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
+func testEmailFromFile(t *testing.T, fp string, expectedEmail Email, config ...string) {
 	rawEmail, err := os.Open(fp)
 	if err != nil {
 		t.Errorf("error while reading email from file: %s", err)
 		return
 	}
 
-	parsedEmail, err := ParseEmail(rawEmail)
+	parsedEmail, err := ParseEmail(rawEmail, config...)
 	if err != nil {
 		t.Errorf("error while parsing email: %s", err)
 		return
 	}
 
-	if !reflect.DeepEqual(parsedEmail, expectedEmail) {
-		t.Errorf("emails are not equal")
-		t.Errorf("Got %#v", parsedEmail)
-		t.Errorf("Want %#v", expectedEmail)
+	if diff := cmp.Diff(expectedEmail, parsedEmail); diff != "" {
+		t.Errorf("emails are not equal: (-want +got: \n%s", diff)
 	}
 }
 
@@ -244,6 +243,92 @@ Pack my box with five dozen liquor jugs.`,
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailEnglishPlaintextAsciiOver7bitHeadersOnly(t *testing.T) {
+	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		HeadersOnly: true,
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test English Pangrams",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.com",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.com",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.com",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "ascii",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
+			},
+		},
+		Text: "",
+	}
+
+	testEmailFromFile(t, fp, expectedEmail, "HeadersOnly")
 }
 
 func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {

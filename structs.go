@@ -550,7 +550,8 @@ func (eb *emailBodies) extend(b emailBodies) {
 }
 
 type Email struct {
-	Headers Headers
+	Headers     Headers
+	HeadersOnly bool
 
 	Text         string
 	EnrichedText string // See RFC 1523, RFC 1563, and RFC 1896

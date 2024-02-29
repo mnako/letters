@@ -9,8 +9,14 @@ import (
 	"golang.org/x/net/html/charset"
 )
 
-func ParseEmail(r io.Reader) (Email, error) {
+func ParseEmail(r io.Reader, config ...string) (Email, error) {
 	var email Email
+
+	for _, c := range config {
+		if c == "HeadersOnly" {
+			email.HeadersOnly = true
+		}
+	}
 
 	msg, err := mail.ReadMessage(r)
 	if err != nil {
@@ -22,9 +28,13 @@ func ParseEmail(r io.Reader) (Email, error) {
 		return email, fmt.Errorf("letters.ParseEmail: cannot parse headers: %w", err)
 	}
 
-	email = Email{
-		Headers: headers,
+	email.Headers = headers
+
+	// exit early in HeadersOnly mode
+	if email.HeadersOnly {
+		return email, nil
 	}
+
 	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
 	cte, err := parseContentTransferEncoding(msg.Header.Get("Content-Transfer-Encoding"))
 	if err != nil {
