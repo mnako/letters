@@ -1,14 +1,14 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>,
- =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
-Sender: =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
-Reply-To: =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
-To: =?IsO-8859-2?Q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.com>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.com>
-Cc: =?ISo-8859-2?q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.com>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.com>
-Bcc: =?ISO-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.com>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.com>
+From: =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.com>,
+ =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.net>
+Sender: =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.com>
+Reply-To: =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.net>
+To: =?IsO-8859-2?Q?"Odbieraj=B1cy,_Bob"?= <bob.odbierajacy@example.com>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Karolina"?= <karolina.odbierajaca@example.com>
+Cc: =?ISo-8859-2?q?"Odbieraj=B1cy,_Daniel"?= <daniel.odbierajacy@example.com>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Ewa"?= <ewa.odbierajaca@example.com>
+Bcc: =?ISO-8859-2?Q?"Odbieraj=B1cy,_Franek"?= <franek.odbierajacy@example.com>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Gra=BFyna"?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
  =?iso-8859-2?Q?Polskie_pangramy?=
 In-Reply-To: <Message-Id-0@example.com>
@@ -17,15 +17,15 @@ Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>,
- =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.com>
-Resent-Sender: =?iso-8859-2?q?Nadaj=B1ca,_Alicja?= <alicja.nadajaca@example.net>
-Resent-To: =?IsO-8859-2?Q?Odbieraj=B1cy,_Bob?= <bob.odbierajacy@example.net>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Karolina?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?ISo-8859-2?q?Odbieraj=B1cy,_Daniel?= <daniel.odbierajacy@example.net>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Ewa?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?ISO-8859-2?Q?Odbieraj=B1cy,_Franek?= <franek.odbierajacy@example.net>,
- =?iso-8859-2?Q?Odbieraj=B1ca,_Gra=BFyna?= <grazyna.odbierajaca@example.net>
+Resent-From: =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.net>,
+ =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.com>
+Resent-Sender: =?iso-8859-2?q?"Nadaj=B1ca,_Alicja"?= <alicja.nadajaca@example.net>
+Resent-To: =?IsO-8859-2?Q?"Odbieraj=B1cy,_Bob"?= <bob.odbierajacy@example.net>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Karolina"?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?ISo-8859-2?q?"Odbieraj=B1cy,_Daniel"?= <daniel.odbierajacy@example.net>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Ewa"?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?ISO-8859-2?Q?"Odbieraj=B1cy,_Franek"?= <franek.odbierajacy@example.net>,
+ =?iso-8859-2?Q?"Odbieraj=B1ca,_Gra=BFyna"?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
 Content-Type: MULTIPaRt/related; CHARsEt="IsO-8859-2"; boundARy="RelatedBoundaryString"
 Content-Transfer-Encoding: qUOTEd-printABlE
