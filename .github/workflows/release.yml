@@ -1,21 +1,19 @@
-name: "Create Release from Tag"
-
-on:
+---
+name: Create Release from Tag
+"on":
   push:
     tags:
       - v*
-
 jobs:
   build:
-    name: "Create Release"
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v4
-
-      - name: "Create Release"
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
