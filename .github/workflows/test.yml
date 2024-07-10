@@ -1,25 +1,29 @@
-name: "Test"
-
-on:
+---
+name: Test
+"on":
   push:
     tags:
       - v*
     branches:
       - main
-  pull_request:
-
+  pull_request: null
 jobs:
   test:
-    name: "Test"
+    name: Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: ["1.18", "1.19", "1.20", "1.21"]
+        go-version:
+          - "1.18"
+          - "1.19"
+          - "1.20"
+          - "1.21"
+          - "1.22"
     steps:
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5.0.1
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v4
-      - uses: golangci/golangci-lint-action@v4
+      - uses: actions/checkout@v4.1.7
+      - uses: golangci/golangci-lint-action@v6.0.1
       - run: make test
