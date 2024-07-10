@@ -1,14 +1,14 @@
 Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>,
- =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
-Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
-Reply-To: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
-To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.com>,
- =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.com>
-Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.com>,
- =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.com>
-Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.com>,
- =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.com>
+From: =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.com>,
+ =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.net>
+Sender: =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.com>
+Reply-To: =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.net>
+To: =?UTF-8?b?Ik9kYmllcmFqxIVjeSwgQm9iIg==?= <bob.odbierajacy@example.com>,
+ =?UTF-8?B?Ik9kYmllcmFqxIVjYSwgS2Fyb2xpbmEi?= <karolina.odbierajaca@example.com>
+Cc: =?uTF-8?b?Ik9kYmllcmFqxIVjeSwgRGFuaWVsIg==?= <daniel.odbierajacy@example.com>,
+ =?Utf-8?b?Ik9kYmllcmFqxIVjYSwgRXdhIg==?= <ewa.odbierajaca@example.com>
+Bcc: =?uTF-8?b?Ik9kYmllcmFqxIVjeSwgRnJhbmVrIg==?= <franek.odbierajacy@example.com>,
+ =?utf-8?b?Ik9kYmllcmFqxIVjYSwgR3Jhxbx5bmEi?= <grazyna.odbierajaca@example.com>
 Subject: =?UTF-8?B?8J+Tpw==?= Test
  =?utf-8?B?UG9sc2tpZSBwYW5ncmFteQ==?=
 In-Reply-To: <Message-Id-0@example.com>
@@ -17,15 +17,15 @@ Message-ID: <Message-Id-1@example.com>
 Comments: Message Header Comment
 Keywords: Keyword 1, Keyword 2
 Resent-Date: Mon, 01 Apr 2019 07:55:00 +0200 (CEST)
-Resent-From: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>,
- =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.com>
-Resent-Sender: =?utf-8?b?TmFkYWrEhWNhLCBBbGljamE=?= <alicja.nadajaca@example.net>
-Resent-To: =?UTF-8?b?T2RiaWVyYWrEhWN5LCBCb2I=?= <bob.odbierajacy@example.net>,
- =?UTF-8?B?T2RiaWVyYWrEhWNhLCBLYXJvbGluYQ==?= <karolina.odbierajaca@example.net>
-Resent-Cc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBEYW5pZWw=?= <daniel.odbierajacy@example.net>,
- =?Utf-8?b?T2RiaWVyYWrEhWNhLCBFd2E=?= <ewa.odbierajaca@example.net>
-Resent-Bcc: =?uTF-8?b?T2RiaWVyYWrEhWN5LCBGcmFuZWs=?= <franek.odbierajacy@example.net>,
- =?utf-8?b?T2RiaWVyYWrEhWNhLCBHcmHFvHluYQ==?= <grazyna.odbierajaca@example.net>
+Resent-From: =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.net>,
+ =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.com>
+Resent-Sender: =?utf-8?b?Ik5hZGFqxIVjYSwgQWxpY2phIg==?= <alicja.nadajaca@example.net>
+Resent-To: =?UTF-8?b?Ik9kYmllcmFqxIVjeSwgQm9iIg==?= <bob.odbierajacy@example.net>,
+ =?UTF-8?B?Ik9kYmllcmFqxIVjYSwgS2Fyb2xpbmEi?= <karolina.odbierajaca@example.net>
+Resent-Cc: =?uTF-8?b?Ik9kYmllcmFqxIVjeSwgRGFuaWVsIg==?= <daniel.odbierajacy@example.net>,
+ =?Utf-8?b?Ik9kYmllcmFqxIVjYSwgRXdhIg==?= <ewa.odbierajaca@example.net>
+Resent-Bcc: =?uTF-8?b?Ik9kYmllcmFqxIVjeSwgRnJhbmVrIg==?= <franek.odbierajacy@example.net>,
+ =?utf-8?b?Ik9kYmllcmFqxIVjYSwgR3Jhxbx5bmEi?= <grazyna.odbierajaca@example.net>
 Resent-Message-ID: <Message-Id-1@example.net>
 Content-Type: multipart/mIXED; charset="utf-8"; bouNDARY="MixedBoundaryString"
 Content-Transfer-Encoding: BASE64
