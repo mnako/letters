@@ -21,7 +21,7 @@ jobs:
           - "1.21"
           - "1.22"
     steps:
-      - uses: actions/setup-go@v5.0.1
+      - uses: actions/setup-go@v5.0.2
         with:
           go-version: ${{ matrix.go-version }}
       - uses: actions/checkout@v4.1.7
