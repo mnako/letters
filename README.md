@@ -174,6 +174,23 @@ email.Text
 // "色は匂えど散りぬるを..."
 ```
 
+If you only want to parse email headers, you can use `letters.ParseHeaders`:
+
+```go
+msg, err := mail.ReadMessage(r)
+if err != nil {
+    log.Fatal(err)
+}
+
+emailHeaders, err := letters.ParseHeaders(msg.Header)
+if err != nil {
+    log.Fatal(err)
+}
+
+emailHeaders.To[0].Address
+// "bob.recipient@example.com"
+```
+
 ## Current Scope and Features
 
 * Parsing plaintext emails and recursively traversing multipart

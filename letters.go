@@ -17,7 +17,7 @@ func ParseEmail(r io.Reader) (Email, error) {
 		return email, fmt.Errorf("letters.ParseEmail: cannot read message: %w", err)
 	}
 
-	headers, err := parseHeaders(msg.Header)
+	headers, err := ParseHeaders(msg.Header)
 	if err != nil {
 		return email, fmt.Errorf("letters.ParseEmail: cannot parse headers: %w", err)
 	}
