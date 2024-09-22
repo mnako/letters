@@ -3,7 +3,6 @@ package letters
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime"
 	"mime/multipart"
 	"net/mail"
@@ -358,7 +357,7 @@ func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (s
 			err)
 	}
 
-	textBody, err := ioutil.ReadAll(reader)
+	textBody, err := io.ReadAll(reader)
 	if err != nil {
 		return "", fmt.Errorf(
 			"letters.parsers.parseText: cannot read plain text content: %w",
