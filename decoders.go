@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime"
 	"mime/multipart"
 	"mime/quotedprintable"
@@ -47,7 +46,7 @@ func decodeContent(
 	cte ContentTransferEncoding,
 ) (io.Reader, error) {
 	var contentReader io.Reader
-	contentBytes, err := ioutil.ReadAll(content)
+	contentBytes, err := io.ReadAll(content)
 	if err != nil && err != io.ErrUnexpectedEOF {
 		return nil, fmt.Errorf(
 			"letters.decoders.decodeContent: cannot decode content: %w",
@@ -57,10 +56,10 @@ func decodeContent(
 	switch cte {
 	case cteBase64:
 		decoded := base64.NewDecoder(base64.StdEncoding, bytes.NewReader(contentBytes))
-		b, err := ioutil.ReadAll(decoded)
+		b, err := io.ReadAll(decoded)
 		if err == io.ErrUnexpectedEOF {
 			decoded = base64.NewDecoder(base64.RawStdEncoding, bytes.NewReader(contentBytes))
-			b, err = ioutil.ReadAll(decoded)
+			b, err = io.ReadAll(decoded)
 			if err != nil {
 				return nil, fmt.Errorf(
 					"letters.decoders.decodeContent: cannot decode raw-std-base64-encoded content: %w",
@@ -74,7 +73,7 @@ func decodeContent(
 		contentReader = bytes.NewReader(b)
 	case cteQuotedPrintable:
 		decoded := quotedprintable.NewReader(bytes.NewReader(contentBytes))
-		b, err := ioutil.ReadAll(decoded)
+		b, err := io.ReadAll(decoded)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"letters.decoders.decodeContent: cannot decode quoted-printable-encoded content: %w",
@@ -113,7 +112,7 @@ func decodeInlineFile(part *multipart.Part, cte ContentTransferEncoding) (Inline
 	}
 
 	ifl.ContentID = strings.Trim(cid, "<>")
-	ifl.Data, err = ioutil.ReadAll(decoded)
+	ifl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return ifl, fmt.Errorf(
 			"letters.decoders.decodeInlineFile: cannot read inline attachment data: %w",
@@ -149,7 +148,7 @@ func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTr
 
 	afl.ContentType = headers.ContentType
 	afl.ContentDisposition = headers.ContentDisposition
-	afl.Data, err = ioutil.ReadAll(decoded)
+	afl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(
 			"letters.decoders.decodeAttachmentFileFromBody: cannot read attached file data: %w",
@@ -183,7 +182,7 @@ func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncodin
 			err)
 	}
 
-	afl.Data, err = ioutil.ReadAll(decoded)
+	afl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(
 			"letters.decoders.decodeAttachedFileFromPart: cannot read attached file data: %w",

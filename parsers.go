@@ -3,7 +3,6 @@ package letters
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime"
 	"mime/multipart"
 	"net/mail"
@@ -223,11 +222,11 @@ func parseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	}, nil
 }
 
-func parseHeaders(header mail.Header) (Headers, error) {
+func ParseHeaders(header mail.Header) (Headers, error) {
 	contentType, err := parseContentTypeHeader(header.Get("Content-Type"))
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Content-Type: %w",
+			"letters.parsers.ParseHeaders: cannot parse Content-Type: %w",
 			err)
 	}
 
@@ -249,77 +248,77 @@ func parseHeaders(header mail.Header) (Headers, error) {
 	sender, err := parseAddressHeader(header, "Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Sender header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Sender header: %w",
 			err)
 	}
 
 	from, err := parseAddressListHeader(header, "From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse From header: %w",
+			"letters.parsers.ParseHeaders: cannot parse From header: %w",
 			err)
 	}
 
 	replyTo, err := parseAddressListHeader(header, "Reply-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Reply-To header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Reply-To header: %w",
 			err)
 	}
 
 	to, err := parseAddressListHeader(header, "To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse To header: %w",
+			"letters.parsers.ParseHeaders: cannot parse To header: %w",
 			err)
 	}
 
 	cc, err := parseAddressListHeader(header, "Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Cc header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Cc header: %w",
 			err)
 	}
 
 	bcc, err := parseAddressListHeader(header, "Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Bcc header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Bcc header: %w",
 			err)
 	}
 
 	resentFrom, err := parseAddressListHeader(header, "Resent-From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Resent-From header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Resent-From header: %w",
 			err)
 	}
 
 	resentSender, err := parseAddressHeader(header, "Resent-Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Resent-Sender header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Resent-Sender header: %w",
 			err)
 	}
 
 	resentTo, err := parseAddressListHeader(header, "Resent-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Resent-To header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Resent-To header: %w",
 			err)
 	}
 
 	resentCc, err := parseAddressListHeader(header, "Resent-Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Resent-Cc header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Resent-Cc header: %w",
 			err)
 	}
 
 	resentBcc, err := parseAddressListHeader(header, "Resent-Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.parseHeaders: cannot parse Resent-Bcc header: %w",
+			"letters.parsers.ParseHeaders: cannot parse Resent-Bcc header: %w",
 			err)
 	}
 
@@ -358,7 +357,7 @@ func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (s
 			err)
 	}
 
-	textBody, err := ioutil.ReadAll(reader)
+	textBody, err := io.ReadAll(reader)
 	if err != nil {
 		return "", fmt.Errorf(
 			"letters.parsers.parseText: cannot read plain text content: %w",
