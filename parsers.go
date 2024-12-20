@@ -6,6 +6,7 @@ import (
 	"mime"
 	"mime/multipart"
 	"net/mail"
+	"regexp"
 	"strings"
 	"time"
 
@@ -121,6 +122,19 @@ func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, e
 
 	addresses, err = mail.ParseAddressList(decodedHeader)
 	if err != nil {
+		// Fallback: Attempt to extract a single email address manually
+		address, parseErr := mail.ParseAddress(decodedHeader)
+		if parseErr == nil {
+			// If successful, wrap the single address in a list and return
+			return []*mail.Address{address}, nil
+		}
+
+		// Additional fallback: Try to manually parse common malformed formats
+		if fallbackAddresses := attemptManualParsing(decodedHeader); len(fallbackAddresses) > 0 {
+			return fallbackAddresses, nil
+		}
+
+		// If all else fails, return an error
 		return addresses, fmt.Errorf(
 			"letters.parsers.parseAddressListHeader: cannot parse address list header %q: %w",
 			s,
@@ -128,6 +142,20 @@ func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, e
 	}
 
 	return addresses, nil
+}
+
+var malformedHeaderAddress = regexp.MustCompile(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}`)
+
+// attemptManualParsing tries to recover addresses from malformed headers
+func attemptManualParsing(input string) []*mail.Address {
+	var addresses []*mail.Address
+
+	matches := malformedHeaderAddress.FindAllString(input, -1)
+	for _, match := range matches {
+		addresses = append(addresses, &mail.Address{Address: match})
+	}
+
+	return addresses
 }
 
 func parseMessageIdHeader(s string) MessageId {
@@ -232,7 +260,7 @@ func ParseHeaders(header mail.Header) (Headers, error) {
 
 	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
 
-	var extraHeaders = make(map[string][]string)
+	extraHeaders := make(map[string][]string)
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
 		if !isKnownHeader {
