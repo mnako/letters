@@ -1,4 +1,4 @@
-module github.com/mnako/letters
+module github.com/rorycl/letters
 
 go 1.17
 
