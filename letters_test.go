@@ -258,6 +258,147 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	testEmailHeadersFromFile(t, fp, expectedEmail)
 }
 
+func TestParseEmailWithoutAttachmentsEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
+	fp := "tests/test_english_multipart_signed_ascii_over_base64.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test English Pangrams",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.com",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.com",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.com",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.net",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.net",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.net",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "ascii",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
+			},
+		},
+		Text: `The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.`,
+		AttachedFiles: nil, // attachments should not show
+	}
+
+	testEmailWithoutAttachmentsFromFile(t, fp, expectedEmail)
+}
+
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
