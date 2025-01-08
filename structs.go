@@ -48,6 +48,7 @@ const (
 var cdMap = map[string]ContentDisposition{
 	"attachment": attachment,
 	"inline":     inline,
+	"text/plain": inline,
 }
 
 const contentTypeMultipartPrefix = "multipart/"

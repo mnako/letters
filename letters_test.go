@@ -53,7 +53,6 @@ func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
 		t.Errorf("Want %#v", expectedEmail)
 	}
 }
-
 func TestParseEmailEnglishEmpty(t *testing.T) {
 	fp := "tests/test_english_empty.txt"
 	expectedEmail := Email{
@@ -1216,6 +1215,7 @@ Pack my box with five dozen liquor jugs.`,
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_related_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
@@ -2380,6 +2380,54 @@ Pack my box with five dozen liquor jugs.`,
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
+func TestParseEmailEnglishMultipartRelatedAsciiTextPlain(t *testing.T) {
+	fp := "tests/test_english_multipart_mixed_ascii_text-plain.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2013, time.February, 27, 16, 18, 27, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "completed week progress",
+			From: []*mail.Address{
+				{
+					Address: "bbbb@xxxxxxxxxxxxxx.com",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Address: "xxxx@xxxxxxxxxxxxxx.com",
+				},
+			},
+			MessageID:  "E1UAji7-0001Qe-CO@manage",
+			Comments:   "",
+			ResentDate: time.Time{}, // zero date
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/mixed",
+				Params:      map[string]string{"boundary": "===============7029359564302541428=="},
+			},
+			ContentDisposition: ContentDispositionHeader{},
+			ExtraHeaders: map[string][]string{
+				"Content-Length": {"58095"},
+				"Delivery-Date":  {"Wed, 27 Feb 2013 16:18:32 +0000"},
+				"Envelope-To":    []string{"xxxx@xxxxxxxxxxxxxx.com"},
+				"Lines":          []string{"1025"},
+				"Mime-Version":   []string{"1.0"},
+				"Received": []string{
+					"from [55.555.55.55] (helo=manage) by xxxxxxxxxxxxxx.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:256) (Exim 4.80) (envelope-from <bbbb@xxxxxxxxxxxxxx.com>) id 1UAjiC-00008e-Iy for xxxx@xxxxxxxxxxxxxx.com; Wed, 27 Feb 2013 16:18:32 +0000", "from localhost ([127.0.0.1] helo=[127.0.1.1]) by manage with esmtp (Exim 4.72) (envelope-from <bbbb@xxxxxxxxxxxxxx.com>) id 1UAji7-0001Qe-CO for xxxx@xxxxxxxxxxxxxx.com; Wed, 27 Feb 2013 16:18:27 +0000",
+				},
+				"Return-Path": []string{"<bbbb@xxxxxxxxxxxxxx.com>"},
+				"Status":      []string{"RO"},
+				"X-Uid":       []string{"240820"},
+			},
+		},
+		Text: "-------------------------+------------+------------+-----------\n         xxxxxx          | xxx_xxxxxx | xxxx_xxxxx | xxxxxxxxx \n-------------------------+------------+------------+-----------\nma.................      |          1 | 20.......8 | ..7\nma.................      |          2 | 20.......5 | ..6",
+	}
+	testEmailFromFile(t, fp, expectedEmail)
+}
+
 func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
