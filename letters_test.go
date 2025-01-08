@@ -3,9 +3,10 @@ package letters
 import (
 	"net/mail"
 	"os"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Headers) {
@@ -27,10 +28,8 @@ func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Head
 		return
 	}
 
-	if !reflect.DeepEqual(parsedEmailHeaders, expectedEmailHeaders) {
-		t.Errorf("email headers are not equal")
-		t.Errorf("Got %#v", parsedEmailHeaders)
-		t.Errorf("Want %#v", expectedEmailHeaders)
+	if got, want := parsedEmailHeaders, expectedEmailHeaders; !cmp.Equal(got, want) {
+		t.Errorf("email headers are not equal\n%s", cmp.Diff(got, want))
 	}
 }
 
@@ -47,10 +46,8 @@ func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
 		return
 	}
 
-	if !reflect.DeepEqual(parsedEmail, expectedEmail) {
-		t.Errorf("emails are not equal")
-		t.Errorf("Got %#v", parsedEmail)
-		t.Errorf("Want %#v", expectedEmail)
+	if got, want := parsedEmail, expectedEmail; !cmp.Equal(got, want) {
+		t.Errorf("emails are not equal\n%s", cmp.Diff(got, want))
 	}
 }
 
