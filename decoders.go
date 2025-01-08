@@ -158,6 +158,9 @@ func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTr
 	return afl, nil
 }
 
+// decodeAttachmentFileFromPart decodes an attachment. When attachments
+// aren't wanted the part must still be drained to progress the
+// multipart reader.
 func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncoding) (AttachedFile, error) {
 	var afl AttachedFile
 

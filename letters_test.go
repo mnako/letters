@@ -1,57 +1,50 @@
 package letters
 
 import (
+	"io"
 	"net/mail"
 	"os"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
-func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Headers) {
+type emailParser func(io.Reader) (Email, error)
+
+func testFromFile(t *testing.T, ep emailParser, fp string, want Email) {
 	rawEmail, err := os.Open(fp)
 	if err != nil {
-		t.Errorf("error while reading email from file: %s", err)
+		t.Fatalf("error while reading email from file: %s", err)
 		return
 	}
-
-	msg, err := mail.ReadMessage(rawEmail)
-	if err != nil {
-		t.Errorf("error while reading message from file: %s", err)
-		return
-	}
-
-	parsedEmailHeaders, err := ParseHeaders(msg.Header)
-	if err != nil {
-		t.Errorf("error while parsing email headers: %s", err)
-		return
-	}
-
-	if !reflect.DeepEqual(parsedEmailHeaders, expectedEmailHeaders) {
-		t.Errorf("email headers are not equal")
-		t.Errorf("Got %#v", parsedEmailHeaders)
-		t.Errorf("Want %#v", expectedEmailHeaders)
-	}
-}
-
-func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
-	rawEmail, err := os.Open(fp)
-	if err != nil {
-		t.Errorf("error while reading email from file: %s", err)
-		return
-	}
-
-	parsedEmail, err := ParseEmail(rawEmail)
+	got, err := ep(rawEmail)
 	if err != nil {
 		t.Errorf("error while parsing email: %s", err)
 		return
 	}
 
-	if !reflect.DeepEqual(parsedEmail, expectedEmail) {
-		t.Errorf("emails are not equal")
-		t.Errorf("Got %#v", parsedEmail)
-		t.Errorf("Want %#v", expectedEmail)
+	if !cmp.Equal(got, want) {
+		t.Errorf("emails are not equal\n%s", cmp.Diff(got, want))
 	}
+}
+
+func testEmailHeadersFromFile(t *testing.T, fp string, expected Email) {
+	var testFunc emailParser = ParseEmailHeaders
+	processSetting = headersOnly
+	testFromFile(t, testFunc, fp, expected)
+}
+
+func testEmailWithoutAttachmentsFromFile(t *testing.T, fp string, expected Email) {
+	var testFunc emailParser = ParseEmailWithoutAttachments
+	processSetting = withoutAttachments
+	testFromFile(t, testFunc, fp, expected)
+}
+
+func testEmailFromFile(t *testing.T, fp string, expected Email) {
+	var testFunc emailParser = ParseEmail
+	processSetting = entireEmail
+	testFromFile(t, testFunc, fp, expected)
 }
 
 func TestParseEmailEnglishEmpty(t *testing.T) {
@@ -187,80 +180,223 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmailHeaders := Headers{
-		Date:    expectedDate,
-		Subject: "📧 Test English Pangrams",
-		ReplyTo: []*mail.Address{
-			{
-				Name:    "Alice Sender",
-				Address: "alice.sender@example.net",
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Test English Pangrams",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
 			},
-		},
-		Sender: &mail.Address{
-			Name:    "Alice Sender",
-			Address: "alice.sender@example.com",
-		},
-		From: []*mail.Address{
-			{
+			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
 			},
-			{
-				Name:    "Alice Sender",
-				Address: "alice.sender@example.net",
+			From: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
 			},
-		},
-		To: []*mail.Address{
-			{
-				Name:    "Bob Recipient",
-				Address: "bob.recipient@example.com",
+			To: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.com",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.com",
+				},
 			},
-			{
-				Name:    "Carol Recipient",
-				Address: "carol.recipient@example.com",
+			Cc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.com",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.com",
+				},
 			},
-		},
-		Cc: []*mail.Address{
-			{
-				Name:    "Dan Recipient",
-				Address: "dan.recipient@example.com",
+			Bcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.com",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.com",
+				},
 			},
-			{
-				Name:    "Eve Recipient",
-				Address: "eve.recipient@example.com",
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ContentType: ContentTypeHeader{
+				ContentType: "text/plain",
+				Params: map[string]string{
+					"charset": "ascii",
+				},
 			},
-		},
-		Bcc: []*mail.Address{
-			{
-				Name:    "Frank Recipient",
-				Address: "frank.recipient@example.com",
-			},
-			{
-				Name:    "Grace Recipient",
-				Address: "grace.recipient@example.com",
-			},
-		},
-		MessageID:  "Message-Id-1@example.com",
-		InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-		References: []MessageId{"Message-Id-0@example.com"},
-		Comments:   "Message Header Comment",
-		Keywords:   []string{"Keyword 1", "Keyword 2"},
-		ContentType: ContentTypeHeader{
-			ContentType: "text/plain",
-			Params: map[string]string{
-				"charset": "ascii",
-			},
-		},
-		ExtraHeaders: map[string][]string{
-			"X-Clacks-Overhead": {"GNU Terry Pratchett"},
-			"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
-				"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
-				"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
 			},
 		},
 	}
 
-	testEmailHeadersFromFile(t, fp, expectedEmailHeaders)
+	testEmailHeadersFromFile(t, fp, expectedEmail)
+}
+
+func TestParseEmailWithoutAttachmentsEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
+	fp := "tests/test_english_multipart_signed_ascii_over_base64.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
+	expectedEmail := Email{
+		Headers: Headers{
+			Date:    expectedDate,
+			Subject: "📧 Signed Test English Pangrams",
+			ReplyTo: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			Sender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.com",
+			},
+			From: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+			},
+			To: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.com",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.com",
+				},
+			},
+			Cc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.com",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.com",
+				},
+			},
+			Bcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.com",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.com",
+				},
+			},
+			MessageID:  "Message-Id-1@example.com",
+			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
+			References: []MessageId{"Message-Id-0@example.com"},
+			Comments:   "Message Header Comment",
+			Keywords:   []string{"Keyword 1", "Keyword 2"},
+			ResentDate: expectedDate,
+			ResentFrom: []*mail.Address{
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.net",
+				},
+				{
+					Name:    "Alice Sender",
+					Address: "alice.sender@example.com",
+				},
+			},
+			ResentSender: &mail.Address{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.net",
+			},
+			ResentTo: []*mail.Address{
+				{
+					Name:    "Bob Recipient",
+					Address: "bob.recipient@example.net",
+				},
+				{
+					Name:    "Carol Recipient",
+					Address: "carol.recipient@example.net",
+				},
+			},
+			ResentCc: []*mail.Address{
+				{
+					Name:    "Dan Recipient",
+					Address: "dan.recipient@example.net",
+				},
+				{
+					Name:    "Eve Recipient",
+					Address: "eve.recipient@example.net",
+				},
+			},
+			ResentBcc: []*mail.Address{
+				{
+					Name:    "Frank Recipient",
+					Address: "frank.recipient@example.net",
+				},
+				{
+					Name:    "Grace Recipient",
+					Address: "grace.recipient@example.net",
+				},
+			},
+			ResentMessageID: "Message-Id-1@example.net",
+			ContentType: ContentTypeHeader{
+				ContentType: "multipart/signed",
+				Params: map[string]string{
+					"boundary": "SignedBoundaryString",
+					"charset":  "ascii",
+					"micalg":   "sha1",
+					"protocol": "application/pkcs7-signature",
+				},
+			},
+			ExtraHeaders: map[string][]string{
+				"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+				"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+					"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+					"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				},
+			},
+		},
+		Text: `The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.`,
+		AttachedFiles: nil, // attachments should not show
+	}
+
+	testEmailWithoutAttachmentsFromFile(t, fp, expectedEmail)
 }
 
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {

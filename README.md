@@ -174,21 +174,25 @@ email.Text
 // "色は匂えど散りぬるを..."
 ```
 
-If you only want to parse email headers, you can use `letters.ParseHeaders`:
+If you only want to parse email headers, you can use `letters.ParseEmailHeaders`:
 
 ```go
-msg, err := mail.ReadMessage(r)
+email, err := letters.ParseEmailHeaders(r)
 if err != nil {
     log.Fatal(err)
 }
-
-emailHeaders, err := letters.ParseHeaders(msg.Header)
-if err != nil {
-    log.Fatal(err)
-}
-
-emailHeaders.To[0].Address
+email.Headers.To[0].Address
 // "bob.recipient@example.com"
+```
+
+If you don't want to skip parsing email attachments, use
+`letters.ParseEmailWithoutAttachments`:
+
+```go
+email, err := letters.ParseEmailWithoutAttachments(r)
+if err != nil {
+    log.Fatal(err)
+}
 ```
 
 ## Current Scope and Features
