@@ -164,11 +164,6 @@ func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTr
 func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncoding) (AttachedFile, error) {
 	var afl AttachedFile
 
-	if processSetting == withoutAttachments {
-		_, err := io.ReadAll(part)
-		return afl, err
-	}
-
 	decoded, err := decodeContent(part, nil, cte)
 	if err != nil {
 		return afl, fmt.Errorf(

@@ -432,16 +432,16 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 				err)
 		}
 		if cdh.ContentDisposition == attachment {
+			if processSetting == withoutAttachments {
+				continue
+			}
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: cannot decode attached file: %w",
 					err)
 			}
-			if processSetting != withoutAttachments {
-				emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
-			}
-			continue
+			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
 		}
 
 		if partContentType.ContentType == contentTypeTextPlain {
@@ -491,6 +491,9 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if isInlineFile(partContentType, parentContentType, cdh) {
+			if processSetting == withoutAttachments {
+				continue
+			}
 			inlineFile, err := decodeInlineFile(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -502,15 +505,16 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if isAttachedFile(partContentType, parentContentType) {
+			if processSetting == withoutAttachments {
+				continue
+			}
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: cannot decode attached file: %w",
 					err)
 			}
-			if processSetting != withoutAttachments {
-				emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
-			}
+			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
 			continue
 		}
 
