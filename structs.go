@@ -2,6 +2,7 @@ package letters
 
 import (
 	"fmt"
+	"io"
 	"net/mail"
 	"time"
 )
@@ -564,11 +565,11 @@ type InlineFile struct {
 	ContentID          string
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader
-	Data               []byte
+	DataReader         io.Reader
 }
 
 type AttachedFile struct {
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader
-	Data               []byte
+	DataReader         io.Reader
 }
