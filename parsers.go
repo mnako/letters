@@ -350,20 +350,13 @@ func ParseHeaders(header mail.Header) (Headers, error) {
 }
 
 func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (string, error) {
-	reader, err := decodeContent(t, e, cte)
-	if err != nil {
-		return "", fmt.Errorf(
-			"letters.parsers.parseText: cannot decode plain text content: %w",
-			err)
-	}
-
+	reader := decodeContent(t, e, cte)
 	textBody, err := io.ReadAll(reader)
 	if err != nil {
 		return "", fmt.Errorf(
 			"letters.parsers.parseText: cannot read plain text content: %w",
 			err)
 	}
-
 	return strings.TrimSuffix(string(textBody), "\n"), nil
 }
 
