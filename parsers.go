@@ -384,7 +384,7 @@ func isAttachedFile(contentType ContentTypeHeader, parentContentType ContentType
 	return parentContentType.ContentType == contentTypeMultipartMixed || parentContentType.ContentType == contentTypeMultipartParallel
 }
 
-func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary string) (emailBodies, error) {
+func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary string) (emailBodies, error) {
 	var emailBodies emailBodies
 
 	multipartReader := multipart.NewReader(msg, boundary)
@@ -432,6 +432,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 				err)
 		}
 		if cdh.ContentDisposition == ContentDispositionAttachment {
+			if !ep.fileFilter(partContentType) {
+				continue
+			}
+
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -443,6 +447,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if partContentType.ContentType == contentTypeTextPlain {
+			if !ep.bodyFilter(partContentType) {
+				continue
+			}
+
 			partTextBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -455,6 +463,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if partContentType.ContentType == contentTypeTextEnriched {
+			if !ep.bodyFilter(partContentType) {
+				continue
+			}
+
 			partEnrichedText, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -466,6 +478,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if partContentType.ContentType == contentTypeTextHtml {
+			if !ep.bodyFilter(partContentType) {
+				continue
+			}
+
 			partHtmlBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -477,7 +493,7 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if strings.HasPrefix(partContentType.ContentType, contentTypeMultipartPrefix) {
-			nestedEmailBodies, err := parsePart(part, partContentType, partContentType.Params["boundary"])
+			nestedEmailBodies, err := ep.parsePart(part, partContentType, partContentType.Params["boundary"])
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: cannot parse nested part: %w",
@@ -489,6 +505,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if isInlineFile(partContentType, parentContentType, cdh) {
+			if !ep.fileFilter(partContentType) {
+				continue
+			}
+
 			inlineFile, err := decodeInlineFile(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
@@ -500,6 +520,10 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 		}
 
 		if isAttachedFile(partContentType, parentContentType) {
+			if !ep.fileFilter(partContentType) {
+				continue
+			}
+
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(

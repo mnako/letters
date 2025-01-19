@@ -47,7 +47,8 @@ func testEmailFromFile(t *testing.T, fp string, expectedEmail letters.Email) {
 		return
 	}
 
-	parsedEmail, err := letters.ParseEmail(rawEmail)
+	emailParser := letters.NewEmailParser()
+	parsedEmail, err := emailParser.ParseEmail(rawEmail)
 	if err != nil {
 		t.Errorf("error while parsing email: %s", err)
 		return

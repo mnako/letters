@@ -23,7 +23,8 @@ go get github.com/mnako/letters@v0.2.3
 Parse a raw email from a Reader:
 
 ```go
-email, err := letters.ParseEmail(r)
+defaultEmailParser := letters.NewEmailParser()
+email, err := defaultEmailParser.ParseEmail(rawEmail)
 if err != nil {
     log.Fatal(err)
 }
@@ -174,21 +175,61 @@ email.Text
 // "色は匂えど散りぬるを..."
 ```
 
-If you only want to parse email headers, you can use `letters.ParseHeaders`:
+## Advanced Usage
+
+By default, letters parses all bodies and files.
+
+You can configure the parser to parse all, some, or none bodies, and files 
+using functional filters.
+
+A functional body or file filter is a function that takes the Content-Type 
+header of the part and returns true or false. Only bodies and files for which 
+the filter returns true will be parsed. Parts for which the filter returned 
+false, will be skipped.
+
+For example, if you do not want to parse any files, you can configure the 
+Email Parser with a file filter that always returns false. For convenience, 
+letters includes a `NoFiles` filter that does precisely that:
 
 ```go
-msg, err := mail.ReadMessage(r)
+noFilesEmailParser := letters.NewEmailParser(
+    WithFileFilter(NoFiles)	
+)
+email, err := noFilesEmailParser.ParseEmail(rawEmail)
 if err != nil {
     log.Fatal(err)
 }
+```
 
-emailHeaders, err := letters.ParseHeaders(msg.Header)
-if err != nil {
-    log.Fatal(err)
-}
+Letters includes the following convenience filters:
 
-emailHeaders.To[0].Address
-// "bob.recipient@example.com"
+* `NoBodies`, a function that always returns false, that can be used with 
+  `WithBodyFilter()`, to skip parsing all bodies of the email;
+* `AllBodies`, a function that always returns true, that can be used with 
+  `WithBodyFilter()`, to parse all bodies of the email. This is the default 
+  behaviour;
+* `NoFiles`, a function that always returns false, that can be used with 
+  `WithFileFilter()`, to skip parsing all attachments of the email. This 
+  option can speed up parsing in use cases where attachments are not needed;
+* `AllFiles`, a function that always returns true, that can be used with 
+  `WithFileFilter()`, to parse all attachments of the email. This is the 
+  default behaviour;
+
+More interestingly, bodies and files can be skipped conditionally, based on 
+the Content-Type header of the part.
+
+For example, to only parse files with a filename that ends with ".jpg", you 
+can pass a custom File Filter:
+
+```go
+customJPGOnlyEmailParser := letters.NewEmailParser(
+    WithFileFilter(
+        func(cth ContentTypeHeader) bool {
+            return strings.HasSuffix(strings.ToLower(cth.Params["name"]), ".jpg")
+        },
+    ),	
+)
+email, err := customJPGOnlyEmailParser.ParseEmail(rawEmail)
 ```
 
 ## Current Scope and Features
