@@ -41,31 +41,35 @@ var knownHeaders = map[string]void{
 type ContentDisposition string
 
 const (
-	attachment ContentDisposition = "attachment"
-	inline     ContentDisposition = "inline"
+	ContentDispositionAttachment ContentDisposition = "attachment"
+	ContentDispositionInline     ContentDisposition = "inline"
 )
 
 var cdMap = map[string]ContentDisposition{
-	"attachment": attachment,
-	"inline":     inline,
+	"attachment": ContentDispositionAttachment,
+	"inline":     ContentDispositionInline,
 }
 
 const contentTypeMultipartPrefix = "multipart/"
 
 // const contentTypeMultipartAlternative = "multipart/alternative"
 // const contentTypeMultipartDigest = "multipart/digest"
-const contentTypeMultipartMixed = "multipart/mixed"
-const contentTypeMultipartParallel = "multipart/parallel"
-const contentTypeMultipartRelated = "multipart/related"
+const (
+	contentTypeMultipartMixed    = "multipart/mixed"
+	contentTypeMultipartParallel = "multipart/parallel"
+	contentTypeMultipartRelated  = "multipart/related"
+)
 
 // const contentTypeMultipartReport = "multipart/report"
 
 // const contentTypeMultipartSigned = "multipart/signed"
 // const contentTypeMultipartEncrypted = "multipart/encrypted"
 
-const contentTypeTextPlain = "text/plain"
-const contentTypeTextEnriched = "text/enriched"
-const contentTypeTextHtml = "text/html"
+const (
+	contentTypeTextPlain    = "text/plain"
+	contentTypeTextEnriched = "text/enriched"
+	contentTypeTextHtml     = "text/html"
+)
 
 type ContentTransferEncoding string
 

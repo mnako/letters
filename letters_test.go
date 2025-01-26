@@ -1,4 +1,4 @@
-package letters
+package letters_test
 
 import (
 	"net/mail"
@@ -6,9 +6,13 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/mnako/letters"
 )
 
-func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Headers) {
+func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders letters.Headers) {
+	t.Helper()
+
 	rawEmail, err := os.Open(fp)
 	if err != nil {
 		t.Errorf("error while reading email from file: %s", err)
@@ -21,7 +25,7 @@ func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Head
 		return
 	}
 
-	parsedEmailHeaders, err := ParseHeaders(msg.Header)
+	parsedEmailHeaders, err := letters.ParseHeaders(msg.Header)
 	if err != nil {
 		t.Errorf("error while parsing email headers: %s", err)
 		return
@@ -34,14 +38,16 @@ func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders Head
 	}
 }
 
-func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
+func testEmailFromFile(t *testing.T, fp string, expectedEmail letters.Email) {
+	t.Helper()
+
 	rawEmail, err := os.Open(fp)
 	if err != nil {
 		t.Errorf("error while reading email from file: %s", err)
 		return
 	}
 
-	parsedEmail, err := ParseEmail(rawEmail)
+	parsedEmail, err := letters.ParseEmail(rawEmail)
 	if err != nil {
 		t.Errorf("error while parsing email: %s", err)
 		return
@@ -55,10 +61,12 @@ func testEmailFromFile(t *testing.T, fp string, expectedEmail Email) {
 }
 
 func TestParseEmailEnglishEmpty(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_empty.txt"
-	expectedEmail := Email{
-		Headers: Headers{
-			ContentType: ContentTypeHeader{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params:      map[string]string{},
 			},
@@ -73,13 +81,15 @@ defaults (e.g. text/plain Content-Type).`,
 }
 
 func TestParseEmailEnglishNoTextContent(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_no_text_content.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "Test No Text Content, Attachment Only",
 			ReplyTo: []*mail.Address{
@@ -133,14 +143,14 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 				},
 			},
 			MessageID: "Message-Id-1@example.com",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "application/pdf",
 				Params: map[string]string{
 					"name": "attached-pdf-name.pdf",
 				},
 			},
-			ContentDisposition: ContentDispositionHeader{
-				ContentDisposition: attachment,
+			ContentDisposition: letters.ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionAttachment,
 				Params: map[string]string{
 					"filename": "attached-pdf-filename.pdf",
 				},
@@ -156,24 +166,26 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 		Text:         "",
 		EnrichedText: "",
 		HTML:         "",
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 		},
 	}
@@ -182,12 +194,14 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 }
 
 func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmailHeaders := Headers{
+	expectedEmailHeaders := letters.Headers{
 		Date:    expectedDate,
 		Subject: "📧 Test English Pangrams",
 		ReplyTo: []*mail.Address{
@@ -241,11 +255,11 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 			},
 		},
 		MessageID:  "Message-Id-1@example.com",
-		InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-		References: []MessageId{"Message-Id-0@example.com"},
+		InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+		References: []letters.MessageId{"Message-Id-0@example.com"},
 		Comments:   "Message Header Comment",
 		Keywords:   []string{"Keyword 1", "Keyword 2"},
-		ContentType: ContentTypeHeader{
+		ContentType: letters.ContentTypeHeader{
 			ContentType: "text/plain",
 			Params: map[string]string{
 				"charset": "ascii",
@@ -264,13 +278,15 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 }
 
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -324,11 +340,11 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "ascii",
@@ -355,13 +371,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -415,8 +433,8 @@ func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -465,7 +483,7 @@ func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "ascii",
@@ -492,13 +510,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_ascii_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -552,8 +572,8 @@ func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -602,7 +622,7 @@ func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "ascii",
@@ -629,13 +649,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -689,8 +711,8 @@ func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -739,7 +761,7 @@ func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -766,13 +788,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -826,8 +850,8 @@ func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -876,7 +900,7 @@ func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -903,13 +927,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -963,8 +989,8 @@ func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1013,7 +1039,7 @@ func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -1040,13 +1066,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1100,8 +1128,8 @@ func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1150,7 +1178,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -1190,40 +1218,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1277,8 +1310,8 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1327,7 +1360,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -1367,40 +1400,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_ascii_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1454,8 +1492,8 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1504,7 +1542,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -1544,40 +1582,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1631,8 +1674,8 @@ func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1681,7 +1724,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -1721,40 +1764,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1808,8 +1856,8 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -1858,7 +1906,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -1898,40 +1946,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -1985,8 +2038,8 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -2035,7 +2088,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -2075,40 +2128,45 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -2162,8 +2220,8 @@ func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -2212,7 +2270,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -2252,89 +2310,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -2342,52 +2408,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -2441,8 +2514,8 @@ func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -2491,7 +2564,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -2531,89 +2604,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -2621,52 +2702,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_ascii_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -2720,8 +2808,8 @@ func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -2770,7 +2858,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -2810,89 +2898,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -2900,52 +2996,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -2999,8 +3102,8 @@ func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -3049,7 +3152,7 @@ func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -3089,89 +3192,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -3179,52 +3290,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -3278,8 +3396,8 @@ func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -3328,7 +3446,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -3368,89 +3486,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -3458,52 +3584,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -3557,8 +3690,8 @@ func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -3607,7 +3740,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -3647,89 +3780,97 @@ Pack my box with five dozen liquor jugs.`,
 <p>Pack my box with five dozen liquor jugs.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -3737,52 +3878,59 @@ Pack my box with five dozen liquor jugs.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_ascii_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -3836,8 +3984,8 @@ func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -3886,7 +4034,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -3910,16 +4058,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -3933,13 +4081,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_ascii_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -3993,8 +4143,8 @@ func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4043,7 +4193,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -4067,16 +4217,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -4090,13 +4240,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_ascii_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -4150,8 +4302,8 @@ func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4200,7 +4352,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -4224,16 +4376,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -4247,13 +4399,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -4307,8 +4461,8 @@ func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4357,7 +4511,7 @@ func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -4381,16 +4535,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -4404,13 +4558,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -4464,8 +4620,8 @@ func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4514,7 +4670,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -4538,16 +4694,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -4561,13 +4717,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_english_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test English Pangrams",
 			ReplyTo: []*mail.Address{
@@ -4621,8 +4779,8 @@ func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4671,7 +4829,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -4695,16 +4853,16 @@ How vexingly quick daft zebras jump!
 The five boxing wizards jump quickly.
 Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -4718,13 +4876,15 @@ Pack my box with five dozen liquor jugs.`,
 }
 
 func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_plaintext_gb18030_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -4778,8 +4938,8 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4828,7 +4988,7 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "gb18030",
@@ -4858,13 +5018,15 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 }
 
 func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_plaintext_gb18030_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -4918,8 +5080,8 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -4968,7 +5130,7 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "gb18030",
@@ -4998,13 +5160,15 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_plaintext_gbk_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5058,8 +5222,8 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5108,7 +5272,7 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "gbk",
@@ -5138,13 +5302,15 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 }
 
 func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_plaintext_gbk_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5198,8 +5364,8 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5248,7 +5414,7 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "gbk",
@@ -5278,13 +5444,15 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_related_gb18030_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5338,8 +5506,8 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5388,7 +5556,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -5437,40 +5605,45 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_related_gb18030_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5524,8 +5697,8 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5574,7 +5747,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -5623,40 +5796,45 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_related_gbk_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5710,8 +5888,8 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5760,7 +5938,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -5809,40 +5987,45 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_related_gbk_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -5896,8 +6079,8 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -5946,7 +6129,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -5995,40 +6178,45 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_mixed_gb18030_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -6082,8 +6270,8 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -6132,7 +6320,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -6181,89 +6369,97 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -6271,52 +6467,59 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_mixed_gb18030_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -6370,8 +6573,8 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -6420,7 +6623,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -6469,89 +6672,97 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -6559,52 +6770,59 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_mixed_gbk_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -6658,8 +6876,8 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -6708,7 +6926,7 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -6757,89 +6975,97 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -6847,52 +7073,59 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_mixed_gbk_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -6946,8 +7179,8 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -6996,7 +7229,7 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -7045,89 +7278,97 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 试释是事。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -7135,52 +7376,59 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_signed_gb18030_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -7234,8 +7482,8 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -7284,7 +7532,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -7311,16 +7559,16 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 石室拭，氏始试食是十狮。
 食时，始识是十狮尸，实十石狮尸。
 试释是事。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -7334,13 +7582,15 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 }
 
 func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_signed_gb18030_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -7394,8 +7644,8 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -7444,7 +7694,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -7471,16 +7721,16 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 石室拭，氏始试食是十狮。
 食时，始识是十狮尸，实十石狮尸。
 试释是事。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -7494,13 +7744,15 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 }
 
 func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_signed_gbk_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -7554,8 +7806,8 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -7604,7 +7856,7 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -7631,16 +7883,16 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 石室拭，氏始试食是十狮。
 食时，始识是十狮尸，实十石狮尸。
 试释是事。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -7654,13 +7906,15 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 }
 
 func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_chinese_multipart_signed_gbk_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Shanghai")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 施氏食狮史",
 			ReplyTo: []*mail.Address{
@@ -7714,8 +7968,8 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -7764,7 +8018,7 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -7791,16 +8045,16 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 石室拭，氏始试食是十狮。
 食时，始识是十狮尸，实十石狮尸。
 试释是事。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -7814,13 +8068,15 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -7874,8 +8130,8 @@ func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -7924,7 +8180,7 @@ func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -7950,13 +8206,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8010,8 +8268,8 @@ func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8060,7 +8318,7 @@ func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -8086,13 +8344,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_plaintext_iso-8859-15_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8146,8 +8406,8 @@ func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8196,7 +8456,7 @@ func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-15",
@@ -8222,13 +8482,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_plaintext_iso-8859-15_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8282,8 +8544,8 @@ func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8332,7 +8594,7 @@ func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-15",
@@ -8358,13 +8620,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8418,8 +8682,8 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8468,7 +8732,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -8505,40 +8769,45 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8592,8 +8861,8 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8642,7 +8911,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -8679,40 +8948,45 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_related_iso-8859-15_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8766,8 +9040,8 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8816,7 +9090,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -8853,40 +9127,45 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_related_iso-8859-15_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -8940,8 +9219,8 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testin
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -8990,7 +9269,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testin
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -9027,40 +9306,45 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -9114,8 +9398,8 @@ func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -9164,7 +9448,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -9201,89 +9485,97 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -9291,52 +9583,59 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -9390,8 +9689,8 @@ func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -9440,7 +9739,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -9477,89 +9776,97 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -9567,52 +9874,59 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_mixed_iso-8859-15_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -9666,8 +9980,8 @@ func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -9716,7 +10030,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -9753,89 +10067,97 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -9843,52 +10165,59 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_mixed_iso-8859-15_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -9942,8 +10271,8 @@ func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -9992,7 +10321,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -10029,89 +10358,97 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 <p>Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -10119,52 +10456,59 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -10218,8 +10562,8 @@ func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -10268,7 +10612,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -10291,16 +10635,16 @@ Hyvän lorun sangen pieneksi hyödyksi jäi suomen kirjaimet.
 Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
 Charles Darwin jammaili Åken hevixylofonilla Qatarin yöpub Zeligissä.
 Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -10314,13 +10658,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -10374,8 +10720,8 @@ func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -10424,7 +10770,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -10447,16 +10793,16 @@ Hyvän lorun sangen pieneksi hyödyksi jäi suomen kirjaimet.
 Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
 Charles Darwin jammaili Åken hevixylofonilla Qatarin yöpub Zeligissä.
 Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -10470,13 +10816,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_signed_iso-8859-15_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -10530,8 +10878,8 @@ func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -10580,7 +10928,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -10603,16 +10951,16 @@ Hyvän lorun sangen pieneksi hyödyksi jäi suomen kirjaimet.
 Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
 Charles Darwin jammaili Åken hevixylofonilla Qatarin yöpub Zeligissä.
 Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -10626,13 +10974,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_finnish_multipart_signed_iso-8859-15_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Helsinki")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Suomenkieliset pangrammit",
 			ReplyTo: []*mail.Address{
@@ -10686,8 +11036,8 @@ func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -10736,7 +11086,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -10759,16 +11109,16 @@ Hyvän lorun sangen pieneksi hyödyksi jäi suomen kirjaimet.
 Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
 Charles Darwin jammaili Åken hevixylofonilla Qatarin yöpub Zeligissä.
 Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -10782,13 +11132,15 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 }
 
 func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -10842,8 +11194,8 @@ func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -10892,7 +11244,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -10915,13 +11267,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -10975,8 +11329,8 @@ func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11025,7 +11379,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -11048,13 +11402,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_plaintext_iso-8859-1_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11108,8 +11464,8 @@ func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11158,7 +11514,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-1",
@@ -11181,13 +11537,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_plaintext_iso-8859-1_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11241,8 +11599,8 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11291,7 +11649,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-1",
@@ -11314,13 +11672,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11374,8 +11734,8 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11424,7 +11784,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -11452,40 +11812,45 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11539,8 +11904,8 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11589,7 +11954,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -11617,40 +11982,45 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_related_iso-8859-1_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11704,8 +12074,8 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11754,7 +12124,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -11782,40 +12152,45 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_related_iso-8859-1_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -11869,8 +12244,8 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testi
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -11919,7 +12294,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testi
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -11947,40 +12322,45 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -12034,8 +12414,8 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -12084,7 +12464,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -12112,89 +12492,97 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -12202,52 +12590,59 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -12301,8 +12696,8 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -12351,7 +12746,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -12379,89 +12774,97 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -12469,52 +12872,59 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_mixed_iso-8859-1_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -12568,8 +12978,8 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -12618,7 +13028,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -12646,89 +13056,97 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -12736,52 +13154,59 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_mixed_iso-8859-1_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -12835,8 +13260,8 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -12885,7 +13310,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -12913,89 +13338,97 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 <p>Þú dazt á hnéð í vök og yfir blóm sexý pæju.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -13003,52 +13436,59 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -13102,8 +13542,8 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13152,7 +13592,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -13172,16 +13612,16 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
 Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 Þú dazt á hnéð í vök og yfir blóm sexý pæju.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -13195,13 +13635,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -13255,8 +13697,8 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13305,7 +13747,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -13325,16 +13767,16 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
 Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 Þú dazt á hnéð í vök og yfir blóm sexý pæju.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -13348,13 +13790,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_signed_iso-8859-1_over_base64.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -13408,8 +13852,8 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13458,7 +13902,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -13478,16 +13922,16 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
 Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 Þú dazt á hnéð í vök og yfir blóm sexý pæju.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -13501,13 +13945,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_icelandic_multipart_signed_iso-8859-1_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Atlantic/Reykjavik")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Íslenskt pangram",
 			ReplyTo: []*mail.Address{
@@ -13561,8 +14007,8 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13611,7 +14057,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -13631,16 +14077,16 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 		Text: `Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.
 Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 Þú dazt á hnéð í vök og yfir blóm sexý pæju.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -13654,13 +14100,15 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 }
 
 func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -13714,8 +14162,8 @@ func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13764,7 +14212,7 @@ func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -13805,13 +14253,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -13865,8 +14315,8 @@ func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -13915,7 +14365,7 @@ func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -13956,13 +14406,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14016,8 +14468,8 @@ func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14066,7 +14518,7 @@ func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -14107,13 +14559,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14167,8 +14621,8 @@ func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14217,7 +14671,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-2022-jp",
@@ -14258,13 +14712,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14318,8 +14774,8 @@ func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14368,7 +14824,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-2022-jp",
@@ -14409,13 +14865,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14469,8 +14927,8 @@ func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14519,7 +14977,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-2022-jp",
@@ -14560,13 +15018,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_euc-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14620,8 +15080,8 @@ func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14670,7 +15130,7 @@ func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "euc-jp",
@@ -14711,13 +15171,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_plaintext_euc-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14771,8 +15233,8 @@ func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14821,7 +15283,7 @@ func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "euc-jp",
@@ -14862,13 +15324,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -14922,8 +15386,8 @@ func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -14972,7 +15436,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -15054,40 +15518,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -15141,8 +15610,8 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -15191,7 +15660,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -15273,40 +15742,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -15360,8 +15834,8 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -15410,7 +15884,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -15492,40 +15966,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -15579,8 +16058,8 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -15629,7 +16108,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -15711,40 +16190,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -15798,8 +16282,8 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -15848,7 +16332,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -15930,40 +16414,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -16017,8 +16506,8 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testi
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -16067,7 +16556,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testi
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -16149,40 +16638,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_euc-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -16236,8 +16730,8 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -16286,7 +16780,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -16368,40 +16862,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_related_euc-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -16455,8 +16954,8 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -16505,7 +17004,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -16587,40 +17086,45 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -16674,8 +17178,8 @@ func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -16724,7 +17228,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -16806,89 +17310,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -16896,52 +17408,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -16995,8 +17514,8 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -17045,7 +17564,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -17127,89 +17646,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -17217,52 +17744,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -17316,8 +17850,8 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -17366,7 +17900,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -17448,89 +17982,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -17538,52 +18080,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -17637,8 +18186,8 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -17687,7 +18236,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -17769,89 +18318,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -17859,52 +18416,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -17958,8 +18522,8 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -18008,7 +18572,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -18090,89 +18654,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -18180,52 +18752,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -18279,8 +18858,8 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -18329,7 +18908,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -18411,89 +18990,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -18501,52 +19088,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_euc-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -18600,8 +19194,8 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -18650,7 +19244,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -18732,89 +19326,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -18822,52 +19424,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_mixed_euc-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -18921,8 +19530,8 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -18971,7 +19580,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -19053,89 +19662,97 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 <p>田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -19143,52 +19760,59 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -19242,8 +19866,8 @@ func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -19292,7 +19916,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -19330,16 +19954,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -19353,13 +19977,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -19413,8 +20039,8 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -19463,7 +20089,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -19501,16 +20127,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -19524,13 +20150,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -19584,8 +20212,8 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -19634,7 +20262,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -19672,16 +20300,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -19695,13 +20323,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_7bit.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -19755,8 +20385,8 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -19805,7 +20435,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -19843,16 +20473,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -19866,13 +20496,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -19926,8 +20558,8 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -19976,7 +20608,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -20014,16 +20646,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -20037,13 +20669,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -20097,8 +20731,8 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testin
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20147,7 +20781,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testin
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -20185,16 +20819,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -20208,13 +20842,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_euc-jp_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -20268,8 +20904,8 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20318,7 +20954,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -20356,16 +20992,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -20379,13 +21015,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_japanese_multipart_signed_euc-jp_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Tokyo")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test いろは歌",
 			ReplyTo: []*mail.Address{
@@ -20439,8 +21077,8 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20489,7 +21127,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -20527,16 +21165,16 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 榎の枝を馴れ居て。
 
 田居に出で菜摘むわれをぞ君召すと求食り追ひゆく山城の打酔へる子ら藻葉干せよえ舟繋けぬ。`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -20550,13 +21188,15 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 }
 
 func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -20610,8 +21250,8 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20660,7 +21300,7 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -20681,13 +21321,15 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 }
 
 func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -20741,8 +21383,8 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20791,7 +21433,7 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -20812,13 +21454,15 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_plaintext_euc-kr_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -20872,8 +21516,8 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -20922,7 +21566,7 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "euc-kr",
@@ -20943,13 +21587,15 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 }
 
 func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_plaintext_euc-kr_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21003,8 +21649,8 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21053,7 +21699,7 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "euc-kr",
@@ -21074,13 +21720,15 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21134,8 +21782,8 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21184,7 +21832,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -21206,40 +21854,45 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21293,8 +21946,8 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21343,7 +21996,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -21365,40 +22018,45 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_related_euc-kr_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21452,8 +22110,8 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21502,7 +22160,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -21524,40 +22182,45 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_related_euc-kr_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21611,8 +22274,8 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21661,7 +22324,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -21683,40 +22346,45 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -21770,8 +22438,8 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -21820,7 +22488,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -21842,89 +22510,97 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -21932,52 +22608,59 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -22031,8 +22714,8 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -22081,7 +22764,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -22103,89 +22786,97 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -22193,52 +22884,59 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_mixed_euc-kr_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -22292,8 +22990,8 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -22342,7 +23040,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -22364,89 +23062,97 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -22454,52 +23160,59 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_mixed_euc-kr_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -22553,8 +23266,8 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -22603,7 +23316,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -22625,89 +23338,97 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 <p>키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -22715,52 +23436,59 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -22814,8 +23542,8 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -22864,7 +23592,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -22882,16 +23610,16 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -22905,13 +23633,15 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 }
 
 func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -22965,8 +23695,8 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23015,7 +23745,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -23033,16 +23763,16 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -23056,13 +23786,15 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_signed_euc-kr_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -23116,8 +23848,8 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23166,7 +23898,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -23184,16 +23916,16 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -23207,13 +23939,15 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 }
 
 func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_korean_multipart_signed_euc-kr_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Seoul")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test 한국어 팬그램",
 			ReplyTo: []*mail.Address{
@@ -23267,8 +24001,8 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23317,7 +24051,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -23335,16 +24069,16 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 			},
 		},
 		Text: `키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -23358,13 +24092,15 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_plaintext_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -23418,8 +24154,8 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23468,7 +24204,7 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -23496,13 +24232,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_plaintext_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -23556,8 +24294,8 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23606,7 +24344,7 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "utf-8",
@@ -23634,13 +24372,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_plaintext_iso-8859-2_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -23694,8 +24434,8 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23744,7 +24484,7 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-2",
@@ -23772,13 +24512,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_plaintext_iso-8859-2_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -23832,8 +24574,8 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -23882,7 +24624,7 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-2",
@@ -23910,13 +24652,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_related_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -23970,8 +24714,8 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -24020,7 +24764,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -24063,40 +24807,45 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_related_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -24150,8 +24899,8 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -24200,7 +24949,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -24243,40 +24992,45 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_related_iso-8859-2_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -24330,8 +25084,8 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -24380,7 +25134,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -24423,40 +25177,45 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_related_iso-8859-2_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -24510,8 +25269,8 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -24560,7 +25319,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -24603,40 +25362,45 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_mixed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -24690,8 +25454,8 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -24740,7 +25504,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -24783,89 +25547,97 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -24873,52 +25645,59 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_mixed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -24972,8 +25751,8 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -25022,7 +25801,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -25065,89 +25844,97 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -25155,52 +25942,59 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_mixed_iso-8859-2_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -25254,8 +26048,8 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -25304,7 +26098,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -25347,89 +26141,97 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -25437,52 +26239,59 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_mixed_iso-8859-2_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -25536,8 +26345,8 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -25586,7 +26395,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -25629,89 +26438,97 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 <p>Chwyć małżonkę, strój bądź pleśń z fugi.</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -25719,52 +26536,59 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_signed_utf-8_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -25818,8 +26642,8 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -25868,7 +26692,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -25893,16 +26717,16 @@ Pchnąć w tę łódź jeża lub ośm skrzyń fig.
 Dość gróźb fuzją, klnę, pych i małżeństw!
 Pójdź w loch zbić małżeńską gęś futryn!
 Chwyć małżonkę, strój bądź pleśń z fugi.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -25916,13 +26740,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_signed_utf-8_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -25976,8 +26802,8 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26026,7 +26852,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -26051,16 +26877,16 @@ Pchnąć w tę łódź jeża lub ośm skrzyń fig.
 Dość gróźb fuzją, klnę, pych i małżeństw!
 Pójdź w loch zbić małżeńską gęś futryn!
 Chwyć małżonkę, strój bądź pleśń z fugi.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -26074,13 +26900,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_signed_iso-8859-2_over_base64.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -26134,8 +26962,8 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26184,7 +27012,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -26209,16 +27037,16 @@ Pchnąć w tę łódź jeża lub ośm skrzyń fig.
 Dość gróźb fuzją, klnę, pych i małżeństw!
 Pójdź w loch zbić małżeńską gęś futryn!
 Chwyć małżonkę, strój bądź pleśń z fugi.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -26232,13 +27060,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_polish_multipart_signed_iso-8859-2_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Europe/Warsaw")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test Polskie pangramy",
 			ReplyTo: []*mail.Address{
@@ -26292,8 +27122,8 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26342,7 +27172,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -26367,16 +27197,16 @@ Pchnąć w tę łódź jeża lub ośm skrzyń fig.
 Dość gróźb fuzją, klnę, pych i małżeństw!
 Pójdź w loch zbić małżeńską gęś futryn!
 Chwyć małżonkę, strój bądź pleśń z fugi.`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -26390,13 +27220,15 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 }
 
 func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_iso-8859-11_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -26450,8 +27282,8 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26500,7 +27332,7 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-11",
@@ -26519,13 +27351,15 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_iso-8859-11_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -26579,8 +27413,8 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26629,7 +27463,7 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "iso-8859-11",
@@ -26648,13 +27482,15 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_windows-874_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -26708,8 +27544,8 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26758,7 +27594,7 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "windows-874",
@@ -26777,13 +27613,15 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_windows-874_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -26837,8 +27675,8 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -26887,7 +27725,7 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "windows-874",
@@ -26906,13 +27744,15 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_tis-620_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -26966,8 +27806,8 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27016,7 +27856,7 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "tis-620",
@@ -27035,13 +27875,15 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_plaintext_tis-620_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27095,8 +27937,8 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27145,7 +27987,7 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "text/plain",
 				Params: map[string]string{
 					"charset": "tis-620",
@@ -27164,13 +28006,15 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 }
 
 func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_iso-8859-11_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27224,8 +28068,8 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27274,7 +28118,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -27298,40 +28142,45 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_iso-8859-11_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27385,8 +28234,8 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27435,7 +28284,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -27459,40 +28308,45 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_windows-874_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27546,8 +28400,8 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27596,7 +28450,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -27620,40 +28474,45 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_windows-874_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27707,8 +28566,8 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27757,7 +28616,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -27781,40 +28640,45 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_tis-620_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -27868,8 +28732,8 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -27918,7 +28782,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -27942,40 +28806,45 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_related_tis-620_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -28029,8 +28898,8 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -28079,7 +28948,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/related",
 				Params: map[string]string{
 					"boundary": "RelatedBoundaryString",
@@ -28103,40 +28972,45 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -28190,8 +29064,8 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -28240,7 +29114,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -28264,89 +29138,97 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -28354,52 +29236,59 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -28453,8 +29342,8 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -28503,7 +29392,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -28527,89 +29416,97 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -28617,52 +29514,59 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_windows-874_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -28716,8 +29620,8 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -28766,7 +29670,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -28790,89 +29694,97 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -28880,52 +29792,59 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_windows-874_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -28979,8 +29898,8 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -29029,7 +29948,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -29053,89 +29972,97 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -29143,52 +30070,59 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_tis-620_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -29242,8 +30176,8 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -29292,7 +30226,7 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -29316,89 +30250,97 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -29406,52 +30348,59 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_mixed_tis-620_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -29505,8 +30454,8 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -29555,7 +30504,7 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/mixed",
 				Params: map[string]string{
 					"boundary": "MixedBoundaryString",
@@ -29579,89 +30528,97 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 <p>นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ</p>
 </div>
 </html>`,
-		InlineFiles: []InlineFile{
+		InlineFiles: []letters.InlineFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-without-disposition.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 			{
 				ContentID: "inline-jpg-image.jpg@example.com",
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "image/jpeg",
 					Params: map[string]string{
 						"name": "inline-jpg-image-name.jpg",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: inline,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionInline,
 					Params: map[string]string{
 						"filename": "inline-jpg-image-filename.jpg",
 					},
 				},
-				Data: []byte{255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
+				Data: []byte{
+					255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4,
 					6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9,
 					13, 17, 13, 14, 15, 16, 16, 17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0, 11, 8,
 					0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255, 218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207,
-					32, 255, 217},
+					32, 255, 217,
+				},
 			},
 		},
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-name.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-pdf-filename.pdf",
 					},
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pdf",
 					Params: map[string]string{
 						"name": "attached-pdf-without-disposition.pdf",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
+				ContentDisposition: letters.ContentDispositionHeader{
 					ContentDisposition: "",
 					Params:             map[string]string(nil),
 				},
-				Data: []byte{37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+				Data: []byte{
+					37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
 					47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
 					60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
-					62, 62, 62, 62, 62},
+					62, 62, 62, 62, 62,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/json",
 					Params: map[string]string{
 						"name": "attached-json-name.json",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-json-filename.json",
 					},
@@ -29669,52 +30626,59 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 				Data: []byte{123, 34, 102, 111, 111, 34, 58, 34, 98, 97, 114, 34, 125},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/plain",
 					Params: map[string]string{
 						"name": "attached-text-plain-name.txt",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-plain-filename.txt",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
+				Data: []byte{
+					84, 101, 120, 116, 47, 112, 108, 97, 105, 110, 32, 99, 111, 110, 116, 101, 110, 116, 32,
 					97, 115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 116, 120, 116, 32, 102, 105,
-					108, 101, 46},
+					108, 101, 46,
+				},
 			},
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "text/html",
 					Params: map[string]string{
 						"name": "attached-text-html-name.html",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "attached-text-html-filename.html",
 					},
 				},
-				Data: []byte{84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
+				Data: []byte{
+					84, 101, 120, 116, 47, 104, 116, 109, 108, 32, 99, 111, 110, 116, 101, 110, 116, 32, 97,
 					115, 32, 97, 110, 32, 97, 116, 116, 97, 99, 104, 101, 100, 32, 46, 104, 116, 109, 108, 32, 102,
-					105, 108, 101, 46},
+					105, 108, 101, 46,
+				},
 			},
 		},
 	}
 
 	testEmailFromFile(t, fp, expectedEmail)
 }
+
 func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -29768,8 +30732,8 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -29818,7 +30782,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -29834,16 +30798,16 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -29857,13 +30821,15 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -29917,8 +30883,8 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -29967,7 +30933,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -29983,16 +30949,16 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -30006,13 +30972,15 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 }
 
 func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_windows-874_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -30066,8 +31034,8 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -30116,7 +31084,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -30132,16 +31100,16 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -30155,13 +31123,15 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_windows-874_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -30215,8 +31185,8 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -30265,7 +31235,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -30281,16 +31251,16 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -30304,13 +31274,15 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 }
 
 func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_tis-620_over_base64.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -30364,8 +31336,8 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -30414,7 +31386,7 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -30430,16 +31402,16 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},
@@ -30453,13 +31425,15 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 }
 
 func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
+	t.Parallel()
+
 	fp := "tests/test_thai_multipart_signed_tis-620_over_quoted-printable.txt"
 	tz, _ := time.LoadLocation("Asia/Bangkok")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
 		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"))
-	expectedEmail := Email{
-		Headers: Headers{
+	expectedEmail := letters.Email{
+		Headers: letters.Headers{
 			Date:    expectedDate,
 			Subject: "📧 Signed Test แพนแกรมภาษาไทย",
 			ReplyTo: []*mail.Address{
@@ -30513,8 +31487,8 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			MessageID:  "Message-Id-1@example.com",
-			InReplyTo:  []MessageId{"Message-Id-0@example.com"},
-			References: []MessageId{"Message-Id-0@example.com"},
+			InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+			References: []letters.MessageId{"Message-Id-0@example.com"},
 			Comments:   "Message Header Comment",
 			Keywords:   []string{"Keyword 1", "Keyword 2"},
 			ResentDate: expectedDate,
@@ -30563,7 +31537,7 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 				},
 			},
 			ResentMessageID: "Message-Id-1@example.net",
-			ContentType: ContentTypeHeader{
+			ContentType: letters.ContentTypeHeader{
 				ContentType: "multipart/signed",
 				Params: map[string]string{
 					"boundary": "SignedBoundaryString",
@@ -30579,16 +31553,16 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 		Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
 
 นายสังฆภัณฑ์ เฮงพิทักษ์ฝั่ง ผู้เฒ่าซึ่งมีอาชีพเป็นฅนขายฃวด ถูกตำรวจปฏิบัติการจับฟ้องศาล ฐานลักนาฬิกาคุณหญิงฉัตรชฎา ฌานสมาธิ`,
-		AttachedFiles: []AttachedFile{
+		AttachedFiles: []letters.AttachedFile{
 			{
-				ContentType: ContentTypeHeader{
+				ContentType: letters.ContentTypeHeader{
 					ContentType: "application/pkcs7-signature",
 					Params: map[string]string{
 						"name": "smime.p7s",
 					},
 				},
-				ContentDisposition: ContentDispositionHeader{
-					ContentDisposition: attachment,
+				ContentDisposition: letters.ContentDispositionHeader{
+					ContentDisposition: letters.ContentDispositionAttachment,
 					Params: map[string]string{
 						"filename": "smime.p7s",
 					},

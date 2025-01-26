@@ -232,7 +232,7 @@ func ParseHeaders(header mail.Header) (Headers, error) {
 
 	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
 
-	var extraHeaders = make(map[string][]string)
+	extraHeaders := make(map[string][]string)
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
 		if !isKnownHeader {
@@ -368,7 +368,7 @@ func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (s
 }
 
 func isInlineFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader, cdh ContentDispositionHeader) bool {
-	if cdh.ContentDisposition == inline {
+	if cdh.ContentDisposition == ContentDispositionInline {
 		return true
 	}
 	if contentType.ContentType == contentTypeTextPlain || contentType.ContentType == contentTypeTextEnriched || contentType.ContentType == contentTypeTextHtml {
@@ -431,7 +431,7 @@ func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary stri
 				"letters.parsers.parsePart: cannot parse Content-Disposition: %w",
 				err)
 		}
-		if cdh.ContentDisposition == attachment {
+		if cdh.ContentDisposition == ContentDispositionAttachment {
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
