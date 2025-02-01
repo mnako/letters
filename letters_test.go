@@ -49,25 +49,34 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 	t.Helper()
 
 	for _, tc := range tcs {
-		t.Run(tc.name, func(t *testing.T) {
+		testCase := tc
+
+		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			rawEmail, err := os.Open(tc.filepath)
+			rawEmail, err := os.Open(testCase.filepath)
 			if err != nil {
 				t.Errorf("error while reading email from file: %s", err)
 				return
 			}
 
-			parsedEmail, err := tc.emailParser.ParseEmail(rawEmail)
+			defer func() {
+				if err := rawEmail.Close(); err != nil {
+					t.Errorf("error while closing rawEmail: %s", err)
+					return
+				}
+			}()
+
+			parsedEmail, err := testCase.emailParser.ParseEmail(rawEmail)
 			if err != nil {
 				t.Errorf("error while parsing email: %s", err)
 				return
 			}
 
-			if !reflect.DeepEqual(parsedEmail, tc.expectedEmail) {
+			if !reflect.DeepEqual(parsedEmail, testCase.expectedEmail) {
 				t.Errorf("emails are not equal")
 				t.Errorf("Got %#v", parsedEmail)
-				t.Errorf("Want %#v", tc.expectedEmail)
+				t.Errorf("Want %#v", testCase.expectedEmail)
 			}
 		})
 	}
