@@ -15,36 +15,6 @@ type EmailParser struct {
 }
 
 type EmailParserOption func(*EmailParser)
-type EmailBodyFilter func(cth ContentTypeHeader) bool
-type EmailFileFilter func(cth ContentTypeHeader) bool
-
-func NoBodies(_ ContentTypeHeader) bool {
-	return false
-}
-
-func AllBodies(_ ContentTypeHeader) bool {
-	return true
-}
-
-func NoFiles(_ ContentTypeHeader) bool {
-	return false
-}
-
-func AllFiles(_ ContentTypeHeader) bool {
-	return true
-}
-
-func WithBodyFilter(bodyFilter EmailBodyFilter) EmailParserOption {
-	return func(ep *EmailParser) {
-		ep.bodyFilter = bodyFilter
-	}
-}
-
-func WithFileFilter(fileFilter EmailFileFilter) EmailParserOption {
-	return func(ep *EmailParser) {
-		ep.fileFilter = fileFilter
-	}
-}
 
 func NewEmailParser(options ...EmailParserOption) *EmailParser {
 	ep := &EmailParser{
@@ -82,23 +52,26 @@ func (ep *EmailParser) ParseEmail(r io.Reader) (Email, error) {
 	}
 
 	if email.Headers.ContentType.ContentType == contentTypeTextPlain {
-		email.Text, err = parseText(msg.Body, encoding, cte)
-		if err != nil {
-			return email, fmt.Errorf("letters.ParseEmail: cannot parse plain text: %w", err)
+		if ep.bodyFilter(email.Headers.ContentType) {
+			email.Text, err = parseText(msg.Body, encoding, cte)
+			if err != nil {
+				return email, fmt.Errorf("letters.ParseEmail: cannot parse plain text: %w", err)
+			}
 		}
-
 	} else if email.Headers.ContentType.ContentType == contentTypeTextEnriched {
-		email.EnrichedText, err = parseText(msg.Body, encoding, cte)
-		if err != nil {
-			return email, fmt.Errorf("letters.ParseEmail: cannot parse enriched text: %w", err)
+		if ep.bodyFilter(email.Headers.ContentType) {
+			email.EnrichedText, err = parseText(msg.Body, encoding, cte)
+			if err != nil {
+				return email, fmt.Errorf("letters.ParseEmail: cannot parse enriched text: %w", err)
+			}
 		}
-
 	} else if email.Headers.ContentType.ContentType == contentTypeTextHtml {
-		email.HTML, err = parseText(msg.Body, encoding, cte)
-		if err != nil {
-			return email, fmt.Errorf("letters.ParseEmail: cannot parse html text: %w", err)
+		if ep.bodyFilter(email.Headers.ContentType) {
+			email.HTML, err = parseText(msg.Body, encoding, cte)
+			if err != nil {
+				return email, fmt.Errorf("letters.ParseEmail: cannot parse html text: %w", err)
+			}
 		}
-
 	} else if strings.HasPrefix(email.Headers.ContentType.ContentType, contentTypeMultipartPrefix) {
 		boundary := email.Headers.ContentType.Params["boundary"]
 		emailBodies, err := ep.parsePart(msg.Body, email.Headers.ContentType, boundary)
