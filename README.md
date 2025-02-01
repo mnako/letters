@@ -193,7 +193,7 @@ letters includes a `NoFiles` filter that does precisely that:
 
 ```go
 noFilesEmailParser := letters.NewEmailParser(
-    WithFileFilter(NoFiles)	
+    letters.WithFileFilter(NoFiles)	
 )
 email, err := noFilesEmailParser.ParseEmail(rawEmail)
 if err != nil {
@@ -223,8 +223,8 @@ can pass a custom File Filter:
 
 ```go
 customJPGOnlyEmailParser := letters.NewEmailParser(
-    WithFileFilter(
-        func(cth ContentTypeHeader) bool {
+    letters.WithFileFilter(
+        func(cth letters.ContentTypeHeader) bool {
             return strings.HasSuffix(strings.ToLower(cth.Params["name"]), ".jpg")
         },
     ),	
