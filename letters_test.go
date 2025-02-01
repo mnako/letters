@@ -75,7 +75,7 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 
 			if !reflect.DeepEqual(parsedEmail, testCase.expectedEmail) {
 				t.Errorf("emails are not equal")
-				t.Errorf("Got %#v", parsedEmail)
+				t.Errorf("Got  %#v", parsedEmail)
 				t.Errorf("Want %#v", testCase.expectedEmail)
 			}
 		})
@@ -28510,6 +28510,10 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -28649,6 +28653,10 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -28788,6 +28796,10 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -28927,6 +28939,10 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29066,6 +29082,10 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29205,6 +29225,10 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29345,6 +29369,10 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29519,6 +29547,10 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29693,6 +29725,10 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -29867,6 +29903,10 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -30041,6 +30081,10 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -30215,6 +30259,10 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -30389,6 +30437,10 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -30675,6 +30727,10 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -30961,6 +31017,10 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -31247,6 +31307,10 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -31533,6 +31597,10 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -31819,6 +31887,10 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32107,6 +32179,10 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32266,6 +32342,10 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32425,6 +32505,10 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32584,6 +32668,10 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32743,6 +32831,10 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
@@ -32902,6 +32994,10 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
 					},
 				},
 				Text: `เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า หัดอภัยเหมือนกีฬาอัชฌาสัย ปฏิบัติประพฤติกฎกำหนดใจ พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอยฯ
