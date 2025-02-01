@@ -11,7 +11,9 @@ format:
 test:
 	go test -v ./... -cover
 	go vet ./...
-	$(GOLANGCI_LINT_ALIAS) run
 	go mod verify
 
-.PHONY: devcontainer format test
+lint:
+	$(GOLANGCI_LINT_ALIAS) run
+
+.PHONY: devcontainer format test lint
