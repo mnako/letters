@@ -23,10 +23,34 @@ go get github.com/mnako/letters@v0.2.3
 Parse a raw email from a Reader:
 
 ```go
-defaultEmailParser := letters.NewEmailParser()
-email, err := defaultEmailParser.ParseEmail(rawEmail)
-if err != nil {
+package main
+
+import (
+  "fmt"
+  "log"
+  "os"
+  "github.com/mnako/letters"
+)
+
+func main() {
+  rawEmail, err := os.Open("email.eml")
+  if err != nil {
+    log.Fatal("error while reading email from file: %w", err)
+    return
+  }
+
+  defer func() {
+    if err := rawEmail.Close(); err != nil {
+      log.Fatal("error while closing rawEmail: %w", err)
+      return
+    }
+  }()
+
+  defaultEmailParser := letters.NewEmailParser()
+  email, err := defaultEmailParser.ParseEmail(rawEmail)
+  if err != nil {
     log.Fatal(err)
+  }
 }
 ```
 
@@ -166,7 +190,8 @@ Content-Type: text/plain; charset=ISO-2022-JP
 =1B$B?'$OFw$($I=1B(B
 =1B$B;6$j$L$k$r=1B(B```)
 
-email, _ := letters.ParseEmail(r)
+defaultParser := letters.NewEmailParser()
+email, _ := defaultParser.ParseEmail(r)
 
 email.Headers.Subject
 // "いろは歌"
@@ -182,10 +207,15 @@ By default, letters parses all bodies and files.
 You can configure the parser to parse all, some, or none bodies, and files 
 using functional filters.
 
-A functional body or file filter is a function that takes the Content-Type 
-header of the part and returns true or false. Only bodies and files for which 
-the filter returns true will be parsed. Parts for which the filter returned 
-false, will be skipped.
+A **functional body filter** is a function that takes the Content-Type header
+of the part and returns true or false. Only bodies for which the filter
+returns true will be parsed. Parts for which the filter returned false, will
+be skipped.
+
+Similar to the body filter, a **functional file filter** is a function that
+takes the Content-Type and Content-Disposition headers of the part and returns
+true or false. Only files for which the filter returns true will be parsed.
+Files for which the filter returned false, will be skipped.
 
 For example, if you do not want to parse any files, you can configure the 
 Email Parser with a file filter that always returns false. For convenience, 
@@ -193,7 +223,7 @@ letters includes a `NoFiles` filter that does precisely that:
 
 ```go
 noFilesEmailParser := letters.NewEmailParser(
-    letters.WithFileFilter(NoFiles)	
+    letters.WithFileFilter(NoFiles),
 )
 email, err := noFilesEmailParser.ParseEmail(rawEmail)
 if err != nil {
@@ -215,22 +245,41 @@ Letters includes the following convenience filters:
   `WithFileFilter()`, to parse all attachments of the email. This is the 
   default behaviour;
 
-More interestingly, bodies and files can be skipped conditionally, based on 
-the Content-Type header of the part.
+More interestingly, bodies and files can be skipped conditionally: bodies can
+be skipped based on the Content-Type header of the part, and files can be
+skipped based on the Content-Type and the Content-Disposition headers of the
+part.
 
-For example, to only parse files with a filename that ends with ".jpg", you 
-can pass a custom File Filter:
+For example, to only parse files with a filename that ends with ".jpg," you
+can pass a custom File Filter that checks the `name` Param of the Content-Type
+header:
 
 ```go
 customJPGOnlyEmailParser := letters.NewEmailParser(
     letters.WithFileFilter(
-        func(cth letters.ContentTypeHeader) bool {
+        func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
             return strings.HasSuffix(strings.ToLower(cth.Params["name"]), ".jpg")
         },
     ),	
 )
 email, err := customJPGOnlyEmailParser.ParseEmail(rawEmail)
 ```
+
+Files can be filtered based on the Content-Disposition header as well. For
+example, to parse only inline files and skip attachments, you can pass
+a custom File Filter that checks the Content-Disposition header:
+
+```go
+inlineFilesOnlyParser := letters.NewEmailParser(
+    letters.WithFileFilter(
+        func(_ letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+            return cdh.ContentDisposition == letters.ContentDispositionInline
+        },
+    ),
+)
+```
+
+You can implement arbitrarily complex conditions with those filter.
 
 ## Current Scope and Features
 

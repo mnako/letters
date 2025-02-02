@@ -2,7 +2,7 @@ package letters
 
 type (
 	EmailBodyFilter func(cth ContentTypeHeader) bool
-	EmailFileFilter func(cth ContentTypeHeader) bool
+	EmailFileFilter func(cth ContentTypeHeader, cdh ContentDispositionHeader) bool
 )
 
 func NoBodies(_ ContentTypeHeader) bool {
@@ -13,11 +13,11 @@ func AllBodies(_ ContentTypeHeader) bool {
 	return true
 }
 
-func NoFiles(_ ContentTypeHeader) bool {
+func NoFiles(_ ContentTypeHeader, __ ContentDispositionHeader) bool {
 	return false
 }
 
-func AllFiles(_ ContentTypeHeader) bool {
+func AllFiles(_ ContentTypeHeader, __ ContentDispositionHeader) bool {
 	return true
 }
 

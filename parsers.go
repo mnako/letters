@@ -432,7 +432,7 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 				err)
 		}
 		if cdh.ContentDisposition == ContentDispositionAttachment {
-			if !ep.fileFilter(partContentType) {
+			if !ep.fileFilter(partContentType, cdh) {
 				continue
 			}
 
@@ -505,7 +505,7 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 		}
 
 		if isInlineFile(partContentType, parentContentType, cdh) {
-			if !ep.fileFilter(partContentType) {
+			if !ep.fileFilter(partContentType, cdh) {
 				continue
 			}
 
@@ -520,7 +520,7 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 		}
 
 		if isAttachedFile(partContentType, parentContentType) {
-			if !ep.fileFilter(partContentType) {
+			if !ep.fileFilter(partContentType, cdh) {
 				continue
 			}
 
