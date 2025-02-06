@@ -1,11 +1,10 @@
-package parser
+package email
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/mnako/letters/email"
 )
 
 func TestExtractContentTypeHeader(t *testing.T) {
@@ -54,15 +53,17 @@ func TestExtractContentTypeHeader(t *testing.T) {
 
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
-			cth, err := extractContentTypeHeader(tt.input)
+			c := &ContentInfo{}
+
+			err := c.extractType(tt.input)
 			if err != nil {
 				t.Fatalf("cannot parse part Content-Type: %s", err)
 			}
 
-			if got, want := cth.ContentType, tt.contentType; got != want {
+			if got, want := c.Type, tt.contentType; got != want {
 				t.Errorf("got %s want %s", got, want)
 			}
-			got, want := cth.Params, tt.params
+			got, want := c.TypeParams, tt.params
 			if diff := cmp.Diff(want, got); diff != "" {
 				t.Errorf("params are not equal\n%s", diff)
 			}
@@ -93,15 +94,16 @@ func TestExtractContentDisposition(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
-			cd, err := extractContentDisposition(tt.input)
+			c := &ContentInfo{}
+			err := c.extractDisposition(tt.input)
 			if err != nil {
 				t.Fatalf("cannot parse part Content-Disposition: %s", err)
 			}
 
-			if got, want := string(cd.ContentDisposition), tt.contentDisposition; got != want {
+			if got, want := c.Disposition, tt.contentDisposition; got != want {
 				t.Errorf("got %s want %s", got, want)
 			}
-			got, want := cd.Params, tt.params
+			got, want := c.DispositionParams, tt.params
 			if diff := cmp.Diff(want, got); diff != "" {
 				t.Errorf("params are not equal\n%s", diff)
 			}
@@ -110,33 +112,139 @@ func TestExtractContentDisposition(t *testing.T) {
 }
 
 func TestExtractContentTransferEncoding(t *testing.T) {
-
 	tests := []struct {
 		input string
-		cte   email.ContentTransferEncoding
+		cte   string
 	}{
 		{
+			input: ``, // empty
+			cte:   "7bit",
+		},
+		{
 			input: `base64`,
-			cte:   email.CTEBase64,
+			cte:   "base64",
 		},
 		{
-			input: `QUOTeD-PriNTABLE`,
-			cte:   email.CTEQuotedPrintable,
-		},
-		{
-			input: `7bit`,
-			cte:   email.CTE7bit,
+			input: `QUOTeD-PriNTABLE `,
+			cte:   "quoted-printable",
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
-			cte, err := extractContentTransferEncoding(tt.input)
+			c := &ContentInfo{}
+			err := c.extractTransferEncoding(tt.input)
 			if err != nil {
 				t.Fatalf("cannot parse part Content-Transfer-Encoding: %s", err)
 			}
 
-			if got, want := cte, tt.cte; got != want {
+			if got, want := c.TransferEncoding, tt.cte; got != want {
 				t.Errorf("got %s want %s", got, want)
+			}
+		})
+	}
+}
+
+func TestExtractCharset(t *testing.T) {
+	tests := []struct {
+		input       string
+		parentCI    *ContentInfo
+		charset     string
+		hasEncoding bool
+	}{
+		{
+			input:       "xyz",
+			parentCI:    nil,
+			charset:     "xyz",
+			hasEncoding: false,
+		},
+		{
+			input: "",
+			parentCI: &ContentInfo{
+				TypeParams: map[string]string{"charset": "UTF-8"},
+			},
+			charset:     "UTF-8",
+			hasEncoding: true,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
+			c := &ContentInfo{}
+			c.TypeParams = map[string]string{"charset": tt.input}
+			c.extractCharset(tt.parentCI)
+			if got, want := c.Charset, tt.charset; got != want {
+				t.Errorf("charset got %s want %s", got, want)
+			}
+			c.ExtractEncoding()
+			if got, want := !(c.Encoding == nil), tt.hasEncoding; got != want {
+				t.Errorf("encoding got %t want %t", got, want)
+			}
+		})
+	}
+}
+
+func TestIsInlineFile(t *testing.T) {
+	tests := []struct {
+		ci       *ContentInfo
+		parentCI *ContentInfo
+		expected bool
+	}{
+		{
+			ci:       &ContentInfo{Disposition: "attachment"},
+			parentCI: &ContentInfo{Type: "multipart/mixed"},
+			expected: false,
+		},
+		{
+			ci:       &ContentInfo{Disposition: "inline"},
+			parentCI: &ContentInfo{Type: "multipart/mixed"},
+			expected: true,
+		},
+		{
+			ci:       &ContentInfo{},
+			parentCI: &ContentInfo{Type: "multipart/related"},
+			expected: true,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
+			if got, want := tt.ci.IsInlineFile(tt.parentCI), tt.expected; got != want {
+				t.Errorf("got %t want %t", got, want)
+			}
+		})
+	}
+}
+
+func TestIsAttachedFile(t *testing.T) {
+	tests := []struct {
+		ci       *ContentInfo
+		parentCI *ContentInfo
+		expected bool
+	}{
+		{
+			ci:       &ContentInfo{Disposition: "inline"},
+			parentCI: nil,
+			expected: false,
+		},
+		{
+			ci:       &ContentInfo{Disposition: "attached"},
+			parentCI: nil,
+			expected: true,
+		},
+		{
+			ci:       &ContentInfo{},
+			parentCI: &ContentInfo{Type: "multipart/mixed"},
+			expected: true,
+		},
+		{
+			ci:       &ContentInfo{},
+			parentCI: &ContentInfo{Type: "multipart/parallel"},
+			expected: true,
+		},
+	}
+
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
+			if got, want := tt.ci.IsAttachedFile(tt.parentCI), tt.expected; got != want {
+				t.Errorf("got %t want %t", got, want)
 			}
 		})
 	}

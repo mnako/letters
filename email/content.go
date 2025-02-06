@@ -1,7 +1,6 @@
 package email
 
 import (
-	"errors"
 	"fmt"
 	"mime"
 	"net/textproto"
@@ -140,6 +139,7 @@ type ContentInfo struct {
 	// additional fields
 	Charset  string            // the charset extracted from the content type
 	Encoding encoding.Encoding // the encoding determined by the charset
+	encDone  bool              // flag to show if encoding has been run
 }
 
 // contentDispositions is a slice of valid content
@@ -185,19 +185,16 @@ func ExtractContentInfo(headers map[string][]string, parentCI *ContentInfo) (*Co
 	if err != nil {
 		return c, err
 	}
-	err := c.extractCharset(parentCI)
+	c.extractCharset(parentCI)
+	err = c.extractTransferEncoding(get("Content-Transfer-Encoding"))
 	if err != nil {
 		return c, err
 	}
-	err := c.extractTransferEncoding(get("Content-Transfer-Encoding"))
+	err = c.extractDisposition(get("Content-Disposition"))
 	if err != nil {
 		return c, err
 	}
-	err := c.extractDisposition(get("Content-Disposition"))
-	if err != nil {
-		return c, err
-	}
-	c.ExtractID(get("Content-ID"))
+	c.extractID(get("Content-ID"))
 	return c, nil
 }
 
@@ -215,12 +212,12 @@ func (c *ContentInfo) IsInlineFile(parentCI *ContentInfo) bool {
 }
 
 // IsAttachedFile reports if the content type describes an attached file.
-func (c *ContentInfo) isAttachedFile(parentCI *ContentInfo) bool {
+func (c *ContentInfo) IsAttachedFile(parentCI *ContentInfo) bool {
 	switch {
 	case c.Disposition == "attached":
 		return true
-	case c.Type == "text/plain", c.Type == "text/enriched", c.Type == "text/html":
-		return false
+	case c.Type != "" && !strings.HasPrefix(c.Type, "text/"):
+		return true
 	case parentCI != nil && parentCI.Type == "multipart/mixed":
 		return true
 	case parentCI != nil && parentCI.Type == "multipart/parallel":
@@ -240,8 +237,8 @@ func (c *ContentInfo) extractType(s string) error {
 		return fmt.Errorf("cannot extract Content-Type %q: %w", s, err)
 	}
 	for _, param := range []string{"charset", "micalg", "protocol"} {
-		if v, ok := c.Params[param]; ok {
-			c.Params[param] = strings.ToLower(v)
+		if v, ok := c.TypeParams[param]; ok {
+			c.TypeParams[param] = strings.ToLower(v)
 		}
 	}
 	return nil
@@ -249,19 +246,24 @@ func (c *ContentInfo) extractType(s string) error {
 
 // extractCharset extracts the charset from the Content Type or parent
 // Content Type
-func (c *ContentInfo) extractCharset(parentCI *ContentInfo) error {
-	if c.Type == "" {
-		return errors.New("content type empty, cannot extract charset")
-	}
+func (c *ContentInfo) extractCharset(parentCI *ContentInfo) {
 	c.Charset = c.TypeParams["charset"]
-	if charsetLabel == "" && parentCI != nil {
+	if c.Charset == "" && parentCI != nil {
 		c.Charset = parentCI.TypeParams["charset"]
 	}
-	if c.Charset == "" {
-		return nil
+}
+
+// ExtractEncoding extracts an encoding from a charset
+func (c *ContentInfo) ExtractEncoding() {
+	if c.encDone {
+		return
 	}
-	c.Encoding, _ := charset.Lookup(c.Charset)
-	return nil
+	c.Encoding, _ = charset.Lookup(c.Charset)
+	if c.Encoding == nil {
+		normalizedLabel := strings.Replace(c.Charset, "windows-", "cp", -1)
+		c.Encoding, _ = charset.Lookup(normalizedLabel)
+	}
+	c.encDone = true
 }
 
 // extractDisposition extracts the Content-Disposition and Parameter information
@@ -281,20 +283,20 @@ func (c *ContentInfo) extractDisposition(s string) error {
 }
 
 // extractTransferEncoding extracts the Content-Transfer-Encoding
-func (c *ContentInfo) ExtractTransferEncoding(s string) error {
-	c.TransferEncoding := strings.ToLower(strings.TrimSpace(s))
-	if label == "" {
+func (c *ContentInfo) extractTransferEncoding(s string) error {
+	c.TransferEncoding = strings.ToLower(strings.TrimSpace(s))
+	if c.TransferEncoding == "" {
 		c.TransferEncoding = "7bit"
 		return nil
 	}
 
 	if !inSlice(contentTransferEncodings, c.TransferEncoding) {
-		return fmt.Errorf("unknown Content-Transfer-Encoding %q", label)
+		return fmt.Errorf("unknown Content-Transfer-Encoding %q", c.TransferEncoding)
 	}
 	return nil
 }
 
 // extractID extracts the ContentID
-func (c *ContentInfo) ExtractID(s string) {
+func (c *ContentInfo) extractID(s string) {
 	c.ID = strings.TrimSpace(strings.Trim(s, "<>"))
 }

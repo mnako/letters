@@ -118,7 +118,6 @@ func dumpEmail(t any) string {
 			t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 		)
 		return true
->>>>>>> c96ad5a (utils: tweak testRegen to add header)
 	}
 	litter.Config.FieldExclusions = regexp.MustCompile("^(Reader|Encoding)$")
 	litter.Config.DisablePointerReplacement = true
@@ -166,7 +165,6 @@ func formatDump(s string) string {
 		outputLines = append(outputLines, l)
 	}
 	return strings.Join(outputLines, "\n")
->>>>>>> 2092f58 (utils: tweak testRegen.go)
 }
 
 var tpl string = `
