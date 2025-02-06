@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/mnako/letters/email"
-	"golang.org/x/net/html/charset"
 )
 
 func TestParseBody(t *testing.T) {
@@ -14,8 +13,7 @@ func TestParseBody(t *testing.T) {
 	tests := []struct {
 		bodyInfo           []byte
 		charsetForEncoding string
-		ct                 string // not email.ContentType?
-		cte                email.ContentTransferEncoding
+		ci                 *email.ContentInfo
 		textLen            int
 		enrichedLen        int
 		htmlLen            int
@@ -32,11 +30,13 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 `),
 			charsetForEncoding: "UTF-8",
-			ct:                 "text/plain",
-			cte:                email.ContentTransferEncoding("quoted-printable"),
-			textLen:            271,
-			enrichedLen:        0,
-			htmlLen:            0,
+			ci: &email.ContentInfo{
+				Type:             "text/plain",
+				TransferEncoding: "quoted-printable",
+			},
+			textLen:     271,
+			enrichedLen: 0,
+			htmlLen:     0,
 		},
 		{
 			bodyInfo: []byte(`
@@ -49,11 +49,13 @@ Jackdaws love my big sphinx of quartz.
 Pack my box with five dozen liquor jugs.
 `),
 			charsetForEncoding: "UTF-8",
-			ct:                 "text/enriched",
-			cte:                email.ContentTransferEncoding("quoted-printable"),
-			textLen:            0,
-			enrichedLen:        339,
-			htmlLen:            0,
+			ci: &email.ContentInfo{
+				Type:             "text/enriched",
+				TransferEncoding: "quoted-printable",
+			},
+			textLen:     0,
+			enrichedLen: 339,
+			htmlLen:     0,
 		},
 		{
 			bodyInfo: []byte(`
@@ -70,24 +72,23 @@ Pack my box with five dozen liquor jugs.
 </html>
 `),
 			charsetForEncoding: "UTF-8",
-			ct:                 "text/html",
-			cte:                email.ContentTransferEncoding("quoted-printable"),
-			textLen:            0,
-			enrichedLen:        0,
-			htmlLen:            358,
+			ci: &email.ContentInfo{
+				Type:             "text/html",
+				TransferEncoding: "quoted-printable",
+			},
+			textLen:     0,
+			enrichedLen: 0,
+			htmlLen:     358,
 		},
 	}
 
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
 			p := NewParser()
-			p.encoding, _ = charset.Lookup(tt.charsetForEncoding)
-			p.cte = tt.cte
-			p.email.Headers.ContentType = email.ContentTypeHeader{
-				ContentType: tt.ct,
-			}
+			p.contentInfo = tt.ci
+			p.contentInfo.Charset = tt.charsetForEncoding
+			p.contentInfo.ExtractEncoding()
 			p.msg.Body = bytes.NewReader(tt.bodyInfo)
-
 			err := p.parseBody()
 			if err != nil {
 				t.Fatal(err)

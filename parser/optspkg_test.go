@@ -33,7 +33,7 @@ func TestPkgOptFileFilter(t *testing.T) {
 	// customJPGFileFunc selects only attached or inline files with the
 	// ContentType of image/jpeg
 	customJPGFileFunc := func(ef *email.File) error {
-		fcc := strings.ToLower(ef.ContentTypeHeader.ContentType)
+		fcc := strings.ToLower(ef.ContentInfo.Type)
 		if fcc != "image/jpeg" {
 			return nil
 		}

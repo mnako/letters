@@ -257,12 +257,12 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
 			&mail.Address{Name: "Frank Recipient", Address: "frank.recipient@example.com"},
 			&mail.Address{Name: "Grace Recipient", Address: "grace.recipient@example.com"},
 		},
-		MessageID: email.MessageId("Message-Id-1@example.com"),
-		InReplyTo: []email.MessageId{
-			email.MessageId("Message-Id-0@example.com"),
+		MessageID: "Message-Id-1@example.com",
+		InReplyTo: []string{
+			"Message-Id-0@example.com",
 		},
-		References: []email.MessageId{
-			email.MessageId("Message-Id-0@example.com"),
+		References: []string{
+			"Message-Id-0@example.com",
 		},
 		Subject:    "📧 Test English Pangrams",
 		Comments:   "Message Header Comment",
@@ -285,18 +285,7 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
 			&mail.Address{Name: "Frank Recipient", Address: "frank.recipient@example.net"},
 			&mail.Address{Name: "Grace Recipient", Address: "grace.recipient@example.net"},
 		},
-		ResentMessageID: email.MessageId("Message-Id-1@example.net"),
-		ContentType: email.ContentTypeHeader{
-			ContentType: "multipart/mixed",
-			Params: map[string]string{
-				"charset":  "ascii",
-				"boundary": "MixedBoundaryString",
-			},
-		},
-		ContentDisposition: email.ContentDispositionHeader{
-			ContentDisposition: email.ContentDisposition(""),
-			Params:             nil,
-		},
+		ResentMessageID: "Message-Id-1@example.net",
 		// newly introduced for tracing
 		Received: []string{
 			"from securemail-y17.example.com ([196.35.198.77]) by anotherexample.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (envelope-from <amazing@examaple.com>) id 1jdYH3-00057X-TF for user@anotherexample.net; Mon, 01 Apr 2019 12:01:38 +0000",

@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/mnako/letters/decoders"
-	"github.com/mnako/letters/email"
 )
 
 var (
@@ -107,17 +106,17 @@ func (p *Parser) parseHeaders() error {
 	}
 
 	// getID returns a cleaned message id
-	getID := func(s string) email.MessageId { return email.MessageId(strings.Trim(s, idTrimCutset)) }
+	getID := func(s string) string { return strings.Trim(s, idTrimCutset) }
 
 	// getIDs returns a slice of cleaned message ids
-	getIDs := func(s string) []email.MessageId {
-		ids := []email.MessageId{}
+	getIDs := func(s string) []string {
+		ids := []string{}
 		for _, id := range strings.Split(s, " ") {
 			id := strings.TrimSpace(strings.Trim(id, idTrimCutset))
 			if id == "" {
 				continue
 			}
-			ids = append(ids, email.MessageId(id))
+			ids = append(ids, id)
 		}
 		return ids
 	}
@@ -151,16 +150,8 @@ func (p *Parser) parseHeaders() error {
 	// alias headers for easy reference
 	h := &p.email.Headers
 
-	var err error
-	h.ContentType, err = extractContentTypeHeader(get("Content-Type"))
-	if err != nil {
-		return fmt.Errorf("cannot parse Content-Type: %w", err)
-	}
-
-	h.ContentDisposition, err = extractContentDisposition(get("Content-Disposition"))
-	if err != nil {
-		return fmt.Errorf("cannot parse Content-Disposition: %w", err)
-	}
+	// set contentInfo from parser
+	h.ContentInfo = p.contentInfo
 
 	h.ExtraHeaders = map[string][]string{}
 	for key, value := range p.msg.Header {
@@ -174,6 +165,7 @@ func (p *Parser) parseHeaders() error {
 		}
 	}
 
+	var err error
 	if h.Sender, err = p.parseAddress(get("Sender")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("cannot parse Sender header: %w", err)

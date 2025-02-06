@@ -12,8 +12,6 @@ import (
 	"time"
 
 	"github.com/mnako/letters/email"
-	"golang.org/x/net/html/charset"
-	"golang.org/x/text/encoding"
 )
 
 // UnknownContentTypeError reports an unknown Content Type
@@ -61,9 +59,8 @@ type Parser struct {
 	// fileFunc : a function for processing inline and attached files
 	fileFunc func(*email.File) error
 
-	// the main email encoding and content transfer encoding
-	encoding encoding.Encoding
-	cte      email.ContentTransferEncoding
+	// the main email content info
+	contentInfo *email.ContentInfo
 
 	// debugging, for future use
 	verbose bool
@@ -113,6 +110,12 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 		return nil, fmt.Errorf("cannot read message: %w", err)
 	}
 
+	// extract content information
+	p.contentInfo, err = email.ExtractContentInfo(p.msg.Header, nil)
+	if err != nil {
+		return nil, fmt.Errorf("cannot extract content: %w", err)
+	}
+
 	// parse headers
 	err = p.parseHeaders()
 	if err != nil {
@@ -122,40 +125,26 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 		return p.email, nil
 	}
 
-	h := p.email.Headers
-
-	// determine encoding
-	p.encoding, _ = charset.Lookup(h.ContentType.Params["charset"])
-	p.cte, err = extractContentTransferEncoding(p.msg.Header.Get("Content-Transfer-Encoding"))
-	if err != nil {
-		return nil, fmt.Errorf("cannot parse Content-Transfer-Encoding: %w", err)
-	}
-
-	switch ct := string(h.ContentType.ContentType); { // true switch
-	case
-		ct == string(email.ContentTypeTextPlain),
-		ct == string(email.ContentTypeTextEnriched),
-		ct == string(email.ContentTypeTextHtml):
+	switch ct := p.contentInfo.Type; { // true switch
+	case ct == "text/plain", ct == "text/enriched", ct == "text/html":
 		// parse body
 		err = p.parseBody()
 		if err != nil {
 			return nil, err
 		}
-	case strings.HasPrefix(ct, string(email.ContentTypeMultipartPrefix)):
+	case strings.HasPrefix(ct, "multipart/"):
 		// parse parts
-		err = p.parsePart(p.msg.Body, h.ContentType, h.ContentType.Params["boundary"])
+		err = p.parsePart(
+			p.msg.Body,
+			p.contentInfo,
+			p.contentInfo.TypeParams["boundary"],
+		)
 		if err != nil {
 			return nil, err
 		}
 	default:
 		// parse attachment
-		err = p.parseFile(
-			p.msg.Body,
-			email.AttachedFileType,
-			p.email.Headers.ContentType,
-			p.email.Headers.ContentDisposition,
-			p.cte,
-		)
+		err = p.parseFile(p.msg.Body, p.contentInfo)
 		if err != nil {
 			return nil, err
 		}
@@ -164,7 +153,7 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 }
 
 // parsePart parses the parts of a multipart message
-func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHeader, boundary string) error {
+func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary string) error {
 
 	multipartReader := multipart.NewReader(msg, boundary)
 	if multipartReader == nil {
@@ -180,39 +169,17 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 			return fmt.Errorf("cannot read part: %w", err)
 		}
 
-		// extract content-type
-		partContentType, err := extractContentTypeHeader(part.Header.Get("Content-Type"))
+		// extract content information
+		contentInfo, err := email.ExtractContentInfo(part.Header, p.contentInfo)
 		if err != nil {
-			return fmt.Errorf("cannot parse part Content-Type: %w", err)
-		}
-
-		// extract charset
-		charsetLabel := partContentType.Params["charset"]
-		if charsetLabel == "" {
-			charsetLabel = parentContentType.Params["charset"]
-		}
-		enc, _ := charset.Lookup(charsetLabel)
-
-		// extract content-transfer-encoding
-		cte, err := extractContentTransferEncoding(part.Header.Get("Content-Transfer-Encoding"))
-		if err != nil {
-			return fmt.Errorf("cannot parse part Content-Transfer-Encoding: %w", err)
-		}
-
-		// extract content-disposition
-		cdh, err := extractContentDisposition(part.Header.Get("Content-Disposition"))
-		if err != nil {
-			return fmt.Errorf("cannot parse part Content-Disposition: %w", err)
+			return fmt.Errorf("content extraction errror: %w", err)
 		}
 
 		// commence extraction of data with attached file
-		if string(cdh.ContentDisposition) == "attachment" && string(email.AttachedFileType) == "attached" {
+		if contentInfo.Disposition == "attachment" {
 			err = p.parseFile(
 				part,
-				email.AttachedFileType,
-				partContentType,
-				cdh,
-				cte,
+				contentInfo,
 			)
 			if err != nil {
 				return fmt.Errorf("cannot parse attached file: %w", err)
@@ -221,8 +188,8 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// process text plain content
-		if string(partContentType.ContentType) == string(email.ContentTypeTextPlain) {
-			partTextBody, err := p.parseText(part, enc, cte)
+		if contentInfo.Type == "text/plain" {
+			partTextBody, err := p.parseText(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse plain text: %w", err)
 			}
@@ -234,8 +201,8 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// process text enriched content
-		if string(partContentType.ContentType) == string(email.ContentTypeTextEnriched) {
-			partEnrichedText, err := p.parseText(part, enc, cte)
+		if contentInfo.Type == "text/enriched" {
+			partEnrichedText, err := p.parseText(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse enriched text: %w", err)
 			}
@@ -244,8 +211,8 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// process html content
-		if string(partContentType.ContentType) == string(email.ContentTypeTextHtml) {
-			partHtmlBody, err := p.parseText(part, p.encoding, cte)
+		if contentInfo.Type == "text/html" {
+			partHtmlBody, err := p.parseText(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse html text: %w", err)
 			}
@@ -254,8 +221,8 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// recursive call to parsePart
-		if strings.HasPrefix(partContentType.ContentType, string(email.ContentTypeMultipartPrefix)) {
-			err := p.parsePart(part, partContentType, partContentType.Params["boundary"])
+		if strings.HasPrefix(contentInfo.Type, "multipart") {
+			err := p.parsePart(part, contentInfo, contentInfo.TypeParams["boundary"])
 			if err != nil {
 				return fmt.Errorf("cannot parse nested part: %w", err)
 			}
@@ -263,20 +230,11 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// process inline file
-		if isInlineFile(partContentType, parentContentType, cdh) {
-			switch p.processType {
-			case headersOnly:
-				continue
-			case noAttachments:
+		if contentInfo.IsInlineFile(contentInfo) {
+			if p.processType != wholeEmail {
 				continue
 			}
-			err = p.parseFile(
-				part,
-				email.InlineFileType,
-				partContentType,
-				cdh,
-				cte,
-			)
+			err = p.parseFile(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse inline file: %w", err)
 			}
@@ -284,20 +242,11 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// process attached file
-		if isAttachedFile(partContentType, parentContentType, cdh) {
-			switch p.processType {
-			case headersOnly:
-				continue
-			case noAttachments:
+		if contentInfo.IsAttachedFile(contentInfo) {
+			if p.processType != wholeEmail {
 				continue
 			}
-			err := p.parseFile(
-				part,
-				email.AttachedFileType,
-				partContentType,
-				cdh,
-				cte,
-			)
+			err := p.parseFile(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse attached file: %w", err)
 			}
@@ -305,7 +254,7 @@ func (p *Parser) parsePart(msg io.Reader, parentContentType email.ContentTypeHea
 		}
 
 		// fallthrough error
-		return &UnknownContentTypeError{contentType: parentContentType.ContentType}
+		return &UnknownContentTypeError{contentType: parentCI.Type}
 	}
 
 	return nil

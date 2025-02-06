@@ -9,52 +9,6 @@ import (
 	"github.com/mnako/letters/email"
 )
 
-// isInlineFile reports if the content type of the part describes an
-// inline file.
-func isInlineFile(
-	ct email.ContentTypeHeader,
-	parentCT email.ContentTypeHeader,
-	cdh email.ContentDispositionHeader,
-) bool {
-	switch {
-	case string(cdh.ContentDisposition) == string(email.InlineFileType):
-		return true
-	case string(ct.ContentType) == string(email.ContentTypeTextPlain):
-		return false
-	case string(ct.ContentType) == string(email.ContentTypeTextEnriched):
-		return false
-	case string(ct.ContentType) == string(email.ContentTypeTextHtml):
-		return false
-	case string(parentCT.ContentType) == string(email.ContentTypeMultipartRelated):
-		return true
-	}
-	return false
-}
-
-// isAttachedFile reports if the content type of the part describes an
-// attached file.
-func isAttachedFile(
-	ct email.ContentTypeHeader,
-	parentCT email.ContentTypeHeader,
-	cdh email.ContentDispositionHeader,
-) bool {
-	switch {
-	case string(cdh.ContentDisposition) == string(email.AttachedFileType):
-		return true
-	case string(ct.ContentType) == string(email.ContentTypeTextPlain):
-		return false
-	case string(ct.ContentType) == string(email.ContentTypeTextEnriched):
-		return false
-	case string(ct.ContentType) == string(email.ContentTypeTextHtml):
-		return false
-	case string(parentCT.ContentType) == string(email.ContentTypeMultipartMixed):
-		return true
-	case string(parentCT.ContentType) == string(email.ContentTypeMultipartParallel):
-		return true
-	}
-	return false
-}
-
 // parseFile parses inline and attached files from email parts, using
 // the parser.fileFunc to process the io.Reader returned by
 // decoders.DecodeContent. By default this func will write the reader
@@ -65,19 +19,12 @@ func isAttachedFile(
 // results for the consumer.
 //
 // Files that are successfully parsed are added to parser.email.Files.
-func (p *Parser) parseFile(
-	r io.Reader,
-	fileType email.FileType,
-	cth email.ContentTypeHeader,
-	cdh email.ContentDispositionHeader,
-	cte email.ContentTransferEncoding,
-) error {
+func (p *Parser) parseFile(r io.Reader, ci *email.ContentInfo) error {
 
 	var err error
 	file := &email.File{
-		FileType:                 fileType,
-		ContentTypeHeader:        cth,
-		ContentDispositionHeader: cdh,
+		FileType:    ci.Disposition,
+		ContentInfo: ci,
 	}
 
 	// extract file name from filename or name field
@@ -94,20 +41,20 @@ func (p *Parser) parseFile(
 	// File path security traversal guidelines
 	// https://www.stackhawk.com/blog/golang-path-traversal-guide-examples-and-prevention/
 	var tmpFileName string
-	if name, ok := file.ContentDispositionHeader.Params["filename"]; ok {
+	if name, ok := file.ContentInfo.DispositionParams["filename"]; ok {
 		tmpFileName = name
 	} else {
 		// fallback to ContentTypeHeader
-		if name, ok := file.ContentTypeHeader.Params["name"]; ok {
+		if name, ok := file.ContentInfo.TypeParams["name"]; ok {
 			tmpFileName = name
 		} else {
 			// Make up a unique name if none exists. Todo: Suffix ideally needed.
-			tmpFileName = fmt.Sprintf("attachment_%d_%s", len(p.email.Files), fileType)
+			tmpFileName = fmt.Sprintf("attachment_%d_%s", len(p.email.Files), ci.Disposition)
 		}
 	}
 	file.Name = filepath.Base(filepath.Clean(tmpFileName))
 
-	file.Reader = decoders.DecodeContent(r, nil, cte)
+	file.Reader = decoders.DecodeContent(r, ci)
 	// parser.fileFunc is a pluggable file reader with the signature
 	// func(*email.File) error.
 	// The fileFunc may be customised through parser.NewParser(...opts).
