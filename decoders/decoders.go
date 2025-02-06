@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"golang.org/x/net/html/charset"
-	"golang.org/x/text/encoding"
 	"golang.org/x/text/transform"
 
 	"github.com/mnako/letters/email"
@@ -46,21 +45,21 @@ func DecodeHeader(s string) (string, error) {
 // Note that the base64 decoder "base64toraw.NewBase64ToRaw" decodes all
 // base64 content to data that is base64.RawStdEncoding encoded, i.e.
 // without "=" padding.
-func DecodeContent(
-	content io.Reader, e encoding.Encoding, cte email.ContentTransferEncoding,
-) io.Reader {
+func DecodeContent(content io.Reader, ci *email.ContentInfo) io.Reader {
 	var contentReader io.Reader
-
-	switch cte {
-	case email.CTEBase64:
+	switch ci.TransferEncoding {
+	case "base64":
 		contentReader = base64.NewDecoder(base64.RawStdEncoding, base64toraw.NewBase64ToRaw(content))
-	case email.CTEQuotedPrintable:
+	case "quoted-printable":
 		contentReader = quotedprintable.NewReader(content)
 	default:
 		contentReader = content
 	}
-	if e == nil {
-		return contentReader
+	if ci.Encoding == nil {
+		ci.ExtractEncoding() // lazy load
+		if ci.Encoding == nil {
+			return contentReader
+		}
 	}
-	return transform.NewReader(contentReader, e.NewDecoder())
+	return transform.NewReader(contentReader, ci.Encoding.NewDecoder())
 }
