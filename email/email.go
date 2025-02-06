@@ -273,9 +273,9 @@ type Headers struct {
 	// Semantically, the angle bracket characters are not part of the
 	// msg-id; the msg-id is what is contained between the two angle bracket
 	// characters.
-	MessageID  MessageId
-	InReplyTo  []MessageId
-	References []MessageId
+	MessageID  string
+	InReplyTo  []string
+	References []string
 
 	// RFC 3522 3.6.5.  Informational Fields
 	//
@@ -394,81 +394,16 @@ type Headers struct {
 	ResentTo        []*mail.Address
 	ResentCc        []*mail.Address
 	ResentBcc       []*mail.Address
-	ResentMessageID MessageId
+	ResentMessageID string
+
+	// ExtraHeaders are those headers that aren't explicitly named in
+	// fields above.
+	ExtraHeaders map[string][]string
 
 	// RFC 2045 5.  Content-Type Header Field
-	//
-	// The purpose of the Content-Type field is to describe the data
-	// contained in the body fully enough that the receiving user agent can
-	// pick an appropriate agent or mechanism to present the data to the
-	// user, or otherwise deal with the data in an appropriate manner. The
-	// value in this field is called a media type.
-	//
-	// HISTORICAL NOTE:  The Content-Type header field was first defined in
-	// RFC 1049.  RFC 1049 used a simpler and less powerful syntax, but one
-	// that is largely compatible with the mechanism given here.
-	//
-	// The Content-Type header field specifies the nature of the data in the
-	// body of an entity by giving media type and subtype identifiers, and
-	// by providing auxiliary information that may be required for certain
-	// media types.  After the media type and subtype names, the remainder
-	// of the header field is simply a set of parameters, specified in an
-	// attribute=value notation.  The ordering of parameters is not
-	// significant.
-	//
-	// In general, the top-level media type is used to declare the general
-	// type of data, while the subtype specifies a specific format for that
-	// type of data.  Thus, a media type of "image/xyz" is enough to tell a
-	// user agent that the data is an image, even if the user agent has no
-	// knowledge of the specific image format "xyz".  Such information can
-	// be used, for example, to decide whether or not to show a user the raw
-	// data from an unrecognized subtype -- such an action might be
-	// reasonable for unrecognized subtypes of text, but not for
-	// unrecognized subtypes of image or audio.  For this reason, registered
-	// subtypes of text, image, audio, and video should not contain embedded
-	// information that is really of a different type.  Such compound
-	// formats should be represented using the "multipart" or "application"
-	// types.
-	//
-	// Parameters are modifiers of the media subtype, and as such do not
-	// fundamentally affect the nature of the content.  The set of
-	// meaningful parameters depends on the media type and subtype.  Most
-	// parameters are associated with a single specific subtype.  However, a
-	// given top-level media type may define parameters which are applicable
-	// to any subtype of that type.  Parameters may be required by their
-	// defining content type or subtype or they may be optional. MIME
-	// implementations must ignore any parameters whose names they do not
-	// recognize.
-	//
-	// For example, the "charset" parameter is applicable to any subtype of
-	// "text", while the "boundary" parameter is required for any subtype of
-	// the "multipart" media type.
-	//
-	// There are NO globally-meaningful parameters that apply to all media
-	// types.  Truly global mechanisms are best addressed, in the MIME
-	// model, by the definition of additional Content-* header fields.
-	//
-	// An initial set of seven top-level media types is defined in RFC 2046.
-	// Five of these are discrete types whose content is essentially opaque
-	// as far as MIME processing is concerned.  The remaining two are
-	// composite types whose contents require additional handling by MIME
-	// processors.
-	//
-	// This set of top-level media types is intended to be substantially
-	// complete.  It is expected that additions to the larger set of
-	// supported types can generally be accomplished by the creation of new
-	// subtypes of these initial types.  In the future, more top-level types
-	// may be defined only by a standards-track extension to this standard.
-	// If another top-level type is to be used for any reason, it must be
-	// given a name starting with "X-" to indicate its non-standard status
-	// and to avoid a potential conflict with a future official name.
-	//
-	// Other notes:
-	// IBM have a useful doc on MIME standard header fields at
-	// https://www.ibm.com/docs/en/integration-bus/10.1?topic=information-mime-standard-header-fields
-	ContentType        ContentTypeHeader
-	ContentDisposition ContentDispositionHeader
-	ExtraHeaders       map[string][]string
+	// ContentInfo holds the Content-Type, Content-Disposition and
+	// related content information.
+	ContentInfo ContentInfo
 
 	// RFC2076 3.2 Trace Information (for "Received" header)
 	// references RFC 822: 4.3.2; RFC 1123: 5.2.8
@@ -511,123 +446,6 @@ type Headers struct {
 	Received []string
 }
 
-// Headers fields
-type MessageId string
-
-// ContentTypeHeader describes the email header content type
-// RFC 822
-//
-//	Content-Type := type "/" subtype *[";" parameter]
-//	type :=          "application"     / "audio"
-//	          / "image"           / "message"
-//	          / "multipart"  / "text"
-//	          / "video"           / x-token
-//	x-token := <The two characters "X-" followed, with no
-//	           intervening white space, by any token>
-//	subtype := token
-//	parameter := attribute "=" value
-//	attribute := token
-//	value := token / quoted-string
-//	token := 1*<any CHAR except SPACE, CTLs, or tspecials>
-//	tspecials :=  "(" / ")" / "<" / ">" / "@"  ; Must be in
-//	           /  "," / ";" / ":" / "\" / <">  ; quoted-string,
-//	           /  "/" / "[" / "]" / "?" / "."  ; to use within
-//	           /  "="                        ; parameter values
-type ContentTypeHeader struct {
-	ContentType string
-	Params      map[string]string
-}
-
-type ContentType string
-
-const (
-	ContentTypeMultipartPrefix   ContentType = "multipart/"
-	ContentTypeMultipartMixed    ContentType = "multipart/mixed"
-	ContentTypeMultipartParallel ContentType = "multipart/parallel"
-	ContentTypeMultipartRelated  ContentType = "multipart/related"
-	ContentTypeTextPlain         ContentType = "text/plain"
-	ContentTypeTextEnriched      ContentType = "text/enriched"
-	ContentTypeTextHtml          ContentType = "text/html"
-)
-
-// ContentDispositionHeader describes the email header or part content
-// disposition where content-disposition is set out in
-// https://www.ietf.org/rfc/rfc2183.txt etc.
-//
-//	disposition := "Content-Disposition" ":"
-//	               disposition-type
-//	               *(";" disposition-parm)
-//
-//	disposition-type := "inline"
-//	                  / "attachment"
-//	                  / extension-token
-//	                  ; values are not case-sensitive
-//
-//	disposition-parm := filename-parm
-//	                  / creation-date-parm
-//	                  / modification-date-parm
-//	                  / read-date-parm
-//	                  / size-parm
-//	                  / parameter
-type ContentDispositionHeader struct {
-	ContentDisposition ContentDisposition
-	Params             map[string]string
-}
-
-type ContentDisposition string
-
-const (
-	Attachment ContentDisposition = "attachment"
-	Inline     ContentDisposition = "inline"
-	TextPlain  ContentDisposition = "text/plain" // this is not in the rfc but used by some mail user agents
-)
-
-// RFC2045 Section 6 Content-Transfer-Encoding Header Field
-//
-// Many media types which could be usefully transported via email are
-// represented, in their "natural" format, as 8bit character or binary
-// data.  Such data cannot be transmitted over some transfer protocols.
-// For example, RFC 821 (SMTP) restricts mail messages to 7bit US-ASCII
-// data with lines no longer than 1000 characters including any trailing
-// CRLF line separator.
-//
-// It is necessary, therefore, to define a standard mechanism for
-// encoding such data into a 7bit short line format.  Proper labelling
-// of unencoded material in less restrictive formats for direct use over
-// less restrictive transports is also desireable.  This document
-// specifies that such encodings will be indicated by a new "Content-
-// Transfer-Encoding" header field...
-//
-// 6.1.  Content-Transfer-Encoding Syntax
-//
-//	The Content-Transfer-Encoding field's value is a single token
-//	specifying the type of encoding, as enumerated below.  Formally:
-//
-//	  encoding := "Content-Transfer-Encoding" ":" mechanism
-//
-//	  mechanism := "7bit" / "8bit" / "binary" /
-//	               "quoted-printable" / "base64" /
-//	               ietf-token / x-token
-type ContentTransferEncoding string
-
-const (
-	CTE7bit            ContentTransferEncoding = "7bit"
-	CTE8bit            ContentTransferEncoding = "8bit"
-	CTEBinary          ContentTransferEncoding = "binary"
-	CTEQuotedPrintable ContentTransferEncoding = "quoted-printable"
-	CTEBase64          ContentTransferEncoding = "base64"
-	// note that ietf-<token> and x-<token> mechanisms may also be
-	// encountered.
-)
-
-// FileType describes the file type of an inline or attached file
-type FileType string
-
-const (
-	InlineFileType   FileType = "inline"
-	AttachedFileType FileType = "attached"
-)
-
 // File is a shared type between inline and attached files. Internally
 // the Reader is used to access content, but will fill Data by default
 // unless a custom func is provided. Avoid using Reader directly as it
@@ -637,11 +455,9 @@ const (
 // The File Name will be extracted from the content type header
 // parameters if possible, otherwise it will be autogenerated.
 type File struct {
-	FileType                 FileType
-	Name                     string
-	ContentTypeHeader        ContentTypeHeader
-	ContentDispositionHeader ContentDispositionHeader
-	Reader                   io.Reader
-	Data                     []byte
-	// ContentID          string
+	FileType    FileType
+	Name        string
+	ContentInfo ContentInfo
+	Reader      io.Reader
+	Data        []byte
 }
