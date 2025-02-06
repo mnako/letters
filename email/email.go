@@ -1,112 +1,50 @@
-package letters
+// Package email holds the shared Email type and sub-types used by the
+// letters packages.
+package email
 
 import (
-	"fmt"
+	"io"
 	"net/mail"
 	"time"
 )
 
-type void struct{}
+// Email is the type returned by the letters parser.
+//
+// For a general primer on email parts, there are a range of useful
+// reference materials in the (now outdated) Microsoft Exchange Server
+// documentation, including the following:
+//
+// RFC 822 Message Format:
+// https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2010/aa493918(v=exchg.140)
+//
+// UUENCODE Attachment Format
+// https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2010/aa579638(v=exchg.140)
+//
+// MIME Message Format
+// (The Multipurpose Internet Mail Extensions (MIME) specification
+// enables the exchange of messages with more complex content than RFC
+// 822)
+// https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2010/aa494197(v=exchg.140)
+//
+// MIME Message Body parts:
+// https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2010/aa563304(v=exchg.140)
+//
+// MIME Headers:
+// https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2010/aa563068(v=exchg.140)
+//
+// There is a particularly Useful diagram in a stackoverflow answer to
+// the question posted here:
+// https://stackoverflow.com/questions/3902455/mail-multipart-alternative-vs-multipart-mixed
+type Email struct {
+	Headers Headers
 
-var member void
+	// Body parts
+	Text         string
+	EnrichedText string // See RFC 1523, RFC 1563, and RFC 1896
+	HTML         string
 
-// A set of headers supported directly in letters.structs.Email.Headers
-// (and not in letters.structs.Email.Headers.ExtraHeaders)
-var knownHeaders = map[string]void{
-	"Date":                      member,
-	"Sender":                    member,
-	"From":                      member,
-	"Reply-To":                  member,
-	"To":                        member,
-	"Cc":                        member,
-	"Bcc":                       member,
-	"Message-Id":                member,
-	"In-Reply-To":               member,
-	"References":                member,
-	"Subject":                   member,
-	"Comments":                  member,
-	"Keywords":                  member,
-	"Resent-Date":               member,
-	"Resent-From":               member,
-	"Resent-Sender":             member,
-	"Resent-To":                 member,
-	"Resent-Cc":                 member,
-	"Resent-Bcc":                member,
-	"Resent-Message-Id":         member,
-	"Content-Transfer-Encoding": member,
-	"Content-Type":              member,
-	"Content-Disposition":       member,
-}
-
-type ContentDisposition string
-
-const (
-	ContentDispositionAttachment ContentDisposition = "attachment"
-	ContentDispositionInline     ContentDisposition = "inline"
-)
-
-var cdMap = map[string]ContentDisposition{
-	"attachment": ContentDispositionAttachment,
-	"inline":     ContentDispositionInline,
-}
-
-const contentTypeMultipartPrefix = "multipart/"
-
-// const contentTypeMultipartAlternative = "multipart/alternative"
-// const contentTypeMultipartDigest = "multipart/digest"
-const (
-	contentTypeMultipartMixed    = "multipart/mixed"
-	contentTypeMultipartParallel = "multipart/parallel"
-	contentTypeMultipartRelated  = "multipart/related"
-)
-
-// const contentTypeMultipartReport = "multipart/report"
-
-// const contentTypeMultipartSigned = "multipart/signed"
-// const contentTypeMultipartEncrypted = "multipart/encrypted"
-
-const (
-	contentTypeTextPlain    = "text/plain"
-	contentTypeTextEnriched = "text/enriched"
-	contentTypeTextHtml     = "text/html"
-)
-
-type ContentTransferEncoding string
-
-const (
-	cte7bit            ContentTransferEncoding = "7bit"
-	cte8bit            ContentTransferEncoding = "8bit"
-	cteBinary          ContentTransferEncoding = "binary"
-	cteQuotedPrintable ContentTransferEncoding = "quoted-printable"
-	cteBase64          ContentTransferEncoding = "base64"
-)
-
-var cteMap = map[string]ContentTransferEncoding{
-	"7bit":             cte7bit,
-	"8bit":             cte8bit,
-	"binary":           cteBinary,
-	"quoted-printable": cteQuotedPrintable,
-	"base64":           cteBase64,
-}
-
-type UnknownContentTypeError struct {
-	contentType string
-}
-
-func (e *UnknownContentTypeError) Error() string {
-	return fmt.Sprintf("unknown Content-Type %q", e.contentType)
-}
-
-type MessageId string
-
-type ContentTypeHeader struct {
-	ContentType string
-	Params      map[string]string
-}
-
-type ContentDispositionHeader struct {
-	ContentDisposition ContentDisposition
-	Params             map[string]string
+	// Inline and attached files
+	Files []*File
 }
 
 type Headers struct {
@@ -393,17 +331,11 @@ type Headers struct {
 	// identical to "Resent-From:".
 	//
 	// resent-date     =   "Resent-Date:" date-time CRLF
-	//
 	// resent-from     =   "Resent-From:" mailbox-list CRLF
-	//
 	// resent-sender   =   "Resent-Sender:" mailbox CRLF
-	//
 	// resent-to       =   "Resent-To:" address-list CRLF
-	//
 	// resent-cc       =   "Resent-Cc:" address-list CRLF
-	//
 	// resent-bcc      =   "Resent-Bcc:" [address-list / CFWS] CRLF
-	//
 	// resent-msg-id   =   "Resent-Message-ID:" msg-id CRLF
 	//
 	// Resent fields are used to identify a message as having been
@@ -530,49 +462,186 @@ type Headers struct {
 	// If another top-level type is to be used for any reason, it must be
 	// given a name starting with "X-" to indicate its non-standard status
 	// and to avoid a potential conflict with a future official name.
+	//
+	// Other notes:
+	// IBM have a useful doc on MIME standard header fields at
+	// https://www.ibm.com/docs/en/integration-bus/10.1?topic=information-mime-standard-header-fields
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader
 	ExtraHeaders       map[string][]string
+
+	// RFC2076 3.2 Trace Information (for "Received" header)
+	// references RFC 822: 4.3.2; RFC 1123: 5.2.8
+	// 822: 4.1.2.  COMMAND SYNTAX
+	//	<time-stamp-line> ::= "Received:" <SP> <stamp> <CRLF>
+	//		<stamp> ::= <from-domain> <by-domain> <opt-info> ";"
+	//  	          <daytime>
+	//  	<from-domain> ::= "FROM" <SP> <domain> <SP>
+	//  	<by-domain> ::= "BY" <SP> <domain> <SP>
+	//  	<opt-info> ::= [<via>] [<with>] [<id>] [<for>]
+	//  	<via> ::= "VIA" <SP> <link> <SP>
+	//  	<with> ::= "WITH" <SP> <protocol> <SP>
+	//  	<id> ::= "ID" <SP> <string> <SP>
+	//  	<for> ::= "FOR" <SP> <path> <SP>
+	//  	<link> ::= The standard names for links are registered with
+	//  	          the Network Information Center.
+	//  	<protocol> ::= The standard names for protocols are
+	//  	          registered with the Network Information Center.
+	//  	<daytime> ::= <SP> <date> <SP> <time>
+	//  	<date> ::= <dd> <SP> <mon> <SP> <yy>
+	//  	<time> ::= <hh> ":" <mm> ":" <ss> <SP> <zone>
+	//  	<dd> ::= the one or two decimal integer day of the month in
+	//  	          the range 1 to 31.
+	//  	<mon> ::= "JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
+	//  	          "JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC"
+	//  	<yy> ::= the two decimal integer year of the century in the
+	//  	          range 00 to 99.
+	//  	<hh> ::= the two decimal integer hour of the day in the
+	//  	          range 00 to 24.
+	//  	<mm> ::= the two decimal integer minute of the hour in the
+	//  	          range 00 to 59.
+	//  	<ss> ::= the two decimal integer second of the minute in the
+	//  	          range 00 to 59.
+	//  	<zone> ::= "UT" for Universal Time (the default) or other
+	//  	          time zone designator (as in [2]).
+	//
+	// Received does not (at present) attempt to parse the received
+	// fragments. In future consider this being a slice of a "Received"
+	// type.
+	Received []string
 }
 
-type emailBodies struct {
-	text string
+// Headers fields
+type MessageId string
 
-	enrichedText string // See RFC 1523, RFC 1563, and RFC 1896
-	html         string
-
-	InlineFiles   []InlineFile
-	AttachedFiles []AttachedFile
+// ContentTypeHeader describes the email header content type
+// RFC 822
+//
+//	Content-Type := type "/" subtype *[";" parameter]
+//	type :=          "application"     / "audio"
+//	          / "image"           / "message"
+//	          / "multipart"  / "text"
+//	          / "video"           / x-token
+//	x-token := <The two characters "X-" followed, with no
+//	           intervening white space, by any token>
+//	subtype := token
+//	parameter := attribute "=" value
+//	attribute := token
+//	value := token / quoted-string
+//	token := 1*<any CHAR except SPACE, CTLs, or tspecials>
+//	tspecials :=  "(" / ")" / "<" / ">" / "@"  ; Must be in
+//	           /  "," / ";" / ":" / "\" / <">  ; quoted-string,
+//	           /  "/" / "[" / "]" / "?" / "."  ; to use within
+//	           /  "="                        ; parameter values
+type ContentTypeHeader struct {
+	ContentType string
+	Params      map[string]string
 }
 
-func (eb *emailBodies) extend(b emailBodies) {
-	eb.text += b.text
-	eb.enrichedText += b.enrichedText
-	eb.html += b.html
-	eb.InlineFiles = append(eb.InlineFiles, b.InlineFiles...)
-	eb.AttachedFiles = append(eb.AttachedFiles, b.AttachedFiles...)
+type ContentType string
+
+const (
+	ContentTypeMultipartPrefix   ContentType = "multipart/"
+	ContentTypeMultipartMixed    ContentType = "multipart/mixed"
+	ContentTypeMultipartParallel ContentType = "multipart/parallel"
+	ContentTypeMultipartRelated  ContentType = "multipart/related"
+	ContentTypeTextPlain         ContentType = "text/plain"
+	ContentTypeTextEnriched      ContentType = "text/enriched"
+	ContentTypeTextHtml          ContentType = "text/html"
+)
+
+// ContentDispositionHeader describes the email header or part content
+// disposition where content-disposition is set out in
+// https://www.ietf.org/rfc/rfc2183.txt etc.
+//
+//	disposition := "Content-Disposition" ":"
+//	               disposition-type
+//	               *(";" disposition-parm)
+//
+//	disposition-type := "inline"
+//	                  / "attachment"
+//	                  / extension-token
+//	                  ; values are not case-sensitive
+//
+//	disposition-parm := filename-parm
+//	                  / creation-date-parm
+//	                  / modification-date-parm
+//	                  / read-date-parm
+//	                  / size-parm
+//	                  / parameter
+type ContentDispositionHeader struct {
+	ContentDisposition ContentDisposition
+	Params             map[string]string
 }
 
-type Email struct {
-	Headers Headers
+type ContentDisposition string
 
-	Text         string
-	EnrichedText string // See RFC 1523, RFC 1563, and RFC 1896
-	HTML         string
+const (
+	Attachment ContentDisposition = "attachment"
+	Inline     ContentDisposition = "inline"
+	TextPlain  ContentDisposition = "text/plain" // this is not in the rfc but used by some mail user agents
+)
 
-	InlineFiles   []InlineFile
-	AttachedFiles []AttachedFile
-}
+// RFC2045 Section 6 Content-Transfer-Encoding Header Field
+//
+// Many media types which could be usefully transported via email are
+// represented, in their "natural" format, as 8bit character or binary
+// data.  Such data cannot be transmitted over some transfer protocols.
+// For example, RFC 821 (SMTP) restricts mail messages to 7bit US-ASCII
+// data with lines no longer than 1000 characters including any trailing
+// CRLF line separator.
+//
+// It is necessary, therefore, to define a standard mechanism for
+// encoding such data into a 7bit short line format.  Proper labelling
+// of unencoded material in less restrictive formats for direct use over
+// less restrictive transports is also desireable.  This document
+// specifies that such encodings will be indicated by a new "Content-
+// Transfer-Encoding" header field...
+//
+// 6.1.  Content-Transfer-Encoding Syntax
+//
+//	The Content-Transfer-Encoding field's value is a single token
+//	specifying the type of encoding, as enumerated below.  Formally:
+//
+//	  encoding := "Content-Transfer-Encoding" ":" mechanism
+//
+//	  mechanism := "7bit" / "8bit" / "binary" /
+//	               "quoted-printable" / "base64" /
+//	               ietf-token / x-token
+type ContentTransferEncoding string
 
-type InlineFile struct {
-	ContentID          string
-	ContentType        ContentTypeHeader
-	ContentDisposition ContentDispositionHeader
-	Data               []byte
-}
+const (
+	CTE7bit            ContentTransferEncoding = "7bit"
+	CTE8bit            ContentTransferEncoding = "8bit"
+	CTEBinary          ContentTransferEncoding = "binary"
+	CTEQuotedPrintable ContentTransferEncoding = "quoted-printable"
+	CTEBase64          ContentTransferEncoding = "base64"
+	// note that ietf-<token> and x-<token> mechanisms may also be
+	// encountered.
+)
 
-type AttachedFile struct {
-	ContentType        ContentTypeHeader
-	ContentDisposition ContentDispositionHeader
-	Data               []byte
+// FileType describes the file type of an inline or attached file
+type FileType string
+
+const (
+	InlineFileType   FileType = "inline"
+	AttachedFileType FileType = "attached"
+)
+
+// File is a shared type between inline and attached files. Internally
+// the Reader is used to access content, but will fill Data by default
+// unless a custom func is provided. Avoid using Reader directly as it
+// will have been drained by the time the File struct is returned to the
+// user.
+//
+// The File Name will be extracted from the content type header
+// parameters if possible, otherwise it will be autogenerated.
+type File struct {
+	FileType                 FileType
+	Name                     string
+	ContentTypeHeader        ContentTypeHeader
+	ContentDispositionHeader ContentDispositionHeader
+	Reader                   io.Reader
+	Data                     []byte
+	// ContentID          string
 }
