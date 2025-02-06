@@ -1,1 +1,2 @@
-.gopath/
+go.work*
+parser/go.work*
