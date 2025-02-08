@@ -8,7 +8,6 @@ require (
 )
 
 require (
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/rorycl/base64toraw v0.0.1 // indirect
 )
