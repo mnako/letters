@@ -19,6 +19,23 @@ func TestPkgOptVerbose(t *testing.T) {
 	_ = parser.NewParser(opt)
 }
 
+// TestPkgNoAttachments tests to ensure that no attachments are
+// processed with the WithoutAttachments option.
+func TestPkgNoAttachments(t *testing.T) {
+	p := parser.NewParser(parser.WithoutAttachments())
+	c, err := os.Open("testdata/cats.eml")
+	if err != nil {
+		t.Fatal(err)
+	}
+	e, err := p.Parse(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(e.Files) > 0 {
+		t.Error("expected no files for parser.WithoutAttachments")
+	}
+}
+
 // TestPkgOptFileFilter shows an example of a file filter to only save
 // jpeg images from an email.
 func TestPkgOptFileFilter(t *testing.T) {
