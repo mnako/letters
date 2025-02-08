@@ -13,7 +13,9 @@ a simple struct with standard headers and text, enriched text, and HTML
 content, and decode inline and attached files.
 
 Letters also supports options for skipping parts of messages and
-providing custom processing functions.
+providing custom processing functions. The `Content-*` information of
+message headers and their MIME parts are conveniently summarised in a
+`ContentInfo` structure.
 
 ## Quickstart
 
@@ -66,6 +68,20 @@ email.Headers.Bcc
 // }
 ```
 
+email.Headers.ContentInfo
+// &email.ContentInfo{
+// 	Type: "text/plain",
+// 	TypeParams: map[string]string{
+// 		"charset": "ascii",
+// 	},
+// 	Disposition:       "",
+// 	DispositionParams: map[string]string(nil),
+// 	TransferEncoding:  "7bit",
+// 	ID:                "",
+// 	Charset:           "ascii",
+// }
+```
+
 get custom headers:
 
 ```go
@@ -90,55 +106,59 @@ are read into a `Data` []byte slice but direct access can be made to the
 underlying `io.Reader`.
 
 ```go
-Files: []*email.File{
-	{
-		FileType: "inline",
-		ContentTypeHeader: email.ContentTypeHeader{
-			ContentType: "image/jpeg",
-			Params: map[string]string{
-				"name": "inline-jpg-image-name.jpg",
-			},
-		},
-		ContentDispositionHeader: email.ContentDispositionHeader{
-			ContentDisposition: "inline",
-			Params: map[string]string{
-				"filename": "inline-jpg-image-filename.jpg",
-			},
-		},
-		Name: "inline-jpg-image-filename.jpg",
-		Data: []byte{
-			255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3,
-			3, 3, 4, 6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9,
-			10, 12, 15, 12, 10, 11, 14, 11, 9, 9, 13, 17, 13, 14, 15, 16, 16,
-			17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0,
-			11, 8, 0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255,
-			218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207, 32, 255, 217,
-		},
-	},
-	{
-		FileType: "attached",
-		Name:     "attached-pdf-filename.pdf",
-		ContentTypeHeader: email.ContentTypeHeader{
-			ContentType: "application/pdf",
-			Params: map[string]string{
-				"name": "attached-pdf-name.pdf",
-			},
-		},
-		ContentDispositionHeader: email.ContentDispositionHeader{
-			ContentDisposition: "attachment",
-			Params: map[string]string{
-				"filename": "attached-pdf-filename.pdf",
-			},
-		},
-		Data: []byte{
-			37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114,
-			60, 60, 47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115,
-			60, 60, 47, 75, 105, 100, 115, 91, 60, 60, 47, 77, 101, 100, 105,
-			97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93,
-			62, 62, 62, 62, 62, 62,
-		},
-	},
-}
+email.Files
+// []*email.File{
+//  	&email.File{
+//  		FileType: "",
+//  		Name:     "inline-jpg-image-without-disposition.jpg",
+//  		ContentInfo: &email.ContentInfo{
+//  			Type: "image/jpeg",
+//  			TypeParams: map[string]string{
+//  				"name": "inline-jpg-image-without-disposition.jpg",
+//  			},
+//  			Disposition:       "",
+//  			DispositionParams: map[string]string(nil),
+//  			TransferEncoding:  "base64",
+//  			ID:                "",
+//  			Charset:           "tis-620",
+//  		},
+//  		Data: []byte{
+//  			239, 191, 189, 224, 184, 184, 239, 191, 189, 239, 191, 189, 0, 67, 0, 3, 2, 2, 2,
+//  			2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4, 6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9,
+//  			8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9, 13, 17, 13, 14, 15, 16, 16, 17, 16,
+//  			10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 239, 191, 189, 224, 184, 169, 0, 11,
+//  			8, 0, 1, 0, 1, 1, 1, 17, 0, 239, 191, 189, 224, 184, 172, 0, 6, 0, 16, 16, 5, 239,
+//  			191, 189, 224, 184, 186, 0, 8, 1, 1, 0, 0, 63, 0, 224, 184, 178, 224, 184, 175, 32,
+//  			239, 191, 189, 224, 184, 185,
+//  		},
+//  	},
+//  	&email.File{
+//  		FileType: "inline",
+//  		Name:     "inline-jpg-image-filename.jpg",
+//  		ContentInfo: &email.ContentInfo{
+//  			Type: "image/jpeg",
+//  			TypeParams: map[string]string{
+//  				"name": "inline-jpg-image-name.jpg",
+//  			},
+//  			Disposition: "inline",
+//  			DispositionParams: map[string]string{
+//  				"filename": "inline-jpg-image-filename.jpg",
+//  			},
+//  			TransferEncoding: "base64",
+//  			ID:               "inline-jpg-image.jpg@example.com",
+//  			Charset:          "tis-620",
+//  		},
+//  		Data: []byte{
+//  			239, 191, 189, 224, 184, 184, 239, 191, 189, 239, 191, 189, 0, 67, 0, 3, 2, 2, 2,
+//  			2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 4, 6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9,
+//  			8, 9, 9, 10, 12, 15, 12, 10, 11, 14, 11, 9, 9, 13, 17, 13, 14, 15, 16, 16, 17, 16,
+//  			10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 239, 191, 189, 224, 184, 169, 0, 11,
+//  			8, 0, 1, 0, 1, 1, 1, 17, 0, 239, 191, 189, 224, 184, 172, 0, 6, 0, 16, 16, 5, 239,
+//  			191, 189, 224, 184, 186, 0, 8, 1, 1, 0, 0, 63, 0, 224, 184, 178, 224, 184, 175, 32,
+//  			239, 191, 189, 224, 184, 185,
+//  		},
+//  	},
+// 
 ```
 
 ## Options
@@ -222,8 +242,7 @@ email.Text
   Japanese ISO-2022-JP-over-7bit, Polish ISO-8859-2-over-Quoted-Printable,
   etc.)
 * Easy access to text, enriched text and HTML content of the email
-* Easy access to inline attachments
-* Easy access to attached files
+* Easy access to inline and attached files
 
 All of that and more in a minimal Golang library with realistic email
 examples and thorough test coverage.
