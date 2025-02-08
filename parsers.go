@@ -378,10 +378,11 @@ func isInlineFile(contentType ContentTypeHeader, parentContentType ContentTypeHe
 }
 
 func isAttachedFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader) bool {
-	if contentType.ContentType != contentTypeTextPlain && contentType.ContentType != contentTypeTextEnriched && contentType.ContentType != contentTypeTextHtml {
-		return true
+	switch contentType.ContentType {
+	case contentTypeTextPlain, contentTypeTextEnriched, contentTypeTextHtml:
+		return false
 	}
-	return parentContentType.ContentType == contentTypeMultipartMixed || parentContentType.ContentType == contentTypeMultipartParallel
+	return true
 }
 
 func parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary string) (emailBodies, error) {
