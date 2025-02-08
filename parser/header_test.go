@@ -7,7 +7,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/mnako/letters/email"
 
 	"github.com/google/go-cmp/cmp"
@@ -204,8 +203,6 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
         id 1jdYGW-000aQH-Lx; Mon, 01 Apr 2019 14:01:05 +0200
 
 `
-	var debug bool = false
-
 	var err error
 	p := NewParser()
 	p.msg, err = mail.ReadMessage(strings.NewReader(rawEmail))
@@ -216,15 +213,6 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
 	err = p.parseHeaders()
 	if err != nil {
 		t.Fatal(err)
-	}
-
-	if debug {
-		spewer := spew.ConfigState{
-			DisableCapacities:       true,
-			DisablePointerAddresses: true,
-			Indent:                  "\t",
-		}
-		spewer.Dump(p.email.Headers)
 	}
 
 	timeLayout := "2006-01-02 15:04:05 -0700 MST"
