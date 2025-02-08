@@ -68,7 +68,7 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 				}
 			}()
 
-			parsedEmail, err := testCase.emailParser.ParseEmail(rawEmail)
+			parsedEmail, err := testCase.emailParser.Parse(rawEmail)
 			if err != nil {
 				t.Errorf("error while parsing email: %s", err)
 				return

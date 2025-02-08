@@ -26,9 +26,9 @@ Parse a raw email from a Reader:
 package main
 
 import (
-  "fmt"
   "log"
   "os"
+  
   "github.com/mnako/letters"
 )
 
@@ -45,9 +45,8 @@ func main() {
       return
     }
   }()
-
-  defaultEmailParser := letters.NewEmailParser()
-  email, err := defaultEmailParser.ParseEmail(rawEmail)
+  
+  email, err := letters.ParseEmail(rawEmail)
   if err != nil {
     log.Fatal(err)
   }
@@ -190,8 +189,7 @@ Content-Type: text/plain; charset=ISO-2022-JP
 =1B$B?'$OFw$($I=1B(B
 =1B$B;6$j$L$k$r=1B(B```)
 
-defaultParser := letters.NewEmailParser()
-email, _ := defaultParser.ParseEmail(r)
+email, _ := letters.ParseEmail(r)
 
 email.Headers.Subject
 // "いろは歌"
@@ -201,6 +199,21 @@ email.Text
 ```
 
 ## Advanced Usage
+
+`letters.ParseEmail()` is a helper function that creates a default email 
+parser and returns the parsed email and error.
+
+You can replace `letters.ParseEmail()` with:
+
+```go
+defaultEmailParser := letters.NewEmailParser()
+email, err := defaultEmailParser.Parse(rawEmail)
+if err != nil {
+  log.Fatal(err)
+}
+```
+
+to customise the parser with the following advanced options.
 
 By default, letters parses all bodies and files.
 
@@ -225,7 +238,7 @@ letters includes a `NoFiles` filter that does precisely that:
 noFilesEmailParser := letters.NewEmailParser(
     letters.WithFileFilter(NoFiles),
 )
-email, err := noFilesEmailParser.ParseEmail(rawEmail)
+email, err := noFilesEmailParser.Parse(rawEmail)
 if err != nil {
     log.Fatal(err)
 }
@@ -262,7 +275,7 @@ customJPGOnlyEmailParser := letters.NewEmailParser(
         },
     ),	
 )
-email, err := customJPGOnlyEmailParser.ParseEmail(rawEmail)
+email, err := customJPGOnlyEmailParser.Parse(rawEmail)
 ```
 
 Files can be filtered based on the Content-Disposition header as well. For
