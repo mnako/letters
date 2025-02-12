@@ -23,9 +23,33 @@ go get github.com/mnako/letters@v0.2.3
 Parse a raw email from a Reader:
 
 ```go
-email, err := letters.ParseEmail(r)
-if err != nil {
+package main
+
+import (
+  "log"
+  "os"
+  
+  "github.com/mnako/letters"
+)
+
+func main() {
+  rawEmail, err := os.Open("email.eml")
+  if err != nil {
+    log.Fatal("error while reading email from file: %w", err)
+    return
+  }
+
+  defer func() {
+    if err := rawEmail.Close(); err != nil {
+      log.Fatal("error while closing rawEmail: %w", err)
+      return
+    }
+  }()
+  
+  email, err := letters.ParseEmail(rawEmail)
+  if err != nil {
     log.Fatal(err)
+  }
 }
 ```
 
@@ -174,22 +198,101 @@ email.Text
 // "色は匂えど散りぬるを..."
 ```
 
-If you only want to parse email headers, you can use `letters.ParseHeaders`:
+## Advanced Usage
+
+`letters.ParseEmail()` is a helper function that creates a default email 
+parser and returns the parsed email and error.
+
+You can replace `letters.ParseEmail()` with:
 
 ```go
-msg, err := mail.ReadMessage(r)
+defaultEmailParser := letters.NewEmailParser()
+email, err := defaultEmailParser.Parse(rawEmail)
 if err != nil {
-    log.Fatal(err)
+  log.Fatal(err)
 }
-
-emailHeaders, err := letters.ParseHeaders(msg.Header)
-if err != nil {
-    log.Fatal(err)
-}
-
-emailHeaders.To[0].Address
-// "bob.recipient@example.com"
 ```
+
+to customise the parser with the following advanced options.
+
+By default, letters parses all bodies and files.
+
+You can configure the parser to parse all, some, or none bodies, and files 
+using functional filters.
+
+A **functional body filter** is a function that takes the Content-Type header
+of the part and returns true or false. Only bodies for which the filter
+returns true will be parsed. Parts for which the filter returned false, will
+be skipped.
+
+Similar to the body filter, a **functional file filter** is a function that
+takes the Content-Type and Content-Disposition headers of the part and returns
+true or false. Only files for which the filter returns true will be parsed.
+Files for which the filter returned false, will be skipped.
+
+For example, if you do not want to parse any files, you can configure the 
+Email Parser with a file filter that always returns false. For convenience, 
+letters includes a `NoFiles` filter that does precisely that:
+
+```go
+noFilesEmailParser := letters.NewEmailParser(
+    letters.WithFileFilter(NoFiles),
+)
+email, err := noFilesEmailParser.Parse(rawEmail)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+Letters includes the following convenience filters:
+
+* `NoBodies`, a function that always returns false, that can be used with 
+  `WithBodyFilter()`, to skip parsing all bodies of the email;
+* `AllBodies`, a function that always returns true, that can be used with 
+  `WithBodyFilter()`, to parse all bodies of the email. This is the default 
+  behaviour;
+* `NoFiles`, a function that always returns false, that can be used with 
+  `WithFileFilter()`, to skip parsing all attachments of the email. This 
+  option can speed up parsing in use cases where attachments are not needed;
+* `AllFiles`, a function that always returns true, that can be used with 
+  `WithFileFilter()`, to parse all attachments of the email. This is the 
+  default behaviour;
+
+More interestingly, bodies and files can be skipped conditionally: bodies can
+be skipped based on the Content-Type header of the part, and files can be
+skipped based on the Content-Type and the Content-Disposition headers of the
+part.
+
+For example, to only parse files with a filename that ends with ".jpg," you
+can pass a custom File Filter that checks the `name` Param of the Content-Type
+header:
+
+```go
+customJPGOnlyEmailParser := letters.NewEmailParser(
+    letters.WithFileFilter(
+        func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
+            return strings.HasSuffix(strings.ToLower(cth.Params["name"]), ".jpg")
+        },
+    ),	
+)
+email, err := customJPGOnlyEmailParser.Parse(rawEmail)
+```
+
+Files can be filtered based on the Content-Disposition header as well. For
+example, to parse only inline files and skip attachments, you can pass
+a custom File Filter that checks the Content-Disposition header:
+
+```go
+inlineFilesOnlyParser := letters.NewEmailParser(
+    letters.WithFileFilter(
+        func(_ letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+            return cdh.ContentDisposition == letters.ContentDispositionInline
+        },
+    ),
+)
+```
+
+You can implement arbitrarily complex conditions with those filter.
 
 ## Current Scope and Features
 
