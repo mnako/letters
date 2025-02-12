@@ -30,7 +30,10 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Test
         run: make test
+      - name: Read golangci-lint version from file
+        id: golangci-lint-version
+        run: echo "version=$(cat .golangci-version)" >> $GITHUB_OUTPUT
       - name: Lint
-        uses: golangci/golangci-lint-action@v6.2.0
+        uses: golangci/golangci-lint-action@v6.3.2
         with:
-          version: v1.63.4
+          version: ${{ steps.golangci-lint-version.outputs.version }}
