@@ -32,3 +32,12 @@ func WithFileFilter(fileFilter EmailFileFilter) EmailParserOption {
 		ep.fileFilter = fileFilter
 	}
 }
+
+// WithUnquotedAtInDisplayName allows to parse email with @ in display name
+// this provides a flexibility in case some clients send email with @ in display name
+// which is not allowed by rfc5322
+func WithUnquotedAtInDisplayName(allow bool) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.allowUnquotedAtInDisplayName = allow
+	}
+}

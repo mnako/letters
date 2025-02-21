@@ -33,7 +33,8 @@ func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders lett
 		return
 	}
 
-	parsedEmailHeaders, err := letters.ParseHeaders(msg.Header)
+	ep := letters.NewEmailParser()
+	parsedEmailHeaders, err := ep.ParseHeaders(msg.Header)
 	if err != nil {
 		t.Errorf("error while parsing email headers: %s", err)
 		return
@@ -40443,6 +40444,57 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 						Data: []byte{130, 28, 135, 132, 117, 46, 142, 18, 97, 140, 126, 251, 159, 193, 199, 25, 58, 223, 189, 185, 227, 239, 158, 173, 108, 31, 71, 27, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 235, 133, 80, 165, 252, 133, 227, 174, 198, 132, 129, 159, 29, 246, 19, 234, 49, 251, 238, 127, 7, 28, 104, 33, 200, 120, 71, 82, 232, 225, 38, 30, 249, 234, 214, 193, 244, 113, 147, 173, 251, 219, 158, 57, 252, 28, 113, 147, 173, 251, 225, 38, 24, 199, 239, 190, 173, 108, 31, 71, 27, 133, 80, 110, 120, 251, 231, 174, 198, 132, 129, 159, 29, 246, 19, 234, 8, 114, 30, 17, 212, 186, 58, 95, 200, 94, 59, 26, 18, 6, 124, 119, 216, 79, 174, 21, 65, 185, 227, 239, 158},
 					},
 				},
+			},
+		},
+	}
+
+	testEmailCases(t, tcs)
+}
+
+func TestParseEmailUnquaotedAtInDisplayName(t *testing.T) {
+	t.Parallel()
+
+	expectedDate := time.Date(2025, 2, 21, 10, 0, 0, 0, time.FixedZone("", -5*60*60))
+
+	tcs := []emailTestCase{
+		{
+			name: "Unquoted At Parser",
+			emailParser: letters.NewEmailParser(
+				letters.WithUnquotedAtInDisplayName(true),
+			),
+			filepath: "tests/test_unquoted_at_in_display_name.txt",
+			expectedEmail: letters.Email{
+				Headers: letters.Headers{
+					Date:    expectedDate,
+					Subject: "Test Email",
+					From: []*mail.Address{
+						{
+							Name:    "Sender Name",
+							Address: "sender@example.com",
+						},
+					},
+					To: []*mail.Address{
+						{
+							Name:    "test@example.com",
+							Address: "test@example.com",
+						},
+					},
+					Cc: []*mail.Address{
+						{
+							Address: "cc@example.com",
+						},
+					},
+					ContentType: letters.ContentTypeHeader{
+						ContentType: "text/plain",
+						Params: map[string]string{
+							"charset": "utf-8",
+						},
+					},
+					ExtraHeaders: map[string][]string{
+						"Mime-Version": {"1.0"},
+					},
+				},
+				Text: "This is a test email body.",
 			},
 		},
 	}
