@@ -15,16 +15,46 @@ func ParseEmail(r io.Reader) (Email, error) {
 }
 
 type EmailParser struct {
-	bodyFilter EmailBodyFilter
-	fileFilter EmailFileFilter
+	bodyFilter     EmailBodyFilter
+	fileFilter     EmailFileFilter
+	headersParsers HeadersParsers
 }
 
 type EmailParserOption func(*EmailParser)
 
+func DefaultHeadersParsers() HeadersParsers {
+	return HeadersParsers{
+		Date:               ParseDateHeader,
+		Sender:             ParseAddressHeader,
+		From:               ParseAddressListHeader,
+		ReplyTo:            ParseAddressListHeader,
+		To:                 ParseAddressListHeader,
+		Cc:                 ParseAddressListHeader,
+		Bcc:                ParseAddressListHeader,
+		MessageID:          ParseMessageIdHeader,
+		InReplyTo:          ParseCommaSeparatedMessageIdHeader,
+		References:         ParseCommaSeparatedMessageIdHeader,
+		Subject:            ParseStringHeader,
+		Comments:           ParseStringHeader,
+		Keywords:           ParseCommaSeparatedStringHeader,
+		ResentDate:         ParseDateHeader,
+		ResentFrom:         ParseAddressListHeader,
+		ResentSender:       ParseAddressHeader,
+		ResentTo:           ParseAddressListHeader,
+		ResentCc:           ParseAddressListHeader,
+		ResentBcc:          ParseAddressListHeader,
+		ResentMessageID:    ParseMessageIdHeader,
+		ContentType:        ParseContentTypeHeader,
+		ContentDisposition: ParseContentDisposition,
+		ExtraHeaders:       make(map[string]parseStringHeaderFn),
+	}
+}
+
 func NewEmailParser(options ...EmailParserOption) *EmailParser {
 	ep := &EmailParser{
-		bodyFilter: AllBodies,
-		fileFilter: AllFiles,
+		bodyFilter:     AllBodies,
+		fileFilter:     AllFiles,
+		headersParsers: DefaultHeadersParsers(),
 	}
 
 	for _, option := range options {
@@ -42,7 +72,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		return email, fmt.Errorf("letters.EmailParser.Parse: cannot read message: %w", err)
 	}
 
-	headers, err := ParseHeaders(msg.Header)
+	headers, err := ep.ParseHeaders(msg.Header)
 	if err != nil {
 		return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse headers: %w", err)
 	}
@@ -51,7 +81,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		Headers: headers,
 	}
 	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
-	cte, err := parseContentTransferEncoding(msg.Header.Get("Content-Transfer-Encoding"))
+	cte, err := ParseContentTransferEncoding(msg.Header.Get("Content-Transfer-Encoding"))
 	if err != nil {
 		return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse Content-Transfer-Encoding: %w", err)
 	}

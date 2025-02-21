@@ -1,6 +1,7 @@
 package letters_test
 
 import (
+	"fmt"
 	"net/mail"
 	"os"
 	"reflect"
@@ -44,6 +45,91 @@ func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders lett
 		t.Errorf("Got %#v", parsedEmailHeaders)
 		t.Errorf("Want %#v", expectedEmailHeaders)
 	}
+}
+
+func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
+	t.Parallel()
+
+	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"),
+	)
+	expectedEmailHeaders := letters.Headers{
+		Date:    expectedDate,
+		Subject: "📧 Test English Pangrams",
+		ReplyTo: []*mail.Address{
+			{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.net",
+			},
+		},
+		Sender: &mail.Address{
+			Name:    "Alice Sender",
+			Address: "alice.sender@example.com",
+		},
+		From: []*mail.Address{
+			{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.com",
+			},
+			{
+				Name:    "Alice Sender",
+				Address: "alice.sender@example.net",
+			},
+		},
+		To: []*mail.Address{
+			{
+				Name:    "Bob Recipient",
+				Address: "bob.recipient@example.com",
+			},
+			{
+				Name:    "Carol Recipient",
+				Address: "carol.recipient@example.com",
+			},
+		},
+		Cc: []*mail.Address{
+			{
+				Name:    "Dan Recipient",
+				Address: "dan.recipient@example.com",
+			},
+			{
+				Name:    "Eve Recipient",
+				Address: "eve.recipient@example.com",
+			},
+		},
+		Bcc: []*mail.Address{
+			{
+				Name:    "Frank Recipient",
+				Address: "frank.recipient@example.com",
+			},
+			{
+				Name:    "Grace Recipient",
+				Address: "grace.recipient@example.com",
+			},
+		},
+		MessageID:  "Message-Id-1@example.com",
+		InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
+		References: []letters.MessageId{"Message-Id-0@example.com"},
+		Comments:   "Message Header Comment",
+		Keywords:   []string{"Keyword 1", "Keyword 2"},
+		ContentType: letters.ContentTypeHeader{
+			ContentType: "text/plain",
+			Params: map[string]string{
+				"charset": "ascii",
+			},
+		},
+		ExtraHeaders: map[string][]string{
+			"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+			"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+				"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+				"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+			},
+		},
+	}
+
+	testEmailHeadersFromFile(t, fp, expectedEmailHeaders)
 }
 
 func testEmailCases(t *testing.T, tcs []emailTestCase) {
@@ -271,91 +357,6 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 	testEmailCases(t, tcs)
 }
 
-func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
-	t.Parallel()
-
-	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
-	tz, _ := time.LoadLocation("Europe/London")
-	expectedDate, _ := time.Parse(
-		time.RFC1123Z+" (MST)",
-		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"),
-	)
-	expectedEmailHeaders := letters.Headers{
-		Date:    expectedDate,
-		Subject: "📧 Test English Pangrams",
-		ReplyTo: []*mail.Address{
-			{
-				Name:    "Alice Sender",
-				Address: "alice.sender@example.net",
-			},
-		},
-		Sender: &mail.Address{
-			Name:    "Alice Sender",
-			Address: "alice.sender@example.com",
-		},
-		From: []*mail.Address{
-			{
-				Name:    "Alice Sender",
-				Address: "alice.sender@example.com",
-			},
-			{
-				Name:    "Alice Sender",
-				Address: "alice.sender@example.net",
-			},
-		},
-		To: []*mail.Address{
-			{
-				Name:    "Bob Recipient",
-				Address: "bob.recipient@example.com",
-			},
-			{
-				Name:    "Carol Recipient",
-				Address: "carol.recipient@example.com",
-			},
-		},
-		Cc: []*mail.Address{
-			{
-				Name:    "Dan Recipient",
-				Address: "dan.recipient@example.com",
-			},
-			{
-				Name:    "Eve Recipient",
-				Address: "eve.recipient@example.com",
-			},
-		},
-		Bcc: []*mail.Address{
-			{
-				Name:    "Frank Recipient",
-				Address: "frank.recipient@example.com",
-			},
-			{
-				Name:    "Grace Recipient",
-				Address: "grace.recipient@example.com",
-			},
-		},
-		MessageID:  "Message-Id-1@example.com",
-		InReplyTo:  []letters.MessageId{"Message-Id-0@example.com"},
-		References: []letters.MessageId{"Message-Id-0@example.com"},
-		Comments:   "Message Header Comment",
-		Keywords:   []string{"Keyword 1", "Keyword 2"},
-		ContentType: letters.ContentTypeHeader{
-			ContentType: "text/plain",
-			Params: map[string]string{
-				"charset": "ascii",
-			},
-		},
-		ExtraHeaders: map[string][]string{
-			"X-Clacks-Overhead": {"GNU Terry Pratchett"},
-			"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
-				"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
-				"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
-			},
-		},
-	}
-
-	testEmailHeadersFromFile(t, fp, expectedEmailHeaders)
-}
-
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	t.Parallel()
 
@@ -437,6 +438,284 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 					},
 					ExtraHeaders: map[string][]string{
 						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
+					},
+				},
+				Text: `The quick brown fox jumps over a lazy dog.
+Glib jocks quiz nymph to vex dwarf.
+Sphinx of black quartz, judge my vow.
+How vexingly quick daft zebras jump!
+The five boxing wizards jump quickly.
+Jackdaws love my big sphinx of quartz.
+Pack my box with five dozen liquor jugs.`,
+			},
+		},
+	}
+
+	testEmailCases(t, tcs)
+}
+
+func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(t *testing.T) {
+	t.Parallel()
+
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 6, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"),
+	)
+
+	customDateHeaderParser := func(s string) time.Time {
+		date := letters.ParseDateHeader(s)
+		return date.Add(-1 * time.Hour)
+	}
+
+	customSenderHeaderParser := func(header mail.Header, name string) (*mail.Address, error) {
+		sender, err := letters.ParseAddressHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customSenderHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		return &mail.Address{
+			Name:    "Custom-" + name + " " + (*sender).Name,
+			Address: strings.ToUpper((*sender).Address),
+		}, nil
+	}
+
+	customFromHeaderParser := func(header mail.Header, name string) ([]*mail.Address, error) {
+		from, err := letters.ParseAddressListHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customFromHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		for idx := range from {
+			from[idx].Name = "Custom-" + name + " " + from[idx].Name
+			from[idx].Address = strings.ToUpper(from[idx].Address)
+		}
+
+		return from, nil
+	}
+
+	customReplyToHeaderParser := func(header mail.Header, name string) ([]*mail.Address, error) {
+		replyTo, err := letters.ParseAddressListHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customReplyToHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		for idx := range replyTo {
+			replyTo[idx].Name = "Custom-" + name + " " + replyTo[idx].Name
+			replyTo[idx].Address = strings.ToUpper(replyTo[idx].Address)
+		}
+
+		return replyTo, nil
+	}
+
+	customToHeaderParser := func(header mail.Header, name string) ([]*mail.Address, error) {
+		to, err := letters.ParseAddressListHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customToHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		for idx := range to {
+			to[idx].Name = "Custom-" + name + " " + to[idx].Name
+			to[idx].Address = strings.ToUpper(to[idx].Address)
+		}
+
+		return to, nil
+	}
+
+	customCcHeaderParser := func(header mail.Header, name string) ([]*mail.Address, error) {
+		cc, err := letters.ParseAddressListHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customCcHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		for idx := range cc {
+			cc[idx].Name = "Custom-" + name + " " + cc[idx].Name
+			cc[idx].Address = strings.ToUpper(cc[idx].Address)
+		}
+
+		return cc, nil
+	}
+
+	customBccHeaderParser := func(header mail.Header, name string) ([]*mail.Address, error) {
+		bcc, err := letters.ParseAddressListHeader(header, name)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"customBccHeaderParser: cannot parse address header: %w",
+				err,
+			)
+		}
+
+		for idx := range bcc {
+			bcc[idx].Name = "Custom-" + name + " " + bcc[idx].Name
+			bcc[idx].Address = strings.ToUpper(bcc[idx].Address)
+		}
+
+		return bcc, nil
+	}
+
+	customMessageIdHeaderParser := func(_ string) letters.MessageId {
+		return letters.MessageId("Custom-Message-Id-1@example.com")
+	}
+
+	customInReplyToHeaderParser := func(string) []letters.MessageId {
+		return []letters.MessageId{"Custom-Message-Id-0@example.com"}
+	}
+
+	customReferencesToHeaderParser := func(string) []letters.MessageId {
+		return []letters.MessageId{"Custom-Message-Id-0@example.com"}
+	}
+
+	customSubjectHeaderParser := func(s string) string {
+		subject := letters.ParseStringHeader(s)
+		return strings.ToUpper(subject)
+	}
+
+	customCommentsHeaderParser := func(s string) string {
+		return "COMMENTS REMOVED BY CUSTOM COMMENTS HEADER PARSER"
+	}
+
+	customKeywordsHeaderParser := func(s string) []string {
+		keywords := letters.ParseCommaSeparatedStringHeader(s)
+		return append(keywords, "Custom Injected Keyword 3")
+	}
+
+	customContentTypeHeaderParser := func(string) (letters.ContentTypeHeader, error) {
+		// Force text/plain charset=ascii Content-Type
+		return letters.ContentTypeHeader{
+			ContentType: "text/plain",
+			Params: map[string]string{
+				"charset": "ascii",
+			},
+		}, nil
+	}
+
+	customXClacksOverheadExtraHeaderParser := func(s string) string {
+		xClacksOverhead := letters.ParseStringHeader(s)
+		return strings.Replace(xClacksOverhead, "Terry Pratchett", "Sir Terry Pratchett", 1)
+	}
+
+	customXNonexistentExtraHeaderParser := func(s string) string {
+		return "This header does not exist"
+	}
+
+	tcs := []emailTestCase{
+		{
+			name:     "AllCustomHeadersParsersEmailParser",
+			filepath: "tests/test_english_plaintext_ascii_over_7bit.txt",
+			emailParser: letters.NewEmailParser(
+				letters.WithDateHeaderParser(customDateHeaderParser),
+				letters.WithSenderHeaderParser(customSenderHeaderParser),
+				letters.WithFromHeaderParser(customFromHeaderParser),
+				letters.WithReplyToHeaderParser(customReplyToHeaderParser),
+				letters.WithToHeaderParser(customToHeaderParser),
+				letters.WithCcHeaderParser(customCcHeaderParser),
+				letters.WithBccHeaderParser(customBccHeaderParser),
+				letters.WithMessageIDHeaderParser(customMessageIdHeaderParser),
+				letters.WithInReplyHeaderParser(customInReplyToHeaderParser),
+				letters.WithReferencesHeaderParser(customReferencesToHeaderParser),
+				letters.WithSubjectHeaderParser(customSubjectHeaderParser),
+				letters.WithCommentsHeaderParser(customCommentsHeaderParser),
+				letters.WithKeywordsHeaderParser(customKeywordsHeaderParser),
+				letters.WithContentTypeHeaderParser(customContentTypeHeaderParser),
+				letters.WithExtraHeaderParser(
+					"X-Clacks-Overhead",
+					customXClacksOverheadExtraHeaderParser,
+				),
+				letters.WithExtraHeaderParser(
+					"X-Nonexistent",
+					customXNonexistentExtraHeaderParser,
+				),
+			),
+			expectedEmail: letters.Email{
+				Headers: letters.Headers{
+					Date:    expectedDate,
+					Subject: "📧 TEST ENGLISH PANGRAMS",
+					ReplyTo: []*mail.Address{
+						{
+							Name:    "Custom-Reply-To Alice Sender",
+							Address: "ALICE.SENDER@EXAMPLE.NET",
+						},
+					},
+					Sender: &mail.Address{
+						Name:    "Custom-Sender Alice Sender",
+						Address: "ALICE.SENDER@EXAMPLE.COM",
+					},
+					From: []*mail.Address{
+						{
+							Name:    "Custom-From Alice Sender",
+							Address: "ALICE.SENDER@EXAMPLE.COM",
+						},
+						{
+							Name:    "Custom-From Alice Sender",
+							Address: "ALICE.SENDER@EXAMPLE.NET",
+						},
+					},
+					To: []*mail.Address{
+						{
+							Name:    "Custom-To Bob Recipient",
+							Address: "BOB.RECIPIENT@EXAMPLE.COM",
+						},
+						{
+							Name:    "Custom-To Carol Recipient",
+							Address: "CAROL.RECIPIENT@EXAMPLE.COM",
+						},
+					},
+					Cc: []*mail.Address{
+						{
+							Name:    "Custom-Cc Dan Recipient",
+							Address: "DAN.RECIPIENT@EXAMPLE.COM",
+						},
+						{
+							Name:    "Custom-Cc Eve Recipient",
+							Address: "EVE.RECIPIENT@EXAMPLE.COM",
+						},
+					},
+					Bcc: []*mail.Address{
+						{
+							Name:    "Custom-Bcc Frank Recipient",
+							Address: "FRANK.RECIPIENT@EXAMPLE.COM",
+						},
+						{
+							Name:    "Custom-Bcc Grace Recipient",
+							Address: "GRACE.RECIPIENT@EXAMPLE.COM",
+						},
+					},
+					MessageID:  "Custom-Message-Id-1@example.com",
+					InReplyTo:  []letters.MessageId{"Custom-Message-Id-0@example.com"},
+					References: []letters.MessageId{"Custom-Message-Id-0@example.com"},
+					Comments:   "COMMENTS REMOVED BY CUSTOM COMMENTS HEADER PARSER",
+					Keywords: []string{
+						"Keyword 1",
+						"Keyword 2",
+						"Custom Injected Keyword 3",
+					},
+					ContentType: letters.ContentTypeHeader{
+						ContentType: "text/plain",
+						Params: map[string]string{
+							"charset": "ascii",
+						},
+					},
+					ExtraHeaders: map[string][]string{
+						"X-Clacks-Overhead": {"GNU Sir Terry Pratchett"},
 						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
 							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
 							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",

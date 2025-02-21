@@ -25,7 +25,7 @@ func normalizeParametrizedAttributeValue(s string) string {
 	return s
 }
 
-func parseDateHeader(s string) time.Time {
+func ParseDateHeader(s string) time.Time {
 	var t time.Time
 
 	formats := []string{
@@ -45,12 +45,12 @@ func parseDateHeader(s string) time.Time {
 	return t
 }
 
-func parseStringHeader(s string) string {
+func ParseStringHeader(s string) string {
 	decodedHeader, _ := decodeHeader(s)
 	return strings.Trim(decodedHeader, " ")
 }
 
-func parseCommaSeparatedStringHeader(s string) []string {
+func ParseCommaSeparatedStringHeader(s string) []string {
 	var values []string
 
 	normalizedS := normalizeMultilineString(s)
@@ -59,12 +59,12 @@ func parseCommaSeparatedStringHeader(s string) []string {
 	}
 
 	for _, value := range strings.Split(s, ",") {
-		values = append(values, parseStringHeader(value))
+		values = append(values, ParseStringHeader(value))
 	}
 	return values
 }
 
-func parseAddressHeader(header mail.Header, name string) (*mail.Address, error) {
+func ParseAddressHeader(header mail.Header, name string) (*mail.Address, error) {
 	var address *mail.Address
 
 	ss, ok := header[name]
@@ -98,7 +98,7 @@ func parseAddressHeader(header mail.Header, name string) (*mail.Address, error) 
 	return address, nil
 }
 
-func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, error) {
+func ParseAddressListHeader(header mail.Header, name string) ([]*mail.Address, error) {
 	var addresses []*mail.Address
 
 	ss, ok := header[name]
@@ -130,15 +130,15 @@ func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, e
 	return addresses, nil
 }
 
-func parseMessageIdHeader(s string) MessageId {
+func ParseMessageIdHeader(s string) MessageId {
 	return MessageId(strings.Trim(s, "<> \n"))
 }
 
-func parseCommaSeparatedMessageIdHeader(s string) []MessageId {
+func ParseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	var values []MessageId
 
 	for _, value := range strings.Split(s, " ") {
-		messageId := parseMessageIdHeader(value)
+		messageId := ParseMessageIdHeader(value)
 		if messageId != "" {
 			values = append(values, messageId)
 		}
@@ -147,7 +147,7 @@ func parseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	return values
 }
 
-func parseContentDisposition(s string) (ContentDispositionHeader, error) {
+func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 	var cdh ContentDispositionHeader
 
 	label, params, err := mime.ParseMediaType(s)
@@ -171,7 +171,7 @@ func parseContentDisposition(s string) (ContentDispositionHeader, error) {
 	}, nil
 }
 
-func parseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
+func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	label := normalizeParametrizedAttributeValue(s)
 	if label == "" {
 		return cte7bit, nil
@@ -184,7 +184,7 @@ func parseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	return cte, nil
 }
 
-func parseDefaultMediaType(s string) (string, map[string]string, error) {
+func ParseDefaultMediaType(s string) (string, map[string]string, error) {
 	if s == "" {
 		s = "text/plain"
 	}
@@ -198,10 +198,10 @@ func parseDefaultMediaType(s string) (string, map[string]string, error) {
 	return mediatype, params, nil
 }
 
-func parseContentTypeHeader(s string) (ContentTypeHeader, error) {
+func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	var cth ContentTypeHeader
 
-	mediaType, mediaTypeParams, err := parseDefaultMediaType(s)
+	mediaType, mediaTypeParams, err := ParseDefaultMediaType(s)
 	if err != nil {
 		return cth, fmt.Errorf(
 			"letters.parsers.parseContentTypeHeader: cannot parse Content-Type %q: %w",
@@ -222,100 +222,121 @@ func parseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	}, nil
 }
 
+func ParseEmailHeaders(header mail.Header) (Headers, error) {
+	defaultParser := NewEmailParser()
+	return defaultParser.ParseHeaders(header)
+}
+
 func ParseHeaders(header mail.Header) (Headers, error) {
-	contentType, err := parseContentTypeHeader(header.Get("Content-Type"))
+	// Deprecated: letters.ParseHeaders exists for backwards compatibility and will be removed in the future.
+	// Use letters.NewEmailParser().ParseHeaders or the letters.ParseEmailHeaders helper function instead.
+	return ParseEmailHeaders(header)
+}
+
+func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
+	contentType, err := ep.headersParsers.ContentType(header.Get("Content-Type"))
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Content-Type: %w",
 			err)
 	}
 
-	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
+	contentDisposition, _ := ep.headersParsers.ContentDisposition(
+		header.Get("Content-Disposition"),
+	)
 
 	extraHeaders := make(map[string][]string)
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
-		if !isKnownHeader {
-			normalisedVals := []string{}
-			for _, val := range value {
+		if isKnownHeader {
+			continue
+		}
+
+		normalisedVals := []string{}
+		extraHeaderParserFn, hasExtraHeaderParseFn := ep.headersParsers.ExtraHeaders[strings.ToLower(key)]
+		for _, val := range value {
+			if !hasExtraHeaderParseFn {
 				decodedHeader, _ := decodeHeader(val)
 				normalisedVals = append(normalisedVals, decodedHeader)
+			} else {
+				decodedHeader := extraHeaderParserFn(val)
+				normalisedVals = append(normalisedVals, decodedHeader)
 			}
-			extraHeaders[key] = normalisedVals
 		}
+		extraHeaders[key] = normalisedVals
 	}
 
-	sender, err := parseAddressHeader(header, "Sender")
+	sender, err := ep.headersParsers.Sender(header, "Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Sender header: %w",
 			err)
 	}
 
-	from, err := parseAddressListHeader(header, "From")
+	from, err := ep.headersParsers.From(header, "From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse From header: %w",
 			err)
 	}
 
-	replyTo, err := parseAddressListHeader(header, "Reply-To")
+	replyTo, err := ep.headersParsers.ReplyTo(header, "Reply-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Reply-To header: %w",
 			err)
 	}
 
-	to, err := parseAddressListHeader(header, "To")
+	to, err := ep.headersParsers.To(header, "To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse To header: %w",
 			err)
 	}
 
-	cc, err := parseAddressListHeader(header, "Cc")
+	cc, err := ep.headersParsers.Cc(header, "Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Cc header: %w",
 			err)
 	}
 
-	bcc, err := parseAddressListHeader(header, "Bcc")
+	bcc, err := ep.headersParsers.Bcc(header, "Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Bcc header: %w",
 			err)
 	}
 
-	resentFrom, err := parseAddressListHeader(header, "Resent-From")
+	resentFrom, err := ep.headersParsers.ResentFrom(header, "Resent-From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Resent-From header: %w",
 			err)
 	}
 
-	resentSender, err := parseAddressHeader(header, "Resent-Sender")
+	resentSender, err := ep.headersParsers.ResentSender(header, "Resent-Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Resent-Sender header: %w",
 			err)
 	}
 
-	resentTo, err := parseAddressListHeader(header, "Resent-To")
+	resentTo, err := ep.headersParsers.ResentTo(header, "Resent-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Resent-To header: %w",
 			err)
 	}
 
-	resentCc, err := parseAddressListHeader(header, "Resent-Cc")
+	resentCc, err := ep.headersParsers.ResentCc(header, "Resent-Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Resent-Cc header: %w",
 			err)
 	}
 
-	resentBcc, err := parseAddressListHeader(header, "Resent-Bcc")
+	resentBcc, err := ep.headersParsers.ResentBcc(header, "Resent-Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
 			"letters.parsers.ParseHeaders: cannot parse Resent-Bcc header: %w",
@@ -323,26 +344,26 @@ func ParseHeaders(header mail.Header) (Headers, error) {
 	}
 
 	return Headers{
-		Date:               parseDateHeader(header.Get("Date")),
+		Date:               ep.headersParsers.Date(header.Get("Date")),
 		Sender:             sender,
 		From:               from,
 		ReplyTo:            replyTo,
 		To:                 to,
 		Cc:                 cc,
 		Bcc:                bcc,
-		MessageID:          parseMessageIdHeader(header.Get("Message-ID")),
-		InReplyTo:          parseCommaSeparatedMessageIdHeader(header.Get("In-Reply-To")),
-		References:         parseCommaSeparatedMessageIdHeader(header.Get("References")),
-		Subject:            parseStringHeader(header.Get("Subject")),
-		Comments:           parseStringHeader(header.Get("Comments")),
-		Keywords:           parseCommaSeparatedStringHeader(header.Get("Keywords")),
-		ResentDate:         parseDateHeader(header.Get("Resent-Date")),
+		MessageID:          ep.headersParsers.MessageID(header.Get("Message-ID")),
+		InReplyTo:          ep.headersParsers.InReplyTo(header.Get("In-Reply-To")),
+		References:         ep.headersParsers.References(header.Get("References")),
+		Subject:            ep.headersParsers.Subject(header.Get("Subject")),
+		Comments:           ep.headersParsers.Comments(header.Get("Comments")),
+		Keywords:           ep.headersParsers.Keywords(header.Get("Keywords")),
+		ResentDate:         ep.headersParsers.ResentDate(header.Get("Resent-Date")),
 		ResentFrom:         resentFrom,
 		ResentSender:       resentSender,
 		ResentTo:           resentTo,
 		ResentCc:           resentCc,
 		ResentBcc:          resentBcc,
-		ResentMessageID:    parseMessageIdHeader(header.Get("Resent-Message-ID")),
+		ResentMessageID:    ep.headersParsers.ResentMessageID(header.Get("Resent-Message-ID")),
 		ContentType:        contentType,
 		ContentDisposition: contentDisposition,
 		ExtraHeaders:       extraHeaders,
@@ -405,7 +426,7 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 				err)
 		}
 
-		partContentType, err := parseContentTypeHeader(part.Header.Get("Content-Type"))
+		partContentType, err := ParseContentTypeHeader(part.Header.Get("Content-Type"))
 		if err != nil {
 			return emailBodies, fmt.Errorf(
 				"letters.parsers.parsePart: cannot parse Content-Type: %w",
@@ -418,14 +439,14 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 		}
 
 		enc, _ := charset.Lookup(charsetLabel)
-		cte, err := parseContentTransferEncoding(part.Header.Get("Content-Transfer-Encoding"))
+		cte, err := ParseContentTransferEncoding(part.Header.Get("Content-Transfer-Encoding"))
 		if err != nil {
 			return emailBodies, fmt.Errorf(
 				"letters.parsers.parsePart: cannot parse Content-Transfer-Encoding: %w",
 				err)
 		}
 
-		cdh, err := parseContentDisposition(part.Header.Get("Content-Disposition"))
+		cdh, err := ParseContentDisposition(part.Header.Get("Content-Disposition"))
 		if err != nil {
 			return emailBodies, fmt.Errorf(
 				"letters.parsers.parsePart: cannot parse Content-Disposition: %w",

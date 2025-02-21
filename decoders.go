@@ -119,14 +119,14 @@ func decodeInlineFile(part *multipart.Part, cte ContentTransferEncoding) (Inline
 			err)
 	}
 
-	ifl.ContentType, err = parseContentTypeHeader(part.Header.Get("Content-Type"))
+	ifl.ContentType, err = ParseContentTypeHeader(part.Header.Get("Content-Type"))
 	if err != nil {
 		return ifl, fmt.Errorf(
 			"letters.decoders.decodeInlineFile: cannot parse Content-Type of inline attachment: %w",
 			err)
 	}
 
-	ifl.ContentDisposition, err = parseContentDisposition(part.Header.Get("Content-Disposition"))
+	ifl.ContentDisposition, err = ParseContentDisposition(part.Header.Get("Content-Disposition"))
 	if err != nil {
 		return ifl, fmt.Errorf(
 			"letters.decoders.decodeInlineFile: cannot parse Content-Disposition of inline attachment: %w",
@@ -168,14 +168,14 @@ func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncodin
 			err)
 	}
 
-	afl.ContentType, err = parseContentTypeHeader(part.Header.Get("Content-Type"))
+	afl.ContentType, err = ParseContentTypeHeader(part.Header.Get("Content-Type"))
 	if err != nil {
 		return afl, fmt.Errorf(
 			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Type of attached file: %w",
 			err)
 	}
 
-	afl.ContentDisposition, err = parseContentDisposition(part.Header.Get("Content-Disposition"))
+	afl.ContentDisposition, err = ParseContentDisposition(part.Header.Get("Content-Disposition"))
 	if err != nil {
 		return afl, fmt.Errorf(
 			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Disposition of attached file: %w",
