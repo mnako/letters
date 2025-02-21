@@ -1,0 +1,9 @@
+From: "Sender Name" <sender@example.com>
+To:  test@example.com <test@example.com>
+Cc: cc@example.com
+Subject: Test Email
+Date: Fri, 21 Feb 2025 10:00:00 -0500
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+
+This is a test email body.

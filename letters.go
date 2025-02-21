@@ -15,8 +15,9 @@ func ParseEmail(r io.Reader) (Email, error) {
 }
 
 type EmailParser struct {
-	bodyFilter EmailBodyFilter
-	fileFilter EmailFileFilter
+	bodyFilter                   EmailBodyFilter
+	fileFilter                   EmailFileFilter
+	allowUnquotedAtInDisplayName bool
 }
 
 type EmailParserOption func(*EmailParser)
@@ -42,7 +43,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		return email, fmt.Errorf("letters.EmailParser.Parse: cannot read message: %w", err)
 	}
 
-	headers, err := ParseHeaders(msg.Header)
+	headers, err := ep.ParseHeaders(msg.Header)
 	if err != nil {
 		return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse headers: %w", err)
 	}
