@@ -222,17 +222,6 @@ func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	}, nil
 }
 
-func ParseEmailHeaders(header mail.Header) (Headers, error) {
-	defaultParser := NewEmailParser()
-	return defaultParser.ParseHeaders(header)
-}
-
-func ParseHeaders(header mail.Header) (Headers, error) {
-	// Deprecated: letters.ParseHeaders exists for backwards compatibility and will be removed in the future.
-	// Use letters.NewEmailParser().ParseHeaders or the letters.ParseEmailHeaders helper function instead.
-	return ParseEmailHeaders(header)
-}
-
 func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 	contentType, err := ep.headersParsers.ContentType(header.Get("Content-Type"))
 	if err != nil {

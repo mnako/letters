@@ -86,7 +86,7 @@ func WithBccHeaderParser(bccHeaderParserFn parseAddressListHeaderFn) EmailParser
 	}
 }
 
-func WithMessageIDHeaderParser(messageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
+func WithMessageIdHeaderParser(messageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.MessageID = messageIDHeaderParserFn
 	}
@@ -158,7 +158,7 @@ func WithResentCcHeaderParser(resentCcHeaderParserFn parseAddressListHeaderFn) E
 	}
 }
 
-func WithResentMessageIDHeaderParser(resentMessageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
+func WithResentMessageIdHeaderParser(resentMessageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentMessageID = resentMessageIDHeaderParserFn
 	}

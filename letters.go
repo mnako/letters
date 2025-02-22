@@ -9,6 +9,17 @@ import (
 	"golang.org/x/net/html/charset"
 )
 
+func ParseEmailHeaders(header mail.Header) (Headers, error) {
+	defaultParser := NewEmailParser()
+	return defaultParser.ParseHeaders(header)
+}
+
+func ParseHeaders(header mail.Header) (Headers, error) {
+	// Deprecated: letters.ParseHeaders exists for backwards compatibility and will be removed in the future.
+	// Use letters.NewEmailParser().ParseHeaders or the letters.ParseEmailHeaders helper function instead.
+	return ParseEmailHeaders(header)
+}
+
 func ParseEmail(r io.Reader) (Email, error) {
 	defaultParser := NewEmailParser()
 	return defaultParser.Parse(r)
@@ -122,7 +133,6 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		email.HTML = emailBodies.html
 		email.InlineFiles = emailBodies.InlineFiles
 		email.AttachedFiles = emailBodies.AttachedFiles
-
 	} else {
 		afl, err := decodeAttachmentFileFromBody(msg.Body, email.Headers, cte)
 		if err != nil {
