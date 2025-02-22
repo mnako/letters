@@ -15,8 +15,9 @@ func ParseEmailHeaders(header mail.Header) (Headers, error) {
 }
 
 func ParseHeaders(header mail.Header) (Headers, error) {
-	// Deprecated: letters.ParseHeaders exists for backwards compatibility and will be removed in the future.
-	// Use letters.NewEmailParser().ParseHeaders or the letters.ParseEmailHeaders helper function instead.
+	// Deprecated: letters.ParseHeaders exists for backwards compatibility and
+	// will be removed in the future. Use letters.NewEmailParser().ParseHeaders
+	// or the letters.ParseEmailHeaders helper function instead.
 	return ParseEmailHeaders(header)
 }
 
@@ -80,53 +81,88 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 
 	msg, err := mail.ReadMessage(r)
 	if err != nil {
-		return email, fmt.Errorf("letters.EmailParser.Parse: cannot read message: %w", err)
+		return email, fmt.Errorf(
+			"letters.EmailParser.Parse: cannot read message: %w",
+			err,
+		)
 	}
 
 	headers, err := ep.ParseHeaders(msg.Header)
 	if err != nil {
-		return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse headers: %w", err)
+		return email, fmt.Errorf(
+			"letters.EmailParser.Parse: cannot parse headers: %w",
+			err,
+		)
 	}
 
 	email = Email{
 		Headers: headers,
 	}
 	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
-	cte, err := ParseContentTransferEncoding(msg.Header.Get("Content-Transfer-Encoding"))
+	cte, err := ParseContentTransferEncoding(
+		msg.Header.Get("Content-Transfer-Encoding"),
+	)
 	if err != nil {
-		return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse Content-Transfer-Encoding: %w", err)
+		return email, fmt.Errorf(
+			"letters.EmailParser.Parse: "+
+				"cannot parse Content-Transfer-Encoding: %w",
+			err,
+		)
 	}
 
 	if email.Headers.ContentType.ContentType == contentTypeTextPlain {
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.Text, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
-				return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse plain text: %w", err)
+				return email, fmt.Errorf(
+					"letters.EmailParser.Parse: "+
+						"cannot parse plain text: %w",
+					err,
+				)
 			}
 		}
 	} else if email.Headers.ContentType.ContentType == contentTypeTextEnriched {
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.EnrichedText, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
-				return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse enriched text: %w", err)
+				return email,
+					fmt.Errorf(
+						"letters.EmailParser.Parse: "+
+							"cannot parse enriched text: %w",
+						err,
+					)
 			}
 		}
 	} else if email.Headers.ContentType.ContentType == contentTypeTextHtml {
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.HTML, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
-				return email, fmt.Errorf("letters.EmailParser.Parse: cannot parse html text: %w", err)
+				return email,
+					fmt.Errorf(
+						"letters.EmailParser.Parse: "+
+							"cannot parse html text: %w",
+						err,
+					)
 			}
 		}
-	} else if strings.HasPrefix(email.Headers.ContentType.ContentType, contentTypeMultipartPrefix) {
+	} else if strings.HasPrefix(
+		email.Headers.ContentType.ContentType,
+		contentTypeMultipartPrefix,
+	) {
 		boundary := email.Headers.ContentType.Params["boundary"]
-		emailBodies, err := ep.parsePart(msg.Body, email.Headers.ContentType, boundary)
+		emailBodies, err := ep.parsePart(
+			msg.Body,
+			email.Headers.ContentType,
+			boundary,
+		)
 		if err != nil {
 			return email, fmt.Errorf(
-				"letters.EmailParser.Parse: cannot parse part %q with boundary %q: %w",
+				"letters.EmailParser.Parse: "+
+					"cannot parse part %q with boundary %q: %w",
 				email.Headers.ContentType.ContentType,
 				boundary,
-				err)
+				err,
+			)
 		}
 		email.Text = emailBodies.text
 		email.EnrichedText = emailBodies.enrichedText
@@ -137,8 +173,10 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		afl, err := decodeAttachmentFileFromBody(msg.Body, email.Headers, cte)
 		if err != nil {
 			return email, fmt.Errorf(
-				"letters.EmailParser.Parse: cannot decode attached file content from body: %w",
-				err)
+				"letters.EmailParser.Parse: "+
+					"cannot decode attached file content from body: %w",
+				err,
+			)
 		}
 		email.AttachedFiles = append(email.AttachedFiles, afl)
 	}

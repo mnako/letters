@@ -19,13 +19,20 @@ func decodeHeader(s string) (string, error) {
 	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)
 		if enc == nil {
-			normalizedLabel := strings.Replace(label, "windows-", "cp", -1)
+			normalizedLabel := strings.Replace(
+				label,
+				"windows-",
+				"cp",
+				-1,
+			)
 			enc, _ = charset.Lookup(normalizedLabel)
 		}
 		if enc == nil {
 			return nil, fmt.Errorf(
-				"letters.decoders.decodeHeader.CharsetReader: cannot lookup encoding %s",
-				label)
+				"letters.decoders.decodeHeader.CharsetReader: "+
+					"cannot lookup encoding %s",
+				label,
+			)
 		}
 		return enc.NewDecoder().Reader(input), nil
 	}
@@ -33,9 +40,11 @@ func decodeHeader(s string) (string, error) {
 	decodedHeader, err := mimeDecoder.DecodeHeader(s)
 	if err != nil {
 		return decodedHeader, fmt.Errorf(
-			"letters.decoders.decodeHeader: cannot decode MIME-word-encoded header %q: %w",
+			"letters.decoders.decodeHeader: "+
+				"cannot decode MIME-word-encoded header %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 	return decodedHeader, nil
 }
@@ -49,26 +58,38 @@ func decodeContent(
 	contentBytes, err := io.ReadAll(content)
 	if err != nil && err != io.ErrUnexpectedEOF {
 		return nil, fmt.Errorf(
-			"letters.decoders.decodeContent: cannot decode content: %w",
-			err)
+			"letters.decoders.decodeContent: "+
+				"cannot decode content: %w",
+			err,
+		)
 	}
 
 	switch cte {
 	case cteBase64:
-		decoded := base64.NewDecoder(base64.StdEncoding, bytes.NewReader(contentBytes))
+		decoded := base64.NewDecoder(
+			base64.StdEncoding,
+			bytes.NewReader(contentBytes),
+		)
 		b, err := io.ReadAll(decoded)
 		if err == io.ErrUnexpectedEOF {
-			decoded = base64.NewDecoder(base64.RawStdEncoding, bytes.NewReader(contentBytes))
+			decoded = base64.NewDecoder(
+				base64.RawStdEncoding,
+				bytes.NewReader(contentBytes),
+			)
 			b, err = io.ReadAll(decoded)
 			if err != nil {
 				return nil, fmt.Errorf(
-					"letters.decoders.decodeContent: cannot decode raw-std-base64-encoded content: %w",
-					err)
+					"letters.decoders.decodeContent: "+
+						"cannot decode raw-std-base64-encoded content: %w",
+					err,
+				)
 			}
 		} else if err != nil {
 			return nil, fmt.Errorf(
-				"letters.decoders.decodeContent: cannot decode std-base64-encoded content: %w",
-				err)
+				"letters.decoders.decodeContent: "+
+					"cannot decode std-base64-encoded content: %w",
+				err,
+			)
 		}
 		contentReader = bytes.NewReader(b)
 	case cteQuotedPrintable:
@@ -76,8 +97,10 @@ func decodeContent(
 		b, err := io.ReadAll(decoded)
 		if err != nil {
 			return nil, fmt.Errorf(
-				"letters.decoders.decodeContent: cannot decode quoted-printable-encoded content: %w",
-				err)
+				"letters.decoders.decodeContent: "+
+					"cannot decode quoted-printable-encoded content: %w",
+				err,
+			)
 		}
 		contentReader = bytes.NewReader(b)
 	default:
@@ -94,56 +117,79 @@ func decodeContent(
 	return contentReader, nil
 }
 
-func decodeInlineFile(part *multipart.Part, cte ContentTransferEncoding) (InlineFile, error) {
+func decodeInlineFile(
+	part *multipart.Part,
+	cte ContentTransferEncoding,
+) (InlineFile, error) {
 	var ifl InlineFile
 
 	cid, err := decodeHeader(part.Header.Get("Content-Id"))
 	if err != nil {
 		return ifl, fmt.Errorf(
-			"letters.decoders.decodeInlineFile: cannot decode Content-ID header for inline attachment: %w",
-			err)
+			"letters.decoders.decodeInlineFile: "+
+				"cannot decode Content-ID header for inline attachment: %w",
+			err,
+		)
 	}
 
 	decoded, err := decodeContent(part, nil, cte)
 	if err != nil {
 		return ifl, fmt.Errorf(
-			"letters.decoders.decodeInlineFile: cannot decode inline attachment content: %w",
-			err)
+			"letters.decoders.decodeInlineFile: "+
+				"cannot decode inline attachment content: %w",
+			err,
+		)
 	}
 
 	ifl.ContentID = strings.Trim(cid, "<>")
 	ifl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return ifl, fmt.Errorf(
-			"letters.decoders.decodeInlineFile: cannot read inline attachment data: %w",
-			err)
+			"letters.decoders.decodeInlineFile: "+
+				"cannot read inline attachment data: %w",
+			err,
+		)
 	}
 
-	ifl.ContentType, err = ParseContentTypeHeader(part.Header.Get("Content-Type"))
+	ifl.ContentType, err = ParseContentTypeHeader(
+		part.Header.Get("Content-Type"),
+	)
 	if err != nil {
 		return ifl, fmt.Errorf(
-			"letters.decoders.decodeInlineFile: cannot parse Content-Type of inline attachment: %w",
-			err)
+			"letters.decoders.decodeInlineFile: "+
+				"cannot parse Content-Type of inline attachment: %w",
+			err,
+		)
 	}
 
-	ifl.ContentDisposition, err = ParseContentDisposition(part.Header.Get("Content-Disposition"))
+	ifl.ContentDisposition, err = ParseContentDisposition(
+		part.Header.Get("Content-Disposition"),
+	)
 	if err != nil {
 		return ifl, fmt.Errorf(
-			"letters.decoders.decodeInlineFile: cannot parse Content-Disposition of inline attachment: %w",
-			err)
+			"letters.decoders.decodeInlineFile: "+
+				"cannot parse Content-Disposition of inline attachment: %w",
+			err,
+		)
 	}
 
 	return ifl, nil
 }
 
-func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTransferEncoding) (AttachedFile, error) {
+func decodeAttachmentFileFromBody(
+	body io.Reader,
+	headers Headers,
+	cte ContentTransferEncoding,
+) (AttachedFile, error) {
 	var afl AttachedFile
 
 	decoded, err := decodeContent(body, nil, cte)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachmentFileFromBody: cannot decode attached file content: %w",
-			err)
+			"letters.decoders.decodeAttachmentFileFromBody: "+
+				"cannot decode attached file content: %w",
+			err,
+		)
 	}
 
 	afl.ContentType = headers.ContentType
@@ -151,42 +197,59 @@ func decodeAttachmentFileFromBody(body io.Reader, headers Headers, cte ContentTr
 	afl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachmentFileFromBody: cannot read attached file data: %w",
-			err)
+			"letters.decoders.decodeAttachmentFileFromBody: "+
+				"cannot read attached file data: %w",
+			err,
+		)
 	}
 
 	return afl, nil
 }
 
-func decodeAttachedFileFromPart(part *multipart.Part, cte ContentTransferEncoding) (AttachedFile, error) {
+func decodeAttachedFileFromPart(
+	part *multipart.Part,
+	cte ContentTransferEncoding,
+) (AttachedFile, error) {
 	var afl AttachedFile
 
 	decoded, err := decodeContent(part, nil, cte)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFileFromPart: cannot decode attached file content: %w",
-			err)
+			"letters.decoders.decodeAttachedFileFromPart: "+
+				"cannot decode attached file content: %w",
+			err,
+		)
 	}
 
-	afl.ContentType, err = ParseContentTypeHeader(part.Header.Get("Content-Type"))
+	afl.ContentType, err = ParseContentTypeHeader(
+		part.Header.Get("Content-Type"),
+	)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Type of attached file: %w",
-			err)
+			"letters.decoders.decodeAttachedFileFromPart: "+
+				"cannot parse Content-Type of attached file: %w",
+			err,
+		)
 	}
 
-	afl.ContentDisposition, err = ParseContentDisposition(part.Header.Get("Content-Disposition"))
+	afl.ContentDisposition, err = ParseContentDisposition(
+		part.Header.Get("Content-Disposition"),
+	)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFileFromPart: cannot parse Content-Disposition of attached file: %w",
-			err)
+			"letters.decoders.decodeAttachedFileFromPart: "+
+				"cannot parse Content-Disposition of attached file: %w",
+			err,
+		)
 	}
 
 	afl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(
-			"letters.decoders.decodeAttachedFileFromPart: cannot read attached file data: %w",
-			err)
+			"letters.decoders.decodeAttachedFileFromPart: "+
+				"cannot read attached file data: %w",
+			err,
+		)
 	}
 
 	return afl, nil

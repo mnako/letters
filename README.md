@@ -252,7 +252,8 @@ headers.Headers.From
 // ...
 ```
 
-> [!TIP] The `letters.ParseEmail()` and `letters.ParseEmailHeaders()` helpers
+> [!TIP] 
+> The `letters.ParseEmail()` and `letters.ParseEmailHeaders()` helpers
 > exist for developers' convenience and are a good entrypoint to get started
 > quickly. However, if you find yourself in need of customising the parser to,
 > i.a. parse non-compliant headers or conditionally parse only some parts of the

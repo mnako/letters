@@ -44,139 +44,186 @@ type HeadersParsers struct {
 	ExtraHeaders       map[string]parseStringHeaderFn
 }
 
-func WithDateHeaderParser(dateHeaderParserFn parseDateHeaderFn) EmailParserOption {
+func WithDateHeaderParser(
+	dateHeaderParserFn parseDateHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Date = dateHeaderParserFn
 	}
 }
 
-func WithSenderHeaderParser(senderHeaderParserFn parseAddressHeaderFn) EmailParserOption {
+func WithSenderHeaderParser(
+	senderHeaderParserFn parseAddressHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Sender = senderHeaderParserFn
 	}
 }
 
-func WithFromHeaderParser(fromHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithFromHeaderParser(
+	fromHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.From = fromHeaderParserFn
 	}
 }
 
-func WithReplyToHeaderParser(replyToHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithReplyToHeaderParser(
+	replyToHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ReplyTo = replyToHeaderParserFn
 	}
 }
 
-func WithToHeaderParser(toHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithToHeaderParser(
+	toHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.To = toHeaderParserFn
 	}
 }
 
-func WithCcHeaderParser(ccHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithCcHeaderParser(
+	ccHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Cc = ccHeaderParserFn
 	}
 }
 
-func WithBccHeaderParser(bccHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithBccHeaderParser(
+	bccHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Bcc = bccHeaderParserFn
 	}
 }
 
-func WithMessageIdHeaderParser(messageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
+func WithMessageIdHeaderParser(
+	messageIDHeaderParserFn parseMessageIdHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.MessageID = messageIDHeaderParserFn
 	}
 }
 
-func WithInReplyHeaderParser(inReplyHeaderParserFn parseCommaSeparatedMessageIdHeaderFn) EmailParserOption {
+func WithInReplyHeaderParser(
+	inReplyHeaderParserFn parseCommaSeparatedMessageIdHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.InReplyTo = inReplyHeaderParserFn
 	}
 }
 
-func WithReferencesHeaderParser(referencesHeaderParserFn parseCommaSeparatedMessageIdHeaderFn) EmailParserOption {
+func WithReferencesHeaderParser(
+	referencesHeaderParserFn parseCommaSeparatedMessageIdHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.References = referencesHeaderParserFn
 	}
 }
 
-func WithSubjectHeaderParser(subjectHeaderParserFn parseStringHeaderFn) EmailParserOption {
+func WithSubjectHeaderParser(
+	subjectHeaderParserFn parseStringHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Subject = subjectHeaderParserFn
 	}
 }
 
-func WithCommentsHeaderParser(commentsHeaderParserFn parseStringHeaderFn) EmailParserOption {
+func WithCommentsHeaderParser(
+	commentsHeaderParserFn parseStringHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Comments = commentsHeaderParserFn
 	}
 }
 
-func WithKeywordsHeaderParser(keywordsHeaderParserFn parseCommaSeparatedStringHeaderFn) EmailParserOption {
+func WithKeywordsHeaderParser(
+	keywordsHeaderParserFn parseCommaSeparatedStringHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.Keywords = keywordsHeaderParserFn
 	}
 }
 
-func WithResentDateHeaderParser(resentDateHeaderParserFn parseDateHeaderFn) EmailParserOption {
+func WithResentDateHeaderParser(
+	resentDateHeaderParserFn parseDateHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentDate = resentDateHeaderParserFn
 	}
 }
 
-func WithResentFromHeaderParser(resentFromHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithResentFromHeaderParser(
+	resentFromHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentFrom = resentFromHeaderParserFn
 	}
 }
 
-func WithResentFromParser(resentFromHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithResentFromParser(
+	resentFromHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentFrom = resentFromHeaderParserFn
 	}
 }
 
-func WithResentSenderHeaderParser(resentSenderHeaderParserFn parseAddressHeaderFn) EmailParserOption {
+func WithResentSenderHeaderParser(
+	resentSenderHeaderParserFn parseAddressHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentSender = resentSenderHeaderParserFn
 	}
 }
 
-func WithResentToHeaderParser(resentToHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithResentToHeaderParser(
+	resentToHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentTo = resentToHeaderParserFn
 	}
 }
 
-func WithResentCcHeaderParser(resentCcHeaderParserFn parseAddressListHeaderFn) EmailParserOption {
+func WithResentCcHeaderParser(
+	resentCcHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentCc = resentCcHeaderParserFn
 	}
 }
 
-func WithResentMessageIdHeaderParser(resentMessageIDHeaderParserFn parseMessageIdHeaderFn) EmailParserOption {
+func WithResentMessageIdHeaderParser(
+	resentMessageIDHeaderParserFn parseMessageIdHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentMessageID = resentMessageIDHeaderParserFn
 	}
 }
 
-func WithContentTypeHeaderParser(contentTypeHeaderParserFn parseContentTypeHeaderFn) EmailParserOption {
+func WithContentTypeHeaderParser(
+	contentTypeHeaderParserFn parseContentTypeHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ContentType = contentTypeHeaderParserFn
 	}
 }
 
-func WithContentDispositionHeaderParser(contentDispositionHeaderParserFn parseContentDispositionHeaderFn) EmailParserOption {
+func WithContentDispositionHeaderParser(
+	contentDispositionHeaderParserFn parseContentDispositionHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ContentDisposition = contentDispositionHeaderParserFn
 	}
 }
 
-func WithExtraHeaderParser(headerName string, extraHeaderParserFn parseStringHeaderFn) EmailParserOption {
+func WithExtraHeaderParser(
+	headerName string,
+	extraHeaderParserFn parseStringHeaderFn,
+) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ExtraHeaders[strings.ToLower(headerName)] = extraHeaderParserFn
 	}

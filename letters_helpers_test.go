@@ -10,10 +10,15 @@ import (
 	"github.com/mnako/letters"
 )
 
-// Tests for simple helper functions: letters.ParseEmail, and letters.ParseEmailHeaders.
-// Tests in this file should correspond to the API documented under the ## Quickstart section of the README.md file.
+// Tests for simple helper functions: letters.ParseEmail, and
+// letters.ParseEmailHeaders. Tests in this file should correspond to the API
+// documented under the ## Quickstart section of the README.md file.
 
-func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmailHeaders letters.Headers) {
+func testEmailHeadersFromFile(
+	t *testing.T,
+	fp string,
+	expectedEmailHeaders letters.Headers,
+) {
 	t.Helper()
 
 	rawEmail, err := os.Open(fp)
@@ -48,7 +53,8 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	tz, _ := time.LoadLocation("Europe/London")
 	expectedDate, _ := time.Parse(
 		time.RFC1123Z+" (MST)",
-		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).Format(time.RFC1123Z+" (MST)"),
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).
+			Format(time.RFC1123Z+" (MST)"),
 	)
 	expectedEmailHeaders := letters.Headers{
 		Date:    expectedDate,
