@@ -25,7 +25,7 @@ func normalizeParametrizedAttributeValue(s string) string {
 	return s
 }
 
-func parseDateHeader(s string) time.Time {
+func ParseDateHeader(s string) time.Time {
 	var t time.Time
 
 	formats := []string{
@@ -45,12 +45,12 @@ func parseDateHeader(s string) time.Time {
 	return t
 }
 
-func parseStringHeader(s string) string {
+func ParseStringHeader(s string) string {
 	decodedHeader, _ := decodeHeader(s)
 	return strings.Trim(decodedHeader, " ")
 }
 
-func parseCommaSeparatedStringHeader(s string) []string {
+func ParseCommaSeparatedStringHeader(s string) []string {
 	var values []string
 
 	normalizedS := normalizeMultilineString(s)
@@ -59,12 +59,15 @@ func parseCommaSeparatedStringHeader(s string) []string {
 	}
 
 	for _, value := range strings.Split(s, ",") {
-		values = append(values, parseStringHeader(value))
+		values = append(values, ParseStringHeader(value))
 	}
 	return values
 }
 
-func parseAddressHeader(header mail.Header, name string) (*mail.Address, error) {
+func ParseAddressHeader(
+	header mail.Header,
+	name string,
+) (*mail.Address, error) {
 	var address *mail.Address
 
 	ss, ok := header[name]
@@ -82,23 +85,30 @@ func parseAddressHeader(header mail.Header, name string) (*mail.Address, error) 
 	decodedHeader, err := decodeHeader(normalizedS)
 	if err != nil {
 		return address, fmt.Errorf(
-			"letters.parsers.parseAddressHeader: cannot decode address header %q: %w",
+			"letters.parsers.parseAddressHeader: "+
+				"cannot decode address header %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	address, err = mail.ParseAddress(decodedHeader)
 	if err != nil {
 		return address, fmt.Errorf(
-			"letters.parsers.parseAddressHeader: cannot parse address header %q: %w",
+			"letters.parsers.parseAddressHeader: "+
+				"cannot parse address header %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	return address, nil
 }
 
-func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, error) {
+func ParseAddressListHeader(
+	header mail.Header,
+	name string,
+) ([]*mail.Address, error) {
 	var addresses []*mail.Address
 
 	ss, ok := header[name]
@@ -114,31 +124,35 @@ func parseAddressListHeader(header mail.Header, name string) ([]*mail.Address, e
 	decodedHeader, err := decodeHeader(normalizedS)
 	if err != nil {
 		return addresses, fmt.Errorf(
-			"letters.parsers.parseAddressListHeader: cannot decode address list header %q: %w",
+			"letters.parsers.parseAddressListHeader: "+
+				"cannot decode address list header %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	addresses, err = mail.ParseAddressList(decodedHeader)
 	if err != nil {
 		return addresses, fmt.Errorf(
-			"letters.parsers.parseAddressListHeader: cannot parse address list header %q: %w",
+			"letters.parsers.parseAddressListHeader: "+
+				"cannot parse address list header %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	return addresses, nil
 }
 
-func parseMessageIdHeader(s string) MessageId {
+func ParseMessageIdHeader(s string) MessageId {
 	return MessageId(strings.Trim(s, "<> \n"))
 }
 
-func parseCommaSeparatedMessageIdHeader(s string) []MessageId {
+func ParseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	var values []MessageId
 
 	for _, value := range strings.Split(s, " ") {
-		messageId := parseMessageIdHeader(value)
+		messageId := ParseMessageIdHeader(value)
 		if messageId != "" {
 			values = append(values, messageId)
 		}
@@ -147,7 +161,7 @@ func parseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	return values
 }
 
-func parseContentDisposition(s string) (ContentDispositionHeader, error) {
+func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 	var cdh ContentDispositionHeader
 
 	label, params, err := mime.ParseMediaType(s)
@@ -156,14 +170,20 @@ func parseContentDisposition(s string) (ContentDispositionHeader, error) {
 	}
 	if err != nil {
 		return cdh, fmt.Errorf(
-			"letters.parsers.parseContentDisposition: cannot parse Content-Disposition %q: %w",
+			"letters.parsers.parseContentDisposition: "+
+				"cannot parse Content-Disposition %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	cd, ok := cdMap[label]
 	if !ok {
-		return cdh, fmt.Errorf("letters.parsers.parseContentDisposition: unknown Content-Disposition %q", label)
+		return cdh, fmt.Errorf(
+			"letters.parsers.parseContentDisposition: "+
+				"unknown Content-Disposition %q",
+			label,
+		)
 	}
 	return ContentDispositionHeader{
 		ContentDisposition: cd,
@@ -171,7 +191,7 @@ func parseContentDisposition(s string) (ContentDispositionHeader, error) {
 	}, nil
 }
 
-func parseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
+func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	label := normalizeParametrizedAttributeValue(s)
 	if label == "" {
 		return cte7bit, nil
@@ -179,34 +199,42 @@ func parseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 
 	cte, ok := cteMap[label]
 	if !ok {
-		return cte, fmt.Errorf("letters.parsers.parseContentTransferEncoding: unknown Content-Transfer-Encoding %q", label)
+		return cte, fmt.Errorf(
+			"letters.parsers.parseContentTransferEncoding: "+
+				"unknown Content-Transfer-Encoding %q",
+			label,
+		)
 	}
 	return cte, nil
 }
 
-func parseDefaultMediaType(s string) (string, map[string]string, error) {
+func ParseDefaultMediaType(s string) (string, map[string]string, error) {
 	if s == "" {
 		s = "text/plain"
 	}
 	mediatype, params, err := mime.ParseMediaType(s)
 	if err != nil {
 		return mediatype, params, fmt.Errorf(
-			"letters.parsers.parseDefaultMediaType: cannot parse Content-Type %q: %w",
+			"letters.parsers.parseDefaultMediaType: "+
+				"cannot parse Content-Type %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 	return mediatype, params, nil
 }
 
-func parseContentTypeHeader(s string) (ContentTypeHeader, error) {
+func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	var cth ContentTypeHeader
 
-	mediaType, mediaTypeParams, err := parseDefaultMediaType(s)
+	mediaType, mediaTypeParams, err := ParseDefaultMediaType(s)
 	if err != nil {
 		return cth, fmt.Errorf(
-			"letters.parsers.parseContentTypeHeader: cannot parse Content-Type %q: %w",
+			"letters.parsers.parseContentTypeHeader: "+
+				"cannot parse Content-Type %q: %w",
 			s,
-			err)
+			err,
+		)
 	}
 
 	for _, param := range []string{"charset", "micalg", "protocol"} {
@@ -222,169 +250,239 @@ func parseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	}, nil
 }
 
-func ParseHeaders(header mail.Header) (Headers, error) {
-	contentType, err := parseContentTypeHeader(header.Get("Content-Type"))
+func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
+	contentType, err := ep.headersParsers.ContentType(
+		header.Get("Content-Type"),
+	)
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Content-Type: %w",
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Content-Type: %w",
 			err)
 	}
 
-	contentDisposition, _ := parseContentDisposition(header.Get("Content-Disposition"))
+	contentDisposition, _ := ep.headersParsers.ContentDisposition(
+		header.Get("Content-Disposition"),
+	)
 
 	extraHeaders := make(map[string][]string)
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
-		if !isKnownHeader {
-			normalisedVals := []string{}
-			for _, val := range value {
+		if isKnownHeader {
+			continue
+		}
+
+		normalisedVals := []string{}
+		extraHeaderParserFn,
+			hasExtraHeaderParseFn := ep.headersParsers.ExtraHeaders[strings.ToLower(key)]
+		for _, val := range value {
+			if !hasExtraHeaderParseFn {
 				decodedHeader, _ := decodeHeader(val)
 				normalisedVals = append(normalisedVals, decodedHeader)
+			} else {
+				decodedHeader := extraHeaderParserFn(val)
+				normalisedVals = append(normalisedVals, decodedHeader)
 			}
-			extraHeaders[key] = normalisedVals
 		}
+		extraHeaders[key] = normalisedVals
 	}
 
-	sender, err := parseAddressHeader(header, "Sender")
+	sender, err := ep.headersParsers.Sender(header, "Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Sender header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Sender header: %w",
+			err,
+		)
 	}
 
-	from, err := parseAddressListHeader(header, "From")
+	from, err := ep.headersParsers.From(header, "From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse From header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse From header: %w",
+			err,
+		)
 	}
 
-	replyTo, err := parseAddressListHeader(header, "Reply-To")
+	replyTo, err := ep.headersParsers.ReplyTo(header, "Reply-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Reply-To header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Reply-To header: %w",
+			err,
+		)
 	}
 
-	to, err := parseAddressListHeader(header, "To")
+	to, err := ep.headersParsers.To(header, "To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse To header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse To header: %w",
+			err,
+		)
 	}
 
-	cc, err := parseAddressListHeader(header, "Cc")
+	cc, err := ep.headersParsers.Cc(header, "Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Cc header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Cc header: %w",
+			err,
+		)
 	}
 
-	bcc, err := parseAddressListHeader(header, "Bcc")
+	bcc, err := ep.headersParsers.Bcc(header, "Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Bcc header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Bcc header: %w",
+			err,
+		)
 	}
 
-	resentFrom, err := parseAddressListHeader(header, "Resent-From")
+	resentFrom, err := ep.headersParsers.ResentFrom(header, "Resent-From")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Resent-From header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Resent-From header: %w",
+			err,
+		)
 	}
 
-	resentSender, err := parseAddressHeader(header, "Resent-Sender")
+	resentSender, err := ep.headersParsers.ResentSender(header, "Resent-Sender")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Resent-Sender header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Resent-Sender header: %w",
+			err,
+		)
 	}
 
-	resentTo, err := parseAddressListHeader(header, "Resent-To")
+	resentTo, err := ep.headersParsers.ResentTo(header, "Resent-To")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Resent-To header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Resent-To header: %w",
+			err,
+		)
 	}
 
-	resentCc, err := parseAddressListHeader(header, "Resent-Cc")
+	resentCc, err := ep.headersParsers.ResentCc(header, "Resent-Cc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Resent-Cc header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Resent-Cc header: %w",
+			err,
+		)
 	}
 
-	resentBcc, err := parseAddressListHeader(header, "Resent-Bcc")
+	resentBcc, err := ep.headersParsers.ResentBcc(header, "Resent-Bcc")
 	if err != nil {
 		return Headers{}, fmt.Errorf(
-			"letters.parsers.ParseHeaders: cannot parse Resent-Bcc header: %w",
-			err)
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Resent-Bcc header: %w",
+			err,
+		)
 	}
 
 	return Headers{
-		Date:               parseDateHeader(header.Get("Date")),
-		Sender:             sender,
-		From:               from,
-		ReplyTo:            replyTo,
-		To:                 to,
-		Cc:                 cc,
-		Bcc:                bcc,
-		MessageID:          parseMessageIdHeader(header.Get("Message-ID")),
-		InReplyTo:          parseCommaSeparatedMessageIdHeader(header.Get("In-Reply-To")),
-		References:         parseCommaSeparatedMessageIdHeader(header.Get("References")),
-		Subject:            parseStringHeader(header.Get("Subject")),
-		Comments:           parseStringHeader(header.Get("Comments")),
-		Keywords:           parseCommaSeparatedStringHeader(header.Get("Keywords")),
-		ResentDate:         parseDateHeader(header.Get("Resent-Date")),
-		ResentFrom:         resentFrom,
-		ResentSender:       resentSender,
-		ResentTo:           resentTo,
-		ResentCc:           resentCc,
-		ResentBcc:          resentBcc,
-		ResentMessageID:    parseMessageIdHeader(header.Get("Resent-Message-ID")),
+		Date:    ep.headersParsers.Date(header.Get("Date")),
+		Sender:  sender,
+		From:    from,
+		ReplyTo: replyTo,
+		To:      to,
+		Cc:      cc,
+		Bcc:     bcc,
+		MessageID: ep.headersParsers.MessageID(
+			header.Get("Message-ID"),
+		),
+		InReplyTo: ep.headersParsers.InReplyTo(
+			header.Get("In-Reply-To"),
+		),
+		References: ep.headersParsers.References(
+			header.Get("References"),
+		),
+		Subject:  ep.headersParsers.Subject(header.Get("Subject")),
+		Comments: ep.headersParsers.Comments(header.Get("Comments")),
+		Keywords: ep.headersParsers.Keywords(header.Get("Keywords")),
+		ResentDate: ep.headersParsers.ResentDate(
+			header.Get("Resent-Date"),
+		),
+		ResentFrom:   resentFrom,
+		ResentSender: resentSender,
+		ResentTo:     resentTo,
+		ResentCc:     resentCc,
+		ResentBcc:    resentBcc,
+		ResentMessageID: ep.headersParsers.ResentMessageID(
+			header.Get("Resent-Message-ID"),
+		),
 		ContentType:        contentType,
 		ContentDisposition: contentDisposition,
 		ExtraHeaders:       extraHeaders,
 	}, nil
 }
 
-func parseText(t io.Reader, e encoding.Encoding, cte ContentTransferEncoding) (string, error) {
+func parseText(
+	t io.Reader,
+	e encoding.Encoding,
+	cte ContentTransferEncoding,
+) (string, error) {
 	reader, err := decodeContent(t, e, cte)
 	if err != nil {
 		return "", fmt.Errorf(
-			"letters.parsers.parseText: cannot decode plain text content: %w",
-			err)
+			"letters.parsers.parseText: "+
+				"cannot decode plain text content: %w",
+			err,
+		)
 	}
 
 	textBody, err := io.ReadAll(reader)
 	if err != nil {
 		return "", fmt.Errorf(
-			"letters.parsers.parseText: cannot read plain text content: %w",
-			err)
+			"letters.parsers.parseText: "+
+				"cannot read plain text content: %w",
+			err,
+		)
 	}
 
 	return strings.TrimSuffix(string(textBody), "\n"), nil
 }
 
-func isInlineFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader, cdh ContentDispositionHeader) bool {
+func isInlineFile(
+	contentType ContentTypeHeader,
+	parentContentType ContentTypeHeader,
+	cdh ContentDispositionHeader,
+) bool {
 	if cdh.ContentDisposition == ContentDispositionInline {
 		return true
 	}
-	if contentType.ContentType == contentTypeTextPlain || contentType.ContentType == contentTypeTextEnriched || contentType.ContentType == contentTypeTextHtml {
+	if contentType.ContentType == contentTypeTextPlain ||
+		contentType.ContentType == contentTypeTextEnriched ||
+		contentType.ContentType == contentTypeTextHtml {
 		return false
 	}
 	return parentContentType.ContentType == contentTypeMultipartRelated
 }
 
-func isAttachedFile(contentType ContentTypeHeader, parentContentType ContentTypeHeader) bool {
-	if contentType.ContentType != contentTypeTextPlain && contentType.ContentType != contentTypeTextEnriched && contentType.ContentType != contentTypeTextHtml {
+func isAttachedFile(
+	contentType ContentTypeHeader,
+	parentContentType ContentTypeHeader,
+) bool {
+	if contentType.ContentType != contentTypeTextPlain &&
+		contentType.ContentType != contentTypeTextEnriched &&
+		contentType.ContentType != contentTypeTextHtml {
 		return true
 	}
-	return parentContentType.ContentType == contentTypeMultipartMixed || parentContentType.ContentType == contentTypeMultipartParallel
+	return parentContentType.ContentType == contentTypeMultipartMixed ||
+		parentContentType.ContentType == contentTypeMultipartParallel
 }
 
-func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHeader, boundary string) (emailBodies, error) {
+func (ep *EmailParser) parsePart(
+	msg io.Reader,
+	parentContentType ContentTypeHeader,
+	boundary string,
+) (emailBodies, error) {
 	var emailBodies emailBodies
 
 	multipartReader := multipart.NewReader(msg, boundary)
@@ -402,14 +500,19 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			}
 			return emailBodies, fmt.Errorf(
 				"letters.parsers.parsePart: cannot read part: %w",
-				err)
+				err,
+			)
 		}
 
-		partContentType, err := parseContentTypeHeader(part.Header.Get("Content-Type"))
+		partContentType, err := ParseContentTypeHeader(
+			part.Header.Get("Content-Type"),
+		)
 		if err != nil {
 			return emailBodies, fmt.Errorf(
-				"letters.parsers.parsePart: cannot parse Content-Type: %w",
-				err)
+				"letters.parsers.parsePart: "+
+					"cannot parse Content-Type: %w",
+				err,
+			)
 		}
 
 		charsetLabel := partContentType.Params["charset"]
@@ -418,18 +521,26 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 		}
 
 		enc, _ := charset.Lookup(charsetLabel)
-		cte, err := parseContentTransferEncoding(part.Header.Get("Content-Transfer-Encoding"))
+		cte, err := ParseContentTransferEncoding(
+			part.Header.Get("Content-Transfer-Encoding"),
+		)
 		if err != nil {
 			return emailBodies, fmt.Errorf(
-				"letters.parsers.parsePart: cannot parse Content-Transfer-Encoding: %w",
-				err)
+				"letters.parsers.parsePart: "+
+					"cannot parse Content-Transfer-Encoding: %w",
+				err,
+			)
 		}
 
-		cdh, err := parseContentDisposition(part.Header.Get("Content-Disposition"))
+		cdh, err := ParseContentDisposition(
+			part.Header.Get("Content-Disposition"),
+		)
 		if err != nil {
 			return emailBodies, fmt.Errorf(
-				"letters.parsers.parsePart: cannot parse Content-Disposition: %w",
-				err)
+				"letters.parsers.parsePart: "+
+					"cannot parse Content-Disposition: %w",
+				err,
+			)
 		}
 		if cdh.ContentDisposition == ContentDispositionAttachment {
 			if !ep.fileFilter(partContentType, cdh) {
@@ -439,10 +550,15 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot decode attached file: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot decode attached file: %w",
+					err,
+				)
 			}
-			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
+			emailBodies.AttachedFiles = append(
+				emailBodies.AttachedFiles,
+				attachedFile,
+			)
 			continue
 		}
 
@@ -454,8 +570,10 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			partTextBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot parse plain text: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot parse plain text: %w",
+					err,
+				)
 			}
 			emailBodies.text += partTextBody
 			emailBodies.text += "\n\n"
@@ -470,8 +588,10 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			partEnrichedText, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot parse enriched text: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot parse enriched text: %w",
+					err,
+				)
 			}
 			emailBodies.enrichedText += partEnrichedText
 			continue
@@ -485,19 +605,30 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			partHtmlBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot parse html text: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot parse html text: %w",
+					err,
+				)
 			}
 			emailBodies.html += partHtmlBody
 			continue
 		}
 
-		if strings.HasPrefix(partContentType.ContentType, contentTypeMultipartPrefix) {
-			nestedEmailBodies, err := ep.parsePart(part, partContentType, partContentType.Params["boundary"])
+		if strings.HasPrefix(
+			partContentType.ContentType,
+			contentTypeMultipartPrefix,
+		) {
+			nestedEmailBodies, err := ep.parsePart(
+				part,
+				partContentType,
+				partContentType.Params["boundary"],
+			)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot parse nested part: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot parse nested part: %w",
+					err,
+				)
 			}
 
 			emailBodies.extend(nestedEmailBodies)
@@ -512,10 +643,15 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			inlineFile, err := decodeInlineFile(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot decode inline file: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot decode inline file: %w",
+					err,
+				)
 			}
-			emailBodies.InlineFiles = append(emailBodies.InlineFiles, inlineFile)
+			emailBodies.InlineFiles = append(
+				emailBodies.InlineFiles,
+				inlineFile,
+			)
 			continue
 		}
 
@@ -527,14 +663,21 @@ func (ep *EmailParser) parsePart(msg io.Reader, parentContentType ContentTypeHea
 			attachedFile, err := decodeAttachedFileFromPart(part, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
-					"letters.parsers.parsePart: cannot decode attached file: %w",
-					err)
+					"letters.parsers.parsePart: "+
+						"cannot decode attached file: %w",
+					err,
+				)
 			}
-			emailBodies.AttachedFiles = append(emailBodies.AttachedFiles, attachedFile)
+			emailBodies.AttachedFiles = append(
+				emailBodies.AttachedFiles,
+				attachedFile,
+			)
 			continue
 		}
 
-		return emailBodies, &UnknownContentTypeError{contentType: parentContentType.ContentType}
+		return emailBodies, &UnknownContentTypeError{
+			contentType: parentContentType.ContentType,
+		}
 	}
 
 	emailBodies.text = strings.Trim(emailBodies.text, "\n")
