@@ -30,7 +30,7 @@ inline and attached files.
 Install Letters:
 
 ```sh
-go get github.com/mnako/letters@v0.2.4
+go get github.com/mnako/letters@v0.2.5
 ```
 
 ### Quickstart
@@ -275,7 +275,7 @@ You can replace it with the following code to have more control over the parser:
 defaultEmailParser := letters.NewEmailParser()
 email, err := defaultEmailParser.Parse(rawEmail)
 if err != nil {
-  log.Fatal(err)
+    log.Fatal(err)
 }
 ```
 
