@@ -15,6 +15,39 @@ import (
 	"golang.org/x/text/transform"
 )
 
+type filteredReader struct {
+	reader io.Reader
+}
+
+func newFilteredReader(reader io.Reader) *filteredReader {
+	return &filteredReader{reader}
+}
+
+func (r *filteredReader) Read(p []byte) (int, error) {
+	n, err := r.reader.Read(p)
+	if err != nil {
+		return n, err
+	}
+	j := 0
+	for i := 0; i < n; i++ {
+		if char := getFiltered(p[i]); char != 0 {
+			p[j] = char
+			j++
+		}
+	}
+	if j == 0 {
+		return 0, io.EOF
+	}
+	return j, nil
+}
+
+func getFiltered(c byte) byte {
+	if c != ' ' {
+		return c
+	}
+	return 0
+}
+
 func decodeHeader(s string) (string, error) {
 	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)
@@ -66,15 +99,16 @@ func decodeContent(
 
 	switch cte {
 	case cteBase64:
+		filtered_content := newFilteredReader(bytes.NewReader(contentBytes))
 		decoded := base64.NewDecoder(
 			base64.StdEncoding,
-			bytes.NewReader(contentBytes),
+			filtered_content,
 		)
 		b, err := io.ReadAll(decoded)
 		if err == io.ErrUnexpectedEOF {
 			decoded = base64.NewDecoder(
 				base64.RawStdEncoding,
-				bytes.NewReader(contentBytes),
+				filtered_content,
 			)
 			b, err = io.ReadAll(decoded)
 			if err != nil {
