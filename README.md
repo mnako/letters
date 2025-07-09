@@ -387,7 +387,7 @@ custom parser function to the `WithDateHeaderParser()` option:
 
 ```go
 customDateHeaderEmailParser := letters.NewEmailParser(
-    letters.WithHeaderParser(
+    letters.WithDateHeaderParser(
         func(s string) time.Time {
             // Decode and parse the raw Date header from the s string here
             // and return a time.Time object
