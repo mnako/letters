@@ -14,7 +14,7 @@ import (
 )
 
 func normalizeMultilineString(s string) string {
-	s = strings.Replace(s, "\r\n", "\n", -1)
+	s = strings.ReplaceAll(s, "\r\n", "\n")
 	s = strings.Trim(s, "\n ")
 	return s
 }

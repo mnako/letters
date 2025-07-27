@@ -1,6 +1,7 @@
 ---
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
     - asasalint
     - asciicheck
@@ -40,16 +41,13 @@ linters:
     - gocyclo
     #- godot
     - godox
-    - gofmt
-    - gofumpt
     - goheader
     #- goimports
     - gomoddirectives
     - gomodguard
     - goprintffuncname
     - gosec
-    - gosimple
-    - gosmopolitan
+    #- gosmopolitan
     - govet
     - grouper
     - iface
@@ -109,3 +107,7 @@ linters:
     - wrapcheck
     #- wsl
     - zerologlint
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
