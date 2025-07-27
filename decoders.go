@@ -19,11 +19,10 @@ func decodeHeader(s string) (string, error) {
 	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)
 		if enc == nil {
-			normalizedLabel := strings.Replace(
+			normalizedLabel := strings.ReplaceAll(
 				label,
 				"windows-",
 				"cp",
-				-1,
 			)
 			enc, _ = charset.Lookup(normalizedLabel)
 		}

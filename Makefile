@@ -1,5 +1,5 @@
 GOLANGCI_LINT_VERSION := $(shell cat .golangci-version)
-GOLANGCI_LINT_ALIAS := GOPROXY=direct go run github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT_ALIAS := GOPROXY=direct go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
 GOLINES_ALIAS := GOPROXY=direct go run github.com/segmentio/golines@v0.12.2
 
 devcontainer:
