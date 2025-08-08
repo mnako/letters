@@ -82,7 +82,7 @@ func ParseAddressHeader(
 		return address, nil
 	}
 
-	address, err = mail.ParseAddress(normalizedS)
+	address, err := mail.ParseAddress(normalizedS)
 	if err != nil {
 		return address, fmt.Errorf(
 			"letters.parsers.parseAddressHeader: "+
