@@ -82,16 +82,6 @@ func ParseAddressHeader(
 		return address, nil
 	}
 
-	decodedHeader, err := decodeHeader(normalizedS)
-	if err != nil {
-		return address, fmt.Errorf(
-			"letters.parsers.parseAddressHeader: "+
-				"cannot decode address header %q: %w",
-			s,
-			err,
-		)
-	}
-
 	address, err = mail.ParseAddress(decodedHeader)
 	if err != nil {
 		return address, fmt.Errorf(
@@ -100,6 +90,14 @@ func ParseAddressHeader(
 			s,
 			err,
 		)
+	}
+
+	if address.Name != "" {
+		decoded, err := decodeHeader(address.Name)
+		if err == nil {
+			address.Name = decoded
+		}
+		// Optional: log decode failure but keep original name
 	}
 
 	return address, nil
