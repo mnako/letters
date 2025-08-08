@@ -196,6 +196,14 @@ func WithResentCcHeaderParser(
 	}
 }
 
+func WithResentBccHeaderParser(
+	resentBccHeaderParserFn parseAddressListHeaderFn,
+) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.headersParsers.ResentBcc = resentBccHeaderParserFn
+	}
+}
+
 func WithResentMessageIdHeaderParser(
 	resentMessageIDHeaderParserFn parseMessageIdHeaderFn,
 ) EmailParserOption {
