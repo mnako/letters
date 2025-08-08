@@ -121,17 +121,7 @@ func ParseAddressListHeader(
 		return addresses, nil
 	}
 
-	decodedHeader, err := decodeHeader(normalizedS)
-	if err != nil {
-		return addresses, fmt.Errorf(
-			"letters.parsers.parseAddressListHeader: "+
-				"cannot decode address list header %q: %w",
-			s,
-			err,
-		)
-	}
-
-	addresses, err = mail.ParseAddressList(decodedHeader)
+	addresses, err := mail.ParseAddressList(normalizedS)
 	if err != nil {
 		return addresses, fmt.Errorf(
 			"letters.parsers.parseAddressListHeader: "+
@@ -139,6 +129,16 @@ func ParseAddressListHeader(
 			s,
 			err,
 		)
+	}
+
+	for _, addr := range addresses {
+		if addr.Name != "" {
+			decoded, err := decodeHeader(addr.Name)
+			if err == nil {
+				addr.Name = decoded
+			}
+			// If decode fails, just leave the original name as-is
+		}
 	}
 
 	return addresses, nil
