@@ -30,7 +30,7 @@ inline and attached files.
 Install Letters:
 
 ```sh
-go get github.com/mnako/letters@v0.2.5
+go get github.com/mnako/letters@v0.2.6
 ```
 
 ### Quickstart
