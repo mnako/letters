@@ -21,7 +21,7 @@ func testEmailHeadersFromFile(
 ) {
 	t.Helper()
 
-	rawEmail, err := os.Open(fp)
+	rawEmail, err := os.Open(fp) //nolint:gosec
 	if err != nil {
 		t.Errorf("error while reading email from file: %s", err)
 		return
