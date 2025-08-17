@@ -254,7 +254,7 @@ headers.Headers.From
 
 > [!TIP] 
 > The `letters.ParseEmail()` and `letters.ParseEmailHeaders()` helpers
-> exist for developers' convenience and are a good entrypoint to get started
+> exist for developers’ convenience and are a good entrypoint to get started
 > quickly. However, if you find yourself in need of customising the parser to,
 > i.a. parse non-compliant headers or conditionally parse only some parts of the
 > email, we recommend following the [Advanced Usage](#advanced-usage) section
@@ -332,7 +332,7 @@ More interestingly, bodies and files can be skipped conditionally: bodies can be
 skipped based on the Content-Type header of the part, and files can be skipped
 based on the Content-Type and the Content-Disposition headers of the part.
 
-For example, to only parse files with a filename that ends with ".jpg," you can
+For example, to only parse files with a filename that ends with `.jpg`, you can
 pass a custom File Filter that checks the `name` Param of the Content-Type
 header:
 
@@ -523,3 +523,10 @@ Feature-complete and tests passing.
 
 Currently, gathering feedback and refactoring code before releasing v1.0.0.
 Fields and API are still subject to change.
+
+# Release Policy
+
+We follow [Go’s Release Policy](https://go.dev/doc/devel/release#policy) 
+and commit to supporting at least the two most recent major versions of Go.
+
+Letter v0.2.7 supports Go versions 1.23 through 1.25.
