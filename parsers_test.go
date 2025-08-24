@@ -25,6 +25,20 @@ func TestParseDateHeader(t *testing.T) {
 	testCases := []dateParsingTestCase{
 		{
 			name:       "RFC822 A.3.1.",
+			dateHeader: "26 Aug 76 1429 GMT",
+			expectedDate: time.Date(
+				1976,
+				time.August,
+				26,
+				14,
+				29,
+				0,
+				0,
+				time.UTC,
+			),
+		},
+		{
+			name:       "RFC822 A.3.1.",
 			dateHeader: "26 Aug 76 1429 EDT",
 			expectedDate: time.Date(
 				1976,

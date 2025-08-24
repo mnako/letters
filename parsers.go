@@ -25,6 +25,54 @@ func normalizeParametrizedAttributeValue(s string) string {
 	return s
 }
 
+func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
+	// From RFC5322 Section 4.3.  Obsolete Date and Time:
+	// The remaining three character zones are the US time zones. The first
+	// letter, "E", "C", "M", or "P" stands for "Eastern", "Central",
+	// "Mountain", and "Pacific".  The second letter is either "S" for
+	// "Standard" time, or "D" for "Daylight Savings" (or summer) time. Their
+	// interpretations are as follows:
+	//
+	//   EDT is semantically equivalent to -0400
+	//   EST is semantically equivalent to -0500
+	//   CDT is semantically equivalent to -0500
+	//   CST is semantically equivalent to -0600
+	//   MDT is semantically equivalent to -0600
+	//   MST is semantically equivalent to -0700
+	//   PDT is semantically equivalent to -0700
+	//   PST is semantically equivalent to -0800
+
+	const (
+		edtOffset = -4 * 60 * 60
+		estOffset = -5 * 60 * 60
+		cdtOffset = -5 * 60 * 60
+		cstOffset = -6 * 60 * 60
+		mdtOffset = -6 * 60 * 60
+		mstOffset = -7 * 60 * 60
+		pdtOffset = -7 * 60 * 60
+		pstOffset = -8 * 60 * 60
+	)
+
+	equivalentTZs := map[string]*time.Location{
+		"EDT": time.FixedZone("EDT", edtOffset),
+		"EST": time.FixedZone("EST", estOffset),
+		"CDT": time.FixedZone("CDT", cdtOffset),
+		"CST": time.FixedZone("CST", cstOffset),
+		"MDT": time.FixedZone("MDT", mdtOffset),
+		"MST": time.FixedZone("MST", mstOffset),
+		"PDT": time.FixedZone("PDT", pdtOffset),
+		"PST": time.FixedZone("PST", pstOffset),
+	}
+
+	for name, location := range equivalentTZs {
+		if strings.HasSuffix(s, name) {
+			return location
+		}
+	}
+
+	return nil
+}
+
 func ParseDateHeader(s string) time.Time {
 	// We follow date formats specified in RFC5322, RFC2822, and RFC822,
 	// including obsolete but legal formats.
@@ -32,6 +80,8 @@ func ParseDateHeader(s string) time.Time {
 	// from the specifications and appendices.
 
 	var t time.Time
+
+	obsLocation := getTimeLocationFromObsoleteDateFormat(s)
 
 	formats := []string{
 		"02 Jan 2006 1504 -0700",
@@ -133,9 +183,16 @@ func ParseDateHeader(s string) time.Time {
 	}
 
 	for _, format := range formats {
-		t, err := time.Parse(format, s)
-		if err == nil {
-			return t
+		if obsLocation == nil {
+			t, err := time.Parse(format, s)
+			if err == nil {
+				return t
+			}
+		} else {
+			t, err := time.ParseInLocation(format, s, obsLocation)
+			if err == nil {
+				return t
+			}
 		}
 	}
 
@@ -194,9 +251,16 @@ func ParseDateHeader(s string) time.Time {
 	}
 
 	for _, formatWithObsZone := range formatsWithObsZone {
-		t, err := time.Parse(formatWithObsZone, sWithoutObsZone)
-		if err == nil {
-			return t
+		if obsLocation == nil {
+			t, err := time.Parse(formatWithObsZone, sWithoutObsZone)
+			if err == nil {
+				return t
+			}
+		} else {
+			t, err := time.ParseInLocation(formatWithObsZone, sWithoutObsZone, obsLocation)
+			if err == nil {
+				return t
+			}
 		}
 	}
 
