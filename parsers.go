@@ -75,7 +75,23 @@ func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
 
 func ParseDateHeader(s string) time.Time {
 	// We follow date formats specified in RFC5322, RFC2822, and RFC822,
-	// including obsolete but legal formats.
+	// including obsolete but legal formats, but parse them according to
+	// time.Parse Go implementation. The main difference is in parsing
+	// two-digit years. While RFC5322 Section 4.3. prescribes that:
+	//
+	//   If a two digit year is encountered whose value is between 00 and 49,
+	//   the year is interpreted by adding 2000, ending up with a value
+	//   between 2000 and 2049.  If a two digit year is encountered with
+	//   a value between 50 and 99, or any three digit year is encountered,
+	//   the year is interpreted by adding 1900.
+	//
+	// time.Parse states that:
+	//
+	//   For layouts specifying the two-digit year 06, a value NN >= 69 will
+	//   be treated as 19NN and a value NN < 69 will be treated as 20NN.
+	//
+	// We have chosen to unify the behaviour of letters with the Go implementation.
+	//
 	// Cf. parsers_test.TestParseDateHeader for test cases taken directly
 	// from the specifications and appendices.
 
