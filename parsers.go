@@ -25,20 +25,258 @@ func normalizeParametrizedAttributeValue(s string) string {
 	return s
 }
 
+func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
+	// From RFC5322 Section 4.3.  Obsolete Date and Time:
+	// The remaining three character zones are the US time zones. The first
+	// letter, "E", "C", "M", or "P" stands for "Eastern", "Central",
+	// "Mountain", and "Pacific".  The second letter is either "S" for
+	// "Standard" time, or "D" for "Daylight Savings" (or summer) time. Their
+	// interpretations are as follows:
+	//
+	//   EDT is semantically equivalent to -0400
+	//   EST is semantically equivalent to -0500
+	//   CDT is semantically equivalent to -0500
+	//   CST is semantically equivalent to -0600
+	//   MDT is semantically equivalent to -0600
+	//   MST is semantically equivalent to -0700
+	//   PDT is semantically equivalent to -0700
+	//   PST is semantically equivalent to -0800
+
+	const (
+		edtOffset = -4 * 60 * 60
+		estOffset = -5 * 60 * 60
+		cdtOffset = -5 * 60 * 60
+		cstOffset = -6 * 60 * 60
+		mdtOffset = -6 * 60 * 60
+		mstOffset = -7 * 60 * 60
+		pdtOffset = -7 * 60 * 60
+		pstOffset = -8 * 60 * 60
+	)
+
+	equivalentTZs := map[string]*time.Location{
+		"EDT": time.FixedZone("EDT", edtOffset),
+		"EST": time.FixedZone("EST", estOffset),
+		"CDT": time.FixedZone("CDT", cdtOffset),
+		"CST": time.FixedZone("CST", cstOffset),
+		"MDT": time.FixedZone("MDT", mdtOffset),
+		"MST": time.FixedZone("MST", mstOffset),
+		"PDT": time.FixedZone("PDT", pdtOffset),
+		"PST": time.FixedZone("PST", pstOffset),
+	}
+
+	for name, location := range equivalentTZs {
+		if strings.HasSuffix(s, name) {
+			return location
+		}
+	}
+
+	return nil
+}
+
 func ParseDateHeader(s string) time.Time {
+	// We follow date formats specified in RFC5322, RFC2822, and RFC822,
+	// including obsolete but legal formats, but parse them according to
+	// time.Parse Go implementation. The main difference is in parsing
+	// two-digit years. While RFC5322 Section 4.3. prescribes that:
+	//
+	//   If a two digit year is encountered whose value is between 00 and 49,
+	//   the year is interpreted by adding 2000, ending up with a value
+	//   between 2000 and 2049.  If a two digit year is encountered with
+	//   a value between 50 and 99, or any three digit year is encountered,
+	//   the year is interpreted by adding 1900.
+	//
+	// time.Parse states that:
+	//
+	//   For layouts specifying the two-digit year 06, a value NN >= 69 will
+	//   be treated as 19NN and a value NN < 69 will be treated as 20NN.
+	//
+	// We have chosen to unify the behaviour of letters with the Go implementation.
+	//
+	// Cf. parsers_test.TestParseDateHeader for test cases taken directly
+	// from the specifications and appendices.
+
 	var t time.Time
 
+	obsLocation := getTimeLocationFromObsoleteDateFormat(s)
+
 	formats := []string{
-		time.RFC1123Z,
+		"02 Jan 2006 1504 -0700",
+		"02 Jan 2006 1504 MST",
+		"02 Jan 2006 1504 (MST)",
+		"02 Jan 2006 1504 -0700 (MST)",
+		"02 Jan 2006 15:04 -0700",
+		"02 Jan 2006 15:04 MST",
+		"02 Jan 2006 15:04 (MST)",
+		"02 Jan 2006 15:04 -0700 (MST)",
+		"02 Jan 2006 15:04:05 -0700",
+		"02 Jan 2006 15:04:05 MST",
+		"02 Jan 2006 15:04:05 (MST)",
+		"02 Jan 2006 15:04:05 -0700 (MST)",
+		"02 Jan 06 1504 -0700",
+		"02 Jan 06 1504 MST",
+		"02 Jan 06 1504 (MST)",
+		"02 Jan 06 1504 -0700 (MST)",
+		"02 Jan 06 15:04 -0700",
+		"02 Jan 06 15:04 MST",
+		"02 Jan 06 15:04 (MST)",
+		"02 Jan 06 15:04 -0700 (MST)",
+		"02 Jan 06 15:04:05 -0700",
+		"02 Jan 06 15:04:05 MST",
+		"02 Jan 06 15:04:05 (MST)",
+		"02 Jan 06 15:04:05 -0700 (MST)",
+		"2 Jan 2006 1504 -0700",
+		"2 Jan 2006 1504 MST",
+		"2 Jan 2006 1504 (MST)",
+		"2 Jan 2006 1504 -0700 (MST)",
+		"2 Jan 2006 15:04 -0700",
+		"2 Jan 2006 15:04 MST",
+		"2 Jan 2006 15:04 (MST)",
+		"2 Jan 2006 15:04 -0700 (MST)",
+		"2 Jan 2006 15:04:05 -0700",
+		"2 Jan 2006 15:04:05 MST",
+		"2 Jan 2006 15:04:05 (MST)",
+		"2 Jan 2006 15:04:05 -0700 (MST)",
+		"2 Jan 06 1504 -0700",
+		"2 Jan 06 1504 MST",
+		"2 Jan 06 1504 (MST)",
+		"2 Jan 06 1504 -0700 (MST)",
+		"2 Jan 06 15:04 -0700",
+		"2 Jan 06 15:04 MST",
+		"2 Jan 06 15:04 (MST)",
+		"2 Jan 06 15:04 -0700 (MST)",
+		"2 Jan 06 15:04:05 -0700",
+		"2 Jan 06 15:04:05 MST",
+		"2 Jan 06 15:04:05 (MST)",
+		"2 Jan 06 15:04:05 -0700 (MST)",
+		"Mon, 02 Jan 2006 1504 -0700",
+		"Mon, 02 Jan 2006 1504 MST",
+		"Mon, 02 Jan 2006 1504 (MST)",
+		"Mon, 02 Jan 2006 1504 -0700 (MST)",
+		"Mon, 02 Jan 2006 15:04 -0700",
+		"Mon, 02 Jan 2006 15:04 MST",
+		"Mon, 02 Jan 2006 15:04 (MST)",
+		"Mon, 02 Jan 2006 15:04 -0700 (MST)",
+		"Mon, 02 Jan 2006 15:04:05 -0700",
+		"Mon, 02 Jan 2006 15:04:05 MST",
+		"Mon, 02 Jan 2006 15:04:05 (MST)",
+		"Mon, 02 Jan 2006 15:04:05 -0700 (MST)",
+		"Mon, 02 Jan 06 1504 -0700",
+		"Mon, 02 Jan 06 1504 MST",
+		"Mon, 02 Jan 06 1504 (MST)",
+		"Mon, 02 Jan 06 1504 -0700 (MST)",
+		"Mon, 02 Jan 06 15:04 -0700",
+		"Mon, 02 Jan 06 15:04 MST",
+		"Mon, 02 Jan 06 15:04 (MST)",
+		"Mon, 02 Jan 06 15:04 -0700 (MST)",
+		"Mon, 02 Jan 06 15:04:05 -0700",
+		"Mon, 02 Jan 06 15:04:05 MST",
+		"Mon, 02 Jan 06 15:04:05 (MST)",
+		"Mon, 02 Jan 06 15:04:05 -0700 (MST)",
+		"Mon, 2 Jan 2006 1504 -0700",
+		"Mon, 2 Jan 2006 1504 MST",
+		"Mon, 2 Jan 2006 1504 (MST)",
+		"Mon, 2 Jan 2006 1504 -0700 (MST)",
+		"Mon, 2 Jan 2006 15:04 -0700",
+		"Mon, 2 Jan 2006 15:04 MST",
+		"Mon, 2 Jan 2006 15:04 (MST)",
+		"Mon, 2 Jan 2006 15:04 -0700 (MST)",
 		"Mon, 2 Jan 2006 15:04:05 -0700",
-		time.RFC1123Z + " (MST)",
+		"Mon, 2 Jan 2006 15:04:05 MST",
+		"Mon, 2 Jan 2006 15:04:05 (MST)",
 		"Mon, 2 Jan 2006 15:04:05 -0700 (MST)",
+		"Mon, 2 Jan 06 1504 -0700",
+		"Mon, 2 Jan 06 1504 MST",
+		"Mon, 2 Jan 06 1504 (MST)",
+		"Mon, 2 Jan 06 1504 -0700 (MST)",
+		"Mon, 2 Jan 06 15:04 -0700",
+		"Mon, 2 Jan 06 15:04 MST",
+		"Mon, 2 Jan 06 15:04 (MST)",
+		"Mon, 2 Jan 06 15:04 -0700 (MST)",
+		"Mon, 2 Jan 06 15:04:05 -0700",
+		"Mon, 2 Jan 06 15:04:05 MST",
+		"Mon, 2 Jan 06 15:04:05 (MST)",
+		"Mon, 2 Jan 06 15:04:05 -0700 (MST)",
 	}
 
 	for _, format := range formats {
-		t, err := time.Parse(format, s)
-		if err == nil {
-			return t
+		if obsLocation == nil {
+			t, err := time.Parse(format, s)
+			if err == nil {
+				return t
+			}
+		} else {
+			t, err := time.ParseInLocation(format, s, obsLocation)
+			if err == nil {
+				return t
+			}
+		}
+	}
+
+	// Best-effort support for RFC5322 Appendix A.5. with obs-zone
+	sWithoutObsZone := strings.Split(s, " (")[0]
+
+	formatsWithObsZone := []string{
+		"02 Jan 2006 1504 -0700",
+		"02 Jan 2006 1504 MST",
+		"02 Jan 2006 15:04 -0700",
+		"02 Jan 2006 15:04 MST",
+		"02 Jan 2006 15:04:05 -0700",
+		"02 Jan 2006 15:04:05 MST",
+		"02 Jan 06 1504 -0700",
+		"02 Jan 06 1504 MST",
+		"02 Jan 06 15:04 -0700",
+		"02 Jan 06 15:04 MST",
+		"02 Jan 06 15:04:05 -0700",
+		"02 Jan 06 15:04:05 MST",
+		"2 Jan 2006 1504 -0700",
+		"2 Jan 2006 1504 MST",
+		"2 Jan 2006 15:04 -0700",
+		"2 Jan 2006 15:04 MST",
+		"2 Jan 2006 15:04:05 -0700",
+		"2 Jan 2006 15:04:05 MST",
+		"2 Jan 06 1504 -0700",
+		"2 Jan 06 1504 MST",
+		"2 Jan 06 15:04 -0700",
+		"2 Jan 06 15:04 MST",
+		"2 Jan 06 15:04:05 -0700",
+		"2 Jan 06 15:04:05 MST",
+		"Mon, 02 Jan 2006 1504 -0700",
+		"Mon, 02 Jan 2006 1504 MST",
+		"Mon, 02 Jan 2006 15:04 -0700",
+		"Mon, 02 Jan 2006 15:04 MST",
+		"Mon, 02 Jan 2006 15:04:05 -0700",
+		"Mon, 02 Jan 2006 15:04:05 MST",
+		"Mon, 02 Jan 06 1504 -0700",
+		"Mon, 02 Jan 06 1504 MST",
+		"Mon, 02 Jan 06 15:04 -0700",
+		"Mon, 02 Jan 06 15:04 MST",
+		"Mon, 02 Jan 06 15:04:05 -0700",
+		"Mon, 02 Jan 06 15:04:05 MST",
+		"Mon, 2 Jan 2006 1504 -0700",
+		"Mon, 2 Jan 2006 1504 MST",
+		"Mon, 2 Jan 2006 15:04 -0700",
+		"Mon, 2 Jan 2006 15:04 MST",
+		"Mon, 2 Jan 2006 15:04:05 -0700",
+		"Mon, 2 Jan 2006 15:04:05 MST",
+		"Mon, 2 Jan 06 1504 -0700",
+		"Mon, 2 Jan 06 1504 MST",
+		"Mon, 2 Jan 06 15:04 -0700",
+		"Mon, 2 Jan 06 15:04 MST",
+		"Mon, 2 Jan 06 15:04:05 -0700",
+		"Mon, 2 Jan 06 15:04:05 MST",
+	}
+
+	for _, formatWithObsZone := range formatsWithObsZone {
+		if obsLocation == nil {
+			t, err := time.Parse(formatWithObsZone, sWithoutObsZone)
+			if err == nil {
+				return t
+			}
+		} else {
+			t, err := time.ParseInLocation(formatWithObsZone, sWithoutObsZone, obsLocation)
+			if err == nil {
+				return t
+			}
 		}
 	}
 
