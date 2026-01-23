@@ -24,7 +24,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - name: Checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: Test
         run: make test
       - name: Read golangci-lint version from file
