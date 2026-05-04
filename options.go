@@ -16,6 +16,7 @@ type (
 	parseCommaSeparatedMessageIdHeaderFn func(string) []MessageId
 	parseContentDispositionHeaderFn      func(string) (ContentDispositionHeader, error)
 	parseContentTypeHeaderFn             func(string) (ContentTypeHeader, error)
+	parseContentTransferEncodingHeaderFn func(string) (ContentTransferEncoding, error)
 )
 
 type HeadersParsers struct {
@@ -42,6 +43,12 @@ type HeadersParsers struct {
 	ContentType        parseContentTypeHeaderFn
 	ContentDisposition parseContentDispositionHeaderFn
 	ExtraHeaders       map[string]parseStringHeaderFn
+}
+
+type BodyParsers struct {
+	ContentType             parseContentTypeHeaderFn
+	ContentTransferEncoding parseContentTransferEncodingHeaderFn
+	ContentDisposition      parseContentDispositionHeaderFn
 }
 
 func WithDateHeaderParser(
@@ -240,5 +247,35 @@ func WithExtraHeaderParser(
 func WithHeadersParsers(headersParsers HeadersParsers) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers = headersParsers
+	}
+}
+
+func WithContentTypeBodyParser(
+	contentTypeBodyParserFn parseContentTypeHeaderFn,
+) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.bodyParsers.ContentType = contentTypeBodyParserFn
+	}
+}
+
+func WithContentDispositionBodyParser(
+	contentDispositionBodyParserFn parseContentDispositionHeaderFn,
+) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.bodyParsers.ContentDisposition = contentDispositionBodyParserFn
+	}
+}
+
+func WithContentTransferEncodingBodyParser(
+	contentTransferEncodingBodyParserFn parseContentTransferEncodingHeaderFn,
+) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.bodyParsers.ContentTransferEncoding = contentTransferEncodingBodyParserFn
+	}
+}
+
+func WithBodyParsers(bodyParsers BodyParsers) EmailParserOption {
+	return func(ep *EmailParser) {
+		ep.bodyParsers = bodyParsers
 	}
 }
