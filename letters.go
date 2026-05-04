@@ -30,6 +30,7 @@ type EmailParser struct {
 	bodyFilter     EmailBodyFilter
 	fileFilter     EmailFileFilter
 	headersParsers HeadersParsers
+	bodyParsers    BodyParsers
 }
 
 type EmailParserOption func(*EmailParser)
@@ -62,11 +63,20 @@ func DefaultHeadersParsers() HeadersParsers {
 	}
 }
 
+func DefaultBodyParsers() BodyParsers {
+	return BodyParsers{
+		ContentType:             ParseContentTypeHeader,
+		ContentTransferEncoding: ParseContentTransferEncoding,
+		ContentDisposition:      ParseContentDisposition,
+	}
+}
+
 func NewEmailParser(options ...EmailParserOption) *EmailParser {
 	ep := &EmailParser{
 		bodyFilter:     AllBodies,
 		fileFilter:     AllFiles,
 		headersParsers: DefaultHeadersParsers(),
+		bodyParsers:    DefaultBodyParsers(),
 	}
 
 	for _, option := range options {

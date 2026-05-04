@@ -742,7 +742,7 @@ func (ep *EmailParser) parsePart(
 			)
 		}
 
-		partContentType, err := ParseContentTypeHeader(
+		partContentType, err := ep.bodyParsers.ContentType(
 			part.Header.Get("Content-Type"),
 		)
 		if err != nil {
@@ -759,7 +759,7 @@ func (ep *EmailParser) parsePart(
 		}
 
 		enc, _ := charset.Lookup(charsetLabel)
-		cte, err := ParseContentTransferEncoding(
+		cte, err := ep.bodyParsers.ContentTransferEncoding(
 			part.Header.Get("Content-Transfer-Encoding"),
 		)
 		if err != nil {
@@ -770,7 +770,7 @@ func (ep *EmailParser) parsePart(
 			)
 		}
 
-		cdh, err := ParseContentDisposition(
+		cdh, err := ep.bodyParsers.ContentDisposition(
 			part.Header.Get("Content-Disposition"),
 		)
 		if err != nil {

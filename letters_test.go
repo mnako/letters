@@ -2,6 +2,7 @@ package letters_test
 
 import (
 	"fmt"
+	"mime"
 	"net/mail"
 	"os"
 	"reflect"
@@ -138,6 +139,166 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 			name:        "DefaultParser",
 			filepath:    "tests/test_english_no_text_content.txt",
 			emailParser: letters.NewEmailParser(),
+			expectedEmail: letters.Email{
+				Headers: letters.Headers{
+					Date:    expectedDate,
+					Subject: "Test No Text Content, Attachment Only",
+					ReplyTo: []*mail.Address{
+						{
+							Name:    "Alice Sender",
+							Address: "alice.sender@example.net",
+						},
+					},
+					Sender: &mail.Address{
+						Name:    "Alice Sender",
+						Address: "alice.sender@example.com",
+					},
+					From: []*mail.Address{
+						{
+							Name:    "Alice Sender",
+							Address: "alice.sender@example.com",
+						},
+						{
+							Name:    "Alice Sender",
+							Address: "alice.sender@example.net",
+						},
+					},
+					To: []*mail.Address{
+						{
+							Name:    "Bob Recipient",
+							Address: "bob.recipient@example.com",
+						},
+						{
+							Name:    "Carol Recipient",
+							Address: "carol.recipient@example.com",
+						},
+					},
+					Cc: []*mail.Address{
+						{
+							Name:    "Dan Recipient",
+							Address: "dan.recipient@example.com",
+						},
+						{
+							Name:    "Eve Recipient",
+							Address: "eve.recipient@example.com",
+						},
+					},
+					Bcc: []*mail.Address{
+						{
+							Name:    "Frank Recipient",
+							Address: "frank.recipient@example.com",
+						},
+						{
+							Name:    "Grace Recipient",
+							Address: "grace.recipient@example.com",
+						},
+					},
+					MessageID: "Message-Id-1@example.com",
+					ContentType: letters.ContentTypeHeader{
+						ContentType: "application/pdf",
+						Params: map[string]string{
+							"name": "attached-pdf-name.pdf",
+						},
+					},
+					ContentDisposition: letters.ContentDispositionHeader{
+						ContentDisposition: letters.ContentDispositionAttachment,
+						Params: map[string]string{
+							"filename": "attached-pdf-filename.pdf",
+						},
+					},
+					ExtraHeaders: map[string][]string{
+						"X-Clacks-Overhead": {"GNU Terry Pratchett"},
+						"X-Script/function/\t !\"#$%&'()*+,-./;<=>?@[\\]^_`{|}~": {
+							"TEST VALUE 1\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+							"TEST VALUE 2\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~",
+						},
+					},
+				},
+				Text:         "",
+				EnrichedText: "",
+				HTML:         "",
+				AttachedFiles: []letters.AttachedFile{
+					{
+						ContentType: letters.ContentTypeHeader{
+							ContentType: "application/pdf",
+							Params: map[string]string{
+								"name": "attached-pdf-name.pdf",
+							},
+						},
+						ContentDisposition: letters.ContentDispositionHeader{
+							ContentDisposition: letters.ContentDispositionAttachment,
+							Params: map[string]string{
+								"filename": "attached-pdf-filename.pdf",
+							},
+						},
+						Data: []byte{
+							37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114, 60, 60,
+							47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115, 60, 60, 47, 75, 105, 100, 115, 91, 60,
+							60, 47, 77, 101, 100, 105, 97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93, 62,
+							62, 62, 62, 62, 62,
+						},
+					},
+				},
+			},
+		},
+	}
+
+	testEmailCases(t, tcs)
+}
+
+func TestParseEmailEnglishInvalidTextContent(t *testing.T) {
+	t.Parallel()
+
+	tz, _ := time.LoadLocation("Europe/London")
+	expectedDate, _ := time.Parse(
+		time.RFC1123Z+" (MST)",
+		time.Date(2019, time.April, 1, 7, 55, 0, 0, tz).
+			Format(time.RFC1123Z+" (MST)"),
+	)
+
+	var cdMap = map[string]letters.ContentDisposition{
+		"attachment":  letters.ContentDispositionAttachment,
+		"attachments": letters.ContentDispositionAttachment,
+		"inline":      letters.ContentDispositionInline,
+	}
+
+	customContentDispositionParser := func(s string) (letters.ContentDispositionHeader, error) {
+		var cdh letters.ContentDispositionHeader
+
+		label, params, err := mime.ParseMediaType(s)
+		if label == "" {
+			return cdh, nil
+		}
+		if err != nil {
+			return cdh, fmt.Errorf(
+				"letters.parsers.parseContentDisposition: "+
+					"cannot parse Content-Disposition %q: %w",
+				s,
+				err,
+			)
+		}
+
+		cd, ok := cdMap[label]
+		if !ok {
+			return cdh, fmt.Errorf(
+				"letters.parsers.parseContentDisposition: "+
+					"unknown Content-Disposition %q",
+				label,
+			)
+		}
+		return letters.ContentDispositionHeader{
+			ContentDisposition: cd,
+			Params:             params,
+		}, nil
+	}
+
+	tcs := []emailTestCase{
+		{
+			name:     "DefaultParser",
+			filepath: "tests/test_english_no_text_invalid_content.txt",
+			emailParser: letters.NewEmailParser(
+				letters.WithContentDispositionHeaderParser(customContentDispositionParser),
+			),
 			expectedEmail: letters.Email{
 				Headers: letters.Headers{
 					Date:    expectedDate,
