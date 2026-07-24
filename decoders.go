@@ -26,6 +26,7 @@ func decodeHeader(s string) (string, error) {
 			)
 			enc, _ = charset.Lookup(normalizedLabel)
 		}
+
 		if enc == nil {
 			return nil, fmt.Errorf(
 				"letters.decoders.decodeHeader.CharsetReader: "+
@@ -37,6 +38,7 @@ func decodeHeader(s string) (string, error) {
 		return enc.NewDecoder().Reader(input), nil
 	}
 	mimeDecoder := mime.WordDecoder{CharsetReader: CharsetReader}
+
 	decodedHeader, err := mimeDecoder.DecodeHeader(s)
 	if err != nil {
 		return decodedHeader, fmt.Errorf(
@@ -56,6 +58,7 @@ func decodeContent(
 	cte ContentTransferEncoding,
 ) (io.Reader, error) {
 	var contentReader io.Reader
+
 	contentBytes, err := io.ReadAll(content)
 	if err != nil && err != io.ErrUnexpectedEOF {
 		return nil, fmt.Errorf(
@@ -71,12 +74,14 @@ func decodeContent(
 			base64.StdEncoding,
 			bytes.NewReader(contentBytes),
 		)
+
 		b, err := io.ReadAll(decoded)
 		if err == io.ErrUnexpectedEOF {
 			decoded = base64.NewDecoder(
 				base64.RawStdEncoding,
 				bytes.NewReader(contentBytes),
 			)
+
 			b, err = io.ReadAll(decoded)
 			if err != nil {
 				return nil, fmt.Errorf(
@@ -92,9 +97,11 @@ func decodeContent(
 				err,
 			)
 		}
+
 		contentReader = bytes.NewReader(b)
 	case cteQuotedPrintable:
 		decoded := quotedprintable.NewReader(bytes.NewReader(contentBytes))
+
 		b, err := io.ReadAll(decoded)
 		if err != nil {
 			return nil, fmt.Errorf(
@@ -103,6 +110,7 @@ func decodeContent(
 				err,
 			)
 		}
+
 		contentReader = bytes.NewReader(b)
 	default:
 		contentReader = bytes.NewReader(contentBytes)
@@ -143,6 +151,7 @@ func decodeInlineFile(
 	}
 
 	ifl.ContentID = strings.Trim(cid, "<>")
+
 	ifl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return ifl, fmt.Errorf(
@@ -195,6 +204,7 @@ func decodeAttachmentFileFromBody(
 
 	afl.ContentType = headers.ContentType
 	afl.ContentDisposition = headers.ContentDisposition
+
 	afl.Data, err = io.ReadAll(decoded)
 	if err != nil {
 		return afl, fmt.Errorf(

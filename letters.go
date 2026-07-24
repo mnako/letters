@@ -100,7 +100,9 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 	email = Email{
 		Headers: headers,
 	}
+
 	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
+
 	cte, err := ParseContentTransferEncoding(
 		msg.Header.Get("Content-Transfer-Encoding"),
 	)
@@ -152,6 +154,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		contentTypeMultipartPrefix,
 	) {
 		boundary := email.Headers.ContentType.Params["boundary"]
+
 		emailBodies, err := ep.parsePart(
 			msg.Body,
 			email.Headers.ContentType,
@@ -166,6 +169,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 				err,
 			)
 		}
+
 		email.Text = emailBodies.text
 		email.EnrichedText = emailBodies.enrichedText
 		email.HTML = emailBodies.html
@@ -180,6 +184,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 				err,
 			)
 		}
+
 		email.AttachedFiles = append(email.AttachedFiles, afl)
 	}
 

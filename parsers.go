@@ -43,7 +43,6 @@ func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
 	//   MST is semantically equivalent to -0700
 	//   PDT is semantically equivalent to -0700
 	//   PST is semantically equivalent to -0800
-
 	const (
 		edtOffset = -4 * 60 * 60
 		estOffset = -5 * 60 * 60
@@ -96,7 +95,6 @@ func ParseDateHeader(s string) time.Time {
 	//
 	// Cf. parsers_test.TestParseDateHeader for test cases taken directly
 	// from the specifications and appendices.
-
 	var t time.Time
 
 	obsLocation := getTimeLocationFromObsoleteDateFormat(s)
@@ -357,7 +355,9 @@ func ParseAddressListHeader(
 	if !ok {
 		return addresses, nil
 	}
+
 	s := strings.Join(ss, ", ")
+
 	normalizedS := normalizeMultilineString(s)
 	if normalizedS == "" {
 		return addresses, nil
@@ -410,6 +410,7 @@ func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 	if label == "" {
 		return cdh, nil
 	}
+
 	if err != nil {
 		return cdh, fmt.Errorf(
 			"letters.parsers.parseContentDisposition: "+
@@ -456,6 +457,7 @@ func ParseDefaultMediaType(s string) (string, map[string]string, error) {
 	if s == "" {
 		s = "text/plain"
 	}
+
 	mediatype, params, err := mime.ParseMediaType(s)
 	if err != nil {
 		return mediatype, params, fmt.Errorf(
@@ -512,6 +514,7 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 	)
 
 	extraHeaders := make(map[string][]string)
+
 	for key, value := range header {
 		_, isKnownHeader := knownHeaders[key]
 		if isKnownHeader {
@@ -521,6 +524,7 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 		normalisedVals := []string{}
 		extraHeaderParserFn,
 			hasExtraHeaderParseFn := ep.headersParsers.ExtraHeaders[strings.ToLower(key)]
+
 		for _, val := range value {
 			if !hasExtraHeaderParseFn {
 				decodedHeader, _ := decodeHeader(val)
@@ -530,6 +534,7 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 				normalisedVals = append(normalisedVals, decodedHeader)
 			}
 		}
+
 		extraHeaders[key] = normalisedVals
 	}
 
@@ -703,6 +708,7 @@ func isInlineFile(
 	if cdh.ContentDisposition == ContentDispositionInline {
 		return true
 	}
+
 	if contentType.ContentType == contentTypeTextPlain ||
 		contentType.ContentType == contentTypeTextEnriched ||
 		contentType.ContentType == contentTypeTextHtml {
@@ -770,6 +776,7 @@ func (ep *EmailParser) parsePart(
 		}
 
 		enc, _ := charset.Lookup(charsetLabel)
+
 		cte, err := ParseContentTransferEncoding(
 			part.Header.Get("Content-Transfer-Encoding"),
 		)
@@ -791,6 +798,7 @@ func (ep *EmailParser) parsePart(
 				err,
 			)
 		}
+
 		if cdh.ContentDisposition == ContentDispositionAttachment {
 			if !ep.fileFilter(partContentType, cdh) {
 				continue
@@ -804,6 +812,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.AttachedFiles = append(
 				emailBodies.AttachedFiles,
 				attachedFile,
@@ -825,6 +834,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.text += partTextBody
 			emailBodies.text += "\n\n"
 
@@ -844,6 +854,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.enrichedText += partEnrichedText
 
 			continue
@@ -862,6 +873,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.html += partHtmlBody
 
 			continue
@@ -902,6 +914,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.InlineFiles = append(
 				emailBodies.InlineFiles,
 				inlineFile,
@@ -923,6 +936,7 @@ func (ep *EmailParser) parsePart(
 					err,
 				)
 			}
+
 			emailBodies.AttachedFiles = append(
 				emailBodies.AttachedFiles,
 				attachedFile,
