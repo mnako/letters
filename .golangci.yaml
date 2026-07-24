@@ -86,7 +86,6 @@ linters:
     - spancheck
     - sqlclosecheck
     - staticcheck
-    #- stylecheck
     - tagalign
     - tagliatelle
     - testableexamples
@@ -99,7 +98,7 @@ linters:
     - unused
     - usestdlibvars
     - usetesting
-    #- varnamelen
+    - varnamelen
     - wastedassign
     - whitespace
     - wrapcheck
@@ -114,6 +113,8 @@ linters:
             - github.com/mnako/letters
             - golang.org/x/net
             - golang.org/x/text
+    varnamelen:
+      min-name-length: 2
   exclusions:
     rules:
       - path: _test\.go

@@ -28,7 +28,7 @@ func normalizeParametrizedAttributeValue(s string) string {
 	return s
 }
 
-func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
+func getTimeLocationFromObsoleteDateFormat(dateHeader string) *time.Location {
 	// From RFC5322 Section 4.3.  Obsolete Date and Time:
 	// The remaining three character zones are the US time zones. The first
 	// letter, "E", "C", "M", or "P" stands for "Eastern", "Central",
@@ -67,7 +67,7 @@ func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
 	}
 
 	for name, location := range equivalentTZs {
-		if strings.HasSuffix(s, name) {
+		if strings.HasSuffix(dateHeader, name) {
 			return location
 		}
 	}
@@ -75,7 +75,7 @@ func getTimeLocationFromObsoleteDateFormat(s string) *time.Location {
 	return nil
 }
 
-func ParseDateHeader(s string) time.Time {
+func ParseDateHeader(dateHeader string) time.Time {
 	// We follow date formats specified in RFC5322, RFC2822, and RFC822,
 	// including obsolete but legal formats, but parse them according to
 	// time.Parse Go implementation. The main difference is in parsing
@@ -96,9 +96,9 @@ func ParseDateHeader(s string) time.Time {
 	//
 	// Cf. parsers_test.TestParseDateHeader for test cases taken directly
 	// from the specifications and appendices.
-	var t time.Time
+	var parsedDate time.Time
 
-	obsLocation := getTimeLocationFromObsoleteDateFormat(s)
+	obsLocation := getTimeLocationFromObsoleteDateFormat(dateHeader)
 
 	formats := []string{
 		"02 Jan 2006 1504 -0700",
@@ -201,12 +201,12 @@ func ParseDateHeader(s string) time.Time {
 
 	for _, format := range formats {
 		if obsLocation == nil {
-			t, err := time.Parse(format, s)
+			t, err := time.Parse(format, dateHeader)
 			if err == nil {
 				return t
 			}
 		} else {
-			t, err := time.ParseInLocation(format, s, obsLocation)
+			t, err := time.ParseInLocation(format, dateHeader, obsLocation)
 			if err == nil {
 				return t
 			}
@@ -214,7 +214,7 @@ func ParseDateHeader(s string) time.Time {
 	}
 
 	// Best-effort support for RFC5322 Appendix A.5. with obs-zone
-	sWithoutObsZone := strings.Split(s, " (")[0]
+	sWithoutObsZone := strings.Split(dateHeader, " (")[0]
 
 	formatsWithObsZone := []string{
 		"02 Jan 2006 1504 -0700",
@@ -281,7 +281,7 @@ func ParseDateHeader(s string) time.Time {
 		}
 	}
 
-	return t
+	return parsedDate
 }
 
 func ParseStringHeader(s string) string {
@@ -290,15 +290,15 @@ func ParseStringHeader(s string) string {
 	return strings.Trim(decodedHeader, " ")
 }
 
-func ParseCommaSeparatedStringHeader(s string) []string {
+func ParseCommaSeparatedStringHeader(headerValue string) []string {
 	var values []string
 
-	normalizedS := normalizeMultilineString(s)
+	normalizedS := normalizeMultilineString(headerValue)
 	if normalizedS == "" {
 		return values
 	}
 
-	for _, value := range strings.Split(s, ",") {
+	for _, value := range strings.Split(headerValue, ",") {
 		values = append(values, ParseStringHeader(value))
 	}
 
@@ -316,9 +316,9 @@ func ParseAddressHeader(
 		return address, nil
 	}
 
-	s := strings.Join(ss, ", ")
+	addressHeader := strings.Join(ss, ", ")
 
-	normalizedS := normalizeMultilineString(s)
+	normalizedS := normalizeMultilineString(addressHeader)
 	if normalizedS == "" {
 		return address, nil
 	}
@@ -328,7 +328,7 @@ func ParseAddressHeader(
 		return address, fmt.Errorf(
 			"letters.parsers.parseAddressHeader: "+
 				"cannot decode address header %q: %w",
-			s,
+			addressHeader,
 			err,
 		)
 	}
@@ -338,7 +338,7 @@ func ParseAddressHeader(
 		return address, fmt.Errorf(
 			"letters.parsers.parseAddressHeader: "+
 				"cannot parse address header %q: %w",
-			s,
+			addressHeader,
 			err,
 		)
 	}
@@ -357,9 +357,9 @@ func ParseAddressListHeader(
 		return addresses, nil
 	}
 
-	s := strings.Join(ss, ", ")
+	addressListHeader := strings.Join(ss, ", ")
 
-	normalizedS := normalizeMultilineString(s)
+	normalizedS := normalizeMultilineString(addressListHeader)
 	if normalizedS == "" {
 		return addresses, nil
 	}
@@ -369,7 +369,7 @@ func ParseAddressListHeader(
 		return addresses, fmt.Errorf(
 			"letters.parsers.parseAddressListHeader: "+
 				"cannot decode address list header %q: %w",
-			s,
+			addressListHeader,
 			err,
 		)
 	}
@@ -379,7 +379,7 @@ func ParseAddressListHeader(
 		return addresses, fmt.Errorf(
 			"letters.parsers.parseAddressListHeader: "+
 				"cannot parse address list header %q: %w",
-			s,
+			addressListHeader,
 			err,
 		)
 	}
@@ -404,10 +404,10 @@ func ParseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	return values
 }
 
-func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
+func ParseContentDisposition(contentDispositionValue string) (ContentDispositionHeader, error) {
 	var cdh ContentDispositionHeader
 
-	label, params, err := mime.ParseMediaType(s)
+	label, params, err := mime.ParseMediaType(contentDispositionValue)
 	if label == "" {
 		return cdh, nil
 	}
@@ -416,7 +416,7 @@ func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 		return cdh, fmt.Errorf(
 			"letters.parsers.parseContentDisposition: "+
 				"cannot parse Content-Disposition %q: %w",
-			s,
+			contentDispositionValue,
 			err,
 		)
 	}
@@ -452,17 +452,17 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	return cte, nil
 }
 
-func ParseDefaultMediaType(s string) (string, map[string]string, error) {
-	if s == "" {
-		s = "text/plain"
+func ParseDefaultMediaType(contentTypeValue string) (string, map[string]string, error) {
+	if contentTypeValue == "" {
+		contentTypeValue = "text/plain"
 	}
 
-	mediatype, params, err := mime.ParseMediaType(s)
+	mediatype, params, err := mime.ParseMediaType(contentTypeValue)
 	if err != nil {
 		return mediatype, params, fmt.Errorf(
 			"letters.parsers.parseDefaultMediaType: "+
 				"cannot parse Content-Type %q: %w",
-			s,
+			contentTypeValue,
 			err,
 		)
 	}
@@ -470,15 +470,15 @@ func ParseDefaultMediaType(s string) (string, map[string]string, error) {
 	return mediatype, params, nil
 }
 
-func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
+func ParseContentTypeHeader(contentTypeValue string) (ContentTypeHeader, error) {
 	var cth ContentTypeHeader
 
-	mediaType, mediaTypeParams, err := ParseDefaultMediaType(s)
+	mediaType, mediaTypeParams, err := ParseDefaultMediaType(contentTypeValue)
 	if err != nil {
 		return cth, fmt.Errorf(
 			"letters.parsers.parseContentTypeHeader: "+
 				"cannot parse Content-Type %q: %w",
-			s,
+			contentTypeValue,
 			err,
 		)
 	}

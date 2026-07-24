@@ -16,7 +16,7 @@ import (
 	"golang.org/x/text/transform"
 )
 
-func decodeHeader(s string) (string, error) {
+func decodeHeader(headerValue string) (string, error) {
 	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)
 		if enc == nil {
@@ -36,12 +36,12 @@ func decodeHeader(s string) (string, error) {
 	}
 	mimeDecoder := mime.WordDecoder{CharsetReader: CharsetReader}
 
-	decodedHeader, err := mimeDecoder.DecodeHeader(s)
+	decodedHeader, err := mimeDecoder.DecodeHeader(headerValue)
 	if err != nil {
 		return decodedHeader, fmt.Errorf(
 			"letters.decoders.decodeHeader: "+
 				"cannot decode MIME-word-encoded header %q: %w",
-			s,
+			headerValue,
 			err,
 		)
 	}
@@ -51,7 +51,7 @@ func decodeHeader(s string) (string, error) {
 
 func decodeContent(
 	content io.Reader,
-	e encoding.Encoding,
+	textEncoding encoding.Encoding,
 	cte ContentTransferEncoding,
 ) (io.Reader, error) {
 	var contentReader io.Reader
@@ -72,14 +72,14 @@ func decodeContent(
 			bytes.NewReader(contentBytes),
 		)
 
-		b, err := io.ReadAll(decoded)
+		decodedBytes, err := io.ReadAll(decoded)
 		if errors.Is(err, io.ErrUnexpectedEOF) {
 			decoded = base64.NewDecoder(
 				base64.RawStdEncoding,
 				bytes.NewReader(contentBytes),
 			)
 
-			b, err = io.ReadAll(decoded)
+			decodedBytes, err = io.ReadAll(decoded)
 			if err != nil {
 				return nil, fmt.Errorf(
 					"letters.decoders.decodeContent: "+
@@ -95,11 +95,11 @@ func decodeContent(
 			)
 		}
 
-		contentReader = bytes.NewReader(b)
+		contentReader = bytes.NewReader(decodedBytes)
 	case cteQuotedPrintable:
 		decoded := quotedprintable.NewReader(bytes.NewReader(contentBytes))
 
-		b, err := io.ReadAll(decoded)
+		decodedBytes, err := io.ReadAll(decoded)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"letters.decoders.decodeContent: "+
@@ -108,15 +108,15 @@ func decodeContent(
 			)
 		}
 
-		contentReader = bytes.NewReader(b)
+		contentReader = bytes.NewReader(decodedBytes)
 	case cte7bit, cte8bit, cteBinary:
 		contentReader = bytes.NewReader(contentBytes)
 	}
 
-	if e != nil {
+	if textEncoding != nil {
 		contentReader = transform.NewReader(
 			contentReader,
-			e.NewDecoder(),
+			textEncoding.NewDecoder(),
 		)
 	}
 
