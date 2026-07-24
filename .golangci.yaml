@@ -56,14 +56,14 @@ linters:
     - ireturn
     - lll
     - loggercheck
-    #- maintidx
+#    - maintidx
     - makezero
     - mirror
     - misspell
     - mnd
     - musttag
     - nakedret
-    #- nestif
+    - nestif
     - nilerr
     - nilnesserr
     - nilnil
