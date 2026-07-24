@@ -10,7 +10,7 @@ linters:
     - canonicalheader
     - containedctx
     - contextcheck
-    #- cyclop
+    # - cyclop
     - decorder
     - depguard
     - dogsled
@@ -28,17 +28,17 @@ linters:
     - fatcontext
     - forbidigo
     - forcetypeassert
-    #- funlen
+    # - funlen
     - ginkgolinter
     - gocheckcompilerdirectives
     - gochecknoglobals
     - gochecknoinits
     - gochecksumtype
-#    - gocognit
+    # - gocognit
     - goconst
     - gocritic
     - gocyclo
-    #- godot
+    # - godot
     - godox
     - goheader
     - gomoddirectives
@@ -56,7 +56,7 @@ linters:
     - ireturn
     - lll
     - loggercheck
-#    - maintidx
+    # - maintidx
     - makezero
     - mirror
     - misspell
