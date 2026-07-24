@@ -54,7 +54,7 @@ linters:
     - ineffassign
     - interfacebloat
     - ireturn
-    #- lll
+    - lll
     - loggercheck
     #- maintidx
     - makezero
@@ -122,6 +122,7 @@ linters:
           - exhaustruct
           - goconst
           - gosmopolitan
+          - lll
 formatters:
   enable:
     - gofmt
