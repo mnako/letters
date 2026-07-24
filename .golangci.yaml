@@ -12,7 +12,7 @@ linters:
     - contextcheck
     #- cyclop
     - decorder
-    #- depguard
+    - depguard
     - dogsled
     #- dupl
     - dupword
@@ -107,6 +107,15 @@ linters:
     - wrapcheck
     #- wsl
     - zerologlint
+  settings:
+    depguard:
+      rules:
+        main:
+          allow:
+            - $gostd
+            - github.com/mnako/letters
+            - golang.org/x/net
+            - golang.org/x/text
   exclusions:
     rules:
       - path: _test\.go
