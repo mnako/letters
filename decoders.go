@@ -109,7 +109,7 @@ func decodeContent(
 		}
 
 		contentReader = bytes.NewReader(b)
-	default:
+	case cte7bit, cte8bit, cteBinary:
 		contentReader = bytes.NewReader(contentBytes)
 	}
 

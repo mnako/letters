@@ -22,7 +22,7 @@ linters:
     - errchkjson
     - errname
     - errorlint
-    #- exhaustive
+    - exhaustive
     #- exhaustruct
     - exptostd
     - fatcontext
