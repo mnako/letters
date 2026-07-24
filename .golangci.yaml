@@ -21,7 +21,7 @@ linters:
     - errcheck
     - errchkjson
     - errname
-    #- errorlint
+    - errorlint
     #- exhaustive
     #- exhaustruct
     - exptostd

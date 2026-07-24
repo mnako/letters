@@ -1,6 +1,7 @@
 package letters
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"mime"
@@ -738,7 +739,7 @@ func (ep *EmailParser) parsePart(
 
 	for {
 		part, err := multipartReader.NextPart()
-		if err == io.EOF {
+		if errors.Is(err, io.EOF) {
 			break
 		} else if err != nil {
 			if strings.Contains(err.Error(), "EOF") {
