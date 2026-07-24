@@ -3,6 +3,7 @@ package letters
 import (
 	"bytes"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"io"
 	"mime"
@@ -28,11 +29,7 @@ func decodeHeader(s string) (string, error) {
 		}
 
 		if enc == nil {
-			return nil, fmt.Errorf(
-				"letters.decoders.decodeHeader.CharsetReader: "+
-					"cannot lookup encoding %s",
-				label,
-			)
+			return nil, fmt.Errorf("%w %s", ErrUnknownCharset, label)
 		}
 
 		return enc.NewDecoder().Reader(input), nil
@@ -60,7 +57,7 @@ func decodeContent(
 	var contentReader io.Reader
 
 	contentBytes, err := io.ReadAll(content)
-	if err != nil && err != io.ErrUnexpectedEOF {
+	if err != nil && !errors.Is(err, io.ErrUnexpectedEOF) {
 		return nil, fmt.Errorf(
 			"letters.decoders.decodeContent: "+
 				"cannot decode content: %w",
@@ -76,7 +73,7 @@ func decodeContent(
 		)
 
 		b, err := io.ReadAll(decoded)
-		if err == io.ErrUnexpectedEOF {
+		if errors.Is(err, io.ErrUnexpectedEOF) {
 			decoded = base64.NewDecoder(
 				base64.RawStdEncoding,
 				bytes.NewReader(contentBytes),

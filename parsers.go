@@ -422,11 +422,7 @@ func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 
 	cd, ok := cdMap[label]
 	if !ok {
-		return cdh, fmt.Errorf(
-			"letters.parsers.parseContentDisposition: "+
-				"unknown Content-Disposition %q",
-			label,
-		)
+		return cdh, fmt.Errorf("%w %q", ErrUnknownContentDisposition, label)
 	}
 
 	return ContentDispositionHeader{
@@ -443,11 +439,7 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 
 	cte, ok := cteMap[label]
 	if !ok {
-		return cte, fmt.Errorf(
-			"letters.parsers.parseContentTransferEncoding: "+
-				"unknown Content-Transfer-Encoding %q",
-			label,
-		)
+		return cte, fmt.Errorf("%w %q", ErrUnknownContentTransferEncoding, label)
 	}
 
 	return cte, nil
