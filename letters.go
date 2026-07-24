@@ -11,6 +11,7 @@ import (
 
 func ParseEmailHeaders(header mail.Header) (Headers, error) {
 	defaultParser := NewEmailParser()
+
 	return defaultParser.ParseHeaders(header)
 }
 
@@ -23,6 +24,7 @@ func ParseHeaders(header mail.Header) (Headers, error) {
 
 func ParseEmail(r io.Reader) (Email, error) {
 	defaultParser := NewEmailParser()
+
 	return defaultParser.Parse(r)
 }
 

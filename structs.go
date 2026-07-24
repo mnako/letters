@@ -11,7 +11,7 @@ type void struct{}
 var member void
 
 // A set of headers supported directly in letters.structs.Email.Headers
-// (and not in letters.structs.Email.Headers.ExtraHeaders)
+// (and not in letters.structs.Email.Headers.ExtraHeaders).
 var knownHeaders = map[string]void{
 	"Date":                      member,
 	"Sender":                    member,

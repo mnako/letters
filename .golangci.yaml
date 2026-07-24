@@ -42,7 +42,6 @@ linters:
     #- godot
     - godox
     - goheader
-    #- goimports
     - gomoddirectives
     - gomodguard_v2
     - goprintffuncname
@@ -69,7 +68,7 @@ linters:
     - nilerr
     - nilnesserr
     - nilnil
-    #- nlreturn
+    - nlreturn
     - noctx
     - nolintlint
     - nonamedreturns

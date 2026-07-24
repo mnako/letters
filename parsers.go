@@ -16,12 +16,14 @@ import (
 func normalizeMultilineString(s string) string {
 	s = strings.ReplaceAll(s, "\r\n", "\n")
 	s = strings.Trim(s, "\n ")
+
 	return s
 }
 
 func normalizeParametrizedAttributeValue(s string) string {
 	s = strings.Trim(s, " ")
 	s = strings.ToLower(s)
+
 	return s
 }
 
@@ -285,6 +287,7 @@ func ParseDateHeader(s string) time.Time {
 
 func ParseStringHeader(s string) string {
 	decodedHeader, _ := decodeHeader(s)
+
 	return strings.Trim(decodedHeader, " ")
 }
 
@@ -299,6 +302,7 @@ func ParseCommaSeparatedStringHeader(s string) []string {
 	for _, value := range strings.Split(s, ",") {
 		values = append(values, ParseStringHeader(value))
 	}
+
 	return values
 }
 
@@ -423,6 +427,7 @@ func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 			label,
 		)
 	}
+
 	return ContentDispositionHeader{
 		ContentDisposition: cd,
 		Params:             params,
@@ -443,6 +448,7 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 			label,
 		)
 	}
+
 	return cte, nil
 }
 
@@ -459,6 +465,7 @@ func ParseDefaultMediaType(s string) (string, map[string]string, error) {
 			err,
 		)
 	}
+
 	return mediatype, params, nil
 }
 
@@ -482,6 +489,7 @@ func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
 			)
 		}
 	}
+
 	return ContentTypeHeader{
 		ContentType: mediaType,
 		Params:      mediaTypeParams,
@@ -700,6 +708,7 @@ func isInlineFile(
 		contentType.ContentType == contentTypeTextHtml {
 		return false
 	}
+
 	return parentContentType.ContentType == contentTypeMultipartRelated
 }
 
@@ -712,6 +721,7 @@ func isAttachedFile(
 		contentType.ContentType != contentTypeTextHtml {
 		return true
 	}
+
 	return parentContentType.ContentType == contentTypeMultipartMixed ||
 		parentContentType.ContentType == contentTypeMultipartParallel
 }
@@ -736,6 +746,7 @@ func (ep *EmailParser) parsePart(
 			if strings.Contains(err.Error(), "EOF") {
 				break
 			}
+
 			return emailBodies, fmt.Errorf(
 				"letters.parsers.parsePart: cannot read part: %w",
 				err,
@@ -797,6 +808,7 @@ func (ep *EmailParser) parsePart(
 				emailBodies.AttachedFiles,
 				attachedFile,
 			)
+
 			continue
 		}
 
@@ -815,6 +827,7 @@ func (ep *EmailParser) parsePart(
 			}
 			emailBodies.text += partTextBody
 			emailBodies.text += "\n\n"
+
 			continue
 		}
 
@@ -832,6 +845,7 @@ func (ep *EmailParser) parsePart(
 				)
 			}
 			emailBodies.enrichedText += partEnrichedText
+
 			continue
 		}
 
@@ -849,6 +863,7 @@ func (ep *EmailParser) parsePart(
 				)
 			}
 			emailBodies.html += partHtmlBody
+
 			continue
 		}
 
@@ -870,6 +885,7 @@ func (ep *EmailParser) parsePart(
 			}
 
 			emailBodies.extend(nestedEmailBodies)
+
 			continue
 		}
 
@@ -890,6 +906,7 @@ func (ep *EmailParser) parsePart(
 				emailBodies.InlineFiles,
 				inlineFile,
 			)
+
 			continue
 		}
 
@@ -910,6 +927,7 @@ func (ep *EmailParser) parsePart(
 				emailBodies.AttachedFiles,
 				attachedFile,
 			)
+
 			continue
 		}
 

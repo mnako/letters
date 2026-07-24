@@ -31,12 +31,14 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 			rawEmail, err := os.Open(testCase.filepath)
 			if err != nil {
 				t.Errorf("error while reading email from file: %s", err)
+
 				return
 			}
 
 			defer func() {
 				if err := rawEmail.Close(); err != nil {
 					t.Errorf("error while closing rawEmail: %s", err)
+
 					return
 				}
 			}()
@@ -44,6 +46,7 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 			parsedEmail, err := testCase.emailParser.Parse(rawEmail)
 			if err != nil {
 				t.Errorf("error while parsing email: %s", err)
+
 				return
 			}
 
@@ -361,6 +364,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customDateHeaderParser := func(s string) time.Time {
 		date := letters.ParseDateHeader(s)
+
 		return date.Add(-1 * time.Hour)
 	}
 
@@ -478,6 +482,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customSubjectHeaderParser := func(s string) string {
 		subject := letters.ParseStringHeader(s)
+
 		return strings.ToUpper(subject)
 	}
 
@@ -487,6 +492,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customKeywordsHeaderParser := func(s string) []string {
 		keywords := letters.ParseCommaSeparatedStringHeader(s)
+
 		return append(keywords, "Custom Injected Keyword 3")
 	}
 
@@ -502,6 +508,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customXClacksOverheadExtraHeaderParser := func(s string) string {
 		xClacksOverhead := letters.ParseStringHeader(s)
+
 		return strings.Replace(
 			xClacksOverhead,
 			"Terry Pratchett",

@@ -33,6 +33,7 @@ func decodeHeader(s string) (string, error) {
 				label,
 			)
 		}
+
 		return enc.NewDecoder().Reader(input), nil
 	}
 	mimeDecoder := mime.WordDecoder{CharsetReader: CharsetReader}
@@ -45,6 +46,7 @@ func decodeHeader(s string) (string, error) {
 			err,
 		)
 	}
+
 	return decodedHeader, nil
 }
 
