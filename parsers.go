@@ -75,6 +75,7 @@ func getTimeLocationFromObsoleteDateFormat(dateHeader string) *time.Location {
 	return nil
 }
 
+// ParseDateHeader parses an RFC-compatible email date or returns the zero time.
 func ParseDateHeader(dateHeader string) time.Time {
 	// We follow date formats specified in RFC5322, RFC2822, and RFC822,
 	// including obsolete but legal formats, but parse them according to
@@ -284,12 +285,14 @@ func ParseDateHeader(dateHeader string) time.Time {
 	return parsedDate
 }
 
+// ParseStringHeader decodes and trims a string-valued email header.
 func ParseStringHeader(s string) string {
 	decodedHeader, _ := decodeHeader(s)
 
 	return strings.Trim(decodedHeader, " ")
 }
 
+// ParseCommaSeparatedStringHeader decodes a comma-separated email header.
 func ParseCommaSeparatedStringHeader(headerValue string) []string {
 	var values []string
 
@@ -305,6 +308,7 @@ func ParseCommaSeparatedStringHeader(headerValue string) []string {
 	return values
 }
 
+// ParseAddressHeader parses a named single-address email header.
 func ParseAddressHeader(
 	header mail.Header,
 	name string,
@@ -346,6 +350,7 @@ func ParseAddressHeader(
 	return address, nil
 }
 
+// ParseAddressListHeader parses a named address-list email header.
 func ParseAddressListHeader(
 	header mail.Header,
 	name string,
@@ -387,23 +392,30 @@ func ParseAddressListHeader(
 	return addresses, nil
 }
 
+// ParseMessageIdHeader trims delimiters and whitespace from a message ID.
+//
+//nolint:revive // The exported name is kept for backward compatibility.
 func ParseMessageIdHeader(s string) MessageId {
 	return MessageId(strings.Trim(s, "<> \n"))
 }
 
+// ParseCommaSeparatedMessageIdHeader parses a space-separated list of message IDs.
+//
+//nolint:revive // The exported name is kept for backward compatibility.
 func ParseCommaSeparatedMessageIdHeader(s string) []MessageId {
 	var values []MessageId
 
 	for _, value := range strings.Split(s, " ") {
-		messageId := ParseMessageIdHeader(value)
-		if messageId != "" {
-			values = append(values, messageId)
+		messageID := ParseMessageIdHeader(value)
+		if messageID != "" {
+			values = append(values, messageID)
 		}
 	}
 
 	return values
 }
 
+// ParseContentDisposition parses a supported Content-Disposition header.
 func ParseContentDisposition(contentDispositionValue string) (ContentDispositionHeader, error) {
 	var cdh ContentDispositionHeader
 
@@ -435,6 +447,7 @@ func ParseContentDisposition(contentDispositionValue string) (ContentDisposition
 	}, nil
 }
 
+// ParseContentTransferEncoding parses a Content-Transfer-Encoding header.
 func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	label := normalizeParametrizedAttributeValue(s)
 	if label == "" {
@@ -452,6 +465,7 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	return cte, nil
 }
 
+// ParseDefaultMediaType parses a media type, defaulting an empty value to text/plain.
 func ParseDefaultMediaType(contentTypeValue string) (string, map[string]string, error) {
 	if contentTypeValue == "" {
 		contentTypeValue = "text/plain"
@@ -470,6 +484,7 @@ func ParseDefaultMediaType(contentTypeValue string) (string, map[string]string, 
 	return mediatype, params, nil
 }
 
+// ParseContentTypeHeader parses and normalizes a Content-Type header.
 func ParseContentTypeHeader(contentTypeValue string) (ContentTypeHeader, error) {
 	var cth ContentTypeHeader
 
@@ -528,6 +543,7 @@ func isKnownHeader(name string) bool {
 	}
 }
 
+// ParseHeaders parses an email header using the parser's configured header parsers.
 func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 	contentType, err := ep.headersParsers.ContentType(
 		header.Get("Content-Type"),
@@ -740,7 +756,7 @@ func isInlineFile(
 
 	if contentType.ContentType == contentTypeTextPlain ||
 		contentType.ContentType == contentTypeTextEnriched ||
-		contentType.ContentType == contentTypeTextHtml {
+		contentType.ContentType == contentTypeTextHTML {
 		return false
 	}
 
@@ -753,7 +769,7 @@ func isAttachedFile(
 ) bool {
 	if contentType.ContentType != contentTypeTextPlain &&
 		contentType.ContentType != contentTypeTextEnriched &&
-		contentType.ContentType != contentTypeTextHtml {
+		contentType.ContentType != contentTypeTextHTML {
 		return true
 	}
 
@@ -889,12 +905,12 @@ func (ep *EmailParser) parsePart(
 			continue
 		}
 
-		if partContentType.ContentType == contentTypeTextHtml {
+		if partContentType.ContentType == contentTypeTextHTML {
 			if !ep.bodyFilter(partContentType) {
 				continue
 			}
 
-			partHtmlBody, err := parseText(part, enc, cte)
+			partHTMLBody, err := parseText(part, enc, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: "+
@@ -903,7 +919,7 @@ func (ep *EmailParser) parsePart(
 				)
 			}
 
-			emailBodies.html += partHtmlBody
+			emailBodies.html += partHTMLBody
 
 			continue
 		}

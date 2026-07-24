@@ -9,33 +9,40 @@ import (
 	"golang.org/x/net/html/charset"
 )
 
+// ParseEmailHeaders parses an email header using the default header parsers.
 func ParseEmailHeaders(header mail.Header) (Headers, error) {
 	defaultParser := NewEmailParser()
 
 	return defaultParser.ParseHeaders(header)
 }
 
+// ParseHeaders parses an email header using the default header parsers.
+//
+// Deprecated: ParseHeaders exists for backwards compatibility and will be
+// removed in the future. Use NewEmailParser().ParseHeaders or ParseEmailHeaders
+// instead.
 func ParseHeaders(header mail.Header) (Headers, error) {
-	// Deprecated: letters.ParseHeaders exists for backwards compatibility and
-	// will be removed in the future. Use letters.NewEmailParser().ParseHeaders
-	// or the letters.ParseEmailHeaders helper function instead.
 	return ParseEmailHeaders(header)
 }
 
+// ParseEmail parses an email message using a parser with the default options.
 func ParseEmail(r io.Reader) (Email, error) {
 	defaultParser := NewEmailParser()
 
 	return defaultParser.Parse(r)
 }
 
+// EmailParser parses email messages according to its configured options.
 type EmailParser struct {
 	bodyFilter     EmailBodyFilter
 	fileFilter     EmailFileFilter
 	headersParsers HeadersParsers
 }
 
+// EmailParserOption configures an EmailParser.
 type EmailParserOption func(*EmailParser)
 
+// DefaultHeadersParsers returns the default set of email header parsers.
 func DefaultHeadersParsers() HeadersParsers {
 	return HeadersParsers{
 		Date:               ParseDateHeader,
@@ -64,6 +71,7 @@ func DefaultHeadersParsers() HeadersParsers {
 	}
 }
 
+// NewEmailParser returns an EmailParser configured with the supplied options.
 func NewEmailParser(options ...EmailParserOption) *EmailParser {
 	ep := &EmailParser{
 		bodyFilter:     AllBodies,
@@ -78,6 +86,7 @@ func NewEmailParser(options ...EmailParserOption) *EmailParser {
 	return ep
 }
 
+// Parse reads and parses an email message.
 func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 	var email Email
 
@@ -138,7 +147,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 					)
 			}
 		}
-	case contentType == contentTypeTextHtml:
+	case contentType == contentTypeTextHTML:
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.HTML, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
