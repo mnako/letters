@@ -14,7 +14,7 @@ linters:
     - decorder
     - depguard
     - dogsled
-    #- dupl
+    - dupl
     - dupword
     - durationcheck
     #- err113
@@ -119,6 +119,7 @@ linters:
     rules:
       - path: _test\.go
         linters:
+          - dupl
           - goconst
 formatters:
   enable:
