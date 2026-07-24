@@ -23,7 +23,7 @@ linters:
     - errname
     - errorlint
     - exhaustive
-    #- exhaustruct
+    - exhaustruct
     - exptostd
     - fatcontext
     - forbidigo
@@ -119,6 +119,7 @@ linters:
       - path: _test\.go
         linters:
           - dupl
+          - exhaustruct
           - goconst
           - gosmopolitan
 formatters:

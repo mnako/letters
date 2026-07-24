@@ -97,9 +97,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		)
 	}
 
-	email = Email{
-		Headers: headers,
-	}
+	email.Headers = headers
 
 	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
 
