@@ -102,7 +102,7 @@ linters:
     - usetesting
     #- varnamelen
     - wastedassign
-    #- whitespace
+    - whitespace
     - wrapcheck
     - wsl_v5
     - zerologlint
