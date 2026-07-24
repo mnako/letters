@@ -421,8 +421,11 @@ func ParseContentDisposition(s string) (ContentDispositionHeader, error) {
 		)
 	}
 
-	cd, ok := cdMap[label]
-	if !ok {
+	cd := ContentDisposition(label)
+
+	switch cd {
+	case ContentDispositionAttachment, ContentDispositionInline:
+	default:
 		return cdh, fmt.Errorf("%w %q", ErrUnknownContentDisposition, label)
 	}
 
@@ -438,8 +441,11 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 		return cte7bit, nil
 	}
 
-	cte, ok := cteMap[label]
-	if !ok {
+	cte := ContentTransferEncoding(label)
+
+	switch cte {
+	case cte7bit, cte8bit, cteBinary, cteQuotedPrintable, cteBase64:
+	default:
 		return cte, fmt.Errorf("%w %q", ErrUnknownContentTransferEncoding, label)
 	}
 
@@ -491,6 +497,37 @@ func ParseContentTypeHeader(s string) (ContentTypeHeader, error) {
 	}, nil
 }
 
+func isKnownHeader(name string) bool {
+	switch name {
+	case "Date",
+		"Sender",
+		"From",
+		"Reply-To",
+		"To",
+		"Cc",
+		"Bcc",
+		"Message-Id",
+		"In-Reply-To",
+		"References",
+		"Subject",
+		"Comments",
+		"Keywords",
+		"Resent-Date",
+		"Resent-From",
+		"Resent-Sender",
+		"Resent-To",
+		"Resent-Cc",
+		"Resent-Bcc",
+		"Resent-Message-Id",
+		"Content-Transfer-Encoding",
+		"Content-Type",
+		"Content-Disposition":
+		return true
+	default:
+		return false
+	}
+}
+
 func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 	contentType, err := ep.headersParsers.ContentType(
 		header.Get("Content-Type"),
@@ -509,8 +546,7 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 	extraHeaders := make(map[string][]string)
 
 	for key, value := range header {
-		_, isKnownHeader := knownHeaders[key]
-		if isKnownHeader {
+		if isKnownHeader(key) {
 			continue
 		}
 

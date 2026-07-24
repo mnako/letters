@@ -6,49 +6,12 @@ import (
 	"time"
 )
 
-type void struct{}
-
-var member void
-
-// A set of headers supported directly in letters.structs.Email.Headers
-// (and not in letters.structs.Email.Headers.ExtraHeaders).
-var knownHeaders = map[string]void{
-	"Date":                      member,
-	"Sender":                    member,
-	"From":                      member,
-	"Reply-To":                  member,
-	"To":                        member,
-	"Cc":                        member,
-	"Bcc":                       member,
-	"Message-Id":                member,
-	"In-Reply-To":               member,
-	"References":                member,
-	"Subject":                   member,
-	"Comments":                  member,
-	"Keywords":                  member,
-	"Resent-Date":               member,
-	"Resent-From":               member,
-	"Resent-Sender":             member,
-	"Resent-To":                 member,
-	"Resent-Cc":                 member,
-	"Resent-Bcc":                member,
-	"Resent-Message-Id":         member,
-	"Content-Transfer-Encoding": member,
-	"Content-Type":              member,
-	"Content-Disposition":       member,
-}
-
 type ContentDisposition string
 
 const (
 	ContentDispositionAttachment ContentDisposition = "attachment"
 	ContentDispositionInline     ContentDisposition = "inline"
 )
-
-var cdMap = map[string]ContentDisposition{
-	"attachment": ContentDispositionAttachment,
-	"inline":     ContentDispositionInline,
-}
 
 const contentTypeMultipartPrefix = "multipart/"
 
@@ -80,14 +43,6 @@ const (
 	cteQuotedPrintable ContentTransferEncoding = "quoted-printable"
 	cteBase64          ContentTransferEncoding = "base64"
 )
-
-var cteMap = map[string]ContentTransferEncoding{
-	"7bit":             cte7bit,
-	"8bit":             cte8bit,
-	"binary":           cteBinary,
-	"quoted-printable": cteQuotedPrintable,
-	"base64":           cteBase64,
-}
 
 type UnknownContentTypeError struct {
 	contentType string
