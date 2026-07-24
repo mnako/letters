@@ -114,6 +114,7 @@ linters:
             - golang.org/x/net
             - golang.org/x/text
     varnamelen:
+      max-distance: 0
       min-name-length: 2
   exclusions:
     rules:

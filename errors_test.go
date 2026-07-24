@@ -29,7 +29,11 @@ func TestUnknownCharsetError(t *testing.T) {
 		"cannot lookup encoding x-invalid"
 
 	if err.Error() != expectedMessage {
-		t.Errorf("unexpected error message: got %q, want %q", err, expectedMessage)
+		t.Errorf(
+			"unexpected error message: got %q, want %q",
+			err,
+			expectedMessage,
+		)
 	}
 }
 
@@ -45,7 +49,11 @@ func TestUnknownContentDispositionError(t *testing.T) {
 		"unknown Content-Disposition \"unexpected\""
 
 	if err.Error() != expectedMessage {
-		t.Errorf("unexpected error message: got %q, want %q", err, expectedMessage)
+		t.Errorf(
+			"unexpected error message: got %q, want %q",
+			err,
+			expectedMessage,
+		)
 	}
 }
 
@@ -61,6 +69,10 @@ func TestUnknownContentTransferEncodingError(t *testing.T) {
 		"unknown Content-Transfer-Encoding \"unexpected\""
 
 	if err.Error() != expectedMessage {
-		t.Errorf("unexpected error message: got %q, want %q", err, expectedMessage)
+		t.Errorf(
+			"unexpected error message: got %q, want %q",
+			err,
+			expectedMessage,
+		)
 	}
 }

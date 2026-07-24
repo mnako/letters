@@ -270,14 +270,18 @@ func ParseDateHeader(dateHeader string) time.Time {
 
 	for _, formatWithObsZone := range formatsWithObsZone {
 		if obsLocation == nil {
-			t, err := time.Parse(formatWithObsZone, sWithoutObsZone)
+			parsedTime, err := time.Parse(formatWithObsZone, sWithoutObsZone)
 			if err == nil {
-				return t
+				return parsedTime
 			}
 		} else {
-			t, err := time.ParseInLocation(formatWithObsZone, sWithoutObsZone, obsLocation)
+			parsedTime, err := time.ParseInLocation(
+				formatWithObsZone,
+				sWithoutObsZone,
+				obsLocation,
+			)
 			if err == nil {
-				return t
+				return parsedTime
 			}
 		}
 	}
@@ -416,7 +420,9 @@ func ParseCommaSeparatedMessageIdHeader(s string) []MessageId {
 }
 
 // ParseContentDisposition parses a supported Content-Disposition header.
-func ParseContentDisposition(contentDispositionValue string) (ContentDispositionHeader, error) {
+func ParseContentDisposition(
+	contentDispositionValue string,
+) (ContentDispositionHeader, error) {
 	var cdh ContentDispositionHeader
 
 	label, params, err := mime.ParseMediaType(contentDispositionValue)
@@ -459,14 +465,20 @@ func ParseContentTransferEncoding(s string) (ContentTransferEncoding, error) {
 	switch cte {
 	case cte7bit, cte8bit, cteBinary, cteQuotedPrintable, cteBase64:
 	default:
-		return cte, fmt.Errorf("%w %q", ErrUnknownContentTransferEncoding, label)
+		return cte, fmt.Errorf(
+			"%w %q",
+			ErrUnknownContentTransferEncoding,
+			label,
+		)
 	}
 
 	return cte, nil
 }
 
 // ParseDefaultMediaType parses a media type, defaulting an empty value to text/plain.
-func ParseDefaultMediaType(contentTypeValue string) (string, map[string]string, error) {
+func ParseDefaultMediaType(
+	contentTypeValue string,
+) (string, map[string]string, error) {
 	if contentTypeValue == "" {
 		contentTypeValue = "text/plain"
 	}
@@ -485,7 +497,9 @@ func ParseDefaultMediaType(contentTypeValue string) (string, map[string]string, 
 }
 
 // ParseContentTypeHeader parses and normalizes a Content-Type header.
-func ParseContentTypeHeader(contentTypeValue string) (ContentTypeHeader, error) {
+func ParseContentTypeHeader(
+	contentTypeValue string,
+) (ContentTypeHeader, error) {
 	var cth ContentTypeHeader
 
 	mediaType, mediaTypeParams, err := ParseDefaultMediaType(contentTypeValue)

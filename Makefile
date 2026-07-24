@@ -1,9 +1,9 @@
 GOLANGCI_LINT_VERSION := $(shell cat .golangci-version)
 GOLANGCI_LINT_ALIAS := GOPROXY=direct go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
-GOLINES_ALIAS := GOPROXY=direct go run github.com/segmentio/golines@v0.12.2
+GOLINES_ALIAS := GOPROXY=direct go run github.com/golangci/golines@v0.15.0
 
 devcontainer:
-	docker run --rm -it -v .:/src -v ./.gopath:/go -w /src golang:1.24.0-bookworm bash
+	docker run --rm -it -v .:/src -v ./.gopath:/go -w /src golang:1.26.5-trixie bash
 
 format:
 	go fmt
