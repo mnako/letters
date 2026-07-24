@@ -44,7 +44,7 @@ linters:
     - goheader
     #- goimports
     - gomoddirectives
-    - gomodguard
+    - gomodguard_v2
     - goprintffuncname
     - gosec
     #- gosmopolitan
