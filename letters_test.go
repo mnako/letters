@@ -378,8 +378,8 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 		}
 
 		return &mail.Address{
-			Name:    "Custom-" + name + " " + (*sender).Name,
-			Address: strings.ToUpper((*sender).Address),
+			Name:    "Custom-" + name + " " + sender.Name,
+			Address: strings.ToUpper(sender.Address),
 		}, nil
 	}
 

@@ -29,15 +29,14 @@ linters:
     - forbidigo
     - forcetypeassert
     #- funlen
-    #- gci
     - ginkgolinter
     - gocheckcompilerdirectives
     #- gochecknoglobals
     - gochecknoinits
     - gochecksumtype
-    #- gocognit
+#    - gocognit
     - goconst
-    #- gocritic
+    - gocritic
     - gocyclo
     #- godot
     - godox

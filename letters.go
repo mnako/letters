@@ -114,7 +114,10 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		)
 	}
 
-	if email.Headers.ContentType.ContentType == contentTypeTextPlain {
+	contentType := email.Headers.ContentType.ContentType
+
+	switch {
+	case contentType == contentTypeTextPlain:
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.Text, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
@@ -125,7 +128,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 				)
 			}
 		}
-	} else if email.Headers.ContentType.ContentType == contentTypeTextEnriched {
+	case contentType == contentTypeTextEnriched:
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.EnrichedText, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
@@ -137,7 +140,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 					)
 			}
 		}
-	} else if email.Headers.ContentType.ContentType == contentTypeTextHtml {
+	case contentType == contentTypeTextHtml:
 		if ep.bodyFilter(email.Headers.ContentType) {
 			email.HTML, err = parseText(msg.Body, encoding, cte)
 			if err != nil {
@@ -149,10 +152,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 					)
 			}
 		}
-	} else if strings.HasPrefix(
-		email.Headers.ContentType.ContentType,
-		contentTypeMultipartPrefix,
-	) {
+	case strings.HasPrefix(contentType, contentTypeMultipartPrefix):
 		boundary := email.Headers.ContentType.Params["boundary"]
 
 		emailBodies, err := ep.parsePart(
@@ -175,7 +175,7 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		email.HTML = emailBodies.html
 		email.InlineFiles = emailBodies.InlineFiles
 		email.AttachedFiles = emailBodies.AttachedFiles
-	} else {
+	default:
 		afl, err := decodeAttachmentFileFromBody(msg.Body, email.Headers, cte)
 		if err != nil {
 			return email, fmt.Errorf(
