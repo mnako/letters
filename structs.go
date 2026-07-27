@@ -6,49 +6,14 @@ import (
 	"time"
 )
 
-type void struct{}
-
-var member void
-
-// A set of headers supported directly in letters.structs.Email.Headers
-// (and not in letters.structs.Email.Headers.ExtraHeaders)
-var knownHeaders = map[string]void{
-	"Date":                      member,
-	"Sender":                    member,
-	"From":                      member,
-	"Reply-To":                  member,
-	"To":                        member,
-	"Cc":                        member,
-	"Bcc":                       member,
-	"Message-Id":                member,
-	"In-Reply-To":               member,
-	"References":                member,
-	"Subject":                   member,
-	"Comments":                  member,
-	"Keywords":                  member,
-	"Resent-Date":               member,
-	"Resent-From":               member,
-	"Resent-Sender":             member,
-	"Resent-To":                 member,
-	"Resent-Cc":                 member,
-	"Resent-Bcc":                member,
-	"Resent-Message-Id":         member,
-	"Content-Transfer-Encoding": member,
-	"Content-Type":              member,
-	"Content-Disposition":       member,
-}
-
+// ContentDisposition identifies how a MIME part should be presented.
 type ContentDisposition string
 
+// ContentDispositionAttachment and ContentDispositionInline are supported dispositions.
 const (
 	ContentDispositionAttachment ContentDisposition = "attachment"
 	ContentDispositionInline     ContentDisposition = "inline"
 )
-
-var cdMap = map[string]ContentDisposition{
-	"attachment": ContentDispositionAttachment,
-	"inline":     ContentDispositionInline,
-}
 
 const contentTypeMultipartPrefix = "multipart/"
 
@@ -68,9 +33,10 @@ const (
 const (
 	contentTypeTextPlain    = "text/plain"
 	contentTypeTextEnriched = "text/enriched"
-	contentTypeTextHtml     = "text/html"
+	contentTypeTextHTML     = "text/html"
 )
 
+// ContentTransferEncoding identifies a MIME content-transfer encoding.
 type ContentTransferEncoding string
 
 const (
@@ -81,14 +47,7 @@ const (
 	cteBase64          ContentTransferEncoding = "base64"
 )
 
-var cteMap = map[string]ContentTransferEncoding{
-	"7bit":             cte7bit,
-	"8bit":             cte8bit,
-	"binary":           cteBinary,
-	"quoted-printable": cteQuotedPrintable,
-	"base64":           cteBase64,
-}
-
+// UnknownContentTypeError reports an unsupported MIME content type.
 type UnknownContentTypeError struct {
 	contentType string
 }
@@ -97,18 +56,24 @@ func (e *UnknownContentTypeError) Error() string {
 	return fmt.Sprintf("unknown Content-Type %q", e.contentType)
 }
 
+// MessageId represents a message identifier without angle-bracket delimiters.
+//
+//nolint:revive // The exported name is kept for backward compatibility.
 type MessageId string
 
+// ContentTypeHeader contains a media type and its parameters.
 type ContentTypeHeader struct {
 	ContentType string
 	Params      map[string]string
 }
 
+// ContentDispositionHeader contains a content disposition and its parameters.
 type ContentDispositionHeader struct {
 	ContentDisposition ContentDisposition
 	Params             map[string]string
 }
 
+// Headers contains the parsed headers of an email message.
 type Headers struct {
 	// RFC 3522 3.6.1.  The Origination Date Field
 	// The origination date field consists of the field name "Date" followed
@@ -553,6 +518,7 @@ func (eb *emailBodies) extend(b emailBodies) {
 	eb.AttachedFiles = append(eb.AttachedFiles, b.AttachedFiles...)
 }
 
+// Email contains the parsed headers, bodies, and files of an email message.
 type Email struct {
 	Headers Headers
 
@@ -564,6 +530,7 @@ type Email struct {
 	AttachedFiles []AttachedFile
 }
 
+// InlineFile contains a MIME file intended for inline presentation.
 type InlineFile struct {
 	ContentID          string
 	ContentType        ContentTypeHeader
@@ -571,6 +538,7 @@ type InlineFile struct {
 	Data               []byte
 }
 
+// AttachedFile contains a MIME file attached to an email message.
 type AttachedFile struct {
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader

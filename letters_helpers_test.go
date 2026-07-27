@@ -24,18 +24,21 @@ func testEmailHeadersFromFile(
 	rawEmail, err := os.Open(fp) //nolint:gosec
 	if err != nil {
 		t.Errorf("error while reading email from file: %s", err)
+
 		return
 	}
 
 	msg, err := mail.ReadMessage(rawEmail)
 	if err != nil {
 		t.Errorf("error while reading message from file: %s", err)
+
 		return
 	}
 
 	parsedEmailHeaders, err := letters.ParseEmailHeaders(msg.Header)
 	if err != nil {
 		t.Errorf("error while parsing email headers: %s", err)
+
 		return
 	}
 

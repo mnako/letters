@@ -31,12 +31,14 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 			rawEmail, err := os.Open(testCase.filepath)
 			if err != nil {
 				t.Errorf("error while reading email from file: %s", err)
+
 				return
 			}
 
 			defer func() {
 				if err := rawEmail.Close(); err != nil {
 					t.Errorf("error while closing rawEmail: %s", err)
+
 					return
 				}
 			}()
@@ -44,6 +46,7 @@ func testEmailCases(t *testing.T, tcs []emailTestCase) {
 			parsedEmail, err := testCase.emailParser.Parse(rawEmail)
 			if err != nil {
 				t.Errorf("error while parsing email: %s", err)
+
 				return
 			}
 
@@ -361,6 +364,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customDateHeaderParser := func(s string) time.Time {
 		date := letters.ParseDateHeader(s)
+
 		return date.Add(-1 * time.Hour)
 	}
 
@@ -374,8 +378,8 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 		}
 
 		return &mail.Address{
-			Name:    "Custom-" + name + " " + (*sender).Name,
-			Address: strings.ToUpper((*sender).Address),
+			Name:    "Custom-" + name + " " + sender.Name,
+			Address: strings.ToUpper(sender.Address),
 		}, nil
 	}
 
@@ -464,7 +468,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 		return bcc, nil
 	}
 
-	customMessageIdHeaderParser := func(_ string) letters.MessageId {
+	customMessageIDHeaderParser := func(_ string) letters.MessageId {
 		return letters.MessageId("Custom-Message-Id-1@example.com")
 	}
 
@@ -478,15 +482,17 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customSubjectHeaderParser := func(s string) string {
 		subject := letters.ParseStringHeader(s)
+
 		return strings.ToUpper(subject)
 	}
 
-	customCommentsHeaderParser := func(s string) string {
+	customCommentsHeaderParser := func(_ string) string {
 		return "COMMENTS REMOVED BY CUSTOM COMMENTS HEADER PARSER"
 	}
 
 	customKeywordsHeaderParser := func(s string) []string {
 		keywords := letters.ParseCommaSeparatedStringHeader(s)
+
 		return append(keywords, "Custom Injected Keyword 3")
 	}
 
@@ -502,6 +508,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 
 	customXClacksOverheadExtraHeaderParser := func(s string) string {
 		xClacksOverhead := letters.ParseStringHeader(s)
+
 		return strings.Replace(
 			xClacksOverhead,
 			"Terry Pratchett",
@@ -510,7 +517,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 		)
 	}
 
-	customXNonexistentExtraHeaderParser := func(s string) string {
+	customXNonexistentExtraHeaderParser := func(_ string) string {
 		return "This header does not exist"
 	}
 
@@ -526,7 +533,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 				letters.WithToHeaderParser(customToHeaderParser),
 				letters.WithCcHeaderParser(customCcHeaderParser),
 				letters.WithBccHeaderParser(customBccHeaderParser),
-				letters.WithMessageIdHeaderParser(customMessageIdHeaderParser),
+				letters.WithMessageIdHeaderParser(customMessageIDHeaderParser),
 				letters.WithInReplyHeaderParser(customInReplyToHeaderParser),
 				letters.WithReferencesHeaderParser(
 					customReferencesToHeaderParser,
@@ -2848,7 +2855,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_ascii_over_7bit.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -3346,7 +3353,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_ascii_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -3844,7 +3851,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_ascii_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -4342,7 +4349,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_utf-8_over_7bit.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -4840,7 +4847,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -5338,7 +5345,7 @@ Pack my box with five dozen liquor jugs.`,
 			filepath: "tests/test_english_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -9125,7 +9132,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 			filepath: "tests/test_chinese_multipart_mixed_gb18030_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -9643,7 +9650,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(
 			filepath: "tests/test_chinese_multipart_mixed_gb18030_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -10159,7 +10166,7 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 			filepath: "tests/test_chinese_multipart_mixed_gbk_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -10675,7 +10682,7 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 			filepath: "tests/test_chinese_multipart_mixed_gbk_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -13785,7 +13792,7 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 			filepath: "tests/test_finnish_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -14277,7 +14284,7 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 			filepath: "tests/test_finnish_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -14769,7 +14776,7 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 			filepath: "tests/test_finnish_multipart_mixed_iso-8859-15_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -15263,7 +15270,7 @@ Wieniläinen sioux:ta puhuva ökyzombie diggaa Åsan roquefort-tacoja.`,
 			filepath: "tests/test_finnish_multipart_mixed_iso-8859-15_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -18288,7 +18295,7 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 			filepath: "tests/test_icelandic_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -18764,7 +18771,7 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 			filepath: "tests/test_icelandic_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -19238,7 +19245,7 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 			filepath: "tests/test_icelandic_multipart_mixed_iso-8859-1_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -19714,7 +19721,7 @@ Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
 			filepath: "tests/test_icelandic_multipart_mixed_iso-8859-1_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -24644,7 +24651,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_utf-8_over_7bit.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -25226,7 +25233,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -25808,7 +25815,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -26390,7 +26397,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_iso-2022-jp_over_7bit.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -26972,7 +26979,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_iso-2022-jp_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -27556,7 +27563,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_iso-2022-jp_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -28138,7 +28145,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_euc-jp_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -28722,7 +28729,7 @@ Iro wa nioedo / Chirinuru o / Wa ga yo tare zo / Tsune naran / Ui no okuyama / K
 			filepath: "tests/test_japanese_multipart_mixed_euc-jp_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -33120,7 +33127,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 			filepath: "tests/test_korean_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -33582,7 +33589,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 			filepath: "tests/test_korean_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -34044,7 +34051,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 			filepath: "tests/test_korean_multipart_mixed_euc-kr_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -34506,7 +34513,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 			filepath: "tests/test_korean_multipart_mixed_euc-kr_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -37587,7 +37594,7 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 			filepath: "tests/test_polish_multipart_mixed_utf-8_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -38091,7 +38098,7 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 			filepath: "tests/test_polish_multipart_mixed_utf-8_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -38595,7 +38602,7 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 			filepath: "tests/test_polish_multipart_mixed_iso-8859-2_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -39101,7 +39108,7 @@ Chwyć małżonkę, strój bądź pleśń z fugi.`,
 			filepath: "tests/test_polish_multipart_mixed_iso-8859-2_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -42786,7 +42793,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 			filepath: "tests/test_thai_multipart_mixed_iso-8859-11_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -43262,7 +43269,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(
 			filepath: "tests/test_thai_multipart_mixed_iso-8859-11_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -43736,7 +43743,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 			filepath: "tests/test_thai_multipart_mixed_windows-874_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -44212,7 +44219,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(
 			filepath: "tests/test_thai_multipart_mixed_windows-874_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -44686,7 +44693,7 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 			filepath: "tests/test_thai_multipart_mixed_tis-620_over_base64.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)
@@ -45160,7 +45167,7 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 			filepath: "tests/test_thai_multipart_mixed_tis-620_over_quoted-printable.txt",
 			emailParser: letters.NewEmailParser(
 				letters.WithFileFilter(
-					func(cth letters.ContentTypeHeader, cdh letters.ContentDispositionHeader) bool {
+					func(cth letters.ContentTypeHeader, _ letters.ContentDispositionHeader) bool {
 						return strings.HasSuffix(
 							strings.ToLower(cth.Params["name"]), ".txt",
 						)

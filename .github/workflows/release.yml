@@ -7,18 +7,17 @@ name: Create Release from Tag
 jobs:
   build:
     name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
+      - name: Create draft release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: Auto-generate release notes
-          draft: true
-          prerelease: false
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: >
+          gh release create "$GITHUB_REF_NAME"
+          --draft
+          --generate-notes
+          --title "Release $GITHUB_REF_NAME"
+          --verify-tag

@@ -10,44 +10,42 @@ linters:
     - canonicalheader
     - containedctx
     - contextcheck
-    #- cyclop
+    # - cyclop
     - decorder
-    #- depguard
+    - depguard
     - dogsled
-    #- dupl
+    - dupl
     - dupword
     - durationcheck
-    #- err113
+    - err113
     - errcheck
     - errchkjson
     - errname
-    #- errorlint
-    #- exhaustive
-    #- exhaustruct
+    - errorlint
+    - exhaustive
+    - exhaustruct
     - exptostd
     - fatcontext
     - forbidigo
     - forcetypeassert
-    #- funlen
-    #- gci
+    # - funlen
     - ginkgolinter
     - gocheckcompilerdirectives
-    #- gochecknoglobals
+    - gochecknoglobals
     - gochecknoinits
     - gochecksumtype
-    #- gocognit
+    # - gocognit
     - goconst
-    #- gocritic
+    - gocritic
     - gocyclo
-    #- godot
+    # - godot
     - godox
     - goheader
-    #- goimports
     - gomoddirectives
-    - gomodguard
+    - gomodguard_v2
     - goprintffuncname
     - gosec
-    #- gosmopolitan
+    - gosmopolitan
     - govet
     - grouper
     - iface
@@ -56,39 +54,38 @@ linters:
     - ineffassign
     - interfacebloat
     - ireturn
-    #- lll
+    - lll
     - loggercheck
-    #- maintidx
+    # - maintidx
     - makezero
     - mirror
     - misspell
     - mnd
     - musttag
     - nakedret
-    #- nestif
+    - nestif
     - nilerr
     - nilnesserr
     - nilnil
-    #- nlreturn
+    - nlreturn
     - noctx
     - nolintlint
     - nonamedreturns
     - nosprintfhostport
     - paralleltest
     - perfsprint
-    #- prealloc
+    - prealloc
     - predeclared
     - promlinter
     - protogetter
     - reassign
     - recvcheck
-    #- revive
+    - revive
     - rowserrcheck
     - sloglint
     - spancheck
     - sqlclosecheck
     - staticcheck
-    #- stylecheck
     - tagalign
     - tagliatelle
     - testableexamples
@@ -101,12 +98,33 @@ linters:
     - unused
     - usestdlibvars
     - usetesting
-    #- varnamelen
+    - varnamelen
     - wastedassign
-    #- whitespace
+    - whitespace
     - wrapcheck
-    #- wsl
+    - wsl_v5
     - zerologlint
+  settings:
+    depguard:
+      rules:
+        main:
+          allow:
+            - $gostd
+            - github.com/mnako/letters
+            - golang.org/x/net
+            - golang.org/x/text
+    varnamelen:
+      max-distance: 0
+      min-name-length: 2
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - dupl
+          - exhaustruct
+          - goconst
+          - gosmopolitan
+          - lll
 formatters:
   enable:
     - gofmt

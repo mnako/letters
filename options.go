@@ -12,12 +12,13 @@ type (
 	parseCommaSeparatedStringHeaderFn    func(string) []string
 	parseAddressHeaderFn                 func(mail.Header, string) (*mail.Address, error)
 	parseAddressListHeaderFn             func(mail.Header, string) ([]*mail.Address, error)
-	parseMessageIdHeaderFn               func(string) MessageId
-	parseCommaSeparatedMessageIdHeaderFn func(string) []MessageId
+	parseMessageIDHeaderFn               func(string) MessageId
+	parseCommaSeparatedMessageIDHeaderFn func(string) []MessageId
 	parseContentDispositionHeaderFn      func(string) (ContentDispositionHeader, error)
 	parseContentTypeHeaderFn             func(string) (ContentTypeHeader, error)
 )
 
+// HeadersParsers contains the parser functions used for individual headers.
 type HeadersParsers struct {
 	Date               parseDateHeaderFn
 	Sender             parseAddressHeaderFn
@@ -26,9 +27,9 @@ type HeadersParsers struct {
 	To                 parseAddressListHeaderFn
 	Cc                 parseAddressListHeaderFn
 	Bcc                parseAddressListHeaderFn
-	MessageID          parseMessageIdHeaderFn
-	InReplyTo          parseCommaSeparatedMessageIdHeaderFn
-	References         parseCommaSeparatedMessageIdHeaderFn
+	MessageID          parseMessageIDHeaderFn
+	InReplyTo          parseCommaSeparatedMessageIDHeaderFn
+	References         parseCommaSeparatedMessageIDHeaderFn
 	Subject            parseStringHeaderFn
 	Comments           parseStringHeaderFn
 	Keywords           parseCommaSeparatedStringHeaderFn
@@ -38,12 +39,13 @@ type HeadersParsers struct {
 	ResentTo           parseAddressListHeaderFn
 	ResentCc           parseAddressListHeaderFn
 	ResentBcc          parseAddressListHeaderFn
-	ResentMessageID    parseMessageIdHeaderFn
+	ResentMessageID    parseMessageIDHeaderFn
 	ContentType        parseContentTypeHeaderFn
 	ContentDisposition parseContentDispositionHeaderFn
 	ExtraHeaders       map[string]parseStringHeaderFn
 }
 
+// WithDateHeaderParser configures the parser used for the Date header.
 func WithDateHeaderParser(
 	dateHeaderParserFn parseDateHeaderFn,
 ) EmailParserOption {
@@ -52,6 +54,7 @@ func WithDateHeaderParser(
 	}
 }
 
+// WithSenderHeaderParser configures the parser used for the Sender header.
 func WithSenderHeaderParser(
 	senderHeaderParserFn parseAddressHeaderFn,
 ) EmailParserOption {
@@ -60,6 +63,7 @@ func WithSenderHeaderParser(
 	}
 }
 
+// WithFromHeaderParser configures the parser used for the From header.
 func WithFromHeaderParser(
 	fromHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -68,6 +72,7 @@ func WithFromHeaderParser(
 	}
 }
 
+// WithReplyToHeaderParser configures the parser used for the Reply-To header.
 func WithReplyToHeaderParser(
 	replyToHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -76,6 +81,7 @@ func WithReplyToHeaderParser(
 	}
 }
 
+// WithToHeaderParser configures the parser used for the To header.
 func WithToHeaderParser(
 	toHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -84,6 +90,7 @@ func WithToHeaderParser(
 	}
 }
 
+// WithCcHeaderParser configures the parser used for the Cc header.
 func WithCcHeaderParser(
 	ccHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -92,6 +99,7 @@ func WithCcHeaderParser(
 	}
 }
 
+// WithBccHeaderParser configures the parser used for the Bcc header.
 func WithBccHeaderParser(
 	bccHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -100,30 +108,36 @@ func WithBccHeaderParser(
 	}
 }
 
+// WithMessageIdHeaderParser configures the parser used for the Message-ID header.
+//
+//nolint:revive // The exported name is kept for backward compatibility.
 func WithMessageIdHeaderParser(
-	messageIDHeaderParserFn parseMessageIdHeaderFn,
+	messageIDHeaderParserFn parseMessageIDHeaderFn,
 ) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.MessageID = messageIDHeaderParserFn
 	}
 }
 
+// WithInReplyHeaderParser configures the parser used for the In-Reply-To header.
 func WithInReplyHeaderParser(
-	inReplyHeaderParserFn parseCommaSeparatedMessageIdHeaderFn,
+	inReplyHeaderParserFn parseCommaSeparatedMessageIDHeaderFn,
 ) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.InReplyTo = inReplyHeaderParserFn
 	}
 }
 
+// WithReferencesHeaderParser configures the parser used for the References header.
 func WithReferencesHeaderParser(
-	referencesHeaderParserFn parseCommaSeparatedMessageIdHeaderFn,
+	referencesHeaderParserFn parseCommaSeparatedMessageIDHeaderFn,
 ) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.References = referencesHeaderParserFn
 	}
 }
 
+// WithSubjectHeaderParser configures the parser used for the Subject header.
 func WithSubjectHeaderParser(
 	subjectHeaderParserFn parseStringHeaderFn,
 ) EmailParserOption {
@@ -132,6 +146,7 @@ func WithSubjectHeaderParser(
 	}
 }
 
+// WithCommentsHeaderParser configures the parser used for the Comments header.
 func WithCommentsHeaderParser(
 	commentsHeaderParserFn parseStringHeaderFn,
 ) EmailParserOption {
@@ -140,6 +155,7 @@ func WithCommentsHeaderParser(
 	}
 }
 
+// WithKeywordsHeaderParser configures the parser used for the Keywords header.
 func WithKeywordsHeaderParser(
 	keywordsHeaderParserFn parseCommaSeparatedStringHeaderFn,
 ) EmailParserOption {
@@ -148,6 +164,7 @@ func WithKeywordsHeaderParser(
 	}
 }
 
+// WithResentDateHeaderParser configures the parser used for the Resent-Date header.
 func WithResentDateHeaderParser(
 	resentDateHeaderParserFn parseDateHeaderFn,
 ) EmailParserOption {
@@ -156,6 +173,7 @@ func WithResentDateHeaderParser(
 	}
 }
 
+// WithResentFromHeaderParser configures the parser used for the Resent-From header.
 func WithResentFromHeaderParser(
 	resentFromHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -164,6 +182,7 @@ func WithResentFromHeaderParser(
 	}
 }
 
+// WithResentFromParser configures the parser used for the Resent-From header.
 func WithResentFromParser(
 	resentFromHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -172,6 +191,7 @@ func WithResentFromParser(
 	}
 }
 
+// WithResentSenderHeaderParser configures the parser used for the Resent-Sender header.
 func WithResentSenderHeaderParser(
 	resentSenderHeaderParserFn parseAddressHeaderFn,
 ) EmailParserOption {
@@ -180,6 +200,7 @@ func WithResentSenderHeaderParser(
 	}
 }
 
+// WithResentToHeaderParser configures the parser used for the Resent-To header.
 func WithResentToHeaderParser(
 	resentToHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -188,6 +209,7 @@ func WithResentToHeaderParser(
 	}
 }
 
+// WithResentCcHeaderParser configures the parser used for the Resent-Cc header.
 func WithResentCcHeaderParser(
 	resentCcHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -196,6 +218,7 @@ func WithResentCcHeaderParser(
 	}
 }
 
+// WithResentBccHeaderParser configures the parser used for the Resent-Bcc header.
 func WithResentBccHeaderParser(
 	resentBccHeaderParserFn parseAddressListHeaderFn,
 ) EmailParserOption {
@@ -204,14 +227,18 @@ func WithResentBccHeaderParser(
 	}
 }
 
+// WithResentMessageIdHeaderParser configures the parser used for the Resent-Message-ID header.
+//
+//nolint:revive // The exported name is kept for backward compatibility.
 func WithResentMessageIdHeaderParser(
-	resentMessageIDHeaderParserFn parseMessageIdHeaderFn,
+	resentMessageIDHeaderParserFn parseMessageIDHeaderFn,
 ) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers.ResentMessageID = resentMessageIDHeaderParserFn
 	}
 }
 
+// WithContentTypeHeaderParser configures the parser used for the Content-Type header.
 func WithContentTypeHeaderParser(
 	contentTypeHeaderParserFn parseContentTypeHeaderFn,
 ) EmailParserOption {
@@ -220,6 +247,7 @@ func WithContentTypeHeaderParser(
 	}
 }
 
+// WithContentDispositionHeaderParser configures the parser used for the Content-Disposition header.
 func WithContentDispositionHeaderParser(
 	contentDispositionHeaderParserFn parseContentDispositionHeaderFn,
 ) EmailParserOption {
@@ -228,6 +256,7 @@ func WithContentDispositionHeaderParser(
 	}
 }
 
+// WithExtraHeaderParser configures a parser for an additional named header.
 func WithExtraHeaderParser(
 	headerName string,
 	extraHeaderParserFn parseStringHeaderFn,
@@ -237,6 +266,7 @@ func WithExtraHeaderParser(
 	}
 }
 
+// WithHeadersParsers replaces all header parsers used by an EmailParser.
 func WithHeadersParsers(headersParsers HeadersParsers) EmailParserOption {
 	return func(ep *EmailParser) {
 		ep.headersParsers = headersParsers
