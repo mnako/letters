@@ -75,7 +75,7 @@ type ContentDispositionHeader struct {
 
 // Headers contains the parsed headers of an email message.
 type Headers struct {
-	// RFC 3522 3.6.1.  The Origination Date Field
+	// RFC 5322 3.6.1.  The Origination Date Field
 	// The origination date field consists of the field name "Date" followed
 	// by a date-time specification.
 	//
@@ -95,7 +95,7 @@ type Headers struct {
 	// connected to the network to send the message.)
 	Date time.Time
 
-	// RFC 3522 3.6.2.  Originator Fields
+	// RFC 5322 3.6.2.  Originator Fields
 	//
 	// The originator fields of a message consist of the from field, the
 	// sender field (when applicable), and optionally the reply-to field.
@@ -150,7 +150,7 @@ type Headers struct {
 	From    []*mail.Address
 	ReplyTo []*mail.Address
 
-	// RFC 3522 3.6.3.  Destination Address Fields
+	// RFC 5322 3.6.3.  Destination Address Fields
 	//
 	// The destination fields of a message consist of three possible fields,
 	// each of the same form: the field name, which is either "To", "Cc", or
@@ -174,7 +174,7 @@ type Headers struct {
 	Cc  []*mail.Address
 	Bcc []*mail.Address
 
-	// RFC 3522 3.6.4.  Identification Fields
+	// RFC 5322 3.6.4.  Identification Fields
 	//
 	// Though listed as optional in the table in section 3.6, every message
 	// SHOULD have a "Message-ID:" field.  Furthermore, reply messages
@@ -304,7 +304,7 @@ type Headers struct {
 	InReplyTo  []MessageId
 	References []MessageId
 
-	// RFC 3522 3.6.5.  Informational Fields
+	// RFC 5322 3.6.5.  Informational Fields
 	//
 	// The informational fields are all optional.  The "Subject:" and
 	// "Comments:" fields are unstructured fields as defined in section
@@ -335,7 +335,7 @@ type Headers struct {
 	Comments string
 	Keywords []string
 
-	// RFC 3522 3.6.6.  Resent Fields
+	// RFC 5322 3.6.6.  Resent Fields
 	//
 	// Resent fields SHOULD be added to any message that is reintroduced by
 	// a user into the transport system.  A separate set of resent fields
