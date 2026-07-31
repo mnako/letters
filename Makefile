@@ -1,4 +1,4 @@
-TOOL_ENV := GOPROXY=direct GOWORK=$(CURDIR)/tools/go.work
+TOOL_ENV := GOWORK=$(CURDIR)/tools/go.work
 GOLANGCI_LINT := $(TOOL_ENV) go tool golangci-lint
 
 devcontainer:
