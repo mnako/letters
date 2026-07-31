@@ -30,7 +30,7 @@ inline and attached files.
 Install Letters:
 
 ```sh
-go get github.com/mnako/letters@v0.2.8
+go get github.com/mnako/letters@v0.3.0
 ```
 
 ### Quickstart
@@ -57,13 +57,13 @@ import (
 func main() {
   rawEmail, err := os.Open("email.eml")
   if err != nil {
-    log.Fatal("error while reading email from file: %w", err)
+    log.Fatal("error while reading email from file: ", err)
     return
   }
 
   defer func() {
     if err := rawEmail.Close(); err != nil {
-      log.Fatal("error while closing rawEmail: %w", err)
+      log.Fatal("error while closing rawEmail: ", err)
       return
     }
   }()
@@ -203,13 +203,13 @@ email.AttachedFiles
 The same default parser and methods will work for other languages, text
 encodings, and transfer-encodings:
 
-````go
-r := strings.NewReader(```Subject: =?ISO-2022-JP?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
+```go
+r := strings.NewReader(`Subject: =?ISO-2022-JP?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
 Content-Type: text/plain; charset=ISO-2022-JP
 
 
 =1B$B?'$OFw$($I=1B(B
-=1B$B;6$j$L$k$r=1B(B```)
+=1B$B;6$j$L$k$r=1B(B`)
 
 email, _ := letters.ParseEmail(r)
 
@@ -218,7 +218,7 @@ email.Headers.Subject
 
 email.Text
 // "色は匂えど散りぬるを..."
-````
+```
 
 #### Parse Email Headers
 
@@ -230,20 +230,20 @@ the default parser, and returns a `letters.Headers` struct or an error:
 ```go
 msg, err := mail.ReadMessage(rawEmail)
 if err != nil {
-    log.Fatal("error while reading message from file: %s", err)
+    log.Fatal("error while reading message from file: ", err)
     return
 }
 
 headers, err := letters.ParseEmailHeaders(msg.Header)
 if err != nil {
-    log.Fatal("error while parsing email headers: %s", err)
+    log.Fatal("error while parsing email headers: ", err)
     return
 }
 
 headers.Sender
 // mail.Address{Name: "Alice Sender", Address: "alice.sender@example.com"}
 
-headers.Headers.From
+headers.From
 // []mail.Address{
 //  {Name: "Alice Sender", Address: "alice.sender@example.com"},
 //  {Name: "Alice Sender", Address: "alice.sender@example.net"},
@@ -252,7 +252,7 @@ headers.Headers.From
 // ...
 ```
 
-> [!TIP] 
+> [!TIP]
 > The `letters.ParseEmail()` and `letters.ParseEmailHeaders()` helpers
 > exist for developers’ convenience and are a good entrypoint to get started
 > quickly. However, if you find yourself in need of customising the parser to,
@@ -262,7 +262,7 @@ headers.Headers.From
 
 ### Advanced Usage
 
-This section documents come of Letters more advanced features.
+This section documents some of Letters’ more advanced features.
 
 #### The Email Parser
 
@@ -301,7 +301,7 @@ includes a `NoFiles` filter that does precisely that:
 
 ```go
 noFilesEmailParser := letters.NewEmailParser(
-    letters.WithFileFilter(NoFiles),
+    letters.WithFileFilter(letters.NoFiles),
 )
 email, err := noFilesEmailParser.Parse(rawEmail)
 if err != nil {
@@ -370,7 +370,7 @@ inlineFilesOnlyParser := letters.NewEmailParser(
 )
 ```
 
-You can implement arbitrarily complex conditions with those filter.
+You can implement arbitrarily complex conditions with those filters.
 
 #### Customising Headers Parsers
 
@@ -508,12 +508,12 @@ customEmailParser := letters.NewEmailParser(
 - Easy access to inline attachments
 - Easy access to attached files
 
-All of that and more in a minimal Golang library with realistic email examples
+All of that and more in a minimal Go library with realistic email examples
 and thorough test coverage.
 
 ## Current Limitations
 
-- S/MIME `multipart/signed` email are limited to clear-signed messages
+- S/MIME `multipart/signed` emails are limited to clear-signed messages
 - The decryption and signature verification and any other cryptography-related
   tasks need to be performed outside of letters.
 
@@ -524,9 +524,9 @@ Feature-complete and tests passing.
 Currently, gathering feedback and refactoring code before releasing v1.0.0.
 Fields and API are still subject to change.
 
-# Release Policy
+## Release Policy
 
-We follow [Go’s Release Policy](https://go.dev/doc/devel/release#policy) 
+We follow [Go’s Release Policy](https://go.dev/doc/devel/release#policy)
 and commit to supporting at least the two most recent major versions of Go.
 
-Letter v0.2.8 supports Go versions 1.24 through 1.25.
+Letters v0.3.0 supports Go versions 1.24 through 1.26.
