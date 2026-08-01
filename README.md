@@ -30,7 +30,7 @@ inline and attached files.
 Install Letters:
 
 ```sh
-go get github.com/mnako/letters@v0.3.0
+go get github.com/mnako/letters@v0.3.1
 ```
 
 ### Quickstart
@@ -529,4 +529,4 @@ Fields and API are still subject to change.
 We follow [Go’s Release Policy](https://go.dev/doc/devel/release#policy)
 and commit to supporting at least the two most recent major versions of Go.
 
-Letters v0.3.0 supports Go versions 1.24 through 1.26.
+Letters v0.3.1 supports Go versions 1.25 through 1.26.
