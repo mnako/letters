@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"golang.org/x/net/html/charset"
-	"golang.org/x/text/encoding"
 )
 
 func normalizeMultilineString(s string) string {
@@ -734,11 +733,16 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 }
 
 func parseText(
-	t io.Reader,
-	e encoding.Encoding,
+	content io.Reader,
+	charsetLabel string,
 	cte ContentTransferEncoding,
 ) (string, error) {
-	reader, err := decodeContent(t, e, cte)
+	textEncoding, _ := charset.Lookup(charsetLabel)
+	if textEncoding == nil && charsetLabel != "" {
+		return "", fmt.Errorf("%w %s", ErrUnknownCharset, charsetLabel)
+	}
+
+	reader, err := decodeContent(content, textEncoding, cte)
 	if err != nil {
 		return "", fmt.Errorf(
 			"letters.parsers.parseText: "+
@@ -834,8 +838,6 @@ func (ep *EmailParser) parsePart(
 			charsetLabel = parentContentType.Params["charset"]
 		}
 
-		enc, _ := charset.Lookup(charsetLabel)
-
 		cte, err := ParseContentTransferEncoding(
 			part.Header.Get("Content-Transfer-Encoding"),
 		)
@@ -885,7 +887,7 @@ func (ep *EmailParser) parsePart(
 				continue
 			}
 
-			partTextBody, err := parseText(part, enc, cte)
+			partTextBody, err := parseText(part, charsetLabel, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: "+
@@ -905,7 +907,7 @@ func (ep *EmailParser) parsePart(
 				continue
 			}
 
-			partEnrichedText, err := parseText(part, enc, cte)
+			partEnrichedText, err := parseText(part, charsetLabel, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: "+
@@ -924,7 +926,7 @@ func (ep *EmailParser) parsePart(
 				continue
 			}
 
-			partHTMLBody, err := parseText(part, enc, cte)
+			partHTMLBody, err := parseText(part, charsetLabel, cte)
 			if err != nil {
 				return emailBodies, fmt.Errorf(
 					"letters.parsers.parsePart: "+
