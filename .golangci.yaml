@@ -42,7 +42,7 @@ linters:
     - godox
     - goheader
     - gomoddirectives
-    - gomodguard_v2
+    - gomodguard
     - goprintffuncname
     - gosec
     - gosmopolitan
@@ -127,5 +127,12 @@ linters:
           - lll
 formatters:
   enable:
+    - gci
     - gofmt
     - gofumpt
+    - goimports
+    - golines
+  settings:
+    golines:
+      max-len: 80
+      chain-split-dots: false

@@ -7,14 +7,15 @@ name: Create Release from Tag
 jobs:
   build:
     name: Create Release
-    runs-on: ubuntu-slim
     permissions:
       contents: write
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
     steps:
       - name: Create draft release
         env:
-          GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
         run: >
           gh release create "$GITHUB_REF_NAME"
           --draft

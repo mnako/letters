@@ -1,14 +1,12 @@
-GOLANGCI_LINT_VERSION := $(shell cat .golangci-version)
-GOLANGCI_LINT_ALIAS := GOPROXY=direct go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
-GOLINES_ALIAS := GOPROXY=direct go run github.com/golangci/golines@v0.15.0
+TOOL_ENV := GOWORK=$(CURDIR)/tools/go.work
+GOLANGCI_LINT := $(TOOL_ENV) go tool golangci-lint
 
 devcontainer:
 	docker run --rm -it -v .:/src -v ./.gopath:/go -w /src golang:1.26.5-trixie bash
 
 format:
-	go fmt
-	$(GOLINES_ALIAS) -w -m80 --no-chain-split-dots **.go
-	$(GOLANGCI_LINT_ALIAS) run --fix
+	$(GOLANGCI_LINT) fmt
+	$(GOLANGCI_LINT) run --fix
 
 test:
 	go test -v ./... -cover
@@ -16,6 +14,7 @@ test:
 	go mod verify
 
 lint:
-	$(GOLANGCI_LINT_ALIAS) run
+	$(GOLANGCI_LINT) fmt --diff
+	$(GOLANGCI_LINT) run
 
 .PHONY: devcontainer format test lint
