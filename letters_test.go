@@ -597,7 +597,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bitCustomHeaderParsers(
 				letters.WithCcHeaderParser(customCcHeaderParser),
 				letters.WithBccHeaderParser(customBccHeaderParser),
 				letters.WithMessageIdHeaderParser(customMessageIDHeaderParser),
-				letters.WithInReplyHeaderParser(customInReplyToHeaderParser),
+				letters.WithInReplyToHeaderParser(customInReplyToHeaderParser),
 				letters.WithReferencesHeaderParser(
 					customReferencesToHeaderParser,
 				),
