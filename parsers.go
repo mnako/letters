@@ -569,9 +569,16 @@ func (ep *EmailParser) ParseHeaders(header mail.Header) (Headers, error) {
 			err)
 	}
 
-	contentDisposition, _ := ep.headersParsers.ContentDisposition(
+	contentDisposition, err := ep.headersParsers.ContentDisposition(
 		header.Get("Content-Disposition"),
 	)
+	if err != nil {
+		return Headers{}, fmt.Errorf(
+			"letters.parsers.ParseHeaders: "+
+				"cannot parse Content-Disposition: %w",
+			err,
+		)
+	}
 
 	extraHeaders := make(map[string][]string)
 
