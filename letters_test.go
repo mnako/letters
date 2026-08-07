@@ -25009,17 +25009,17 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					Subject: "📧 Test Íslenskt pangram",
 					ReplyTo: []*mail.Address{
 						{
-							Name:    "Alice Sendandidóttir",
+							Name:    "Sendandidóttir, Alice",
 							Address: "alice.sendandidottir@example.net",
 						},
 					},
 					Sender: &mail.Address{
-						Name:    "Alice Sendandidóttir",
+						Name:    "Sendandidóttir, Alice",
 						Address: "alice.sendandidottir@example.com",
 					},
 					From: []*mail.Address{
 						{
-							Name:    "Alice Sendandidóttir",
+							Name:    "Sendandidóttir, Alice",
 							Address: "alice.sendandidottir@example.com",
 						},
 						{
@@ -25029,7 +25029,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					},
 					To: []*mail.Address{
 						{
-							Name:    "Bob Viðtakandison",
+							Name:    "Viðtakandison, Bob",
 							Address: "bob.didtakandison@example.com",
 						},
 						{
@@ -25039,7 +25039,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					},
 					Cc: []*mail.Address{
 						{
-							Name:    "Dan Viðtakandison",
+							Name:    "Viðtakandison, Dan",
 							Address: "dan.vidtakandison@example.com",
 						},
 						{
@@ -25049,7 +25049,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					},
 					Bcc: []*mail.Address{
 						{
-							Name:    "Frank Viðtakandison",
+							Name:    "Viðtakandison, Frank",
 							Address: "frank.vidtakandison@example.com",
 						},
 						{
@@ -25065,7 +25065,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					ResentDate: expectedDate,
 					ResentFrom: []*mail.Address{
 						{
-							Name:    "Alice Sendandidóttir",
+							Name:    "Sendandidóttir, Alice",
 							Address: "alice.sendandidottir@example.net",
 						},
 						{
@@ -25074,12 +25074,12 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 						},
 					},
 					ResentSender: &mail.Address{
-						Name:    "Alice Sendandidóttir",
+						Name:    "Sendandidóttir, Alice",
 						Address: "alice.sendandidottir@example.net",
 					},
 					ResentTo: []*mail.Address{
 						{
-							Name:    "Bob Viðtakandison",
+							Name:    "Viðtakandison, Bob",
 							Address: "bob.didtakandison@example.net",
 						},
 						{
@@ -25089,7 +25089,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					},
 					ResentCc: []*mail.Address{
 						{
-							Name:    "Dan Viðtakandison",
+							Name:    "Viðtakandison, Dan",
 							Address: "dan.vidtakandison@example.net",
 						},
 						{
@@ -25099,7 +25099,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 					},
 					ResentBcc: []*mail.Address{
 						{
-							Name:    "Frank Viðtakandison",
+							Name:    "Viðtakandison, Frank",
 							Address: "frank.vidtakandison@example.net",
 						},
 						{
