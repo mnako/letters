@@ -119,12 +119,12 @@ func WithMessageIdHeaderParser(
 	}
 }
 
-// WithInReplyHeaderParser configures the parser used for the In-Reply-To header.
-func WithInReplyHeaderParser(
-	inReplyHeaderParserFn parseCommaSeparatedMessageIDHeaderFn,
+// WithInReplyToHeaderParser configures the parser used for the In-Reply-To header.
+func WithInReplyToHeaderParser(
+	inReplyToHeaderParserFn parseCommaSeparatedMessageIDHeaderFn,
 ) EmailParserOption {
 	return func(ep *EmailParser) {
-		ep.headersParsers.InReplyTo = inReplyHeaderParserFn
+		ep.headersParsers.InReplyTo = inReplyToHeaderParserFn
 	}
 }
 
