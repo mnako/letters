@@ -191,6 +191,13 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		email.InlineFiles = emailBodies.InlineFiles
 		email.AttachedFiles = emailBodies.AttachedFiles
 	default:
+		if !ep.fileFilter(
+			email.Headers.ContentType,
+			email.Headers.ContentDisposition,
+		) {
+			break
+		}
+
 		afl, err := decodeAttachmentFileFromBody(msg.Body, email.Headers, cte)
 		if err != nil {
 			return email, fmt.Errorf(

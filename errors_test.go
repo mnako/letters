@@ -81,6 +81,30 @@ func TestUnknownContentDispositionError(t *testing.T) {
 	}
 }
 
+func TestParseHeadersUnknownContentDispositionError(t *testing.T) {
+	t.Parallel()
+
+	header := mail.Header{"Content-Disposition": {"unexpected"}}
+	_, err := letters.NewEmailParser().ParseHeaders(header)
+
+	if !errors.Is(err, letters.ErrUnknownContentDisposition) {
+		t.Fatalf("expected ErrUnknownContentDisposition, got %v", err)
+	}
+
+	const expectedMessage = "letters.parsers.ParseHeaders: " +
+		"cannot parse Content-Disposition: " +
+		"letters.parsers.parseContentDisposition: " +
+		"unknown Content-Disposition \"unexpected\""
+
+	if err.Error() != expectedMessage {
+		t.Errorf(
+			"unexpected error message: got %q, want %q",
+			err,
+			expectedMessage,
+		)
+	}
+}
+
 func TestUnknownContentTransferEncodingError(t *testing.T) {
 	t.Parallel()
 
