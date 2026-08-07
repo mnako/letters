@@ -311,6 +311,35 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 	testEmailCases(t, tcs)
 }
 
+func TestParseEmailTopLevelAttachmentWithNoFiles(t *testing.T) {
+	t.Parallel()
+
+	tcs := []emailTestCase{
+		{
+			name:     "NoFilesParser",
+			filepath: "tests/test_english_top_level_attachment.txt",
+			emailParser: letters.NewEmailParser(
+				letters.WithFileFilter(letters.NoFiles),
+			),
+			expectedEmail: letters.Email{
+				Headers: letters.Headers{
+					ContentType: letters.ContentTypeHeader{
+						ContentType: "application/octet-stream",
+						Params:      map[string]string{},
+					},
+					ContentDisposition: letters.ContentDispositionHeader{
+						ContentDisposition: letters.ContentDispositionAttachment,
+						Params:             map[string]string{},
+					},
+					ExtraHeaders: map[string][]string{},
+				},
+			},
+		},
+	}
+
+	testEmailCases(t, tcs)
+}
+
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	t.Parallel()
 
