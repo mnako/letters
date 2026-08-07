@@ -3,6 +3,7 @@ package letters_test
 import (
 	"errors"
 	"net/mail"
+	"os"
 	"testing"
 
 	"github.com/mnako/letters"
@@ -34,6 +35,29 @@ func TestUnknownCharsetError(t *testing.T) {
 			err,
 			expectedMessage,
 		)
+	}
+}
+
+func TestParseEmailUnknownCharsetError(t *testing.T) {
+	t.Parallel()
+
+	rawEmail, err := os.Open(
+		"tests/test_english_plaintext_unknown_charset.txt",
+	)
+	if err != nil {
+		t.Fatalf("error while reading email from file: %s", err)
+	}
+
+	defer func() {
+		if err := rawEmail.Close(); err != nil {
+			t.Errorf("error while closing rawEmail: %s", err)
+		}
+	}()
+
+	_, err = letters.NewEmailParser().Parse(rawEmail)
+
+	if !errors.Is(err, letters.ErrUnknownCharset) {
+		t.Fatalf("expected ErrUnknownCharset, got %v", err)
 	}
 }
 

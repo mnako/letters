@@ -5,8 +5,6 @@ import (
 	"io"
 	"net/mail"
 	"strings"
-
-	"golang.org/x/net/html/charset"
 )
 
 // ParseEmailHeaders parses an email header using the default header parsers.
@@ -108,8 +106,6 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 
 	email.Headers = headers
 
-	encoding, _ := charset.Lookup(email.Headers.ContentType.Params["charset"])
-
 	cte, err := ParseContentTransferEncoding(
 		msg.Header.Get("Content-Transfer-Encoding"),
 	)
@@ -126,7 +122,11 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 	switch {
 	case contentType == contentTypeTextPlain:
 		if ep.bodyFilter(email.Headers.ContentType) {
-			email.Text, err = parseText(msg.Body, encoding, cte)
+			email.Text, err = parseText(
+				msg.Body,
+				email.Headers.ContentType.Params["charset"],
+				cte,
+			)
 			if err != nil {
 				return email, fmt.Errorf(
 					"letters.EmailParser.Parse: "+
@@ -137,7 +137,11 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		}
 	case contentType == contentTypeTextEnriched:
 		if ep.bodyFilter(email.Headers.ContentType) {
-			email.EnrichedText, err = parseText(msg.Body, encoding, cte)
+			email.EnrichedText, err = parseText(
+				msg.Body,
+				email.Headers.ContentType.Params["charset"],
+				cte,
+			)
 			if err != nil {
 				return email,
 					fmt.Errorf(
@@ -149,7 +153,11 @@ func (ep *EmailParser) Parse(r io.Reader) (Email, error) {
 		}
 	case contentType == contentTypeTextHTML:
 		if ep.bodyFilter(email.Headers.ContentType) {
-			email.HTML, err = parseText(msg.Body, encoding, cte)
+			email.HTML, err = parseText(
+				msg.Body,
+				email.Headers.ContentType.Params["charset"],
+				cte,
+			)
 			if err != nil {
 				return email,
 					fmt.Errorf(
