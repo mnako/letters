@@ -330,18 +330,26 @@ func ParseAddressHeader(
 		return address, nil
 	}
 
-	decodedHeader, err := decodeHeader(normalizedS)
-	if err != nil {
-		return address, fmt.Errorf(
-			"letters.parsers.parseAddressHeader: "+
-				"cannot decode address header %q: %w",
-			addressHeader,
-			err,
-		)
+	mimeWordDecoder := mime.WordDecoder{
+		CharsetReader: charsetReader,
 	}
 
-	address, err = mail.ParseAddress(decodedHeader)
+	mailAddressParser := mail.AddressParser{
+		WordDecoder: &mimeWordDecoder,
+	}
+
+	address, err := mailAddressParser.Parse(normalizedS)
 	if err != nil {
+		_, decodeErr := decodeHeader(normalizedS)
+		if decodeErr != nil {
+			return address, fmt.Errorf(
+				"letters.parsers.parseAddressHeader: "+
+					"cannot decode address header %q: %w",
+				addressHeader,
+				decodeErr,
+			)
+		}
+
 		return address, fmt.Errorf(
 			"letters.parsers.parseAddressHeader: "+
 				"cannot parse address header %q: %w",
@@ -372,18 +380,26 @@ func ParseAddressListHeader(
 		return addresses, nil
 	}
 
-	decodedHeader, err := decodeHeader(normalizedS)
-	if err != nil {
-		return addresses, fmt.Errorf(
-			"letters.parsers.parseAddressListHeader: "+
-				"cannot decode address list header %q: %w",
-			addressListHeader,
-			err,
-		)
+	mimeWordDecoder := mime.WordDecoder{
+		CharsetReader: charsetReader,
 	}
 
-	addresses, err = mail.ParseAddressList(decodedHeader)
+	mailAddressParser := mail.AddressParser{
+		WordDecoder: &mimeWordDecoder,
+	}
+
+	addresses, err := mailAddressParser.ParseList(normalizedS)
 	if err != nil {
+		_, decodeErr := decodeHeader(normalizedS)
+		if decodeErr != nil {
+			return addresses, fmt.Errorf(
+				"letters.parsers.parseAddressListHeader: "+
+					"cannot decode address list header %q: %w",
+				addressListHeader,
+				decodeErr,
+			)
+		}
+
 		return addresses, fmt.Errorf(
 			"letters.parsers.parseAddressListHeader: "+
 				"cannot parse address list header %q: %w",

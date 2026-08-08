@@ -16,27 +16,28 @@ import (
 	"golang.org/x/text/transform"
 )
 
-func decodeHeader(headerValue string) (string, error) {
-	CharsetReader := func(label string, input io.Reader) (io.Reader, error) {
-		enc, _ := charset.Lookup(label)
-		if enc == nil {
-			normalizedLabel := strings.ReplaceAll(
-				label,
-				"windows-",
-				"cp",
-			)
-			enc, _ = charset.Lookup(normalizedLabel)
-		}
-
-		if enc == nil {
-			return nil, fmt.Errorf("%w %s", ErrUnknownCharset, label)
-		}
-
-		return enc.NewDecoder().Reader(input), nil
+func charsetReader(label string, input io.Reader) (io.Reader, error) {
+	enc, _ := charset.Lookup(label)
+	if enc == nil {
+		normalizedLabel := strings.ReplaceAll(
+			label,
+			"windows-",
+			"cp",
+		)
+		enc, _ = charset.Lookup(normalizedLabel)
 	}
-	mimeDecoder := mime.WordDecoder{CharsetReader: CharsetReader}
 
-	decodedHeader, err := mimeDecoder.DecodeHeader(headerValue)
+	if enc == nil {
+		return nil, fmt.Errorf("%w %s", ErrUnknownCharset, label)
+	}
+
+	return enc.NewDecoder().Reader(input), nil
+}
+
+func decodeHeader(headerValue string) (string, error) {
+	mimeWordDecoder := mime.WordDecoder{CharsetReader: charsetReader}
+
+	decodedHeader, err := mimeWordDecoder.DecodeHeader(headerValue)
 	if err != nil {
 		return decodedHeader, fmt.Errorf(
 			"letters.decoders.decodeHeader: "+
