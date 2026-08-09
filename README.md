@@ -381,7 +381,7 @@ The `letters.Headers` struct contains these headers. The table also gives the
 options and parser signatures for these headers:
 
 | Header              | Option                                                                | Parser Signature                                         |
-| ------------------- | --------------------------------------------------------------------- | -------------------------------------------------------- |
+|---------------------|-----------------------------------------------------------------------|----------------------------------------------------------|
 | Date                | `WithDateHeaderParser(parseDateHeaderFn)`                             | `func(string) time.Time`                                 |
 | Sender              | `WithSenderHeaderParser(parseAddressHeaderFn)`                        | `func(mail.Header, string) (*mail.Address, error)`       |
 | From                | `WithFromHeaderParser(parseAddressListHeaderFn)`                      | `func(mail.Header, string) ([]*mail.Address, error)`     |
