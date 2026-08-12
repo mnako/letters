@@ -2,47 +2,46 @@
 
 [![Go Reference](https://img.shields.io/badge/Reference-blue?logo=Go&labelColor=black)](https://pkg.go.dev/github.com/mnako/letters)
 [![Test](https://github.com/mnako/letters/actions/workflows/test.yml/badge.svg)](https://github.com/mnako/letters/actions/workflows/test.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/mnako/letters)](https://goreportcard.com/report/github.com/mnako/letters)
 
-**Letters** is a minimal Go library for parsing plaintext and MIME
-emails.
+**Letters** is a minimal Go library that parses plain-text and MIME emails.
 
-It correctly handles text and MIME mime-types, Base64 and Quoted-Printable
-Content-Transfer-Encoding, as well as any text encoding that Go standard
-library is capable of handling. Letters will parse an email into a simple struct
-with standard headers and text, enriched text, and HTML content, and decode
-inline and attached files.
+Letters parses plain-text, enriched-text, and HTML bodies. It also parses inline
+and attached files. Letters decodes Base64 and Quoted-Printable content-transfer
+encodings. It decodes all character encodings supported by
+`golang.org/x/net/html/charset`.
+
+The parser returns an `Email` struct with standard email headers; plain-text,
+enriched-text, and HTML bodies; and inline and attached files.
 
 ## The User Guide
 
 - [Installation](#installation)
-- [Quickstart](#quickstart)
+- [Quick Start](#quick-start)
   - [Parse an Email](#parse-an-email)
   - [Parse Email Headers](#parse-email-headers)
-- [Advanced Usage](#advanced-usage)
+- [Parser Options](#parser-options)
   - [The Email Parser](#the-email-parser)
-  - [Skipping Parts of the Email](#skipping-parts-of-the-email)
-  - [Customising Headers Parsers](#customising-headers-parsers)
-  - [Customising Extra Headers Parsers](#customising-extra-headers-parsers)
+  - [Skip Email Parts](#skip-email-parts)
+  - [Customize Header Parsers](#customize-header-parsers)
+  - [Customize Parsers for Extra Headers](#customize-parsers-for-extra-headers)
 
 ### Installation
 
-Install Letters:
+Install Letters with this command:
 
 ```sh
 go get github.com/mnako/letters@v0.3.1
 ```
 
-### Quickstart
+### Quick Start
 
-This section documents the simplified API of Letters.
+Parse emails with the default parser.
 
 #### Parse an Email
 
-The quickest way to get started with parsing emails with Letters is to use the
-`letters.ParseEmail()` helper function. It takes an `io.Reader` with the
-contents of the email, parses it using the default parser, and returns an
-`Email` struct or an error:
+Use `letters.ParseEmail()` to parse an email with the default parser. The
+function accepts an `io.Reader` that contains the email and returns an `Email`
+struct or an error:
 
 ```go
 package main
@@ -75,7 +74,7 @@ func main() {
 }
 ```
 
-Now, you can access the common headers:
+After Letters parses the email, you can get the RFC headers:
 
 ```go
 email.Headers.Sender
@@ -109,7 +108,7 @@ email.Headers.Bcc
 // }
 ```
 
-and custom headers:
+Get extra headers from `email.Headers.ExtraHeaders`:
 
 ```go
 email.Headers.ExtraHeaders
@@ -118,7 +117,7 @@ email.Headers.ExtraHeaders
 // }
 ```
 
-get decoded bodies:
+Get the decoded bodies from these fields:
 
 ```go
 email.Text
@@ -128,7 +127,7 @@ email.HTML
 // "<html><div dir="ltr"><p>The quick brown fox jumps over a lazy dog..."
 ```
 
-inline files:
+Get inline files from `email.InlineFiles`:
 
 ```go
 email.InlineFiles
@@ -165,7 +164,7 @@ email.InlineFiles
 // }
 ```
 
-and attached files:
+Get attached files from `email.AttachedFiles`:
 
 ```go
 email.AttachedFiles
@@ -200,8 +199,8 @@ email.AttachedFiles
 // }
 ```
 
-The same default parser and methods will work for other languages, text
-encodings, and transfer-encodings:
+The default parser also parses messages written in other languages when they use
+supported character encodings and content-transfer encodings:
 
 ```go
 r := strings.NewReader(`Subject: =?ISO-2022-JP?Q?=1B=24=42=24=24=24=6D=24=4F=32=4E=1B=28=42?=
@@ -222,10 +221,8 @@ email.Text
 
 #### Parse Email Headers
 
-If you already have a `mail.Message` and you are only interested in the headers
-of the email, you can use the `letters.ParseEmailHeaders()` helper function. It
-takes a `mail.Header` with the whole head section of an email, parses it using
-the default parser, and returns a `letters.Headers` struct or an error:
+Use `letters.ParseEmailHeaders()` to parse only email headers. The function
+accepts a `mail.Header` and returns a `letters.Headers` struct or an error:
 
 ```go
 msg, err := mail.ReadMessage(rawEmail)
@@ -253,23 +250,21 @@ headers.From
 ```
 
 > [!TIP]
-> The `letters.ParseEmail()` and `letters.ParseEmailHeaders()` helpers
-> exist for developers’ convenience and are a good entrypoint to get started
-> quickly. However, if you find yourself in need of customising the parser to,
-> i.a. parse non-compliant headers or conditionally parse only some parts of the
-> email, we recommend following the [Advanced Usage](#advanced-usage) section
-> below for a more flexible and maintainable approach.
+> `letters.ParseEmail()` and `letters.ParseEmailHeaders()` provide
+> convenient ways to get started. To handle non-compliant headers or select
+> which parts of an email to parse, configure an `EmailParser` as described in
+> [Parser Options](#parser-options).
 
-### Advanced Usage
+### Parser Options
 
-This section documents some of Letters’ more advanced features.
+Use `EmailParser` options to configure parsing.
 
 #### The Email Parser
 
-The `letters.ParseEmail()` documented above is a helper function that creates a
-default email parser and returns the parsed email and error.
+`letters.ParseEmail()` creates a parser with the default options and returns the
+parsed email or an error.
 
-You can replace it with the following code to have more control over the parser:
+Create an `EmailParser` directly when you need more control:
 
 ```go
 defaultEmailParser := letters.NewEmailParser()
@@ -279,25 +274,24 @@ if err != nil {
 }
 ```
 
-#### Skipping Parts of the Email
+#### Skip Email Parts
 
-By default, letters parses all bodies and files.
+By default, Letters parses all bodies and files.
 
-You can configure the parser to parse all, some, or none bodies, and files using
-functional filters.
+A **body filter** controls the bodies that the parser parses or skips. A **file
+filter** controls the files that the parser parses or skips.
 
-A **functional body filter** is a function that takes the Content-Type header of
-the part and returns true or false. Only bodies for which the filter returns
-true will be parsed. Parts for which the filter returned false, will be skipped.
+A **body filter** receives the parsed Content-Type header for a body. The parser
+parses the body when the filter returns `true` and skips it when the filter
+returns `false`.
 
-Similar to the body filter, a **functional file filter** is a function that
-takes the Content-Type and Content-Disposition headers of the part and returns
-true or false. Only files for which the filter returns true will be parsed.
-Files for which the filter returned false, will be skipped.
+A **file filter** receives the parsed Content-Type and Content-Disposition
+headers for a file. The parser parses the file when the filter returns `true`
+and skips it when the filter returns `false`.
 
-For example, if you do not want to parse any files, you can configure the Email
-Parser with a file filter that always returns false. For convenience, letters
-includes a `NoFiles` filter that does precisely that:
+The `NoFiles` filter always returns false.
+
+Skip all files with this filter:
 
 ```go
 noFilesEmailParser := letters.NewEmailParser(
@@ -309,32 +303,22 @@ if err != nil {
 }
 ```
 
-Letters includes the following convenience filters:
+Letters has these filters:
 
-- `NoBodies`, a function that always returns false, that can be used with
-  `WithBodyFilter()`, to skip parsing all bodies of the email;
-- `AllBodies`, a function that always returns true, that can be used with
-  `WithBodyFilter()`, to parse all bodies of the email. This is the default
-  behaviour;
-- `NoFiles`, a function that always returns false, that can be used with
-  `WithFileFilter()`, to skip parsing all attachments of the email. This option
-  can speed up parsing in use cases where attachments are not needed;
-- `AllFiles`, a function that always returns true, that can be used with
-  `WithFileFilter()`, to parse all attachments of the email. This is the default
-  behaviour;
+- `NoBodies` returns false for each body. `WithBodyFilter(NoBodies)` skips all
+  bodies.
+- `AllBodies` returns true for each body. It is the default body filter.
+- `NoFiles` returns false for each file. `WithFileFilter(NoFiles)` skips all
+  files.
+- `AllFiles` returns true for each file. It is the default file filter.
 
-This means that `WithBodyFilter(NoBodies)` is the more flexible equivalent of
-the `ParseEmailHeaders()` helper function from the
-[Quickstart](#parse-email-headers) section above, as it allows you to parse only
-the headers of the email.
+`WithBodyFilter(NoBodies)` configures the email parser to parse only headers.
+You can use other parser options with this configuration.
 
-More interestingly, bodies and files can be skipped conditionally: bodies can be
-skipped based on the Content-Type header of the part, and files can be skipped
-based on the Content-Type and the Content-Disposition headers of the part.
+##### Examples
 
-For example, to only parse files with a filename that ends with `.jpg`, you can
-pass a custom File Filter that checks the `name` Param of the Content-Type
-header:
+Parse only `.jpg` files with a file filter that checks the `name` parameter in
+the Content-Type header:
 
 ```go
 customJPGOnlyEmailParser := letters.NewEmailParser(
@@ -353,9 +337,8 @@ customJPGOnlyEmailParser := letters.NewEmailParser(
 email, err := customJPGOnlyEmailParser.Parse(rawEmail)
 ```
 
-Files can be filtered based on the Content-Disposition header as well. For
-example, to parse only inline files and skip attachments, you can pass a custom
-File Filter that checks the Content-Disposition header:
+Parse only inline files with a file filter that checks the Content-Disposition
+header:
 
 ```go
 inlineFilesOnlyParser := letters.NewEmailParser(
@@ -370,41 +353,35 @@ inlineFilesOnlyParser := letters.NewEmailParser(
 )
 ```
 
-You can implement arbitrarily complex conditions with those filters.
+These filters can implement any conditions you need.
 
-#### Customising Headers Parsers
+#### Customize Header Parsers
 
-Letters aims to be spec-compliant and follow email-related RFCs closely. Not all
-emails that you will encounter in the wild will be compliant with the RFCs,
-though.
+Letters closely follows email RFCs. Some real-world emails do not comply with
+these RFCs. Use custom header parsers to handle non-compliant headers.
 
-To allow parsing such emails without adding exceptions to the library itself,
-you can freely customise the parsers according to your needs with
-`With<HeaderName>HeaderParser()` options.
+Configure a custom header parser with the corresponding
+`With<HeaderName>HeaderParser()` option.
 
-For example, to customise the parser for the `Date` header, you can pass a
-custom parser function to the `WithDateHeaderParser()` option:
+Customize the `Date` header parser with the `WithDateHeaderParser()` option:
 
 ```go
 customDateHeaderEmailParser := letters.NewEmailParser(
     letters.WithDateHeaderParser(
         func(s string) time.Time {
-            // Decode and parse the raw Date header from the s string here
-            // and return a time.Time object
+            // Decode the raw Date header in s.
+            // Parse the decoded header.
+            // Return a time.Time value.
         },
     ),
 )
 ```
 
-Custom parsers for every header can be specified separately. E.g., if you want
-to customise parsing of all dates, you need to specify a custom parser for the
-Date header and for the ResentDate header.
+The `letters.Headers` struct contains these headers. The table also gives the
+options and parser signatures for these headers:
 
-The following headers are included in the `letters.Headers` struct and the
-following options and types are available:
-
-| Header              | Option                                                                | Expected Parser Signature                                |
-| ------------------- | --------------------------------------------------------------------- | -------------------------------------------------------- |
+| Header              | Option                                                                | Parser Signature                                         |
+|---------------------|-----------------------------------------------------------------------|----------------------------------------------------------|
 | Date                | `WithDateHeaderParser(parseDateHeaderFn)`                             | `func(string) time.Time`                                 |
 | Sender              | `WithSenderHeaderParser(parseAddressHeaderFn)`                        | `func(mail.Header, string) (*mail.Address, error)`       |
 | From                | `WithFromHeaderParser(parseAddressListHeaderFn)`                      | `func(mail.Header, string) ([]*mail.Address, error)`     |
@@ -428,19 +405,19 @@ following options and types are available:
 | Content-Type        | `WithContentTypeHeaderParser(parseContentTypeHeaderFn)`               | `func(string) (letters.ContentTypeHeader, error)`        |
 | Content-Disposition | `WithContentDispositionHeaderParser(parseContentDispositionHeaderFn)` | `func(string) (letters.ContentDispositionHeader, error)` |
 
-#### Customising Extra Headers Parsers
+#### Customize Parsers for Extra Headers
 
-The RFC-documented headers, their corresponding options and parser signatures
-are strictly typed.
+Letters provides dedicated fields and parser options for the RFC-defined headers
+listed above.
 
-Letters allows parsing custom headers to the `ExtraHeaders` map in the
-`letters.Headers` struct. You can freely customise the parsers according to your
-needs with the
+It stores other headers in the `ExtraHeaders` map of the `letters.Headers`
+struct.
+
+Set an extra header parser with the
 `WithExtraHeaderParser(headerName string, extraHeaderParserFn parseStringHeaderFn)`
 option.
 
-For example, you can customise parsing the `X-CrossPremisesHeadersPromoted`
-header:
+Customize an extra header parser with this code:
 
 ```go
 xCrossPremisesHeadersPromotedHeaderParser := func(s string) string {
@@ -456,7 +433,7 @@ customEmailParser := letters.NewEmailParser(
 )
 ```
 
-You can also specify custom parsers for many extra headers:
+Set parsers for more than one extra header with this code:
 
 ```go
 xCrossPremisesHeadersPromotedHeaderParser := func(s string) string {
@@ -490,43 +467,37 @@ customEmailParser := letters.NewEmailParser(
 )
 ```
 
-## Current Scope and Features
+## What Letters Does
 
-- Parsing plaintext emails and recursively traversing multipart
-  (`multipart/alternative`, `multipart/mixed`, `multipart/parallel`,
-  `multipart/related`, `multipart/signed`) emails
-- Unfolding headers
-- Decoding non-US-ASCII email headers according to
-  [RFC 2047](https://datatracker.ietf.org/doc/html/rfc2047)
-- Decoding Base64 and Quoted-Printable Content-Transfer-Encodings
-- Decoding any text encoding (e.g. UTF-8, Chinese GB18030 or GBK, Finnish
-  ISO-8859-15, Icelandic ISO-8859-1, Japanese ISO-2022-JP, Korean EUC-KR, Polish
-  ISO-8859-2) in combination with any Transfer Encoding (e.g. ASCII-over-7bit,
-  UTF-8-over-Base64, Japanese ISO-2022-JP-over-7bit, Polish
-  ISO-8859-2-over-Quoted-Printable, etc.)
-- Easy access to text, enriched text and HTML content of the email
-- Easy access to inline attachments
-- Easy access to attached files
+- Letters parses plain-text emails.
+- Letters parses `multipart/alternative`, `multipart/mixed`,
+  `multipart/parallel`, `multipart/related`, and `multipart/signed` emails.
+- Letters unfolds headers.
+- Letters decodes non-ASCII email headers according to
+  [RFC 2047](https://datatracker.ietf.org/doc/html/rfc2047).
+- Letters supports the 7bit, 8bit, binary, Base64, and Quoted-Printable
+  content-transfer encodings.
+- Letters supports the character encodings provided by
+  `golang.org/x/net/html/charset`. Examples include UTF-8, GB18030, GBK,
+  ISO-8859-15, ISO-8859-1, ISO-2022-JP, EUC-KR, and ISO-8859-2.
 
-All of that and more in a minimal Go library with realistic email examples
-and thorough test coverage.
+The repository contains email examples and tests.
 
-## Current Limitations
+## Limits
 
-- S/MIME `multipart/signed` emails are limited to clear-signed messages
-- The decryption and signature verification and any other cryptography-related
-  tasks need to be performed outside of letters.
+- Letters parses only clear-signed S/MIME `multipart/signed` messages.
+- Decryption and signature verification are outside the scope of Letters.
 
-## Current Status
+## Project State
 
-Feature-complete and tests passing.
+Letters is feature-complete, and all tests pass.
 
-Currently, gathering feedback and refactoring code before releasing v1.0.0.
-Fields and API are still subject to change.
+We are gathering feedback and refactoring the code before releasing v1.0.0. The
+public API, including struct fields, may still change.
 
 ## Release Policy
 
-We follow [Go’s Release Policy](https://go.dev/doc/devel/release#policy)
-and commit to supporting at least the two most recent major versions of Go.
+Letters follows [Go’s Release Policy](https://go.dev/doc/devel/release#policy).
+Each Letters release supports at least the two most recent major Go releases.
 
-Letters v0.3.1 supports Go versions 1.25 through 1.26.
+Letters v0.3.1 supports Go 1.25 and Go 1.26.
