@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> This module has moved to [`github.com/go-letters/letters`](https://github.com/go-letters/letters).
+> Versions v0.4.0 and later use the new module path, use `github.com/go-letters/letters`.
+
 # Letters, or how to parse emails in Go
 
 [![Go Reference](https://img.shields.io/badge/Reference-blue?logo=Go&labelColor=black)](https://pkg.go.dev/github.com/mnako/letters)
@@ -30,7 +34,7 @@ enriched-text, and HTML bodies; and inline and attached files.
 Install Letters with this command:
 
 ```sh
-go get github.com/mnako/letters@v0.4.0
+go get github.com/go-letters/letters@v0.4.0
 ```
 
 ### Quick Start
@@ -50,7 +54,7 @@ import (
   "log"
   "os"
 
-  "github.com/mnako/letters"
+  "github.com/go-letters/letters"
 )
 
 func main() {
