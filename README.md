@@ -34,7 +34,7 @@ enriched-text, and HTML bodies; and inline and attached files.
 Install Letters with this command:
 
 ```sh
-go get github.com/go-letters/letters@v0.4.0
+go get github.com/go-letters/letters@v0.4.1
 ```
 
 ### Quick Start

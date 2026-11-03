@@ -1,3 +1,4 @@
+// Deprecated: use github.com/go-letters/letters instead.
 module github.com/mnako/letters
 
 go 1.25.0
